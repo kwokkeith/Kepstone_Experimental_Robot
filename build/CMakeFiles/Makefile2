@@ -149,6 +149,7 @@ bumperbot_examples/all: bumperbot_examples/CMakeFiles/simple_cpp_timer.dir/all
 bumperbot_examples/all: bumperbot_examples/CMakeFiles/turtlesim_kinematics.dir/all
 bumperbot_examples/all: bumperbot_examples/CMakeFiles/simple_cpp_publisher.dir/all
 bumperbot_examples/all: bumperbot_examples/CMakeFiles/simple_cpp_service_server.dir/all
+bumperbot_examples/all: bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all
 bumperbot_examples/all: bumperbot_examples/CMakeFiles/bumperbot_examples_generate_messages.dir/all
 bumperbot_examples/all: bumperbot_examples/CMakeFiles/tf_examples_node.dir/all
 bumperbot_examples/all: bumperbot_examples/CMakeFiles/simple_cpp_subscriber.dir/all
@@ -178,6 +179,7 @@ bumperbot_examples/clean: bumperbot_examples/CMakeFiles/std_srvs_generate_messag
 bumperbot_examples/clean: bumperbot_examples/CMakeFiles/actionlib_msgs_generate_messages_py.dir/clean
 bumperbot_examples/clean: bumperbot_examples/CMakeFiles/actionlib_generate_messages_cpp.dir/clean
 bumperbot_examples/clean: bumperbot_examples/CMakeFiles/tf2_msgs_generate_messages_eus.dir/clean
+bumperbot_examples/clean: bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/clean
 bumperbot_examples/clean: bumperbot_examples/CMakeFiles/actionlib_generate_messages_lisp.dir/clean
 bumperbot_examples/clean: bumperbot_examples/CMakeFiles/std_srvs_generate_messages_py.dir/clean
 bumperbot_examples/clean: bumperbot_examples/CMakeFiles/turtlesim_generate_messages_nodejs.dir/clean
@@ -1227,7 +1229,7 @@ bumperbot_examples/CMakeFiles/turtlesim_kinematics_node.dir/all: bumperbot_examp
 bumperbot_examples/CMakeFiles/turtlesim_kinematics_node.dir/all: bumperbot_examples/CMakeFiles/bumperbot_examples_generate_messages_lisp.dir/all
 	$(MAKE) -f bumperbot_examples/CMakeFiles/turtlesim_kinematics_node.dir/build.make bumperbot_examples/CMakeFiles/turtlesim_kinematics_node.dir/depend
 	$(MAKE) -f bumperbot_examples/CMakeFiles/turtlesim_kinematics_node.dir/build.make bumperbot_examples/CMakeFiles/turtlesim_kinematics_node.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/keith/Documents/bumperbot_robot/build/CMakeFiles --progress-num=35,36,37 "Built target turtlesim_kinematics_node"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/keith/Documents/bumperbot_robot/build/CMakeFiles --progress-num=37,38,39 "Built target turtlesim_kinematics_node"
 .PHONY : bumperbot_examples/CMakeFiles/turtlesim_kinematics_node.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1303,7 +1305,7 @@ bumperbot_examples/CMakeFiles/tf_examples.dir/all: bumperbot_examples/CMakeFiles
 bumperbot_examples/CMakeFiles/tf_examples.dir/all: bumperbot_examples/CMakeFiles/bumperbot_examples_generate_messages_lisp.dir/all
 	$(MAKE) -f bumperbot_examples/CMakeFiles/tf_examples.dir/build.make bumperbot_examples/CMakeFiles/tf_examples.dir/depend
 	$(MAKE) -f bumperbot_examples/CMakeFiles/tf_examples.dir/build.make bumperbot_examples/CMakeFiles/tf_examples.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/keith/Documents/bumperbot_robot/build/CMakeFiles --progress-num=28,29 "Built target tf_examples"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/keith/Documents/bumperbot_robot/build/CMakeFiles --progress-num=30,31 "Built target tf_examples"
 .PHONY : bumperbot_examples/CMakeFiles/tf_examples.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1330,7 +1332,7 @@ bumperbot_examples/CMakeFiles/tf_examples.dir/clean:
 bumperbot_examples/CMakeFiles/simple_cpp_timer.dir/all:
 	$(MAKE) -f bumperbot_examples/CMakeFiles/simple_cpp_timer.dir/build.make bumperbot_examples/CMakeFiles/simple_cpp_timer.dir/depend
 	$(MAKE) -f bumperbot_examples/CMakeFiles/simple_cpp_timer.dir/build.make bumperbot_examples/CMakeFiles/simple_cpp_timer.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/keith/Documents/bumperbot_robot/build/CMakeFiles --progress-num=26,27 "Built target simple_cpp_timer"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/keith/Documents/bumperbot_robot/build/CMakeFiles --progress-num=28,29 "Built target simple_cpp_timer"
 .PHONY : bumperbot_examples/CMakeFiles/simple_cpp_timer.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1406,7 +1408,7 @@ bumperbot_examples/CMakeFiles/turtlesim_kinematics.dir/all: bumperbot_examples/C
 bumperbot_examples/CMakeFiles/turtlesim_kinematics.dir/all: bumperbot_examples/CMakeFiles/bumperbot_examples_generate_messages_lisp.dir/all
 	$(MAKE) -f bumperbot_examples/CMakeFiles/turtlesim_kinematics.dir/build.make bumperbot_examples/CMakeFiles/turtlesim_kinematics.dir/depend
 	$(MAKE) -f bumperbot_examples/CMakeFiles/turtlesim_kinematics.dir/build.make bumperbot_examples/CMakeFiles/turtlesim_kinematics.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/keith/Documents/bumperbot_robot/build/CMakeFiles --progress-num=33,34 "Built target turtlesim_kinematics"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/keith/Documents/bumperbot_robot/build/CMakeFiles --progress-num=35,36 "Built target turtlesim_kinematics"
 .PHONY : bumperbot_examples/CMakeFiles/turtlesim_kinematics.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1699,7 +1701,7 @@ bumperbot_examples/CMakeFiles/simple_cpp_service_server.dir/all: bumperbot_examp
 bumperbot_examples/CMakeFiles/simple_cpp_service_server.dir/all: bumperbot_examples/CMakeFiles/bumperbot_examples_generate_messages_lisp.dir/all
 	$(MAKE) -f bumperbot_examples/CMakeFiles/simple_cpp_service_server.dir/build.make bumperbot_examples/CMakeFiles/simple_cpp_service_server.dir/depend
 	$(MAKE) -f bumperbot_examples/CMakeFiles/simple_cpp_service_server.dir/build.make bumperbot_examples/CMakeFiles/simple_cpp_service_server.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/keith/Documents/bumperbot_robot/build/CMakeFiles --progress-num=22,23 "Built target simple_cpp_service_server"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/keith/Documents/bumperbot_robot/build/CMakeFiles --progress-num=24,25 "Built target simple_cpp_service_server"
 .PHONY : bumperbot_examples/CMakeFiles/simple_cpp_service_server.dir/all
 
 # Build rule for subdir invocation for target.
@@ -1826,6 +1828,82 @@ tf2_msgs_generate_messages_eus: bumperbot_examples/CMakeFiles/tf2_msgs_generate_
 bumperbot_examples/CMakeFiles/tf2_msgs_generate_messages_eus.dir/clean:
 	$(MAKE) -f bumperbot_examples/CMakeFiles/tf2_msgs_generate_messages_eus.dir/build.make bumperbot_examples/CMakeFiles/tf2_msgs_generate_messages_eus.dir/clean
 .PHONY : bumperbot_examples/CMakeFiles/tf2_msgs_generate_messages_eus.dir/clean
+
+#=============================================================================
+# Target rules for target bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir
+
+# All Build rule for target.
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_controller/CMakeFiles/geometry_msgs_generate_messages_eus.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_controller/CMakeFiles/std_msgs_generate_messages_py.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_controller/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_controller/CMakeFiles/geometry_msgs_generate_messages_py.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_controller/CMakeFiles/roscpp_generate_messages_cpp.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_controller/CMakeFiles/roscpp_generate_messages_eus.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_controller/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_controller/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_controller/CMakeFiles/roscpp_generate_messages_py.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_controller/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_controller/CMakeFiles/std_msgs_generate_messages_eus.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_controller/CMakeFiles/roscpp_generate_messages_nodejs.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_controller/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_controller/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_controller/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_controller/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_controller/CMakeFiles/geometry_msgs_generate_messages_nodejs.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_controller/CMakeFiles/geometry_msgs_generate_messages_cpp.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_controller/CMakeFiles/roscpp_generate_messages_lisp.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_controller/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/bumperbot_examples_generate_messages_py.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/std_srvs_generate_messages_nodejs.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/turtlesim_generate_messages_py.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/std_srvs_generate_messages_lisp.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/std_srvs_generate_messages_eus.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/actionlib_msgs_generate_messages_py.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/actionlib_generate_messages_cpp.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/tf2_msgs_generate_messages_eus.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/actionlib_generate_messages_lisp.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/std_srvs_generate_messages_py.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/turtlesim_generate_messages_nodejs.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/bumperbot_examples_generate_messages_nodejs.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/turtlesim_generate_messages_lisp.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/std_srvs_generate_messages_cpp.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/tf2_msgs_generate_messages_cpp.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/turtlesim_generate_messages_eus.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/actionlib_generate_messages_nodejs.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/actionlib_generate_messages_eus.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/actionlib_msgs_generate_messages_eus.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/bumperbot_examples_generate_messages_eus.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/tf2_msgs_generate_messages_lisp.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/bumperbot_examples_generate_messages_cpp.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/actionlib_generate_messages_py.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/actionlib_msgs_generate_messages_nodejs.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/turtlesim_generate_messages_cpp.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/tf2_msgs_generate_messages_py.dir/all
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all: bumperbot_examples/CMakeFiles/bumperbot_examples_generate_messages_lisp.dir/all
+	$(MAKE) -f bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/build.make bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/depend
+	$(MAKE) -f bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/build.make bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/keith/Documents/bumperbot_robot/build/CMakeFiles --progress-num=22,23 "Built target simple_cpp_service_client"
+.PHONY : bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all
+
+# Build rule for subdir invocation for target.
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/keith/Documents/bumperbot_robot/build/CMakeFiles 9
+	$(MAKE) -f CMakeFiles/Makefile2 bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/keith/Documents/bumperbot_robot/build/CMakeFiles 0
+.PHONY : bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/rule
+
+# Convenience name for target.
+simple_cpp_service_client: bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/rule
+
+.PHONY : simple_cpp_service_client
+
+# clean rule for target.
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/clean:
+	$(MAKE) -f bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/build.make bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/clean
+.PHONY : bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/clean
 
 #=============================================================================
 # Target rules for target bumperbot_examples/CMakeFiles/actionlib_generate_messages_lisp.dir
@@ -2376,7 +2454,7 @@ bumperbot_examples/CMakeFiles/tf_examples_node.dir/all: bumperbot_examples/CMake
 bumperbot_examples/CMakeFiles/tf_examples_node.dir/all: bumperbot_examples/CMakeFiles/bumperbot_examples_generate_messages_lisp.dir/all
 	$(MAKE) -f bumperbot_examples/CMakeFiles/tf_examples_node.dir/build.make bumperbot_examples/CMakeFiles/tf_examples_node.dir/depend
 	$(MAKE) -f bumperbot_examples/CMakeFiles/tf_examples_node.dir/build.make bumperbot_examples/CMakeFiles/tf_examples_node.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/keith/Documents/bumperbot_robot/build/CMakeFiles --progress-num=30,31,32 "Built target tf_examples_node"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/keith/Documents/bumperbot_robot/build/CMakeFiles --progress-num=32,33,34 "Built target tf_examples_node"
 .PHONY : bumperbot_examples/CMakeFiles/tf_examples_node.dir/all
 
 # Build rule for subdir invocation for target.
@@ -2512,7 +2590,7 @@ bumperbot_examples/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/clean:
 bumperbot_examples/CMakeFiles/simple_cpp_subscriber.dir/all:
 	$(MAKE) -f bumperbot_examples/CMakeFiles/simple_cpp_subscriber.dir/build.make bumperbot_examples/CMakeFiles/simple_cpp_subscriber.dir/depend
 	$(MAKE) -f bumperbot_examples/CMakeFiles/simple_cpp_subscriber.dir/build.make bumperbot_examples/CMakeFiles/simple_cpp_subscriber.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/keith/Documents/bumperbot_robot/build/CMakeFiles --progress-num=24,25 "Built target simple_cpp_subscriber"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/keith/Documents/bumperbot_robot/build/CMakeFiles --progress-num=26,27 "Built target simple_cpp_subscriber"
 .PHONY : bumperbot_examples/CMakeFiles/simple_cpp_subscriber.dir/all
 
 # Build rule for subdir invocation for target.

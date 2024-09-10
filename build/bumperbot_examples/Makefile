@@ -423,6 +423,21 @@ tf2_msgs_generate_messages_eus/fast:
 .PHONY : tf2_msgs_generate_messages_eus/fast
 
 # Convenience name for target.
+bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/rule:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/rule
+.PHONY : bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/rule
+
+# Convenience name for target.
+simple_cpp_service_client: bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/rule
+
+.PHONY : simple_cpp_service_client
+
+# fast build rule for target.
+simple_cpp_service_client/fast:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/build.make bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/build
+.PHONY : simple_cpp_service_client/fast
+
+# Convenience name for target.
 bumperbot_examples/CMakeFiles/actionlib_generate_messages_lisp.dir/rule:
 	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_examples/CMakeFiles/actionlib_generate_messages_lisp.dir/rule
 .PHONY : bumperbot_examples/CMakeFiles/actionlib_generate_messages_lisp.dir/rule
@@ -869,6 +884,33 @@ nodes/simple_publisher.cpp.s:
 	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_examples/CMakeFiles/simple_cpp_publisher.dir/build.make bumperbot_examples/CMakeFiles/simple_cpp_publisher.dir/nodes/simple_publisher.cpp.s
 .PHONY : nodes/simple_publisher.cpp.s
 
+nodes/simple_service_client.o: nodes/simple_service_client.cpp.o
+
+.PHONY : nodes/simple_service_client.o
+
+# target to build an object file
+nodes/simple_service_client.cpp.o:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/build.make bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/nodes/simple_service_client.cpp.o
+.PHONY : nodes/simple_service_client.cpp.o
+
+nodes/simple_service_client.i: nodes/simple_service_client.cpp.i
+
+.PHONY : nodes/simple_service_client.i
+
+# target to preprocess a source file
+nodes/simple_service_client.cpp.i:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/build.make bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/nodes/simple_service_client.cpp.i
+.PHONY : nodes/simple_service_client.cpp.i
+
+nodes/simple_service_client.s: nodes/simple_service_client.cpp.s
+
+.PHONY : nodes/simple_service_client.s
+
+# target to generate assembly for a file
+nodes/simple_service_client.cpp.s:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/build.make bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/nodes/simple_service_client.cpp.s
+.PHONY : nodes/simple_service_client.cpp.s
+
 nodes/simple_service_server.o: nodes/simple_service_server.cpp.o
 
 .PHONY : nodes/simple_service_server.o
@@ -1092,6 +1134,7 @@ help:
 	@echo "... actionlib_generate_messages_cpp"
 	@echo "... rebuild_cache"
 	@echo "... tf2_msgs_generate_messages_eus"
+	@echo "... simple_cpp_service_client"
 	@echo "... actionlib_generate_messages_lisp"
 	@echo "... test"
 	@echo "... std_srvs_generate_messages_py"
@@ -1125,6 +1168,9 @@ help:
 	@echo "... nodes/simple_publisher.o"
 	@echo "... nodes/simple_publisher.i"
 	@echo "... nodes/simple_publisher.s"
+	@echo "... nodes/simple_service_client.o"
+	@echo "... nodes/simple_service_client.i"
+	@echo "... nodes/simple_service_client.s"
 	@echo "... nodes/simple_service_server.o"
 	@echo "... nodes/simple_service_server.i"
 	@echo "... nodes/simple_service_server.s"

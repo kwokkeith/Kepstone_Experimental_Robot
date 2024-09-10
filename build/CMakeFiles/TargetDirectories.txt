@@ -94,6 +94,7 @@
 /home/keith/Documents/bumperbot_robot/build/bumperbot_examples/CMakeFiles/actionlib_generate_messages_cpp.dir
 /home/keith/Documents/bumperbot_robot/build/bumperbot_examples/CMakeFiles/rebuild_cache.dir
 /home/keith/Documents/bumperbot_robot/build/bumperbot_examples/CMakeFiles/tf2_msgs_generate_messages_eus.dir
+/home/keith/Documents/bumperbot_robot/build/bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir
 /home/keith/Documents/bumperbot_robot/build/bumperbot_examples/CMakeFiles/actionlib_generate_messages_lisp.dir
 /home/keith/Documents/bumperbot_robot/build/bumperbot_examples/CMakeFiles/test.dir
 /home/keith/Documents/bumperbot_robot/build/bumperbot_examples/CMakeFiles/std_srvs_generate_messages_py.dir

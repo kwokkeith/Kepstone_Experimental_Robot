@@ -805,6 +805,19 @@ tf2_msgs_generate_messages_eus/fast:
 .PHONY : tf2_msgs_generate_messages_eus/fast
 
 #=============================================================================
+# Target rules for targets named simple_cpp_service_client
+
+# Build rule for target.
+simple_cpp_service_client: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 simple_cpp_service_client
+.PHONY : simple_cpp_service_client
+
+# fast build rule for target.
+simple_cpp_service_client/fast:
+	$(MAKE) -f bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/build.make bumperbot_examples/CMakeFiles/simple_cpp_service_client.dir/build
+.PHONY : simple_cpp_service_client/fast
+
+#=============================================================================
 # Target rules for targets named actionlib_generate_messages_lisp
 
 # Build rule for target.
@@ -1230,6 +1243,7 @@ help:
 	@echo "... actionlib_msgs_generate_messages_py"
 	@echo "... actionlib_generate_messages_cpp"
 	@echo "... tf2_msgs_generate_messages_eus"
+	@echo "... simple_cpp_service_client"
 	@echo "... actionlib_generate_messages_lisp"
 	@echo "... std_srvs_generate_messages_py"
 	@echo "... turtlesim_generate_messages_nodejs"

@@ -73,3 +73,7 @@ target_link_libraries(simple_cpp_timer ${catkin_LIBRARIES})
 add_executable(simple_cpp_service_server nodes/simple_service_server.cpp)
 add_dependencies(simple_cpp_service_server ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(simple_cpp_service_server ${catkin_LIBRARIES})
+
+add_executable(simple_cpp_service_client nodes/simple_service_client.cpp)
+add_dependencies(simple_cpp_service_client ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(simple_cpp_service_client ${catkin_LIBRARIES})
