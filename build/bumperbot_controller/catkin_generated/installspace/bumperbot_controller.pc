@@ -1,0 +1,8 @@
+prefix=/home/keith/Documents/bumperbot_ws/install
+
+Name: bumperbot_controller
+Description: Description of bumperbot_controller
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: std_msgs geometry_msgs
