@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(bumperbot_examples_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/keith/Documents/bumperbot_robot/src/bumperbot_examples/include " STREQUAL " ")
+if(NOT "/home/keith/Documents/bumperbot_robot/devel/include;/home/keith/Documents/bumperbot_robot/src/bumperbot_examples/include " STREQUAL " ")
   set(bumperbot_examples_INCLUDE_DIRS "")
-  set(_include_dirs "/home/keith/Documents/bumperbot_robot/src/bumperbot_examples/include")
+  set(_include_dirs "/home/keith/Documents/bumperbot_robot/devel/include;/home/keith/Documents/bumperbot_robot/src/bumperbot_examples/include")
   if(NOT " " STREQUAL " ")
     set(_report "Check the issue tracker '' and consider creating a ticket if the problem has not been reported yet.")
   elseif(NOT " " STREQUAL " ")
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/keith/Documents/bumperbot_robot/devel/lib;/opt/ros/noetic/lib)
+    foreach(path /home/keith/Documents/bumperbot_robot/devel/lib;/home/keith/Documents/bumperbot_robot/devel/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
@@ -177,7 +177,7 @@ foreach(library ${libraries})
   endif()
 endforeach()
 
-set(bumperbot_examples_EXPORTED_TARGETS "")
+set(bumperbot_examples_EXPORTED_TARGETS "bumperbot_examples_generate_messages_cpp;bumperbot_examples_generate_messages_eus;bumperbot_examples_generate_messages_lisp;bumperbot_examples_generate_messages_nodejs;bumperbot_examples_generate_messages_py")
 # create dummy targets for exported code generation targets to make life of users easier
 foreach(t ${bumperbot_examples_EXPORTED_TARGETS})
   if(NOT TARGET ${t})
@@ -214,7 +214,7 @@ foreach(depend ${depends})
   _list_append_deduplicate(bumperbot_examples_EXPORTED_TARGETS ${${bumperbot_examples_dep}_EXPORTED_TARGETS})
 endforeach()
 
-set(pkg_cfg_extras "")
+set(pkg_cfg_extras "bumperbot_examples-msg-extras.cmake")
 foreach(extra ${pkg_cfg_extras})
   if(NOT IS_ABSOLUTE ${extra})
     set(extra ${bumperbot_examples_DIR}/${extra})

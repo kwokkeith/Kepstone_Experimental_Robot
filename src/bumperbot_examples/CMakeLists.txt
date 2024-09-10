@@ -8,6 +8,17 @@ find_package(catkin REQUIRED COMPONENTS
   turtlesim
   tf2_ros
   geometry_msgs
+  message_generation
+)
+
+add_service_files(
+  FILES
+  AddTwoInts.srv
+)
+
+generate_messages(
+  DEPENDENCIES
+  std_msgs
 )
 
 catkin_package(
@@ -58,3 +69,7 @@ target_link_libraries(tf_examples_node tf_examples ${catkin_LIBRARIES})
 
 add_executable(simple_cpp_timer nodes/simple_timer.cpp)
 target_link_libraries(simple_cpp_timer ${catkin_LIBRARIES})
+
+add_executable(simple_cpp_service_server nodes/simple_service_server.cpp)
+add_dependencies(simple_cpp_service_server ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(simple_cpp_service_server ${catkin_LIBRARIES})
