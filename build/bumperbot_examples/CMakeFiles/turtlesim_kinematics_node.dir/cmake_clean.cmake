@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/keith/Documents/bumperbot_ws/devel/lib/bumperbot_examples/turtlesim_kinematics_node"
-  "/home/keith/Documents/bumperbot_ws/devel/lib/bumperbot_examples/turtlesim_kinematics_node.pdb"
+  "/home/keith/Documents/bumperbot_robot/devel/lib/bumperbot_examples/turtlesim_kinematics_node"
+  "/home/keith/Documents/bumperbot_robot/devel/lib/bumperbot_examples/turtlesim_kinematics_node.pdb"
   "CMakeFiles/turtlesim_kinematics_node.dir/nodes/turtlesim_kinematics_node.cpp.o"
   "CMakeFiles/turtlesim_kinematics_node.dir/src/turtlesim_kinematics.cpp.o"
 )

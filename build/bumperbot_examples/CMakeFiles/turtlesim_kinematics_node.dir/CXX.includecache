@@ -6,15 +6,19 @@
 
 #IncludeRegexTransform: 
 
-/home/keith/Documents/bumperbot_ws/src/bumperbot_examples/include/bumperbot_examples/turtlesim_kinematics.h
+/home/keith/Documents/bumperbot_robot/src/bumperbot_examples/include/bumperbot_examples/turtlesim_kinematics.h
 ros/ros.h
 -
 turtlesim/Pose.h
 -
 
-/home/keith/Documents/bumperbot_ws/src/bumperbot_examples/src/turtlesim_kinematics.cpp
+/home/keith/Documents/bumperbot_robot/src/bumperbot_examples/nodes/turtlesim_kinematics_node.cpp
 bumperbot_examples/turtlesim_kinematics.h
-/home/keith/Documents/bumperbot_ws/src/bumperbot_examples/src/bumperbot_examples/turtlesim_kinematics.h
+/home/keith/Documents/bumperbot_robot/src/bumperbot_examples/nodes/bumperbot_examples/turtlesim_kinematics.h
+
+/home/keith/Documents/bumperbot_robot/src/bumperbot_examples/src/turtlesim_kinematics.cpp
+bumperbot_examples/turtlesim_kinematics.h
+/home/keith/Documents/bumperbot_robot/src/bumperbot_examples/src/bumperbot_examples/turtlesim_kinematics.h
 
 /opt/ros/noetic/include/ros/advertise_options.h
 ros/forwards.h

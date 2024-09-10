@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/keith/Documents/bumperbot_ws/devel/lib/bumperbot_examples/simple_cpp_publisher"
-  "/home/keith/Documents/bumperbot_ws/devel/lib/bumperbot_examples/simple_cpp_publisher.pdb"
+  "/home/keith/Documents/bumperbot_robot/devel/lib/bumperbot_examples/simple_cpp_publisher"
+  "/home/keith/Documents/bumperbot_robot/devel/lib/bumperbot_examples/simple_cpp_publisher.pdb"
   "CMakeFiles/simple_cpp_publisher.dir/nodes/simple_publisher.cpp.o"
 )
 

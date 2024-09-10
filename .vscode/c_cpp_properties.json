@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/opt/ros/noetic/include",
-                "/usr/include/eigen3"
+                "/usr/include/eigen3",
+                "${workspaceFolder}/src/bumperbot_examples/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

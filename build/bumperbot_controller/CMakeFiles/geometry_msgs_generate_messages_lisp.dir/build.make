@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/keith/Documents/bumperbot_ws/src
+CMAKE_SOURCE_DIR = /home/keith/Documents/bumperbot_robot/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/keith/Documents/bumperbot_ws/build
+CMAKE_BINARY_DIR = /home/keith/Documents/bumperbot_robot/build
 
 # Utility rule file for geometry_msgs_generate_messages_lisp.
 
@@ -63,10 +63,10 @@ bumperbot_controller/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build: 
 .PHONY : bumperbot_controller/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build
 
 bumperbot_controller/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/clean:
-	cd /home/keith/Documents/bumperbot_ws/build/bumperbot_controller && $(CMAKE_COMMAND) -P CMakeFiles/geometry_msgs_generate_messages_lisp.dir/cmake_clean.cmake
+	cd /home/keith/Documents/bumperbot_robot/build/bumperbot_controller && $(CMAKE_COMMAND) -P CMakeFiles/geometry_msgs_generate_messages_lisp.dir/cmake_clean.cmake
 .PHONY : bumperbot_controller/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/clean
 
 bumperbot_controller/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/depend:
-	cd /home/keith/Documents/bumperbot_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/keith/Documents/bumperbot_ws/src /home/keith/Documents/bumperbot_ws/src/bumperbot_controller /home/keith/Documents/bumperbot_ws/build /home/keith/Documents/bumperbot_ws/build/bumperbot_controller /home/keith/Documents/bumperbot_ws/build/bumperbot_controller/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/keith/Documents/bumperbot_robot/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/keith/Documents/bumperbot_robot/src /home/keith/Documents/bumperbot_robot/src/bumperbot_controller /home/keith/Documents/bumperbot_robot/build /home/keith/Documents/bumperbot_robot/build/bumperbot_controller /home/keith/Documents/bumperbot_robot/build/bumperbot_controller/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : bumperbot_controller/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/depend
 

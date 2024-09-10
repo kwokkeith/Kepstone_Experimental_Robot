@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/keith/Documents/bumperbot_ws/src/bumperbot_examples/nodes/simple_publisher.cpp" "/home/keith/Documents/bumperbot_ws/build/bumperbot_examples/CMakeFiles/simple_cpp_publisher.dir/nodes/simple_publisher.cpp.o"
+  "/home/keith/Documents/bumperbot_robot/src/bumperbot_examples/nodes/simple_publisher.cpp" "/home/keith/Documents/bumperbot_robot/build/bumperbot_examples/CMakeFiles/simple_cpp_publisher.dir/nodes/simple_publisher.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -17,7 +17,7 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "/home/keith/Documents/bumperbot_ws/src/bumperbot_examples/include"
+  "/home/keith/Documents/bumperbot_robot/src/bumperbot_examples/include"
   "/opt/ros/noetic/include"
   "/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"
   )

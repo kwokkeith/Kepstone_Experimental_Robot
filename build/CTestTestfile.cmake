@@ -1,6 +1,6 @@
 # CMake generated Testfile for 
-# Source directory: /home/keith/Documents/bumperbot_ws/src
-# Build directory: /home/keith/Documents/bumperbot_ws/build
+# Source directory: /home/keith/Documents/bumperbot_robot/src
+# Build directory: /home/keith/Documents/bumperbot_robot/build
 # 
 # This file includes the relevant testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.
