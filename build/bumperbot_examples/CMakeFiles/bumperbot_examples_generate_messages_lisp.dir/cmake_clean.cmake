@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "/home/keith/Documents/bumperbot_robot/devel/share/common-lisp/ros/bumperbot_examples/srv/AddTwoInts.lisp"
+  "/home/keith/Documents/bumperbot_robot/devel/share/common-lisp/ros/bumperbot_examples/srv/GetTransform.lisp"
   "CMakeFiles/bumperbot_examples_generate_messages_lisp"
 )
 

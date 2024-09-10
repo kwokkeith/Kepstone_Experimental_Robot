@@ -54,20 +54,32 @@ CMAKE_BINARY_DIR = /home/keith/Documents/bumperbot_robot/build
 include bumperbot_examples/CMakeFiles/bumperbot_examples_generate_messages_eus.dir/progress.make
 
 bumperbot_examples/CMakeFiles/bumperbot_examples_generate_messages_eus: /home/keith/Documents/bumperbot_robot/devel/share/roseus/ros/bumperbot_examples/srv/AddTwoInts.l
+bumperbot_examples/CMakeFiles/bumperbot_examples_generate_messages_eus: /home/keith/Documents/bumperbot_robot/devel/share/roseus/ros/bumperbot_examples/srv/GetTransform.l
 bumperbot_examples/CMakeFiles/bumperbot_examples_generate_messages_eus: /home/keith/Documents/bumperbot_robot/devel/share/roseus/ros/bumperbot_examples/manifest.l
 
 
 /home/keith/Documents/bumperbot_robot/devel/share/roseus/ros/bumperbot_examples/srv/AddTwoInts.l: /opt/ros/noetic/lib/geneus/gen_eus.py
 /home/keith/Documents/bumperbot_robot/devel/share/roseus/ros/bumperbot_examples/srv/AddTwoInts.l: /home/keith/Documents/bumperbot_robot/src/bumperbot_examples/srv/AddTwoInts.srv
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/keith/Documents/bumperbot_robot/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating EusLisp code from bumperbot_examples/AddTwoInts.srv"
-	cd /home/keith/Documents/bumperbot_robot/build/bumperbot_examples && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/keith/Documents/bumperbot_robot/src/bumperbot_examples/srv/AddTwoInts.srv -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p bumperbot_examples -o /home/keith/Documents/bumperbot_robot/devel/share/roseus/ros/bumperbot_examples/srv
+	cd /home/keith/Documents/bumperbot_robot/build/bumperbot_examples && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/keith/Documents/bumperbot_robot/src/bumperbot_examples/srv/AddTwoInts.srv -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p bumperbot_examples -o /home/keith/Documents/bumperbot_robot/devel/share/roseus/ros/bumperbot_examples/srv
+
+/home/keith/Documents/bumperbot_robot/devel/share/roseus/ros/bumperbot_examples/srv/GetTransform.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/home/keith/Documents/bumperbot_robot/devel/share/roseus/ros/bumperbot_examples/srv/GetTransform.l: /home/keith/Documents/bumperbot_robot/src/bumperbot_examples/srv/GetTransform.srv
+/home/keith/Documents/bumperbot_robot/devel/share/roseus/ros/bumperbot_examples/srv/GetTransform.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
+/home/keith/Documents/bumperbot_robot/devel/share/roseus/ros/bumperbot_examples/srv/GetTransform.l: /opt/ros/noetic/share/geometry_msgs/msg/TransformStamped.msg
+/home/keith/Documents/bumperbot_robot/devel/share/roseus/ros/bumperbot_examples/srv/GetTransform.l: /opt/ros/noetic/share/geometry_msgs/msg/Transform.msg
+/home/keith/Documents/bumperbot_robot/devel/share/roseus/ros/bumperbot_examples/srv/GetTransform.l: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
+/home/keith/Documents/bumperbot_robot/devel/share/roseus/ros/bumperbot_examples/srv/GetTransform.l: /opt/ros/noetic/share/geometry_msgs/msg/Vector3.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/keith/Documents/bumperbot_robot/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating EusLisp code from bumperbot_examples/GetTransform.srv"
+	cd /home/keith/Documents/bumperbot_robot/build/bumperbot_examples && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/keith/Documents/bumperbot_robot/src/bumperbot_examples/srv/GetTransform.srv -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -p bumperbot_examples -o /home/keith/Documents/bumperbot_robot/devel/share/roseus/ros/bumperbot_examples/srv
 
 /home/keith/Documents/bumperbot_robot/devel/share/roseus/ros/bumperbot_examples/manifest.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/keith/Documents/bumperbot_robot/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating EusLisp manifest code for bumperbot_examples"
-	cd /home/keith/Documents/bumperbot_robot/build/bumperbot_examples && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py -m -o /home/keith/Documents/bumperbot_robot/devel/share/roseus/ros/bumperbot_examples bumperbot_examples std_msgs
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/keith/Documents/bumperbot_robot/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating EusLisp manifest code for bumperbot_examples"
+	cd /home/keith/Documents/bumperbot_robot/build/bumperbot_examples && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py -m -o /home/keith/Documents/bumperbot_robot/devel/share/roseus/ros/bumperbot_examples bumperbot_examples std_msgs geometry_msgs
 
 bumperbot_examples_generate_messages_eus: bumperbot_examples/CMakeFiles/bumperbot_examples_generate_messages_eus
 bumperbot_examples_generate_messages_eus: /home/keith/Documents/bumperbot_robot/devel/share/roseus/ros/bumperbot_examples/srv/AddTwoInts.l
+bumperbot_examples_generate_messages_eus: /home/keith/Documents/bumperbot_robot/devel/share/roseus/ros/bumperbot_examples/srv/GetTransform.l
 bumperbot_examples_generate_messages_eus: /home/keith/Documents/bumperbot_robot/devel/share/roseus/ros/bumperbot_examples/manifest.l
 bumperbot_examples_generate_messages_eus: bumperbot_examples/CMakeFiles/bumperbot_examples_generate_messages_eus.dir/build.make
 

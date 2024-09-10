@@ -3,7 +3,6 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**",
                 "/opt/ros/noetic/include",
                 "/usr/include/eigen3",
                 "${workspaceFolder}/src/bumperbot_examples/include",
