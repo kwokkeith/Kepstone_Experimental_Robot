@@ -1,0 +1,36 @@
+bumperbot_controller:
+  type: "diff_drive_controller/DiffDriveController"
+  left_wheel: 'wheel_left_joint'
+  right_wheel: 'wheel_right_joint'
+  publish_rate: 50.0               # default: 50
+  pose_covariance_diagonal : [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000.0]
+  twist_covariance_diagonal: [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000.0]
+
+  wheel_separation: 0.17
+  wheel_radius: 0.033
+  cmd_vel_timeout: 0.25
+  base_frame_id: base_footprint
+  prserve_turning_radius: true
+  publish_smd: false
+  publish_wheel_data: true
+  enable_odom_tf: true
+
+  linear:
+    x: 
+      has_velocity_limits: true
+      max_velocity: 1.0
+      min_velocity: -0.5
+      has_acceleration_limits: true
+      max_acceleration: 0.8
+      min_acceleration: -0.4
+      has_jerk_limits: false
+    
+  angular:
+    z:
+      has_speed_limits: true
+      max_velocity: 1.7
+      has_acceleration_limits: true
+      max_acceleration: 1.5
+      has_jerk_limits: false
+
+  

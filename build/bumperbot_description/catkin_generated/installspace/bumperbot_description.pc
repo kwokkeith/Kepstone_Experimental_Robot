@@ -1,4 +1,4 @@
-prefix=/home/keith/Documents/bumperbot_ws/install
+prefix=/home/keith/Documents/bumperbot_robot/install
 
 Name: bumperbot_description
 Description: Description of bumperbot_description
