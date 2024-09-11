@@ -7,7 +7,8 @@
                 "/usr/include/eigen3",
                 "${workspaceFolder}/src/bumperbot_examples/include",
                 "${workspaceFolder}/devel/include",
-                "${workspaceFolder}/src/bumperbot_controller/include"
+                "${workspaceFolder}/src/bumperbot_controller/include",
+                "${workspaceFolder}/src/bumperbot_utils/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
