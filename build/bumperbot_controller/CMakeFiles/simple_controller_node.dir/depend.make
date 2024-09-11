@@ -7,6 +7,8 @@ bumperbot_controller/CMakeFiles/simple_controller_node.dir/nodes/simple_controll
 bumperbot_controller/CMakeFiles/simple_controller_node.dir/nodes/simple_controller_node.cpp.o: /opt/ros/noetic/include/geometry_msgs/Pose.h
 bumperbot_controller/CMakeFiles/simple_controller_node.dir/nodes/simple_controller_node.cpp.o: /opt/ros/noetic/include/geometry_msgs/PoseWithCovariance.h
 bumperbot_controller/CMakeFiles/simple_controller_node.dir/nodes/simple_controller_node.cpp.o: /opt/ros/noetic/include/geometry_msgs/Quaternion.h
+bumperbot_controller/CMakeFiles/simple_controller_node.dir/nodes/simple_controller_node.cpp.o: /opt/ros/noetic/include/geometry_msgs/Transform.h
+bumperbot_controller/CMakeFiles/simple_controller_node.dir/nodes/simple_controller_node.cpp.o: /opt/ros/noetic/include/geometry_msgs/TransformStamped.h
 bumperbot_controller/CMakeFiles/simple_controller_node.dir/nodes/simple_controller_node.cpp.o: /opt/ros/noetic/include/geometry_msgs/Twist.h
 bumperbot_controller/CMakeFiles/simple_controller_node.dir/nodes/simple_controller_node.cpp.o: /opt/ros/noetic/include/geometry_msgs/TwistWithCovariance.h
 bumperbot_controller/CMakeFiles/simple_controller_node.dir/nodes/simple_controller_node.cpp.o: /opt/ros/noetic/include/geometry_msgs/Vector3.h

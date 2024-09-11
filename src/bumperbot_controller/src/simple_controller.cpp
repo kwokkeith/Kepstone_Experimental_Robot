@@ -2,6 +2,7 @@
 #include <std_msgs/Float64.h>
 #include <Eigen/Geometry>
 #include <tf2/LinearMath/Quaternion.h>
+#include <tf2_ros/transform_broadcaster.h>
 
 
 SimpleController::SimpleController(const ros::NodeHandle &nh, double radius, double separation) : 
@@ -34,6 +35,10 @@ SimpleController::SimpleController(const ros::NodeHandle &nh, double radius, dou
     odom_msg_.pose.pose.orientation.y = 0.0;
     odom_msg_.pose.pose.orientation.z = 0.0;
     odom_msg_.pose.pose.orientation.w = 1.0;
+
+    transform_stamped_.header.frame_id = "odom";
+    transform_stamped_.child_frame_id = "base_footprint";
+    
 
 
     ROS_INFO_STREAM("The conversion matrix is \n" << speed_conversion_);
@@ -97,4 +102,14 @@ void SimpleController::jointCallback(const sensor_msgs::JointState &state)
 
     odom_pub_.publish(odom_msg_);
 
+    transform_stamped_.transform.translation.x = x_;
+    transform_stamped_.transform.translation.y = y_;
+    transform_stamped_.transform.rotation.x = q.getX();
+    transform_stamped_.transform.rotation.y = q.getY();
+    transform_stamped_.transform.rotation.z = q.getZ();
+    transform_stamped_.transform.rotation.w = q.getW();
+    transform_stamped_.header.stamp = ros::Time::now();
+
+    static tf2_ros::TransformBroadcaster br;
+    br.sendTransform(transform_stamped_);
 }

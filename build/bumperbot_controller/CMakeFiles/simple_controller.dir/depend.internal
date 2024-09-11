@@ -8,6 +8,8 @@ bumperbot_controller/CMakeFiles/simple_controller.dir/src/simple_controller.cpp.
  /opt/ros/noetic/include/geometry_msgs/Pose.h
  /opt/ros/noetic/include/geometry_msgs/PoseWithCovariance.h
  /opt/ros/noetic/include/geometry_msgs/Quaternion.h
+ /opt/ros/noetic/include/geometry_msgs/Transform.h
+ /opt/ros/noetic/include/geometry_msgs/TransformStamped.h
  /opt/ros/noetic/include/geometry_msgs/Twist.h
  /opt/ros/noetic/include/geometry_msgs/TwistWithCovariance.h
  /opt/ros/noetic/include/geometry_msgs/Vector3.h
@@ -76,6 +78,7 @@ bumperbot_controller/CMakeFiles/simple_controller.dir/src/simple_controller.cpp.
  /opt/ros/noetic/include/tf2/LinearMath/Quaternion.h
  /opt/ros/noetic/include/tf2/LinearMath/Scalar.h
  /opt/ros/noetic/include/tf2/LinearMath/Vector3.h
+ /opt/ros/noetic/include/tf2_ros/transform_broadcaster.h
  /opt/ros/noetic/include/xmlrpcpp/XmlRpcDecl.h
  /opt/ros/noetic/include/xmlrpcpp/XmlRpcValue.h
  /usr/include/eigen3/Eigen/Cholesky

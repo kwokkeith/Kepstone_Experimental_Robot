@@ -12,6 +12,7 @@ bumperbot_utils/CMakeFiles/path_plotter_node.dir/nodes/path_plotter_node.cpp.o: 
 bumperbot_utils/CMakeFiles/path_plotter_node.dir/nodes/path_plotter_node.cpp.o: /opt/ros/noetic/include/geometry_msgs/TwistWithCovariance.h
 bumperbot_utils/CMakeFiles/path_plotter_node.dir/nodes/path_plotter_node.cpp.o: /opt/ros/noetic/include/geometry_msgs/Vector3.h
 bumperbot_utils/CMakeFiles/path_plotter_node.dir/nodes/path_plotter_node.cpp.o: /opt/ros/noetic/include/nav_msgs/Odometry.h
+bumperbot_utils/CMakeFiles/path_plotter_node.dir/nodes/path_plotter_node.cpp.o: /opt/ros/noetic/include/nav_msgs/Path.h
 bumperbot_utils/CMakeFiles/path_plotter_node.dir/nodes/path_plotter_node.cpp.o: /opt/ros/noetic/include/ros/advertise_options.h
 bumperbot_utils/CMakeFiles/path_plotter_node.dir/nodes/path_plotter_node.cpp.o: /opt/ros/noetic/include/ros/advertise_service_options.h
 bumperbot_utils/CMakeFiles/path_plotter_node.dir/nodes/path_plotter_node.cpp.o: /opt/ros/noetic/include/ros/assert.h

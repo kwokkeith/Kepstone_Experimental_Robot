@@ -168,6 +168,51 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+bumperbot_controller/CMakeFiles/simple_controller_node.dir/rule:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/simple_controller_node.dir/rule
+.PHONY : bumperbot_controller/CMakeFiles/simple_controller_node.dir/rule
+
+# Convenience name for target.
+simple_controller_node: bumperbot_controller/CMakeFiles/simple_controller_node.dir/rule
+
+.PHONY : simple_controller_node
+
+# fast build rule for target.
+simple_controller_node/fast:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/simple_controller_node.dir/build.make bumperbot_controller/CMakeFiles/simple_controller_node.dir/build
+.PHONY : simple_controller_node/fast
+
+# Convenience name for target.
+bumperbot_controller/CMakeFiles/actionlib_generate_messages_py.dir/rule:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/actionlib_generate_messages_py.dir/rule
+.PHONY : bumperbot_controller/CMakeFiles/actionlib_generate_messages_py.dir/rule
+
+# Convenience name for target.
+actionlib_generate_messages_py: bumperbot_controller/CMakeFiles/actionlib_generate_messages_py.dir/rule
+
+.PHONY : actionlib_generate_messages_py
+
+# fast build rule for target.
+actionlib_generate_messages_py/fast:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/actionlib_generate_messages_py.dir/build.make bumperbot_controller/CMakeFiles/actionlib_generate_messages_py.dir/build
+.PHONY : actionlib_generate_messages_py/fast
+
+# Convenience name for target.
+bumperbot_controller/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule
+.PHONY : bumperbot_controller/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule
+
+# Convenience name for target.
+actionlib_generate_messages_nodejs: bumperbot_controller/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule
+
+.PHONY : actionlib_generate_messages_nodejs
+
+# fast build rule for target.
+actionlib_generate_messages_nodejs/fast:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/actionlib_generate_messages_nodejs.dir/build.make bumperbot_controller/CMakeFiles/actionlib_generate_messages_nodejs.dir/build
+.PHONY : actionlib_generate_messages_nodejs/fast
+
+# Convenience name for target.
 bumperbot_controller/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule:
 	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
 .PHONY : bumperbot_controller/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
@@ -181,6 +226,21 @@ sensor_msgs_generate_messages_cpp: bumperbot_controller/CMakeFiles/sensor_msgs_g
 sensor_msgs_generate_messages_cpp/fast:
 	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build.make bumperbot_controller/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build
 .PHONY : sensor_msgs_generate_messages_cpp/fast
+
+# Convenience name for target.
+bumperbot_controller/CMakeFiles/actionlib_generate_messages_lisp.dir/rule:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/actionlib_generate_messages_lisp.dir/rule
+.PHONY : bumperbot_controller/CMakeFiles/actionlib_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+actionlib_generate_messages_lisp: bumperbot_controller/CMakeFiles/actionlib_generate_messages_lisp.dir/rule
+
+.PHONY : actionlib_generate_messages_lisp
+
+# fast build rule for target.
+actionlib_generate_messages_lisp/fast:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/actionlib_generate_messages_lisp.dir/build.make bumperbot_controller/CMakeFiles/actionlib_generate_messages_lisp.dir/build
+.PHONY : actionlib_generate_messages_lisp/fast
 
 # Convenience name for target.
 bumperbot_controller/CMakeFiles/sensor_msgs_generate_messages_eus.dir/rule:
@@ -228,19 +288,19 @@ tf2_msgs_generate_messages_py/fast:
 .PHONY : tf2_msgs_generate_messages_py/fast
 
 # Convenience name for target.
-bumperbot_controller/CMakeFiles/simple_controller_node.dir/rule:
-	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/simple_controller_node.dir/rule
-.PHONY : bumperbot_controller/CMakeFiles/simple_controller_node.dir/rule
+bumperbot_controller/CMakeFiles/noisy_controller_node.dir/rule:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/noisy_controller_node.dir/rule
+.PHONY : bumperbot_controller/CMakeFiles/noisy_controller_node.dir/rule
 
 # Convenience name for target.
-simple_controller_node: bumperbot_controller/CMakeFiles/simple_controller_node.dir/rule
+noisy_controller_node: bumperbot_controller/CMakeFiles/noisy_controller_node.dir/rule
 
-.PHONY : simple_controller_node
+.PHONY : noisy_controller_node
 
 # fast build rule for target.
-simple_controller_node/fast:
-	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/simple_controller_node.dir/build.make bumperbot_controller/CMakeFiles/simple_controller_node.dir/build
-.PHONY : simple_controller_node/fast
+noisy_controller_node/fast:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/noisy_controller_node.dir/build.make bumperbot_controller/CMakeFiles/noisy_controller_node.dir/build
+.PHONY : noisy_controller_node/fast
 
 # Convenience name for target.
 bumperbot_controller/CMakeFiles/simple_controller.dir/rule:
@@ -288,21 +348,6 @@ sensor_msgs_generate_messages_nodejs/fast:
 .PHONY : sensor_msgs_generate_messages_nodejs/fast
 
 # Convenience name for target.
-bumperbot_controller/CMakeFiles/tf2_msgs_generate_messages_eus.dir/rule:
-	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/tf2_msgs_generate_messages_eus.dir/rule
-.PHONY : bumperbot_controller/CMakeFiles/tf2_msgs_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-tf2_msgs_generate_messages_eus: bumperbot_controller/CMakeFiles/tf2_msgs_generate_messages_eus.dir/rule
-
-.PHONY : tf2_msgs_generate_messages_eus
-
-# fast build rule for target.
-tf2_msgs_generate_messages_eus/fast:
-	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/tf2_msgs_generate_messages_eus.dir/build.make bumperbot_controller/CMakeFiles/tf2_msgs_generate_messages_eus.dir/build
-.PHONY : tf2_msgs_generate_messages_eus/fast
-
-# Convenience name for target.
 bumperbot_controller/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule:
 	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
 .PHONY : bumperbot_controller/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
@@ -333,6 +378,51 @@ tf2_msgs_generate_messages_lisp/fast:
 .PHONY : tf2_msgs_generate_messages_lisp/fast
 
 # Convenience name for target.
+bumperbot_controller/CMakeFiles/tf2_msgs_generate_messages_eus.dir/rule:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/tf2_msgs_generate_messages_eus.dir/rule
+.PHONY : bumperbot_controller/CMakeFiles/tf2_msgs_generate_messages_eus.dir/rule
+
+# Convenience name for target.
+tf2_msgs_generate_messages_eus: bumperbot_controller/CMakeFiles/tf2_msgs_generate_messages_eus.dir/rule
+
+.PHONY : tf2_msgs_generate_messages_eus
+
+# fast build rule for target.
+tf2_msgs_generate_messages_eus/fast:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/tf2_msgs_generate_messages_eus.dir/build.make bumperbot_controller/CMakeFiles/tf2_msgs_generate_messages_eus.dir/build
+.PHONY : tf2_msgs_generate_messages_eus/fast
+
+# Convenience name for target.
+bumperbot_controller/CMakeFiles/actionlib_generate_messages_cpp.dir/rule:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/actionlib_generate_messages_cpp.dir/rule
+.PHONY : bumperbot_controller/CMakeFiles/actionlib_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+actionlib_generate_messages_cpp: bumperbot_controller/CMakeFiles/actionlib_generate_messages_cpp.dir/rule
+
+.PHONY : actionlib_generate_messages_cpp
+
+# fast build rule for target.
+actionlib_generate_messages_cpp/fast:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/actionlib_generate_messages_cpp.dir/build.make bumperbot_controller/CMakeFiles/actionlib_generate_messages_cpp.dir/build
+.PHONY : actionlib_generate_messages_cpp/fast
+
+# Convenience name for target.
+bumperbot_controller/CMakeFiles/noisy_controller.dir/rule:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/noisy_controller.dir/rule
+.PHONY : bumperbot_controller/CMakeFiles/noisy_controller.dir/rule
+
+# Convenience name for target.
+noisy_controller: bumperbot_controller/CMakeFiles/noisy_controller.dir/rule
+
+.PHONY : noisy_controller
+
+# fast build rule for target.
+noisy_controller/fast:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/noisy_controller.dir/build.make bumperbot_controller/CMakeFiles/noisy_controller.dir/build
+.PHONY : noisy_controller/fast
+
+# Convenience name for target.
 bumperbot_controller/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/rule:
 	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/rule
 .PHONY : bumperbot_controller/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/rule
@@ -346,6 +436,48 @@ tf2_msgs_generate_messages_nodejs: bumperbot_controller/CMakeFiles/tf2_msgs_gene
 tf2_msgs_generate_messages_nodejs/fast:
 	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/build.make bumperbot_controller/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir/build
 .PHONY : tf2_msgs_generate_messages_nodejs/fast
+
+# Convenience name for target.
+bumperbot_controller/CMakeFiles/actionlib_generate_messages_eus.dir/rule:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/actionlib_generate_messages_eus.dir/rule
+.PHONY : bumperbot_controller/CMakeFiles/actionlib_generate_messages_eus.dir/rule
+
+# Convenience name for target.
+actionlib_generate_messages_eus: bumperbot_controller/CMakeFiles/actionlib_generate_messages_eus.dir/rule
+
+.PHONY : actionlib_generate_messages_eus
+
+# fast build rule for target.
+actionlib_generate_messages_eus/fast:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/actionlib_generate_messages_eus.dir/build.make bumperbot_controller/CMakeFiles/actionlib_generate_messages_eus.dir/build
+.PHONY : actionlib_generate_messages_eus/fast
+
+nodes/noisy_controller_node.o: nodes/noisy_controller_node.cpp.o
+
+.PHONY : nodes/noisy_controller_node.o
+
+# target to build an object file
+nodes/noisy_controller_node.cpp.o:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/noisy_controller_node.dir/build.make bumperbot_controller/CMakeFiles/noisy_controller_node.dir/nodes/noisy_controller_node.cpp.o
+.PHONY : nodes/noisy_controller_node.cpp.o
+
+nodes/noisy_controller_node.i: nodes/noisy_controller_node.cpp.i
+
+.PHONY : nodes/noisy_controller_node.i
+
+# target to preprocess a source file
+nodes/noisy_controller_node.cpp.i:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/noisy_controller_node.dir/build.make bumperbot_controller/CMakeFiles/noisy_controller_node.dir/nodes/noisy_controller_node.cpp.i
+.PHONY : nodes/noisy_controller_node.cpp.i
+
+nodes/noisy_controller_node.s: nodes/noisy_controller_node.cpp.s
+
+.PHONY : nodes/noisy_controller_node.s
+
+# target to generate assembly for a file
+nodes/noisy_controller_node.cpp.s:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/noisy_controller_node.dir/build.make bumperbot_controller/CMakeFiles/noisy_controller_node.dir/nodes/noisy_controller_node.cpp.s
+.PHONY : nodes/noisy_controller_node.cpp.s
 
 nodes/simple_controller_node.o: nodes/simple_controller_node.cpp.o
 
@@ -373,6 +505,33 @@ nodes/simple_controller_node.s: nodes/simple_controller_node.cpp.s
 nodes/simple_controller_node.cpp.s:
 	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/simple_controller_node.dir/build.make bumperbot_controller/CMakeFiles/simple_controller_node.dir/nodes/simple_controller_node.cpp.s
 .PHONY : nodes/simple_controller_node.cpp.s
+
+src/noisy_controller.o: src/noisy_controller.cpp.o
+
+.PHONY : src/noisy_controller.o
+
+# target to build an object file
+src/noisy_controller.cpp.o:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/noisy_controller.dir/build.make bumperbot_controller/CMakeFiles/noisy_controller.dir/src/noisy_controller.cpp.o
+.PHONY : src/noisy_controller.cpp.o
+
+src/noisy_controller.i: src/noisy_controller.cpp.i
+
+.PHONY : src/noisy_controller.i
+
+# target to preprocess a source file
+src/noisy_controller.cpp.i:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/noisy_controller.dir/build.make bumperbot_controller/CMakeFiles/noisy_controller.dir/src/noisy_controller.cpp.i
+.PHONY : src/noisy_controller.cpp.i
+
+src/noisy_controller.s: src/noisy_controller.cpp.s
+
+.PHONY : src/noisy_controller.s
+
+# target to generate assembly for a file
+src/noisy_controller.cpp.s:
+	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/noisy_controller.dir/build.make bumperbot_controller/CMakeFiles/noisy_controller.dir/src/noisy_controller.cpp.s
+.PHONY : src/noisy_controller.cpp.s
 
 src/simple_controller.o: src/simple_controller.cpp.o
 
@@ -413,22 +572,35 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... test"
+	@echo "... simple_controller_node"
+	@echo "... actionlib_generate_messages_py"
+	@echo "... actionlib_generate_messages_nodejs"
 	@echo "... sensor_msgs_generate_messages_cpp"
+	@echo "... actionlib_generate_messages_lisp"
 	@echo "... sensor_msgs_generate_messages_eus"
 	@echo "... tf2_msgs_generate_messages_cpp"
 	@echo "... tf2_msgs_generate_messages_py"
-	@echo "... simple_controller_node"
+	@echo "... noisy_controller_node"
 	@echo "... simple_controller"
 	@echo "... sensor_msgs_generate_messages_lisp"
 	@echo "... sensor_msgs_generate_messages_nodejs"
-	@echo "... tf2_msgs_generate_messages_eus"
 	@echo "... sensor_msgs_generate_messages_py"
 	@echo "... tf2_msgs_generate_messages_lisp"
+	@echo "... tf2_msgs_generate_messages_eus"
+	@echo "... actionlib_generate_messages_cpp"
+	@echo "... noisy_controller"
 	@echo "... tf2_msgs_generate_messages_nodejs"
-	@echo "... test"
+	@echo "... actionlib_generate_messages_eus"
+	@echo "... nodes/noisy_controller_node.o"
+	@echo "... nodes/noisy_controller_node.i"
+	@echo "... nodes/noisy_controller_node.s"
 	@echo "... nodes/simple_controller_node.o"
 	@echo "... nodes/simple_controller_node.i"
 	@echo "... nodes/simple_controller_node.s"
+	@echo "... src/noisy_controller.o"
+	@echo "... src/noisy_controller.i"
+	@echo "... src/noisy_controller.s"
 	@echo "... src/simple_controller.o"
 	@echo "... src/simple_controller.i"
 	@echo "... src/simple_controller.s"

@@ -3,6 +3,7 @@
 #include <ros/ros.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <nav_msgs/Odometry.h>
+#include <nav_msgs/Path.h>
 
 class PathPlotter
 {
@@ -13,10 +14,11 @@ private:
     ros::NodeHandle nh_;
     ros::Subscriber odom_sub_;
     ros::Publisher trajectory_pub_;
+    nav_msgs::Path path;  
 
     std::vector<geometry_msgs::PoseStamped> poses;
 
-    void odomCallback(const nav_msgs::Odometry &);
+    void odomCallback(const nav_msgs::Odometry::ConstPtr&);
 };
 
 #endif
