@@ -13,6 +13,8 @@ geometry_msgs/Twist.h
 -
 Eigen/Core
 -
+sensor_msgs/JointState.h
+-
 
 /home/keith/Documents/bumperbot_robot/src/bumperbot_controller/src/simple_controller.cpp
 bumperbot_controller/simple_controller.h
@@ -708,7 +710,41 @@ ros/forwards.h
 
 /opt/ros/noetic/include/rosconsole/macros_generated.h
 
+/opt/ros/noetic/include/sensor_msgs/JointState.h
+string
+-
+vector
+-
+memory
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+std_msgs/Header.h
+-
+
 /opt/ros/noetic/include/std_msgs/Float64.h
+string
+-
+vector
+-
+memory
+-
+ros/types.h
+-
+ros/serialization.h
+-
+ros/builtin_message_traits.h
+-
+ros/message_operations.h
+-
+
+/opt/ros/noetic/include/std_msgs/Header.h
 string
 -
 vector

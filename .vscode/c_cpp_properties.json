@@ -6,7 +6,8 @@
                 "/opt/ros/noetic/include",
                 "/usr/include/eigen3",
                 "${workspaceFolder}/src/bumperbot_examples/include",
-                "${workspaceFolder}/devel/include"
+                "${workspaceFolder}/devel/include",
+                "${workspaceFolder}/src/bumperbot_controller/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

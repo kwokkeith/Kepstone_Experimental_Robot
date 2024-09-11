@@ -60,10 +60,6 @@ tf2_ros/transform_listener.h
 tf2/LinearMath/Quaternion.h
 -
 
-/home/keith/Documents/bumperbot_robot/src/bumperbot_examples/nodes/tf_examples_node.cpp
-bumperbot_examples/tf_examples.h
-/home/keith/Documents/bumperbot_robot/src/bumperbot_examples/nodes/bumperbot_examples/tf_examples.h
-
 /home/keith/Documents/bumperbot_robot/src/bumperbot_examples/src/tf_examples.cpp
 bumperbot_examples/tf_examples.h
 /home/keith/Documents/bumperbot_robot/src/bumperbot_examples/src/bumperbot_examples/tf_examples.h
