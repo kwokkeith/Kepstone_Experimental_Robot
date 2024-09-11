@@ -4,8 +4,14 @@
 bumperbot_controller/CMakeFiles/simple_controller_node.dir/nodes/simple_controller_node.cpp.o
  /home/keith/Documents/bumperbot_robot/src/bumperbot_controller/include/bumperbot_controller/simple_controller.h
  /home/keith/Documents/bumperbot_robot/src/bumperbot_controller/nodes/simple_controller_node.cpp
+ /opt/ros/noetic/include/geometry_msgs/Point.h
+ /opt/ros/noetic/include/geometry_msgs/Pose.h
+ /opt/ros/noetic/include/geometry_msgs/PoseWithCovariance.h
+ /opt/ros/noetic/include/geometry_msgs/Quaternion.h
  /opt/ros/noetic/include/geometry_msgs/Twist.h
+ /opt/ros/noetic/include/geometry_msgs/TwistWithCovariance.h
  /opt/ros/noetic/include/geometry_msgs/Vector3.h
+ /opt/ros/noetic/include/nav_msgs/Odometry.h
  /opt/ros/noetic/include/ros/advertise_options.h
  /opt/ros/noetic/include/ros/advertise_service_options.h
  /opt/ros/noetic/include/ros/assert.h
