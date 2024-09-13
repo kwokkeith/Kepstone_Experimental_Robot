@@ -1,0 +1,8 @@
+prefix=/home/keith/Documents/bumperbot_robot/devel
+
+Name: bumperbot_localization
+Description: Description of bumperbot_localization
+Version: 0.0.0
+Cflags: -I/home/keith/Documents/bumperbot_robot/src/bumperbot_localization/include
+Libs: -L${prefix}/lib 
+Requires: nav_msgs sensor_msgs

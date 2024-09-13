@@ -57,8 +57,8 @@ void NoisyController::jointCallback(const sensor_msgs::JointState &state)
     double dt = (state.header.stamp - prev_time_).toSec();
 
     // Actualize the prev pose for the next itheration
-    left_wheel_prev_pos_ = state.position.at(0);
-    right_wheel_prev_pos_ = state.position.at(1);
+    left_wheel_prev_pos_ = wheel_encoder_left;
+    right_wheel_prev_pos_ = wheel_encoder_right;
     prev_time_ = state.header.stamp;
 
     // Calculate the rotational speed of each wheel

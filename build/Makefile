@@ -714,45 +714,6 @@ actionlib_msgs_generate_messages_lisp/fast:
 .PHONY : actionlib_msgs_generate_messages_lisp/fast
 
 #=============================================================================
-# Target rules for targets named simple_controller_node
-
-# Build rule for target.
-simple_controller_node: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 simple_controller_node
-.PHONY : simple_controller_node
-
-# fast build rule for target.
-simple_controller_node/fast:
-	$(MAKE) -f bumperbot_controller/CMakeFiles/simple_controller_node.dir/build.make bumperbot_controller/CMakeFiles/simple_controller_node.dir/build
-.PHONY : simple_controller_node/fast
-
-#=============================================================================
-# Target rules for targets named actionlib_generate_messages_py
-
-# Build rule for target.
-actionlib_generate_messages_py: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 actionlib_generate_messages_py
-.PHONY : actionlib_generate_messages_py
-
-# fast build rule for target.
-actionlib_generate_messages_py/fast:
-	$(MAKE) -f bumperbot_controller/CMakeFiles/actionlib_generate_messages_py.dir/build.make bumperbot_controller/CMakeFiles/actionlib_generate_messages_py.dir/build
-.PHONY : actionlib_generate_messages_py/fast
-
-#=============================================================================
-# Target rules for targets named actionlib_generate_messages_nodejs
-
-# Build rule for target.
-actionlib_generate_messages_nodejs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 actionlib_generate_messages_nodejs
-.PHONY : actionlib_generate_messages_nodejs
-
-# fast build rule for target.
-actionlib_generate_messages_nodejs/fast:
-	$(MAKE) -f bumperbot_controller/CMakeFiles/actionlib_generate_messages_nodejs.dir/build.make bumperbot_controller/CMakeFiles/actionlib_generate_messages_nodejs.dir/build
-.PHONY : actionlib_generate_messages_nodejs/fast
-
-#=============================================================================
 # Target rules for targets named sensor_msgs_generate_messages_cpp
 
 # Build rule for target.
@@ -762,21 +723,8 @@ sensor_msgs_generate_messages_cpp: cmake_check_build_system
 
 # fast build rule for target.
 sensor_msgs_generate_messages_cpp/fast:
-	$(MAKE) -f bumperbot_controller/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build.make bumperbot_controller/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build
+	$(MAKE) -f bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build.make bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build
 .PHONY : sensor_msgs_generate_messages_cpp/fast
-
-#=============================================================================
-# Target rules for targets named actionlib_generate_messages_lisp
-
-# Build rule for target.
-actionlib_generate_messages_lisp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 actionlib_generate_messages_lisp
-.PHONY : actionlib_generate_messages_lisp
-
-# fast build rule for target.
-actionlib_generate_messages_lisp/fast:
-	$(MAKE) -f bumperbot_controller/CMakeFiles/actionlib_generate_messages_lisp.dir/build.make bumperbot_controller/CMakeFiles/actionlib_generate_messages_lisp.dir/build
-.PHONY : actionlib_generate_messages_lisp/fast
 
 #=============================================================================
 # Target rules for targets named sensor_msgs_generate_messages_eus
@@ -788,8 +736,86 @@ sensor_msgs_generate_messages_eus: cmake_check_build_system
 
 # fast build rule for target.
 sensor_msgs_generate_messages_eus/fast:
-	$(MAKE) -f bumperbot_controller/CMakeFiles/sensor_msgs_generate_messages_eus.dir/build.make bumperbot_controller/CMakeFiles/sensor_msgs_generate_messages_eus.dir/build
+	$(MAKE) -f bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_eus.dir/build.make bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_eus.dir/build
 .PHONY : sensor_msgs_generate_messages_eus/fast
+
+#=============================================================================
+# Target rules for targets named sensor_msgs_generate_messages_lisp
+
+# Build rule for target.
+sensor_msgs_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sensor_msgs_generate_messages_lisp
+.PHONY : sensor_msgs_generate_messages_lisp
+
+# fast build rule for target.
+sensor_msgs_generate_messages_lisp/fast:
+	$(MAKE) -f bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/build.make bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/build
+.PHONY : sensor_msgs_generate_messages_lisp/fast
+
+#=============================================================================
+# Target rules for targets named sensor_msgs_generate_messages_nodejs
+
+# Build rule for target.
+sensor_msgs_generate_messages_nodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sensor_msgs_generate_messages_nodejs
+.PHONY : sensor_msgs_generate_messages_nodejs
+
+# fast build rule for target.
+sensor_msgs_generate_messages_nodejs/fast:
+	$(MAKE) -f bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/build.make bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/build
+.PHONY : sensor_msgs_generate_messages_nodejs/fast
+
+#=============================================================================
+# Target rules for targets named sensor_msgs_generate_messages_py
+
+# Build rule for target.
+sensor_msgs_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 sensor_msgs_generate_messages_py
+.PHONY : sensor_msgs_generate_messages_py
+
+# fast build rule for target.
+sensor_msgs_generate_messages_py/fast:
+	$(MAKE) -f bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_py.dir/build.make bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_py.dir/build
+.PHONY : sensor_msgs_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named kalman_filter
+
+# Build rule for target.
+kalman_filter: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 kalman_filter
+.PHONY : kalman_filter
+
+# fast build rule for target.
+kalman_filter/fast:
+	$(MAKE) -f bumperbot_localization/CMakeFiles/kalman_filter.dir/build.make bumperbot_localization/CMakeFiles/kalman_filter.dir/build
+.PHONY : kalman_filter/fast
+
+#=============================================================================
+# Target rules for targets named kalman_filter_node
+
+# Build rule for target.
+kalman_filter_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 kalman_filter_node
+.PHONY : kalman_filter_node
+
+# fast build rule for target.
+kalman_filter_node/fast:
+	$(MAKE) -f bumperbot_localization/CMakeFiles/kalman_filter_node.dir/build.make bumperbot_localization/CMakeFiles/kalman_filter_node.dir/build
+.PHONY : kalman_filter_node/fast
+
+#=============================================================================
+# Target rules for targets named imu_republisher_node
+
+# Build rule for target.
+imu_republisher_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 imu_republisher_node
+.PHONY : imu_republisher_node
+
+# fast build rule for target.
+imu_republisher_node/fast:
+	$(MAKE) -f bumperbot_localization/CMakeFiles/imu_republisher_node.dir/build.make bumperbot_localization/CMakeFiles/imu_republisher_node.dir/build
+.PHONY : imu_republisher_node/fast
 
 #=============================================================================
 # Target rules for targets named tf2_msgs_generate_messages_cpp
@@ -816,71 +842,6 @@ tf2_msgs_generate_messages_py: cmake_check_build_system
 tf2_msgs_generate_messages_py/fast:
 	$(MAKE) -f bumperbot_controller/CMakeFiles/tf2_msgs_generate_messages_py.dir/build.make bumperbot_controller/CMakeFiles/tf2_msgs_generate_messages_py.dir/build
 .PHONY : tf2_msgs_generate_messages_py/fast
-
-#=============================================================================
-# Target rules for targets named noisy_controller_node
-
-# Build rule for target.
-noisy_controller_node: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 noisy_controller_node
-.PHONY : noisy_controller_node
-
-# fast build rule for target.
-noisy_controller_node/fast:
-	$(MAKE) -f bumperbot_controller/CMakeFiles/noisy_controller_node.dir/build.make bumperbot_controller/CMakeFiles/noisy_controller_node.dir/build
-.PHONY : noisy_controller_node/fast
-
-#=============================================================================
-# Target rules for targets named simple_controller
-
-# Build rule for target.
-simple_controller: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 simple_controller
-.PHONY : simple_controller
-
-# fast build rule for target.
-simple_controller/fast:
-	$(MAKE) -f bumperbot_controller/CMakeFiles/simple_controller.dir/build.make bumperbot_controller/CMakeFiles/simple_controller.dir/build
-.PHONY : simple_controller/fast
-
-#=============================================================================
-# Target rules for targets named sensor_msgs_generate_messages_lisp
-
-# Build rule for target.
-sensor_msgs_generate_messages_lisp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 sensor_msgs_generate_messages_lisp
-.PHONY : sensor_msgs_generate_messages_lisp
-
-# fast build rule for target.
-sensor_msgs_generate_messages_lisp/fast:
-	$(MAKE) -f bumperbot_controller/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/build.make bumperbot_controller/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/build
-.PHONY : sensor_msgs_generate_messages_lisp/fast
-
-#=============================================================================
-# Target rules for targets named sensor_msgs_generate_messages_nodejs
-
-# Build rule for target.
-sensor_msgs_generate_messages_nodejs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 sensor_msgs_generate_messages_nodejs
-.PHONY : sensor_msgs_generate_messages_nodejs
-
-# fast build rule for target.
-sensor_msgs_generate_messages_nodejs/fast:
-	$(MAKE) -f bumperbot_controller/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/build.make bumperbot_controller/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/build
-.PHONY : sensor_msgs_generate_messages_nodejs/fast
-
-#=============================================================================
-# Target rules for targets named sensor_msgs_generate_messages_py
-
-# Build rule for target.
-sensor_msgs_generate_messages_py: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 sensor_msgs_generate_messages_py
-.PHONY : sensor_msgs_generate_messages_py
-
-# fast build rule for target.
-sensor_msgs_generate_messages_py/fast:
-	$(MAKE) -f bumperbot_controller/CMakeFiles/sensor_msgs_generate_messages_py.dir/build.make bumperbot_controller/CMakeFiles/sensor_msgs_generate_messages_py.dir/build
-.PHONY : sensor_msgs_generate_messages_py/fast
 
 #=============================================================================
 # Target rules for targets named tf2_msgs_generate_messages_lisp
@@ -922,17 +883,82 @@ actionlib_generate_messages_cpp/fast:
 .PHONY : actionlib_generate_messages_cpp/fast
 
 #=============================================================================
-# Target rules for targets named noisy_controller
+# Target rules for targets named actionlib_generate_messages_eus
 
 # Build rule for target.
-noisy_controller: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 noisy_controller
-.PHONY : noisy_controller
+actionlib_generate_messages_eus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 actionlib_generate_messages_eus
+.PHONY : actionlib_generate_messages_eus
 
 # fast build rule for target.
-noisy_controller/fast:
-	$(MAKE) -f bumperbot_controller/CMakeFiles/noisy_controller.dir/build.make bumperbot_controller/CMakeFiles/noisy_controller.dir/build
-.PHONY : noisy_controller/fast
+actionlib_generate_messages_eus/fast:
+	$(MAKE) -f bumperbot_controller/CMakeFiles/actionlib_generate_messages_eus.dir/build.make bumperbot_controller/CMakeFiles/actionlib_generate_messages_eus.dir/build
+.PHONY : actionlib_generate_messages_eus/fast
+
+#=============================================================================
+# Target rules for targets named actionlib_generate_messages_lisp
+
+# Build rule for target.
+actionlib_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 actionlib_generate_messages_lisp
+.PHONY : actionlib_generate_messages_lisp
+
+# fast build rule for target.
+actionlib_generate_messages_lisp/fast:
+	$(MAKE) -f bumperbot_controller/CMakeFiles/actionlib_generate_messages_lisp.dir/build.make bumperbot_controller/CMakeFiles/actionlib_generate_messages_lisp.dir/build
+.PHONY : actionlib_generate_messages_lisp/fast
+
+#=============================================================================
+# Target rules for targets named noisy_controller_node
+
+# Build rule for target.
+noisy_controller_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 noisy_controller_node
+.PHONY : noisy_controller_node
+
+# fast build rule for target.
+noisy_controller_node/fast:
+	$(MAKE) -f bumperbot_controller/CMakeFiles/noisy_controller_node.dir/build.make bumperbot_controller/CMakeFiles/noisy_controller_node.dir/build
+.PHONY : noisy_controller_node/fast
+
+#=============================================================================
+# Target rules for targets named simple_controller
+
+# Build rule for target.
+simple_controller: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 simple_controller
+.PHONY : simple_controller
+
+# fast build rule for target.
+simple_controller/fast:
+	$(MAKE) -f bumperbot_controller/CMakeFiles/simple_controller.dir/build.make bumperbot_controller/CMakeFiles/simple_controller.dir/build
+.PHONY : simple_controller/fast
+
+#=============================================================================
+# Target rules for targets named actionlib_generate_messages_nodejs
+
+# Build rule for target.
+actionlib_generate_messages_nodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 actionlib_generate_messages_nodejs
+.PHONY : actionlib_generate_messages_nodejs
+
+# fast build rule for target.
+actionlib_generate_messages_nodejs/fast:
+	$(MAKE) -f bumperbot_controller/CMakeFiles/actionlib_generate_messages_nodejs.dir/build.make bumperbot_controller/CMakeFiles/actionlib_generate_messages_nodejs.dir/build
+.PHONY : actionlib_generate_messages_nodejs/fast
+
+#=============================================================================
+# Target rules for targets named actionlib_generate_messages_py
+
+# Build rule for target.
+actionlib_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 actionlib_generate_messages_py
+.PHONY : actionlib_generate_messages_py
+
+# fast build rule for target.
+actionlib_generate_messages_py/fast:
+	$(MAKE) -f bumperbot_controller/CMakeFiles/actionlib_generate_messages_py.dir/build.make bumperbot_controller/CMakeFiles/actionlib_generate_messages_py.dir/build
+.PHONY : actionlib_generate_messages_py/fast
 
 #=============================================================================
 # Target rules for targets named tf2_msgs_generate_messages_nodejs
@@ -948,17 +974,30 @@ tf2_msgs_generate_messages_nodejs/fast:
 .PHONY : tf2_msgs_generate_messages_nodejs/fast
 
 #=============================================================================
-# Target rules for targets named actionlib_generate_messages_eus
+# Target rules for targets named noisy_controller
 
 # Build rule for target.
-actionlib_generate_messages_eus: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 actionlib_generate_messages_eus
-.PHONY : actionlib_generate_messages_eus
+noisy_controller: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 noisy_controller
+.PHONY : noisy_controller
 
 # fast build rule for target.
-actionlib_generate_messages_eus/fast:
-	$(MAKE) -f bumperbot_controller/CMakeFiles/actionlib_generate_messages_eus.dir/build.make bumperbot_controller/CMakeFiles/actionlib_generate_messages_eus.dir/build
-.PHONY : actionlib_generate_messages_eus/fast
+noisy_controller/fast:
+	$(MAKE) -f bumperbot_controller/CMakeFiles/noisy_controller.dir/build.make bumperbot_controller/CMakeFiles/noisy_controller.dir/build
+.PHONY : noisy_controller/fast
+
+#=============================================================================
+# Target rules for targets named simple_controller_node
+
+# Build rule for target.
+simple_controller_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 simple_controller_node
+.PHONY : simple_controller_node
+
+# fast build rule for target.
+simple_controller_node/fast:
+	$(MAKE) -f bumperbot_controller/CMakeFiles/simple_controller_node.dir/build.make bumperbot_controller/CMakeFiles/simple_controller_node.dir/build
+.PHONY : simple_controller_node/fast
 
 #=============================================================================
 # Target rules for targets named simple_cpp_service_client
@@ -1431,25 +1470,28 @@ help:
 	@echo "... geometry_msgs_generate_messages_eus"
 	@echo "... nav_msgs_generate_messages_eus"
 	@echo "... actionlib_msgs_generate_messages_lisp"
-	@echo "... simple_controller_node"
-	@echo "... actionlib_generate_messages_py"
-	@echo "... actionlib_generate_messages_nodejs"
 	@echo "... sensor_msgs_generate_messages_cpp"
-	@echo "... actionlib_generate_messages_lisp"
 	@echo "... sensor_msgs_generate_messages_eus"
-	@echo "... tf2_msgs_generate_messages_cpp"
-	@echo "... tf2_msgs_generate_messages_py"
-	@echo "... noisy_controller_node"
-	@echo "... simple_controller"
 	@echo "... sensor_msgs_generate_messages_lisp"
 	@echo "... sensor_msgs_generate_messages_nodejs"
 	@echo "... sensor_msgs_generate_messages_py"
+	@echo "... kalman_filter"
+	@echo "... kalman_filter_node"
+	@echo "... imu_republisher_node"
+	@echo "... tf2_msgs_generate_messages_cpp"
+	@echo "... tf2_msgs_generate_messages_py"
 	@echo "... tf2_msgs_generate_messages_lisp"
 	@echo "... tf2_msgs_generate_messages_eus"
 	@echo "... actionlib_generate_messages_cpp"
-	@echo "... noisy_controller"
-	@echo "... tf2_msgs_generate_messages_nodejs"
 	@echo "... actionlib_generate_messages_eus"
+	@echo "... actionlib_generate_messages_lisp"
+	@echo "... noisy_controller_node"
+	@echo "... simple_controller"
+	@echo "... actionlib_generate_messages_nodejs"
+	@echo "... actionlib_generate_messages_py"
+	@echo "... tf2_msgs_generate_messages_nodejs"
+	@echo "... noisy_controller"
+	@echo "... simple_controller_node"
 	@echo "... simple_cpp_service_client"
 	@echo "... turtlesim_kinematics_node"
 	@echo "... std_srvs_generate_messages_nodejs"

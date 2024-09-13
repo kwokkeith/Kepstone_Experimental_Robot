@@ -7,5 +7,6 @@
 subdirs("gtest")
 subdirs("bumperbot_description")
 subdirs("bumperbot_utils")
+subdirs("bumperbot_localization")
 subdirs("bumperbot_controller")
 subdirs("bumperbot_examples")

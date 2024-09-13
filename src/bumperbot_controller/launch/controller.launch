@@ -4,7 +4,7 @@
       <arg name="use_python" default="false"/>
       <arg name="py_suffix" value=".py" if="$(arg use_python)" />
       <arg name="py_suffix" value=""    unless="$(arg use_python)" />
-      <arg name="is_simple" default="true"/> 
+      <arg name="is_simple" default="false"/> 
       <arg name="wheel_radius_error" default="0.005" />
       <arg name="wheel_separation_error" default="0.02" />
 
