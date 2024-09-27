@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/keith/Documents/bumperbot_robot/devel/lib/bumperbot_controller/noisy_controller_node"
-  "/home/keith/Documents/bumperbot_robot/devel/lib/bumperbot_controller/noisy_controller_node.pdb"
+  "/home/keith/Documents/Capstone/Test_Robot/devel/lib/bumperbot_controller/noisy_controller_node"
+  "/home/keith/Documents/Capstone/Test_Robot/devel/lib/bumperbot_controller/noisy_controller_node.pdb"
   "CMakeFiles/noisy_controller_node.dir/nodes/noisy_controller_node.cpp.o"
 )
 

@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/keith/Documents/bumperbot_robot/devel/lib/bumperbot_examples/simple_cpp_timer"
-  "/home/keith/Documents/bumperbot_robot/devel/lib/bumperbot_examples/simple_cpp_timer.pdb"
+  "/home/keith/Documents/Capstone/Test_Robot/devel/lib/bumperbot_examples/simple_cpp_timer"
+  "/home/keith/Documents/Capstone/Test_Robot/devel/lib/bumperbot_examples/simple_cpp_timer.pdb"
   "CMakeFiles/simple_cpp_timer.dir/nodes/simple_timer.cpp.o"
 )
 

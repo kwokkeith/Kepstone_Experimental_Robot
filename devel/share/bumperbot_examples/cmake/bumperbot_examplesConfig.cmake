@@ -67,14 +67,14 @@ set(bumperbot_examples_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
-  set(bumperbot_examples_SOURCE_PREFIX /home/keith/Documents/bumperbot_robot/src/bumperbot_examples)
-  set(bumperbot_examples_DEVEL_PREFIX /home/keith/Documents/bumperbot_robot/devel)
+  set(bumperbot_examples_SOURCE_PREFIX /home/keith/Documents/Capstone/Test_Robot/src/bumperbot_examples)
+  set(bumperbot_examples_DEVEL_PREFIX /home/keith/Documents/Capstone/Test_Robot/devel)
   set(bumperbot_examples_INSTALL_PREFIX "")
   set(bumperbot_examples_PREFIX ${bumperbot_examples_DEVEL_PREFIX})
 else()
   set(bumperbot_examples_SOURCE_PREFIX "")
   set(bumperbot_examples_DEVEL_PREFIX "")
-  set(bumperbot_examples_INSTALL_PREFIX /home/keith/Documents/bumperbot_robot/install)
+  set(bumperbot_examples_INSTALL_PREFIX /home/keith/Documents/Capstone/Test_Robot/install)
   set(bumperbot_examples_PREFIX ${bumperbot_examples_INSTALL_PREFIX})
 endif()
 
@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(bumperbot_examples_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/keith/Documents/bumperbot_robot/devel/include;/home/keith/Documents/bumperbot_robot/src/bumperbot_examples/include " STREQUAL " ")
+if(NOT "/home/keith/Documents/Capstone/Test_Robot/devel/include;/home/keith/Documents/Capstone/Test_Robot/src/bumperbot_examples/include " STREQUAL " ")
   set(bumperbot_examples_INCLUDE_DIRS "")
-  set(_include_dirs "/home/keith/Documents/bumperbot_robot/devel/include;/home/keith/Documents/bumperbot_robot/src/bumperbot_examples/include")
+  set(_include_dirs "/home/keith/Documents/Capstone/Test_Robot/devel/include;/home/keith/Documents/Capstone/Test_Robot/src/bumperbot_examples/include")
   if(NOT " " STREQUAL " ")
     set(_report "Check the issue tracker '' and consider creating a ticket if the problem has not been reported yet.")
   elseif(NOT " " STREQUAL " ")
@@ -110,7 +110,7 @@ if(NOT "/home/keith/Documents/bumperbot_robot/devel/include;/home/keith/Document
         message(FATAL_ERROR "Project 'bumperbot_examples' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  ${_report}")
       endif()
     else()
-      message(FATAL_ERROR "Project 'bumperbot_examples' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/keith/Documents/bumperbot_robot/src/bumperbot_examples/${idir}'.  ${_report}")
+      message(FATAL_ERROR "Project 'bumperbot_examples' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/keith/Documents/Capstone/Test_Robot/src/bumperbot_examples/${idir}'.  ${_report}")
     endif()
     _list_append_unique(bumperbot_examples_INCLUDE_DIRS ${include})
   endforeach()
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/keith/Documents/bumperbot_robot/devel/lib;/home/keith/Documents/bumperbot_robot/devel/lib;/opt/ros/noetic/lib)
+    foreach(path /home/keith/Documents/Capstone/Test_Robot/devel/lib;/home/keith/Documents/Capstone/Test_Robot/devel/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
@@ -185,7 +185,7 @@ foreach(t ${bumperbot_examples_EXPORTED_TARGETS})
   endif()
 endforeach()
 
-set(depends "turtlesim;tf2_ros;geometry_msgs")
+set(depends "tf2_ros;geometry_msgs")
 foreach(depend ${depends})
   string(REPLACE " " ";" depend_list ${depend})
   # the package name of the dependency must be kept in a unique variable so that it is not overwritten in recursive calls

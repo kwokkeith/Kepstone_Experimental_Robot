@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/keith/Documents/bumperbot_robot/src
+CMAKE_SOURCE_DIR = /home/keith/Documents/Capstone/Test_Robot/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/keith/Documents/bumperbot_robot/build
+CMAKE_BINARY_DIR = /home/keith/Documents/Capstone/Test_Robot/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -137,14 +137,14 @@ test/fast: test
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/keith/Documents/bumperbot_robot/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/keith/Documents/bumperbot_robot/build/CMakeFiles /home/keith/Documents/bumperbot_robot/build/gtest/CMakeFiles/progress.marks
-	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f CMakeFiles/Makefile2 gtest/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/keith/Documents/bumperbot_robot/build/CMakeFiles 0
+	cd /home/keith/Documents/Capstone/Test_Robot/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/keith/Documents/Capstone/Test_Robot/build/CMakeFiles /home/keith/Documents/Capstone/Test_Robot/build/gtest/CMakeFiles/progress.marks
+	cd /home/keith/Documents/Capstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 gtest/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/keith/Documents/Capstone/Test_Robot/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f CMakeFiles/Makefile2 gtest/clean
+	cd /home/keith/Documents/Capstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 gtest/clean
 .PHONY : clean
 
 # The main clean target
@@ -154,17 +154,17 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f CMakeFiles/Makefile2 gtest/preinstall
+	cd /home/keith/Documents/Capstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 gtest/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/keith/Documents/bumperbot_robot/build && $(MAKE) -f CMakeFiles/Makefile2 gtest/preinstall
+	cd /home/keith/Documents/Capstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 gtest/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/keith/Documents/bumperbot_robot/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/keith/Documents/Capstone/Test_Robot/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Help Target
@@ -191,6 +191,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/keith/Documents/bumperbot_robot/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/keith/Documents/Capstone/Test_Robot/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

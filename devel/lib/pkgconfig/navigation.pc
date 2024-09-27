@@ -1,0 +1,8 @@
+prefix=/home/keith/Documents/Capstone/Test_Robot/devel
+
+Name: navigation
+Description: Description of navigation
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
