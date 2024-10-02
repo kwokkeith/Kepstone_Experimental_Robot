@@ -4,5 +4,5 @@ PROJECT_PKG_CONFIG_INCLUDE_DIRS = "".split(';') if "" != "" else []
 PROJECT_CATKIN_DEPENDS = "".replace(';', ' ')
 PKG_CONFIG_LIBRARIES_WITH_PREFIX = "".split(';') if "" != "" else []
 PROJECT_NAME = "bumperbot_description"
-PROJECT_SPACE_DIR = "/home/keith/Documents/Capstone/Test_Robot/devel"
+PROJECT_SPACE_DIR = "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel"
 PROJECT_VERSION = "0.0.0"

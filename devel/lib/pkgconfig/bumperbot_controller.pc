@@ -1,8 +1,8 @@
-prefix=/home/keith/Documents/Capstone/Test_Robot/devel
+prefix=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel
 
 Name: bumperbot_controller
 Description: Description of bumperbot_controller
 Version: 0.0.0
-Cflags: -I/home/keith/Documents/Capstone/Test_Robot/src/bumperbot_controller/include
+Cflags: -I/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/bumperbot_controller/include
 Libs: -L${prefix}/lib 
 Requires: std_msgs geometry_msgs sensor_msgs nav_msgs tf2 tf2_ros

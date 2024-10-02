@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/keith/Documents/Capstone/Test_Robot/devel/lib/bumperbot_localization/imu_republisher_node"
-  "/home/keith/Documents/Capstone/Test_Robot/devel/lib/bumperbot_localization/imu_republisher_node.pdb"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/bumperbot_localization/imu_republisher_node"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/bumperbot_localization/imu_republisher_node.pdb"
   "CMakeFiles/imu_republisher_node.dir/nodes/imu_republisher_node.cpp.o"
 )
 

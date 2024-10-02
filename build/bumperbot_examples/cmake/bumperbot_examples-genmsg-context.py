@@ -1,7 +1,7 @@
 # generated from genmsg/cmake/pkg-genmsg.context.in
 
 messages_str = ""
-services_str = "/home/keith/Documents/Capstone/Test_Robot/src/bumperbot_examples/srv/AddTwoInts.srv;/home/keith/Documents/Capstone/Test_Robot/src/bumperbot_examples/srv/GetTransform.srv"
+services_str = "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/bumperbot_examples/srv/AddTwoInts.srv;/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/bumperbot_examples/srv/GetTransform.srv"
 pkg_name = "bumperbot_examples"
 dependencies_str = "std_msgs;geometry_msgs"
 langs = "gencpp;geneus;genlisp;gennodejs;genpy"

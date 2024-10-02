@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/keith/Documents/Capstone/Test_Robot/devel/lib/libnoisy_controller.pdb"
-  "/home/keith/Documents/Capstone/Test_Robot/devel/lib/libnoisy_controller.so"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/libnoisy_controller.pdb"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/libnoisy_controller.so"
   "CMakeFiles/noisy_controller.dir/src/noisy_controller.cpp.o"
 )
 

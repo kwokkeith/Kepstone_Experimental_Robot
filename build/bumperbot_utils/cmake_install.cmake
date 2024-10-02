@@ -1,8 +1,8 @@
-# Install script for directory: /home/keith/Documents/Capstone/Test_Robot/src/bumperbot_utils
+# Install script for directory: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/bumperbot_utils
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/keith/Documents/Capstone/Test_Robot/install")
+  set(CMAKE_INSTALL_PREFIX "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,17 +38,17 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/keith/Documents/Capstone/Test_Robot/build/bumperbot_utils/catkin_generated/installspace/bumperbot_utils.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/bumperbot_utils/catkin_generated/installspace/bumperbot_utils.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/bumperbot_utils/cmake" TYPE FILE FILES
-    "/home/keith/Documents/Capstone/Test_Robot/build/bumperbot_utils/catkin_generated/installspace/bumperbot_utilsConfig.cmake"
-    "/home/keith/Documents/Capstone/Test_Robot/build/bumperbot_utils/catkin_generated/installspace/bumperbot_utilsConfig-version.cmake"
+    "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/bumperbot_utils/catkin_generated/installspace/bumperbot_utilsConfig.cmake"
+    "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/bumperbot_utils/catkin_generated/installspace/bumperbot_utilsConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/bumperbot_utils" TYPE FILE FILES "/home/keith/Documents/Capstone/Test_Robot/src/bumperbot_utils/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/bumperbot_utils" TYPE FILE FILES "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/bumperbot_utils/package.xml")
 endif()
 

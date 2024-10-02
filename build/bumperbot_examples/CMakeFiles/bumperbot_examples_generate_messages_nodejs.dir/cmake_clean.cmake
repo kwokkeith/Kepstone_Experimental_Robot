@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/keith/Documents/Capstone/Test_Robot/devel/share/gennodejs/ros/bumperbot_examples/srv/AddTwoInts.js"
-  "/home/keith/Documents/Capstone/Test_Robot/devel/share/gennodejs/ros/bumperbot_examples/srv/GetTransform.js"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/bumperbot_examples/srv/AddTwoInts.js"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/bumperbot_examples/srv/GetTransform.js"
   "CMakeFiles/bumperbot_examples_generate_messages_nodejs"
 )
 

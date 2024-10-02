@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/keith/Documents/Capstone/Test_Robot/src
+CMAKE_SOURCE_DIR = /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/keith/Documents/Capstone/Test_Robot/build
+CMAKE_BINARY_DIR = /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build
 
 # Utility rule file for bumperbot_examples_geneus.
 
@@ -63,10 +63,10 @@ bumperbot_examples/CMakeFiles/bumperbot_examples_geneus.dir/build: bumperbot_exa
 .PHONY : bumperbot_examples/CMakeFiles/bumperbot_examples_geneus.dir/build
 
 bumperbot_examples/CMakeFiles/bumperbot_examples_geneus.dir/clean:
-	cd /home/keith/Documents/Capstone/Test_Robot/build/bumperbot_examples && $(CMAKE_COMMAND) -P CMakeFiles/bumperbot_examples_geneus.dir/cmake_clean.cmake
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/bumperbot_examples && $(CMAKE_COMMAND) -P CMakeFiles/bumperbot_examples_geneus.dir/cmake_clean.cmake
 .PHONY : bumperbot_examples/CMakeFiles/bumperbot_examples_geneus.dir/clean
 
 bumperbot_examples/CMakeFiles/bumperbot_examples_geneus.dir/depend:
-	cd /home/keith/Documents/Capstone/Test_Robot/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/keith/Documents/Capstone/Test_Robot/src /home/keith/Documents/Capstone/Test_Robot/src/bumperbot_examples /home/keith/Documents/Capstone/Test_Robot/build /home/keith/Documents/Capstone/Test_Robot/build/bumperbot_examples /home/keith/Documents/Capstone/Test_Robot/build/bumperbot_examples/CMakeFiles/bumperbot_examples_geneus.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/bumperbot_examples /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/bumperbot_examples /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/bumperbot_examples/CMakeFiles/bumperbot_examples_geneus.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : bumperbot_examples/CMakeFiles/bumperbot_examples_geneus.dir/depend
 

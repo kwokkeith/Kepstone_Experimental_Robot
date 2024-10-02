@@ -180,34 +180,15 @@
         <axis xyz="0 0 0" />
     </joint>
 
-    <link name="lidar_1_link">
-        <collision>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-            <geometry>
-          <box size="0.01 0.01 0.01"/>
-            </geometry>
-          </collision>
-      
-          <visual>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-            <geometry>
-                <cylinder radius="0.01" length="0.01"/>
-            </geometry>
-          </visual>
-      
-          <inertial>
-            <mass value="1e-5" />
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-            <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
-          </inertial>
-    </link>
+    
+    <!-- Lidar -->
+    <xacro:include filename="lidar.xacro" />
 
-    <joint name="lidar_1_joint" type="fixed">
-        <axis xyz="0 1 0" />
-        <origin xyz="0.0 0.0 0.08" rpy="0 0 0"/>
-        <parent link="base_link"/>
-        <child link="lidar_1_link"/>
-    </joint>
+    <!-- Depth Camera (RGBD) -->
+    <xacro:include filename="depth_camera.xacro" />
+
+
+
 
     <!-- Insert Can -->
     <!-- <link name="can_link">
