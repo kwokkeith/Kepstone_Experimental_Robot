@@ -298,6 +298,19 @@ _catkin_empty_exported_target/fast:
 .PHONY : _catkin_empty_exported_target/fast
 
 #=============================================================================
+# Target rules for targets named utils
+
+# Build rule for target.
+utils: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 utils
+.PHONY : utils
+
+# fast build rule for target.
+utils/fast:
+	$(MAKE) -f bumperbot_utils/CMakeFiles/utils.dir/build.make bumperbot_utils/CMakeFiles/utils.dir/build
+.PHONY : utils/fast
+
+#=============================================================================
 # Target rules for targets named path_plotter_node
 
 # Build rule for target.
@@ -714,30 +727,56 @@ actionlib_msgs_generate_messages_lisp/fast:
 .PHONY : actionlib_msgs_generate_messages_lisp/fast
 
 #=============================================================================
-# Target rules for targets named move_base_msgs_generate_messages_cpp
+# Target rules for targets named _navigation_generate_messages_check_deps_GetPixelPose
 
 # Build rule for target.
-move_base_msgs_generate_messages_cpp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 move_base_msgs_generate_messages_cpp
-.PHONY : move_base_msgs_generate_messages_cpp
+_navigation_generate_messages_check_deps_GetPixelPose: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _navigation_generate_messages_check_deps_GetPixelPose
+.PHONY : _navigation_generate_messages_check_deps_GetPixelPose
 
 # fast build rule for target.
-move_base_msgs_generate_messages_cpp/fast:
-	$(MAKE) -f navigation/CMakeFiles/move_base_msgs_generate_messages_cpp.dir/build.make navigation/CMakeFiles/move_base_msgs_generate_messages_cpp.dir/build
-.PHONY : move_base_msgs_generate_messages_cpp/fast
+_navigation_generate_messages_check_deps_GetPixelPose/fast:
+	$(MAKE) -f navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetPixelPose.dir/build.make navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetPixelPose.dir/build
+.PHONY : _navigation_generate_messages_check_deps_GetPixelPose/fast
 
 #=============================================================================
-# Target rules for targets named move_base_msgs_generate_messages_eus
+# Target rules for targets named move_base_msgs_generate_messages_lisp
 
 # Build rule for target.
-move_base_msgs_generate_messages_eus: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 move_base_msgs_generate_messages_eus
-.PHONY : move_base_msgs_generate_messages_eus
+move_base_msgs_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 move_base_msgs_generate_messages_lisp
+.PHONY : move_base_msgs_generate_messages_lisp
 
 # fast build rule for target.
-move_base_msgs_generate_messages_eus/fast:
-	$(MAKE) -f navigation/CMakeFiles/move_base_msgs_generate_messages_eus.dir/build.make navigation/CMakeFiles/move_base_msgs_generate_messages_eus.dir/build
-.PHONY : move_base_msgs_generate_messages_eus/fast
+move_base_msgs_generate_messages_lisp/fast:
+	$(MAKE) -f navigation/CMakeFiles/move_base_msgs_generate_messages_lisp.dir/build.make navigation/CMakeFiles/move_base_msgs_generate_messages_lisp.dir/build
+.PHONY : move_base_msgs_generate_messages_lisp/fast
+
+#=============================================================================
+# Target rules for targets named navigation_gennodejs
+
+# Build rule for target.
+navigation_gennodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 navigation_gennodejs
+.PHONY : navigation_gennodejs
+
+# fast build rule for target.
+navigation_gennodejs/fast:
+	$(MAKE) -f navigation/CMakeFiles/navigation_gennodejs.dir/build.make navigation/CMakeFiles/navigation_gennodejs.dir/build
+.PHONY : navigation_gennodejs/fast
+
+#=============================================================================
+# Target rules for targets named navigation_generate_messages
+
+# Build rule for target.
+navigation_generate_messages: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 navigation_generate_messages
+.PHONY : navigation_generate_messages
+
+# fast build rule for target.
+navigation_generate_messages/fast:
+	$(MAKE) -f navigation/CMakeFiles/navigation_generate_messages.dir/build.make navigation/CMakeFiles/navigation_generate_messages.dir/build
+.PHONY : navigation_generate_messages/fast
 
 #=============================================================================
 # Target rules for targets named actionlib_generate_messages_nodejs
@@ -753,30 +792,30 @@ actionlib_generate_messages_nodejs/fast:
 .PHONY : actionlib_generate_messages_nodejs/fast
 
 #=============================================================================
-# Target rules for targets named actionlib_generate_messages_lisp
+# Target rules for targets named navigation_genpy
 
 # Build rule for target.
-actionlib_generate_messages_lisp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 actionlib_generate_messages_lisp
-.PHONY : actionlib_generate_messages_lisp
+navigation_genpy: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 navigation_genpy
+.PHONY : navigation_genpy
 
 # fast build rule for target.
-actionlib_generate_messages_lisp/fast:
-	$(MAKE) -f navigation/CMakeFiles/actionlib_generate_messages_lisp.dir/build.make navigation/CMakeFiles/actionlib_generate_messages_lisp.dir/build
-.PHONY : actionlib_generate_messages_lisp/fast
+navigation_genpy/fast:
+	$(MAKE) -f navigation/CMakeFiles/navigation_genpy.dir/build.make navigation/CMakeFiles/navigation_genpy.dir/build
+.PHONY : navigation_genpy/fast
 
 #=============================================================================
-# Target rules for targets named move_base_msgs_generate_messages_py
+# Target rules for targets named actionlib_generate_messages_py
 
 # Build rule for target.
-move_base_msgs_generate_messages_py: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 move_base_msgs_generate_messages_py
-.PHONY : move_base_msgs_generate_messages_py
+actionlib_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 actionlib_generate_messages_py
+.PHONY : actionlib_generate_messages_py
 
 # fast build rule for target.
-move_base_msgs_generate_messages_py/fast:
-	$(MAKE) -f navigation/CMakeFiles/move_base_msgs_generate_messages_py.dir/build.make navigation/CMakeFiles/move_base_msgs_generate_messages_py.dir/build
-.PHONY : move_base_msgs_generate_messages_py/fast
+actionlib_generate_messages_py/fast:
+	$(MAKE) -f navigation/CMakeFiles/actionlib_generate_messages_py.dir/build.make navigation/CMakeFiles/actionlib_generate_messages_py.dir/build
+.PHONY : actionlib_generate_messages_py/fast
 
 #=============================================================================
 # Target rules for targets named actionlib_generate_messages_cpp
@@ -805,17 +844,95 @@ actionlib_generate_messages_eus/fast:
 .PHONY : actionlib_generate_messages_eus/fast
 
 #=============================================================================
-# Target rules for targets named move_base_msgs_generate_messages_lisp
+# Target rules for targets named navigation_generate_messages_eus
 
 # Build rule for target.
-move_base_msgs_generate_messages_lisp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 move_base_msgs_generate_messages_lisp
-.PHONY : move_base_msgs_generate_messages_lisp
+navigation_generate_messages_eus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 navigation_generate_messages_eus
+.PHONY : navigation_generate_messages_eus
 
 # fast build rule for target.
-move_base_msgs_generate_messages_lisp/fast:
-	$(MAKE) -f navigation/CMakeFiles/move_base_msgs_generate_messages_lisp.dir/build.make navigation/CMakeFiles/move_base_msgs_generate_messages_lisp.dir/build
-.PHONY : move_base_msgs_generate_messages_lisp/fast
+navigation_generate_messages_eus/fast:
+	$(MAKE) -f navigation/CMakeFiles/navigation_generate_messages_eus.dir/build.make navigation/CMakeFiles/navigation_generate_messages_eus.dir/build
+.PHONY : navigation_generate_messages_eus/fast
+
+#=============================================================================
+# Target rules for targets named move_base_msgs_generate_messages_py
+
+# Build rule for target.
+move_base_msgs_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 move_base_msgs_generate_messages_py
+.PHONY : move_base_msgs_generate_messages_py
+
+# fast build rule for target.
+move_base_msgs_generate_messages_py/fast:
+	$(MAKE) -f navigation/CMakeFiles/move_base_msgs_generate_messages_py.dir/build.make navigation/CMakeFiles/move_base_msgs_generate_messages_py.dir/build
+.PHONY : move_base_msgs_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named _navigation_generate_messages_check_deps_GetAmclPose
+
+# Build rule for target.
+_navigation_generate_messages_check_deps_GetAmclPose: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _navigation_generate_messages_check_deps_GetAmclPose
+.PHONY : _navigation_generate_messages_check_deps_GetAmclPose
+
+# fast build rule for target.
+_navigation_generate_messages_check_deps_GetAmclPose/fast:
+	$(MAKE) -f navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetAmclPose.dir/build.make navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetAmclPose.dir/build
+.PHONY : _navigation_generate_messages_check_deps_GetAmclPose/fast
+
+#=============================================================================
+# Target rules for targets named actionlib_generate_messages_lisp
+
+# Build rule for target.
+actionlib_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 actionlib_generate_messages_lisp
+.PHONY : actionlib_generate_messages_lisp
+
+# fast build rule for target.
+actionlib_generate_messages_lisp/fast:
+	$(MAKE) -f navigation/CMakeFiles/actionlib_generate_messages_lisp.dir/build.make navigation/CMakeFiles/actionlib_generate_messages_lisp.dir/build
+.PHONY : actionlib_generate_messages_lisp/fast
+
+#=============================================================================
+# Target rules for targets named move_base_msgs_generate_messages_eus
+
+# Build rule for target.
+move_base_msgs_generate_messages_eus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 move_base_msgs_generate_messages_eus
+.PHONY : move_base_msgs_generate_messages_eus
+
+# fast build rule for target.
+move_base_msgs_generate_messages_eus/fast:
+	$(MAKE) -f navigation/CMakeFiles/move_base_msgs_generate_messages_eus.dir/build.make navigation/CMakeFiles/move_base_msgs_generate_messages_eus.dir/build
+.PHONY : move_base_msgs_generate_messages_eus/fast
+
+#=============================================================================
+# Target rules for targets named move_base_msgs_generate_messages_cpp
+
+# Build rule for target.
+move_base_msgs_generate_messages_cpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 move_base_msgs_generate_messages_cpp
+.PHONY : move_base_msgs_generate_messages_cpp
+
+# fast build rule for target.
+move_base_msgs_generate_messages_cpp/fast:
+	$(MAKE) -f navigation/CMakeFiles/move_base_msgs_generate_messages_cpp.dir/build.make navigation/CMakeFiles/move_base_msgs_generate_messages_cpp.dir/build
+.PHONY : move_base_msgs_generate_messages_cpp/fast
+
+#=============================================================================
+# Target rules for targets named navigation_generate_messages_lisp
+
+# Build rule for target.
+navigation_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 navigation_generate_messages_lisp
+.PHONY : navigation_generate_messages_lisp
+
+# fast build rule for target.
+navigation_generate_messages_lisp/fast:
+	$(MAKE) -f navigation/CMakeFiles/navigation_generate_messages_lisp.dir/build.make navigation/CMakeFiles/navigation_generate_messages_lisp.dir/build
+.PHONY : navigation_generate_messages_lisp/fast
 
 #=============================================================================
 # Target rules for targets named move_base_msgs_generate_messages_nodejs
@@ -831,17 +948,134 @@ move_base_msgs_generate_messages_nodejs/fast:
 .PHONY : move_base_msgs_generate_messages_nodejs/fast
 
 #=============================================================================
-# Target rules for targets named actionlib_generate_messages_py
+# Target rules for targets named get_pixel_pose_server_node
 
 # Build rule for target.
-actionlib_generate_messages_py: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 actionlib_generate_messages_py
-.PHONY : actionlib_generate_messages_py
+get_pixel_pose_server_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 get_pixel_pose_server_node
+.PHONY : get_pixel_pose_server_node
 
 # fast build rule for target.
-actionlib_generate_messages_py/fast:
-	$(MAKE) -f navigation/CMakeFiles/actionlib_generate_messages_py.dir/build.make navigation/CMakeFiles/actionlib_generate_messages_py.dir/build
-.PHONY : actionlib_generate_messages_py/fast
+get_pixel_pose_server_node/fast:
+	$(MAKE) -f navigation/CMakeFiles/get_pixel_pose_server_node.dir/build.make navigation/CMakeFiles/get_pixel_pose_server_node.dir/build
+.PHONY : get_pixel_pose_server_node/fast
+
+#=============================================================================
+# Target rules for targets named navigation_generate_messages_cpp
+
+# Build rule for target.
+navigation_generate_messages_cpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 navigation_generate_messages_cpp
+.PHONY : navigation_generate_messages_cpp
+
+# fast build rule for target.
+navigation_generate_messages_cpp/fast:
+	$(MAKE) -f navigation/CMakeFiles/navigation_generate_messages_cpp.dir/build.make navigation/CMakeFiles/navigation_generate_messages_cpp.dir/build
+.PHONY : navigation_generate_messages_cpp/fast
+
+#=============================================================================
+# Target rules for targets named navigation_gencpp
+
+# Build rule for target.
+navigation_gencpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 navigation_gencpp
+.PHONY : navigation_gencpp
+
+# fast build rule for target.
+navigation_gencpp/fast:
+	$(MAKE) -f navigation/CMakeFiles/navigation_gencpp.dir/build.make navigation/CMakeFiles/navigation_gencpp.dir/build
+.PHONY : navigation_gencpp/fast
+
+#=============================================================================
+# Target rules for targets named pixel_position_publisher
+
+# Build rule for target.
+pixel_position_publisher: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 pixel_position_publisher
+.PHONY : pixel_position_publisher
+
+# fast build rule for target.
+pixel_position_publisher/fast:
+	$(MAKE) -f navigation/CMakeFiles/pixel_position_publisher.dir/build.make navigation/CMakeFiles/pixel_position_publisher.dir/build
+.PHONY : pixel_position_publisher/fast
+
+#=============================================================================
+# Target rules for targets named pixel_position_publisher_node
+
+# Build rule for target.
+pixel_position_publisher_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 pixel_position_publisher_node
+.PHONY : pixel_position_publisher_node
+
+# fast build rule for target.
+pixel_position_publisher_node/fast:
+	$(MAKE) -f navigation/CMakeFiles/pixel_position_publisher_node.dir/build.make navigation/CMakeFiles/pixel_position_publisher_node.dir/build
+.PHONY : pixel_position_publisher_node/fast
+
+#=============================================================================
+# Target rules for targets named navigation_geneus
+
+# Build rule for target.
+navigation_geneus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 navigation_geneus
+.PHONY : navigation_geneus
+
+# fast build rule for target.
+navigation_geneus/fast:
+	$(MAKE) -f navigation/CMakeFiles/navigation_geneus.dir/build.make navigation/CMakeFiles/navigation_geneus.dir/build
+.PHONY : navigation_geneus/fast
+
+#=============================================================================
+# Target rules for targets named navigation_genlisp
+
+# Build rule for target.
+navigation_genlisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 navigation_genlisp
+.PHONY : navigation_genlisp
+
+# fast build rule for target.
+navigation_genlisp/fast:
+	$(MAKE) -f navigation/CMakeFiles/navigation_genlisp.dir/build.make navigation/CMakeFiles/navigation_genlisp.dir/build
+.PHONY : navigation_genlisp/fast
+
+#=============================================================================
+# Target rules for targets named navigation_generate_messages_py
+
+# Build rule for target.
+navigation_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 navigation_generate_messages_py
+.PHONY : navigation_generate_messages_py
+
+# fast build rule for target.
+navigation_generate_messages_py/fast:
+	$(MAKE) -f navigation/CMakeFiles/navigation_generate_messages_py.dir/build.make navigation/CMakeFiles/navigation_generate_messages_py.dir/build
+.PHONY : navigation_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named navigation_generate_messages_nodejs
+
+# Build rule for target.
+navigation_generate_messages_nodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 navigation_generate_messages_nodejs
+.PHONY : navigation_generate_messages_nodejs
+
+# fast build rule for target.
+navigation_generate_messages_nodejs/fast:
+	$(MAKE) -f navigation/CMakeFiles/navigation_generate_messages_nodejs.dir/build.make navigation/CMakeFiles/navigation_generate_messages_nodejs.dir/build
+.PHONY : navigation_generate_messages_nodejs/fast
+
+#=============================================================================
+# Target rules for targets named get_amcl_pose_server_node
+
+# Build rule for target.
+get_amcl_pose_server_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 get_amcl_pose_server_node
+.PHONY : get_amcl_pose_server_node
+
+# fast build rule for target.
+get_amcl_pose_server_node/fast:
+	$(MAKE) -f navigation/CMakeFiles/get_amcl_pose_server_node.dir/build.make navigation/CMakeFiles/get_amcl_pose_server_node.dir/build
+.PHONY : get_amcl_pose_server_node/fast
 
 #=============================================================================
 # Target rules for targets named sensor_msgs_generate_messages_cpp
@@ -1347,6 +1581,7 @@ help:
 	@echo "... gtest_main"
 	@echo "... gtest"
 	@echo "... _catkin_empty_exported_target"
+	@echo "... utils"
 	@echo "... path_plotter_node"
 	@echo "... rosgraph_msgs_generate_messages_py"
 	@echo "... roscpp_generate_messages_lisp"
@@ -1379,16 +1614,33 @@ help:
 	@echo "... geometry_msgs_generate_messages_eus"
 	@echo "... nav_msgs_generate_messages_eus"
 	@echo "... actionlib_msgs_generate_messages_lisp"
-	@echo "... move_base_msgs_generate_messages_cpp"
-	@echo "... move_base_msgs_generate_messages_eus"
+	@echo "... _navigation_generate_messages_check_deps_GetPixelPose"
+	@echo "... move_base_msgs_generate_messages_lisp"
+	@echo "... navigation_gennodejs"
+	@echo "... navigation_generate_messages"
 	@echo "... actionlib_generate_messages_nodejs"
-	@echo "... actionlib_generate_messages_lisp"
-	@echo "... move_base_msgs_generate_messages_py"
+	@echo "... navigation_genpy"
+	@echo "... actionlib_generate_messages_py"
 	@echo "... actionlib_generate_messages_cpp"
 	@echo "... actionlib_generate_messages_eus"
-	@echo "... move_base_msgs_generate_messages_lisp"
+	@echo "... navigation_generate_messages_eus"
+	@echo "... move_base_msgs_generate_messages_py"
+	@echo "... _navigation_generate_messages_check_deps_GetAmclPose"
+	@echo "... actionlib_generate_messages_lisp"
+	@echo "... move_base_msgs_generate_messages_eus"
+	@echo "... move_base_msgs_generate_messages_cpp"
+	@echo "... navigation_generate_messages_lisp"
 	@echo "... move_base_msgs_generate_messages_nodejs"
-	@echo "... actionlib_generate_messages_py"
+	@echo "... get_pixel_pose_server_node"
+	@echo "... navigation_generate_messages_cpp"
+	@echo "... navigation_gencpp"
+	@echo "... pixel_position_publisher"
+	@echo "... pixel_position_publisher_node"
+	@echo "... navigation_geneus"
+	@echo "... navigation_genlisp"
+	@echo "... navigation_generate_messages_py"
+	@echo "... navigation_generate_messages_nodejs"
+	@echo "... get_amcl_pose_server_node"
 	@echo "... sensor_msgs_generate_messages_cpp"
 	@echo "... sensor_msgs_generate_messages_eus"
 	@echo "... sensor_msgs_generate_messages_lisp"

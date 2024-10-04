@@ -17,6 +17,19 @@
     <arg name="move_forward_only" value="$(arg move_forward_only)"/>
   </include>
 
+  <!-- get_amcl_pose_server -->
+  <node name="get_amcl_pose_server" pkg="navigation" type="get_amcl_pose_server_node" />
+
+  <!-- get_pixel_pose_server -->
+  <node name="get_pixel_pose_server" pkg="navigation" type="get_pixel_pose_server_node">
+    <param name="map_yaml_path" value="$(arg map_file)" /> 
+  </node>
+
+  <!-- pixel position publisher -->
+  <node name="pixel_position_publisher" pkg="navigation" type="pixel_position_publisher_node">    
+    <param name="map_yaml_path"   value="$(arg map_file)" />
+  </node>
+
   <!-- rviz -->
   <node 
     pkg="rviz" 
@@ -24,6 +37,5 @@
     name="rviz" 
     args="-d $(find navigation)/rviz/navigation.rviz"
     required="true"    
-    
-    />  
+  />  
 </launch>

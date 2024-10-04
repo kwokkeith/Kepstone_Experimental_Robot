@@ -168,6 +168,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+bumperbot_utils/CMakeFiles/utils.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_utils/CMakeFiles/utils.dir/rule
+.PHONY : bumperbot_utils/CMakeFiles/utils.dir/rule
+
+# Convenience name for target.
+utils: bumperbot_utils/CMakeFiles/utils.dir/rule
+
+.PHONY : utils
+
+# fast build rule for target.
+utils/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_utils/CMakeFiles/utils.dir/build.make bumperbot_utils/CMakeFiles/utils.dir/build
+.PHONY : utils/fast
+
+# Convenience name for target.
 bumperbot_utils/CMakeFiles/path_plotter_node.dir/rule:
 	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_utils/CMakeFiles/path_plotter_node.dir/rule
 .PHONY : bumperbot_utils/CMakeFiles/path_plotter_node.dir/rule
@@ -701,6 +716,33 @@ src/path_plotter.cpp.s:
 	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_utils/CMakeFiles/path_plotter.dir/build.make bumperbot_utils/CMakeFiles/path_plotter.dir/src/path_plotter.cpp.s
 .PHONY : src/path_plotter.cpp.s
 
+src/utils.o: src/utils.cpp.o
+
+.PHONY : src/utils.o
+
+# target to build an object file
+src/utils.cpp.o:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_utils/CMakeFiles/utils.dir/build.make bumperbot_utils/CMakeFiles/utils.dir/src/utils.cpp.o
+.PHONY : src/utils.cpp.o
+
+src/utils.i: src/utils.cpp.i
+
+.PHONY : src/utils.i
+
+# target to preprocess a source file
+src/utils.cpp.i:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_utils/CMakeFiles/utils.dir/build.make bumperbot_utils/CMakeFiles/utils.dir/src/utils.cpp.i
+.PHONY : src/utils.cpp.i
+
+src/utils.s: src/utils.cpp.s
+
+.PHONY : src/utils.s
+
+# target to generate assembly for a file
+src/utils.cpp.s:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_utils/CMakeFiles/utils.dir/build.make bumperbot_utils/CMakeFiles/utils.dir/src/utils.cpp.s
+.PHONY : src/utils.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -711,6 +753,7 @@ help:
 	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... edit_cache"
+	@echo "... utils"
 	@echo "... path_plotter_node"
 	@echo "... rosgraph_msgs_generate_messages_py"
 	@echo "... roscpp_generate_messages_lisp"
@@ -752,6 +795,9 @@ help:
 	@echo "... src/path_plotter.o"
 	@echo "... src/path_plotter.i"
 	@echo "... src/path_plotter.s"
+	@echo "... src/utils.o"
+	@echo "... src/utils.i"
+	@echo "... src/utils.s"
 .PHONY : help
 
 
