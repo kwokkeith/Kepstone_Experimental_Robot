@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+
+<launch>
+  <!-- Arguments -->
+  <arg name="waypoints_text_file" default="$(find navigation)/waypoints/waypoints.txt"/>  
+
+  <!-- Send waypoint to navstack node -->
+  <node name="send_waypoints_node" pkg="navigation" type="send_waypoints_to_navstack_node" args="$(arg waypoints_text_file)"/>
+
+</launch>

@@ -89,17 +89,16 @@ rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
 
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
 
-# Special rule for the target install/strip
-install/strip/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip/fast
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
 
 # Special rule for the target test
 test:
@@ -112,6 +111,18 @@ test/fast: test
 
 .PHONY : test/fast
 
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
@@ -123,17 +134,6 @@ install/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
 	/usr/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
-
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -168,6 +168,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/rule
+.PHONY : navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/rule
+
+# Convenience name for target.
+send_waypoints_to_navstack_node: navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/rule
+
+.PHONY : send_waypoints_to_navstack_node
+
+# fast build rule for target.
+send_waypoints_to_navstack_node/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/build
+.PHONY : send_waypoints_to_navstack_node/fast
+
+# Convenience name for target.
 navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetPixelPose.dir/rule:
 	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetPixelPose.dir/rule
 .PHONY : navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetPixelPose.dir/rule
@@ -181,6 +196,21 @@ _navigation_generate_messages_check_deps_GetPixelPose: navigation/CMakeFiles/_na
 _navigation_generate_messages_check_deps_GetPixelPose/fast:
 	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetPixelPose.dir/build.make navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetPixelPose.dir/build
 .PHONY : _navigation_generate_messages_check_deps_GetPixelPose/fast
+
+# Convenience name for target.
+navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/rule
+.PHONY : navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/rule
+
+# Convenience name for target.
+convert_pixel_waypoints_to_map_waypoints_server_node: navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/rule
+
+.PHONY : convert_pixel_waypoints_to_map_waypoints_server_node
+
+# fast build rule for target.
+convert_pixel_waypoints_to_map_waypoints_server_node/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/build
+.PHONY : convert_pixel_waypoints_to_map_waypoints_server_node/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/move_base_msgs_generate_messages_lisp.dir/rule:
@@ -273,6 +303,36 @@ actionlib_generate_messages_py/fast:
 .PHONY : actionlib_generate_messages_py/fast
 
 # Convenience name for target.
+navigation/CMakeFiles/get_pixel_pose_server_node.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/get_pixel_pose_server_node.dir/rule
+.PHONY : navigation/CMakeFiles/get_pixel_pose_server_node.dir/rule
+
+# Convenience name for target.
+get_pixel_pose_server_node: navigation/CMakeFiles/get_pixel_pose_server_node.dir/rule
+
+.PHONY : get_pixel_pose_server_node
+
+# fast build rule for target.
+get_pixel_pose_server_node/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/get_pixel_pose_server_node.dir/build.make navigation/CMakeFiles/get_pixel_pose_server_node.dir/build
+.PHONY : get_pixel_pose_server_node/fast
+
+# Convenience name for target.
+navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/rule
+.PHONY : navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/rule
+
+# Convenience name for target.
+move_base_msgs_generate_messages_nodejs: navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/rule
+
+.PHONY : move_base_msgs_generate_messages_nodejs
+
+# fast build rule for target.
+move_base_msgs_generate_messages_nodejs/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/build.make navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/build
+.PHONY : move_base_msgs_generate_messages_nodejs/fast
+
+# Convenience name for target.
 navigation/CMakeFiles/actionlib_generate_messages_cpp.dir/rule:
 	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/actionlib_generate_messages_cpp.dir/rule
 .PHONY : navigation/CMakeFiles/actionlib_generate_messages_cpp.dir/rule
@@ -331,6 +391,36 @@ move_base_msgs_generate_messages_py: navigation/CMakeFiles/move_base_msgs_genera
 move_base_msgs_generate_messages_py/fast:
 	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/move_base_msgs_generate_messages_py.dir/build.make navigation/CMakeFiles/move_base_msgs_generate_messages_py.dir/build
 .PHONY : move_base_msgs_generate_messages_py/fast
+
+# Convenience name for target.
+navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelToMap.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelToMap.dir/rule
+.PHONY : navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelToMap.dir/rule
+
+# Convenience name for target.
+_navigation_generate_messages_check_deps_ConvertPixelToMap: navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelToMap.dir/rule
+
+.PHONY : _navigation_generate_messages_check_deps_ConvertPixelToMap
+
+# fast build rule for target.
+_navigation_generate_messages_check_deps_ConvertPixelToMap/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelToMap.dir/build.make navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelToMap.dir/build
+.PHONY : _navigation_generate_messages_check_deps_ConvertPixelToMap/fast
+
+# Convenience name for target.
+navigation/CMakeFiles/send_waypoints_to_navstack.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/send_waypoints_to_navstack.dir/rule
+.PHONY : navigation/CMakeFiles/send_waypoints_to_navstack.dir/rule
+
+# Convenience name for target.
+send_waypoints_to_navstack: navigation/CMakeFiles/send_waypoints_to_navstack.dir/rule
+
+.PHONY : send_waypoints_to_navstack
+
+# fast build rule for target.
+send_waypoints_to_navstack/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack.dir/build
+.PHONY : send_waypoints_to_navstack/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetAmclPose.dir/rule:
@@ -393,6 +483,21 @@ move_base_msgs_generate_messages_cpp/fast:
 .PHONY : move_base_msgs_generate_messages_cpp/fast
 
 # Convenience name for target.
+navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/rule
+.PHONY : navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/rule
+
+# Convenience name for target.
+convert_pixel_to_map_server_node: navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/rule
+
+.PHONY : convert_pixel_to_map_server_node
+
+# fast build rule for target.
+convert_pixel_to_map_server_node/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/build
+.PHONY : convert_pixel_to_map_server_node/fast
+
+# Convenience name for target.
 navigation/CMakeFiles/navigation_generate_messages_lisp.dir/rule:
 	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/navigation_generate_messages_lisp.dir/rule
 .PHONY : navigation/CMakeFiles/navigation_generate_messages_lisp.dir/rule
@@ -406,36 +511,6 @@ navigation_generate_messages_lisp: navigation/CMakeFiles/navigation_generate_mes
 navigation_generate_messages_lisp/fast:
 	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/navigation_generate_messages_lisp.dir/build.make navigation/CMakeFiles/navigation_generate_messages_lisp.dir/build
 .PHONY : navigation_generate_messages_lisp/fast
-
-# Convenience name for target.
-navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/rule
-.PHONY : navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-move_base_msgs_generate_messages_nodejs: navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/rule
-
-.PHONY : move_base_msgs_generate_messages_nodejs
-
-# fast build rule for target.
-move_base_msgs_generate_messages_nodejs/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/build.make navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/build
-.PHONY : move_base_msgs_generate_messages_nodejs/fast
-
-# Convenience name for target.
-navigation/CMakeFiles/get_pixel_pose_server_node.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/get_pixel_pose_server_node.dir/rule
-.PHONY : navigation/CMakeFiles/get_pixel_pose_server_node.dir/rule
-
-# Convenience name for target.
-get_pixel_pose_server_node: navigation/CMakeFiles/get_pixel_pose_server_node.dir/rule
-
-.PHONY : get_pixel_pose_server_node
-
-# fast build rule for target.
-get_pixel_pose_server_node/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/get_pixel_pose_server_node.dir/build.make navigation/CMakeFiles/get_pixel_pose_server_node.dir/build
-.PHONY : get_pixel_pose_server_node/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/navigation_generate_messages_cpp.dir/rule:
@@ -558,6 +633,21 @@ navigation_generate_messages_nodejs/fast:
 .PHONY : navigation_generate_messages_nodejs/fast
 
 # Convenience name for target.
+navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap.dir/rule
+.PHONY : navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap.dir/rule
+
+# Convenience name for target.
+_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap: navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap.dir/rule
+
+.PHONY : _navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap
+
+# fast build rule for target.
+_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap.dir/build.make navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap.dir/build
+.PHONY : _navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap/fast
+
+# Convenience name for target.
 navigation/CMakeFiles/get_amcl_pose_server_node.dir/rule:
 	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/get_amcl_pose_server_node.dir/rule
 .PHONY : navigation/CMakeFiles/get_amcl_pose_server_node.dir/rule
@@ -598,6 +688,87 @@ nodes/pixel_position_publisher_node.s: nodes/pixel_position_publisher_node.cpp.s
 nodes/pixel_position_publisher_node.cpp.s:
 	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/pixel_position_publisher_node.dir/build.make navigation/CMakeFiles/pixel_position_publisher_node.dir/nodes/pixel_position_publisher_node.cpp.s
 .PHONY : nodes/pixel_position_publisher_node.cpp.s
+
+nodes/send_waypoints_node.o: nodes/send_waypoints_node.cpp.o
+
+.PHONY : nodes/send_waypoints_node.o
+
+# target to build an object file
+nodes/send_waypoints_node.cpp.o:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/nodes/send_waypoints_node.cpp.o
+.PHONY : nodes/send_waypoints_node.cpp.o
+
+nodes/send_waypoints_node.i: nodes/send_waypoints_node.cpp.i
+
+.PHONY : nodes/send_waypoints_node.i
+
+# target to preprocess a source file
+nodes/send_waypoints_node.cpp.i:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/nodes/send_waypoints_node.cpp.i
+.PHONY : nodes/send_waypoints_node.cpp.i
+
+nodes/send_waypoints_node.s: nodes/send_waypoints_node.cpp.s
+
+.PHONY : nodes/send_waypoints_node.s
+
+# target to generate assembly for a file
+nodes/send_waypoints_node.cpp.s:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/nodes/send_waypoints_node.cpp.s
+.PHONY : nodes/send_waypoints_node.cpp.s
+
+src/convert_pixel_to_map_server.o: src/convert_pixel_to_map_server.cpp.o
+
+.PHONY : src/convert_pixel_to_map_server.o
+
+# target to build an object file
+src/convert_pixel_to_map_server.cpp.o:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/src/convert_pixel_to_map_server.cpp.o
+.PHONY : src/convert_pixel_to_map_server.cpp.o
+
+src/convert_pixel_to_map_server.i: src/convert_pixel_to_map_server.cpp.i
+
+.PHONY : src/convert_pixel_to_map_server.i
+
+# target to preprocess a source file
+src/convert_pixel_to_map_server.cpp.i:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/src/convert_pixel_to_map_server.cpp.i
+.PHONY : src/convert_pixel_to_map_server.cpp.i
+
+src/convert_pixel_to_map_server.s: src/convert_pixel_to_map_server.cpp.s
+
+.PHONY : src/convert_pixel_to_map_server.s
+
+# target to generate assembly for a file
+src/convert_pixel_to_map_server.cpp.s:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/src/convert_pixel_to_map_server.cpp.s
+.PHONY : src/convert_pixel_to_map_server.cpp.s
+
+src/convert_pixels_to_mapwaypoints_server.o: src/convert_pixels_to_mapwaypoints_server.cpp.o
+
+.PHONY : src/convert_pixels_to_mapwaypoints_server.o
+
+# target to build an object file
+src/convert_pixels_to_mapwaypoints_server.cpp.o:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/src/convert_pixels_to_mapwaypoints_server.cpp.o
+.PHONY : src/convert_pixels_to_mapwaypoints_server.cpp.o
+
+src/convert_pixels_to_mapwaypoints_server.i: src/convert_pixels_to_mapwaypoints_server.cpp.i
+
+.PHONY : src/convert_pixels_to_mapwaypoints_server.i
+
+# target to preprocess a source file
+src/convert_pixels_to_mapwaypoints_server.cpp.i:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/src/convert_pixels_to_mapwaypoints_server.cpp.i
+.PHONY : src/convert_pixels_to_mapwaypoints_server.cpp.i
+
+src/convert_pixels_to_mapwaypoints_server.s: src/convert_pixels_to_mapwaypoints_server.cpp.s
+
+.PHONY : src/convert_pixels_to_mapwaypoints_server.s
+
+# target to generate assembly for a file
+src/convert_pixels_to_mapwaypoints_server.cpp.s:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/src/convert_pixels_to_mapwaypoints_server.cpp.s
+.PHONY : src/convert_pixels_to_mapwaypoints_server.cpp.s
 
 src/get_amcl_pose_server.o: src/get_amcl_pose_server.cpp.o
 
@@ -680,6 +851,33 @@ src/pixel_position_publisher.cpp.s:
 	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/pixel_position_publisher.dir/build.make navigation/CMakeFiles/pixel_position_publisher.dir/src/pixel_position_publisher.cpp.s
 .PHONY : src/pixel_position_publisher.cpp.s
 
+src/send_waypoints_to_navstack.o: src/send_waypoints_to_navstack.cpp.o
+
+.PHONY : src/send_waypoints_to_navstack.o
+
+# target to build an object file
+src/send_waypoints_to_navstack.cpp.o:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack.dir/src/send_waypoints_to_navstack.cpp.o
+.PHONY : src/send_waypoints_to_navstack.cpp.o
+
+src/send_waypoints_to_navstack.i: src/send_waypoints_to_navstack.cpp.i
+
+.PHONY : src/send_waypoints_to_navstack.i
+
+# target to preprocess a source file
+src/send_waypoints_to_navstack.cpp.i:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack.dir/src/send_waypoints_to_navstack.cpp.i
+.PHONY : src/send_waypoints_to_navstack.cpp.i
+
+src/send_waypoints_to_navstack.s: src/send_waypoints_to_navstack.cpp.s
+
+.PHONY : src/send_waypoints_to_navstack.s
+
+# target to generate assembly for a file
+src/send_waypoints_to_navstack.cpp.s:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack.dir/src/send_waypoints_to_navstack.cpp.s
+.PHONY : src/send_waypoints_to_navstack.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -689,27 +887,33 @@ help:
 	@echo "... install/local"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
+	@echo "... edit_cache"
+	@echo "... test"
+	@echo "... send_waypoints_to_navstack_node"
 	@echo "... _navigation_generate_messages_check_deps_GetPixelPose"
+	@echo "... convert_pixel_waypoints_to_map_waypoints_server_node"
 	@echo "... move_base_msgs_generate_messages_lisp"
 	@echo "... install/strip"
 	@echo "... navigation_gennodejs"
-	@echo "... test"
 	@echo "... navigation_generate_messages"
 	@echo "... actionlib_generate_messages_nodejs"
 	@echo "... install"
 	@echo "... navigation_genpy"
 	@echo "... actionlib_generate_messages_py"
+	@echo "... get_pixel_pose_server_node"
+	@echo "... move_base_msgs_generate_messages_nodejs"
 	@echo "... actionlib_generate_messages_cpp"
 	@echo "... actionlib_generate_messages_eus"
 	@echo "... navigation_generate_messages_eus"
 	@echo "... move_base_msgs_generate_messages_py"
+	@echo "... _navigation_generate_messages_check_deps_ConvertPixelToMap"
+	@echo "... send_waypoints_to_navstack"
 	@echo "... _navigation_generate_messages_check_deps_GetAmclPose"
 	@echo "... actionlib_generate_messages_lisp"
 	@echo "... move_base_msgs_generate_messages_eus"
 	@echo "... move_base_msgs_generate_messages_cpp"
+	@echo "... convert_pixel_to_map_server_node"
 	@echo "... navigation_generate_messages_lisp"
-	@echo "... move_base_msgs_generate_messages_nodejs"
-	@echo "... get_pixel_pose_server_node"
 	@echo "... navigation_generate_messages_cpp"
 	@echo "... navigation_gencpp"
 	@echo "... pixel_position_publisher"
@@ -718,11 +922,20 @@ help:
 	@echo "... navigation_genlisp"
 	@echo "... navigation_generate_messages_py"
 	@echo "... navigation_generate_messages_nodejs"
-	@echo "... edit_cache"
+	@echo "... _navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap"
 	@echo "... get_amcl_pose_server_node"
 	@echo "... nodes/pixel_position_publisher_node.o"
 	@echo "... nodes/pixel_position_publisher_node.i"
 	@echo "... nodes/pixel_position_publisher_node.s"
+	@echo "... nodes/send_waypoints_node.o"
+	@echo "... nodes/send_waypoints_node.i"
+	@echo "... nodes/send_waypoints_node.s"
+	@echo "... src/convert_pixel_to_map_server.o"
+	@echo "... src/convert_pixel_to_map_server.i"
+	@echo "... src/convert_pixel_to_map_server.s"
+	@echo "... src/convert_pixels_to_mapwaypoints_server.o"
+	@echo "... src/convert_pixels_to_mapwaypoints_server.i"
+	@echo "... src/convert_pixels_to_mapwaypoints_server.s"
 	@echo "... src/get_amcl_pose_server.o"
 	@echo "... src/get_amcl_pose_server.i"
 	@echo "... src/get_amcl_pose_server.s"
@@ -732,6 +945,9 @@ help:
 	@echo "... src/pixel_position_publisher.o"
 	@echo "... src/pixel_position_publisher.i"
 	@echo "... src/pixel_position_publisher.s"
+	@echo "... src/send_waypoints_to_navstack.o"
+	@echo "... src/send_waypoints_to_navstack.i"
+	@echo "... src/send_waypoints_to_navstack.s"
 .PHONY : help
 
 

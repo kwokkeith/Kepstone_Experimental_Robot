@@ -37,3 +37,28 @@ bool Utils::loadMapYaml(const std::string& yaml_path, double& map_resolution, do
         return false;
     }
 }
+
+// Function: Reads waypoints from the waypoint text file with format:
+// x y \n
+// x y \n
+// ...
+std::vector<geometry_msgs::Point> Utils::readWaypointsFromFile(const std::string &file_path) {
+    std::vector<geometry_msgs::Point> waypoints;
+    std::ifstream file(file_path);
+    if (!file) {
+        ROS_ERROR("Failed to open waypoint file.");
+        return waypoints;
+    }
+
+    int x_pixel, y_pixel;
+    while (file >> x_pixel >> y_pixel) {
+        geometry_msgs::Point waypoint;
+        waypoint.x = static_cast<float>(x_pixel);
+        waypoint.y = static_cast<float>(y_pixel);
+        waypoint.z = 0;
+        waypoints.push_back(waypoint);
+    }
+
+    file.close();
+    return waypoints;
+}

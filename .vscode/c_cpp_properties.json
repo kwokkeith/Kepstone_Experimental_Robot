@@ -12,6 +12,8 @@
                 "${workspaceFolder}/src/bumperbot_localization/include",
                 "${workspaceFolder}/src/navigation/include",
                 "${workspaceFolder}/devel/include",
+                "${workspaceFolder}/devel/include",
+                "${workspaceFolder}/devel/include",
                 "${workspaceFolder}/devel/include"
             ],
             "defines": [],

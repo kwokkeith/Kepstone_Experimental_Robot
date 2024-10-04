@@ -5,6 +5,10 @@
   :depends-on (:roslisp-msg-protocol :roslisp-utils :geometry_msgs-msg
 )
   :components ((:file "_package")
+    (:file "ConvertPixelToMap" :depends-on ("_package_ConvertPixelToMap"))
+    (:file "_package_ConvertPixelToMap" :depends-on ("_package"))
+    (:file "ConvertPixelWaypointsToMap" :depends-on ("_package_ConvertPixelWaypointsToMap"))
+    (:file "_package_ConvertPixelWaypointsToMap" :depends-on ("_package"))
     (:file "GetAmclPose" :depends-on ("_package_GetAmclPose"))
     (:file "_package_GetAmclPose" :depends-on ("_package"))
     (:file "GetPixelPose" :depends-on ("_package_GetPixelPose"))

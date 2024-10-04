@@ -2,7 +2,6 @@
 
 <launch>
   <!-- Arguments -->
- 
   <arg name="map_file" default="$(find navigation)/maps/my_world_map.yaml"/>  
   <arg name="move_forward_only" default="true"/>
 
@@ -17,17 +16,27 @@
     <arg name="move_forward_only" value="$(arg move_forward_only)"/>
   </include>
 
-  <!-- get_amcl_pose_server -->
+  <!-- get_amcl_pose_server (server) -->
   <node name="get_amcl_pose_server" pkg="navigation" type="get_amcl_pose_server_node" />
 
-  <!-- get_pixel_pose_server -->
+  <!-- get_pixel_pose_server (server) -->
   <node name="get_pixel_pose_server" pkg="navigation" type="get_pixel_pose_server_node">
-    <param name="map_yaml_path" value="$(arg map_file)" /> 
+    <param name="map_yaml_path" value="$(arg map_file)" />
   </node>
 
-  <!-- pixel position publisher -->
-  <node name="pixel_position_publisher" pkg="navigation" type="pixel_position_publisher_node">    
-    <param name="map_yaml_path"   value="$(arg map_file)" />
+  <!-- pixel to map converter (server) -->
+  <node name="convert_pixel_to_map_server" pkg="navigation" type="convert_pixel_to_map_server_node">
+    <param name="map_yaml_path" value="$(arg map_file)" />
+  </node>
+
+  <!-- pixel waypoints to map waypoints converter (server) -->
+  <node name="convert_pixel_waypoints_to_map_waypoints_server" pkg="navigation" type="convert_pixel_waypoints_to_map_waypoints_server_node">
+    <param name="map_yaml_path" value="$(arg map_file)" />
+  </node>
+
+  <!-- pixel position publisher (Publisher) -->
+  <node name="pixel_position_publisher" pkg="navigation" type="pixel_position_publisher_node">
+    <param name="map_yaml_path" value="$(arg map_file)" />
   </node>
 
   <!-- rviz -->

@@ -727,6 +727,19 @@ actionlib_msgs_generate_messages_lisp/fast:
 .PHONY : actionlib_msgs_generate_messages_lisp/fast
 
 #=============================================================================
+# Target rules for targets named send_waypoints_to_navstack_node
+
+# Build rule for target.
+send_waypoints_to_navstack_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 send_waypoints_to_navstack_node
+.PHONY : send_waypoints_to_navstack_node
+
+# fast build rule for target.
+send_waypoints_to_navstack_node/fast:
+	$(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/build
+.PHONY : send_waypoints_to_navstack_node/fast
+
+#=============================================================================
 # Target rules for targets named _navigation_generate_messages_check_deps_GetPixelPose
 
 # Build rule for target.
@@ -738,6 +751,19 @@ _navigation_generate_messages_check_deps_GetPixelPose: cmake_check_build_system
 _navigation_generate_messages_check_deps_GetPixelPose/fast:
 	$(MAKE) -f navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetPixelPose.dir/build.make navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetPixelPose.dir/build
 .PHONY : _navigation_generate_messages_check_deps_GetPixelPose/fast
+
+#=============================================================================
+# Target rules for targets named convert_pixel_waypoints_to_map_waypoints_server_node
+
+# Build rule for target.
+convert_pixel_waypoints_to_map_waypoints_server_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 convert_pixel_waypoints_to_map_waypoints_server_node
+.PHONY : convert_pixel_waypoints_to_map_waypoints_server_node
+
+# fast build rule for target.
+convert_pixel_waypoints_to_map_waypoints_server_node/fast:
+	$(MAKE) -f navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/build
+.PHONY : convert_pixel_waypoints_to_map_waypoints_server_node/fast
 
 #=============================================================================
 # Target rules for targets named move_base_msgs_generate_messages_lisp
@@ -818,6 +844,32 @@ actionlib_generate_messages_py/fast:
 .PHONY : actionlib_generate_messages_py/fast
 
 #=============================================================================
+# Target rules for targets named get_pixel_pose_server_node
+
+# Build rule for target.
+get_pixel_pose_server_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 get_pixel_pose_server_node
+.PHONY : get_pixel_pose_server_node
+
+# fast build rule for target.
+get_pixel_pose_server_node/fast:
+	$(MAKE) -f navigation/CMakeFiles/get_pixel_pose_server_node.dir/build.make navigation/CMakeFiles/get_pixel_pose_server_node.dir/build
+.PHONY : get_pixel_pose_server_node/fast
+
+#=============================================================================
+# Target rules for targets named move_base_msgs_generate_messages_nodejs
+
+# Build rule for target.
+move_base_msgs_generate_messages_nodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 move_base_msgs_generate_messages_nodejs
+.PHONY : move_base_msgs_generate_messages_nodejs
+
+# fast build rule for target.
+move_base_msgs_generate_messages_nodejs/fast:
+	$(MAKE) -f navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/build.make navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/build
+.PHONY : move_base_msgs_generate_messages_nodejs/fast
+
+#=============================================================================
 # Target rules for targets named actionlib_generate_messages_cpp
 
 # Build rule for target.
@@ -868,6 +920,32 @@ move_base_msgs_generate_messages_py: cmake_check_build_system
 move_base_msgs_generate_messages_py/fast:
 	$(MAKE) -f navigation/CMakeFiles/move_base_msgs_generate_messages_py.dir/build.make navigation/CMakeFiles/move_base_msgs_generate_messages_py.dir/build
 .PHONY : move_base_msgs_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named _navigation_generate_messages_check_deps_ConvertPixelToMap
+
+# Build rule for target.
+_navigation_generate_messages_check_deps_ConvertPixelToMap: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _navigation_generate_messages_check_deps_ConvertPixelToMap
+.PHONY : _navigation_generate_messages_check_deps_ConvertPixelToMap
+
+# fast build rule for target.
+_navigation_generate_messages_check_deps_ConvertPixelToMap/fast:
+	$(MAKE) -f navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelToMap.dir/build.make navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelToMap.dir/build
+.PHONY : _navigation_generate_messages_check_deps_ConvertPixelToMap/fast
+
+#=============================================================================
+# Target rules for targets named send_waypoints_to_navstack
+
+# Build rule for target.
+send_waypoints_to_navstack: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 send_waypoints_to_navstack
+.PHONY : send_waypoints_to_navstack
+
+# fast build rule for target.
+send_waypoints_to_navstack/fast:
+	$(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack.dir/build
+.PHONY : send_waypoints_to_navstack/fast
 
 #=============================================================================
 # Target rules for targets named _navigation_generate_messages_check_deps_GetAmclPose
@@ -922,6 +1000,19 @@ move_base_msgs_generate_messages_cpp/fast:
 .PHONY : move_base_msgs_generate_messages_cpp/fast
 
 #=============================================================================
+# Target rules for targets named convert_pixel_to_map_server_node
+
+# Build rule for target.
+convert_pixel_to_map_server_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 convert_pixel_to_map_server_node
+.PHONY : convert_pixel_to_map_server_node
+
+# fast build rule for target.
+convert_pixel_to_map_server_node/fast:
+	$(MAKE) -f navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/build
+.PHONY : convert_pixel_to_map_server_node/fast
+
+#=============================================================================
 # Target rules for targets named navigation_generate_messages_lisp
 
 # Build rule for target.
@@ -933,32 +1024,6 @@ navigation_generate_messages_lisp: cmake_check_build_system
 navigation_generate_messages_lisp/fast:
 	$(MAKE) -f navigation/CMakeFiles/navigation_generate_messages_lisp.dir/build.make navigation/CMakeFiles/navigation_generate_messages_lisp.dir/build
 .PHONY : navigation_generate_messages_lisp/fast
-
-#=============================================================================
-# Target rules for targets named move_base_msgs_generate_messages_nodejs
-
-# Build rule for target.
-move_base_msgs_generate_messages_nodejs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 move_base_msgs_generate_messages_nodejs
-.PHONY : move_base_msgs_generate_messages_nodejs
-
-# fast build rule for target.
-move_base_msgs_generate_messages_nodejs/fast:
-	$(MAKE) -f navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/build.make navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/build
-.PHONY : move_base_msgs_generate_messages_nodejs/fast
-
-#=============================================================================
-# Target rules for targets named get_pixel_pose_server_node
-
-# Build rule for target.
-get_pixel_pose_server_node: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 get_pixel_pose_server_node
-.PHONY : get_pixel_pose_server_node
-
-# fast build rule for target.
-get_pixel_pose_server_node/fast:
-	$(MAKE) -f navigation/CMakeFiles/get_pixel_pose_server_node.dir/build.make navigation/CMakeFiles/get_pixel_pose_server_node.dir/build
-.PHONY : get_pixel_pose_server_node/fast
 
 #=============================================================================
 # Target rules for targets named navigation_generate_messages_cpp
@@ -1063,6 +1128,19 @@ navigation_generate_messages_nodejs: cmake_check_build_system
 navigation_generate_messages_nodejs/fast:
 	$(MAKE) -f navigation/CMakeFiles/navigation_generate_messages_nodejs.dir/build.make navigation/CMakeFiles/navigation_generate_messages_nodejs.dir/build
 .PHONY : navigation_generate_messages_nodejs/fast
+
+#=============================================================================
+# Target rules for targets named _navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap
+
+# Build rule for target.
+_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap
+.PHONY : _navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap
+
+# fast build rule for target.
+_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap/fast:
+	$(MAKE) -f navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap.dir/build.make navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap.dir/build
+.PHONY : _navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap/fast
 
 #=============================================================================
 # Target rules for targets named get_amcl_pose_server_node
@@ -1614,24 +1692,29 @@ help:
 	@echo "... geometry_msgs_generate_messages_eus"
 	@echo "... nav_msgs_generate_messages_eus"
 	@echo "... actionlib_msgs_generate_messages_lisp"
+	@echo "... send_waypoints_to_navstack_node"
 	@echo "... _navigation_generate_messages_check_deps_GetPixelPose"
+	@echo "... convert_pixel_waypoints_to_map_waypoints_server_node"
 	@echo "... move_base_msgs_generate_messages_lisp"
 	@echo "... navigation_gennodejs"
 	@echo "... navigation_generate_messages"
 	@echo "... actionlib_generate_messages_nodejs"
 	@echo "... navigation_genpy"
 	@echo "... actionlib_generate_messages_py"
+	@echo "... get_pixel_pose_server_node"
+	@echo "... move_base_msgs_generate_messages_nodejs"
 	@echo "... actionlib_generate_messages_cpp"
 	@echo "... actionlib_generate_messages_eus"
 	@echo "... navigation_generate_messages_eus"
 	@echo "... move_base_msgs_generate_messages_py"
+	@echo "... _navigation_generate_messages_check_deps_ConvertPixelToMap"
+	@echo "... send_waypoints_to_navstack"
 	@echo "... _navigation_generate_messages_check_deps_GetAmclPose"
 	@echo "... actionlib_generate_messages_lisp"
 	@echo "... move_base_msgs_generate_messages_eus"
 	@echo "... move_base_msgs_generate_messages_cpp"
+	@echo "... convert_pixel_to_map_server_node"
 	@echo "... navigation_generate_messages_lisp"
-	@echo "... move_base_msgs_generate_messages_nodejs"
-	@echo "... get_pixel_pose_server_node"
 	@echo "... navigation_generate_messages_cpp"
 	@echo "... navigation_gencpp"
 	@echo "... pixel_position_publisher"
@@ -1640,6 +1723,7 @@ help:
 	@echo "... navigation_genlisp"
 	@echo "... navigation_generate_messages_py"
 	@echo "... navigation_generate_messages_nodejs"
+	@echo "... _navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap"
 	@echo "... get_amcl_pose_server_node"
 	@echo "... sensor_msgs_generate_messages_cpp"
 	@echo "... sensor_msgs_generate_messages_eus"

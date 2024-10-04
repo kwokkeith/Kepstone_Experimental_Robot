@@ -97,7 +97,6 @@ get_pixel_pose_server_node_EXTERNAL_OBJECTS =
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/navigation/get_pixel_pose_server_node: /usr/lib/x86_64-linux-gnu/libboost_system.so.1.71.0
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/navigation/get_pixel_pose_server_node: /usr/lib/x86_64-linux-gnu/libboost_thread.so.1.71.0
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/navigation/get_pixel_pose_server_node: /usr/lib/x86_64-linux-gnu/libconsole_bridge.so.0.4
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/navigation/get_pixel_pose_server_node: /usr/lib/x86_64-linux-gnu/libyaml-cpp.so.0.6.2
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/navigation/get_pixel_pose_server_node: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/libutils.so
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/navigation/get_pixel_pose_server_node: /opt/ros/noetic/lib/libroscpp.so
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/navigation/get_pixel_pose_server_node: /usr/lib/x86_64-linux-gnu/libpthread.so

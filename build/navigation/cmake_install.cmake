@@ -41,6 +41,8 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/navigation/srv" TYPE FILE FILES
     "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetAmclPose.srv"
     "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetPixelPose.srv"
+    "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/ConvertPixelToMap.srv"
+    "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/ConvertPixelWaypointsToMap.srv"
     )
 endif()
 

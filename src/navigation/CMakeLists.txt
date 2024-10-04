@@ -24,6 +24,8 @@ add_service_files(
   FILES
   GetAmclPose.srv
   GetPixelPose.srv
+  ConvertPixelToMap.srv
+  ConvertPixelWaypointsToMap.srv
 )
 
 # Generate messages and services with any dependencies
@@ -55,6 +57,11 @@ add_library(pixel_position_publisher src/pixel_position_publisher.cpp)
 add_dependencies(pixel_position_publisher ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(pixel_position_publisher ${catkin_LIBRARIES} yaml-cpp)
 
+# Library for send waypoints to navstack 
+add_library(send_waypoints_to_navstack src/send_waypoints_to_navstack.cpp)
+add_dependencies(send_waypoints_to_navstack ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(send_waypoints_to_navstack ${catkin_LIBRARIES})
+
 # Executable node for pixel position publisher
 add_executable(pixel_position_publisher_node nodes/pixel_position_publisher_node.cpp)
 add_dependencies(pixel_position_publisher_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_generate_messages_cpp)
@@ -68,7 +75,22 @@ target_link_libraries(get_amcl_pose_server_node ${catkin_LIBRARIES})
 # Executable node for get_pixel_pose_server
 add_executable(get_pixel_pose_server_node src/get_pixel_pose_server.cpp)
 add_dependencies(get_pixel_pose_server_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_generate_messages_cpp)
-target_link_libraries(get_pixel_pose_server_node ${catkin_LIBRARIES} yaml-cpp utils)
+target_link_libraries(get_pixel_pose_server_node ${catkin_LIBRARIES} utils)
+
+# Executable node for convert_pixel_to_map_server
+add_executable(convert_pixel_to_map_server_node src/convert_pixel_to_map_server.cpp)
+add_dependencies(convert_pixel_to_map_server_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_generate_messages_cpp)
+target_link_libraries(convert_pixel_to_map_server_node ${catkin_LIBRARIES} utils)
+
+# Executable node for convert_pixels_to_mapwaypoints_server
+add_executable(convert_pixel_waypoints_to_map_waypoints_server_node src/convert_pixels_to_mapwaypoints_server.cpp)
+add_dependencies(convert_pixel_waypoints_to_map_waypoints_server_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_generate_messages_cpp)
+target_link_libraries(convert_pixel_waypoints_to_map_waypoints_server_node ${catkin_LIBRARIES} utils)
+
+# Executable node for send waypoints to navstack node
+add_executable(send_waypoints_to_navstack_node nodes/send_waypoints_node.cpp)
+add_dependencies(send_waypoints_to_navstack_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_generate_messages_cpp)
+target_link_libraries(send_waypoints_to_navstack_node ${catkin_LIBRARIES} send_waypoints_to_navstack utils)
 
 
 #############
