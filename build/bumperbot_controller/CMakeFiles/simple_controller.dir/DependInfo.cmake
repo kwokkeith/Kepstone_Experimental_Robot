@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/bumperbot_controller/src/simple_controller.cpp" "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/bumperbot_controller/CMakeFiles/simple_controller.dir/src/simple_controller.cpp.o"
+  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/bumperbot_controller/src/simple_controller.cpp" "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/bumperbot_controller/CMakeFiles/simple_controller.dir/src/simple_controller.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -18,7 +18,7 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/bumperbot_controller/include"
+  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/bumperbot_controller/include"
   "/opt/ros/noetic/include"
   "/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"
   "/usr/include/eigen3"

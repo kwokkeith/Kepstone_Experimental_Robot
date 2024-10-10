@@ -1,4 +1,4 @@
-prefix=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/install
+prefix=/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/install
 
 Name: bumperbot_controller
 Description: Description of bumperbot_controller

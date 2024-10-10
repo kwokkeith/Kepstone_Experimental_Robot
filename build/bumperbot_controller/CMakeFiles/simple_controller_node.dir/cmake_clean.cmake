@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/bumperbot_controller/simple_controller_node"
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/bumperbot_controller/simple_controller_node.pdb"
+  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/bumperbot_controller/simple_controller_node"
+  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/bumperbot_controller/simple_controller_node.pdb"
   "CMakeFiles/simple_controller_node.dir/nodes/simple_controller_node.cpp.o"
 )
 

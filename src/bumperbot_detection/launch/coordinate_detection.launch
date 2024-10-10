@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<launch>
+    <node pkg="bumperbot_detection" type="get_coordinates.py" name="coordinate_detector" >
+        <param name="launch_prefix" value="python3"/>
+    </node>
+
+    <node pkg="bumperbot_detection" type="coordinate_subscriber" name="coordinate_subscriber" output="screen" />
+</launch>
