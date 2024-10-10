@@ -1,9 +1,9 @@
 file(REMOVE_RECURSE
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/manifest.l"
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/ConvertPixelToMap.l"
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/ConvertPixelWaypointsToMap.l"
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/GetAmclPose.l"
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/GetPixelPose.l"
+  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/roseus/ros/navigation/manifest.l"
+  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/roseus/ros/navigation/srv/ConvertPixelToMap.l"
+  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/roseus/ros/navigation/srv/ConvertPixelWaypointsToMap.l"
+  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/roseus/ros/navigation/srv/GetAmclPose.l"
+  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/roseus/ros/navigation/srv/GetPixelPose.l"
   "CMakeFiles/navigation_generate_messages_eus"
 )
 
