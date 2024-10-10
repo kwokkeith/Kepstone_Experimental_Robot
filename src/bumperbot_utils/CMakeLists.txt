@@ -5,6 +5,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   geometry_msgs
   nav_msgs
+  tf
 )
 
 catkin_package(
@@ -12,7 +13,7 @@ catkin_package(
   CATKIN_DEPENDS
     geometry_msgs
     nav_msgs
-)
+  )
 
 # Find the yaml-cpp library
 find_package(yaml-cpp REQUIRED)

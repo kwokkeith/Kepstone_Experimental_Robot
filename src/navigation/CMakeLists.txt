@@ -10,6 +10,8 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   message_generation
   bumperbot_utils
+  tf
+  nav_msgs
 )
 
 # Find the yaml-cpp library
@@ -31,14 +33,19 @@ add_service_files(
 # Generate messages and services with any dependencies
 generate_messages(
   DEPENDENCIES
-  geometry_msgs
-  std_msgs 
+    geometry_msgs
+    std_msgs 
 )
 
 # Declare a catkin package
 catkin_package(
   INCLUDE_DIRS include
-  CATKIN_DEPENDS std_msgs geometry_msgs message_runtime bumperbot_utils
+  CATKIN_DEPENDS 
+    std_msgs 
+    geometry_msgs 
+    message_runtime 
+    bumperbot_utils 
+    tf
 )
 
 ###########
@@ -92,6 +99,10 @@ add_executable(send_waypoints_to_navstack_node nodes/send_waypoints_node.cpp)
 add_dependencies(send_waypoints_to_navstack_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_generate_messages_cpp)
 target_link_libraries(send_waypoints_to_navstack_node ${catkin_LIBRARIES} send_waypoints_to_navstack utils)
 
+# Executable waypoint plotter
+add_executable(waypoint_plotter_publisher src/waypoint_plotter.cpp)
+add_dependencies(waypoint_plotter_publisher ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(waypoint_plotter_publisher ${catkin_LIBRARIES})
 
 #############
 ## Install ##

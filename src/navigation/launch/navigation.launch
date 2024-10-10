@@ -2,8 +2,9 @@
 
 <launch>
   <!-- Arguments -->
-  <arg name="map_file" default="$(find navigation)/maps/my_world_map.yaml"/>  
+  <arg name="map_file" default="$(find navigation)/maps/my_world_map2.yaml"/>  
   <arg name="move_forward_only" default="true"/>
+  <arg name="waypoints_file" default="$(find navigation)/waypoints/waypoints.txt"/>
 
   <!-- Map server -->
   <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
@@ -37,6 +38,11 @@
   <!-- pixel position publisher (Publisher) -->
   <node name="pixel_position_publisher" pkg="navigation" type="pixel_position_publisher_node">
     <param name="map_yaml_path" value="$(arg map_file)" />
+  </node>
+
+  <!-- pixel position publisher (Publisher) -->
+  <node name="waypoint_plotter_publisher" pkg="navigation" type="waypoint_plotter_publisher">
+    <param name="waypoints_file" value="$(arg waypoints_file)" />
   </node>
 
   <!-- rviz -->

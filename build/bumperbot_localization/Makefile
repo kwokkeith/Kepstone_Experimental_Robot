@@ -80,15 +80,27 @@ install/local/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local/fast
 
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
 
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
 
-.PHONY : list_install_components/fast
+.PHONY : edit_cache/fast
+
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+
+.PHONY : test/fast
 
 # Special rule for the target install
 install: preinstall
@@ -102,16 +114,15 @@ install/fast: preinstall/fast
 	/usr/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
 
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
 
-# Special rule for the target test
-test/fast: test
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
 
-.PHONY : test/fast
+.PHONY : list_install_components/fast
 
 # Special rule for the target rebuild_cache
 rebuild_cache:
@@ -123,17 +134,6 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
-
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -168,94 +168,19 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
-.PHONY : bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
+bumperbot_localization/CMakeFiles/imu_republisher_node.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_localization/CMakeFiles/imu_republisher_node.dir/rule
+.PHONY : bumperbot_localization/CMakeFiles/imu_republisher_node.dir/rule
 
 # Convenience name for target.
-sensor_msgs_generate_messages_cpp: bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
+imu_republisher_node: bumperbot_localization/CMakeFiles/imu_republisher_node.dir/rule
 
-.PHONY : sensor_msgs_generate_messages_cpp
+.PHONY : imu_republisher_node
 
 # fast build rule for target.
-sensor_msgs_generate_messages_cpp/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build.make bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build
-.PHONY : sensor_msgs_generate_messages_cpp/fast
-
-# Convenience name for target.
-bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_eus.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_eus.dir/rule
-.PHONY : bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-sensor_msgs_generate_messages_eus: bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_eus.dir/rule
-
-.PHONY : sensor_msgs_generate_messages_eus
-
-# fast build rule for target.
-sensor_msgs_generate_messages_eus/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_eus.dir/build.make bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_eus.dir/build
-.PHONY : sensor_msgs_generate_messages_eus/fast
-
-# Convenience name for target.
-bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule
-.PHONY : bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-sensor_msgs_generate_messages_lisp: bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule
-
-.PHONY : sensor_msgs_generate_messages_lisp
-
-# fast build rule for target.
-sensor_msgs_generate_messages_lisp/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/build.make bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/build
-.PHONY : sensor_msgs_generate_messages_lisp/fast
-
-# Convenience name for target.
-bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/rule
-.PHONY : bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-sensor_msgs_generate_messages_nodejs: bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/rule
-
-.PHONY : sensor_msgs_generate_messages_nodejs
-
-# fast build rule for target.
-sensor_msgs_generate_messages_nodejs/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/build.make bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/build
-.PHONY : sensor_msgs_generate_messages_nodejs/fast
-
-# Convenience name for target.
-bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
-.PHONY : bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
-
-# Convenience name for target.
-sensor_msgs_generate_messages_py: bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
-
-.PHONY : sensor_msgs_generate_messages_py
-
-# fast build rule for target.
-sensor_msgs_generate_messages_py/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_py.dir/build.make bumperbot_localization/CMakeFiles/sensor_msgs_generate_messages_py.dir/build
-.PHONY : sensor_msgs_generate_messages_py/fast
-
-# Convenience name for target.
-bumperbot_localization/CMakeFiles/kalman_filter.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_localization/CMakeFiles/kalman_filter.dir/rule
-.PHONY : bumperbot_localization/CMakeFiles/kalman_filter.dir/rule
-
-# Convenience name for target.
-kalman_filter: bumperbot_localization/CMakeFiles/kalman_filter.dir/rule
-
-.PHONY : kalman_filter
-
-# fast build rule for target.
-kalman_filter/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/kalman_filter.dir/build.make bumperbot_localization/CMakeFiles/kalman_filter.dir/build
-.PHONY : kalman_filter/fast
+imu_republisher_node/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/imu_republisher_node.dir/build.make bumperbot_localization/CMakeFiles/imu_republisher_node.dir/build
+.PHONY : imu_republisher_node/fast
 
 # Convenience name for target.
 bumperbot_localization/CMakeFiles/kalman_filter_node.dir/rule:
@@ -273,19 +198,19 @@ kalman_filter_node/fast:
 .PHONY : kalman_filter_node/fast
 
 # Convenience name for target.
-bumperbot_localization/CMakeFiles/imu_republisher_node.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_localization/CMakeFiles/imu_republisher_node.dir/rule
-.PHONY : bumperbot_localization/CMakeFiles/imu_republisher_node.dir/rule
+bumperbot_localization/CMakeFiles/kalman_filter.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_localization/CMakeFiles/kalman_filter.dir/rule
+.PHONY : bumperbot_localization/CMakeFiles/kalman_filter.dir/rule
 
 # Convenience name for target.
-imu_republisher_node: bumperbot_localization/CMakeFiles/imu_republisher_node.dir/rule
+kalman_filter: bumperbot_localization/CMakeFiles/kalman_filter.dir/rule
 
-.PHONY : imu_republisher_node
+.PHONY : kalman_filter
 
 # fast build rule for target.
-imu_republisher_node/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/imu_republisher_node.dir/build.make bumperbot_localization/CMakeFiles/imu_republisher_node.dir/build
-.PHONY : imu_republisher_node/fast
+kalman_filter/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/kalman_filter.dir/build.make bumperbot_localization/CMakeFiles/kalman_filter.dir/build
+.PHONY : kalman_filter/fast
 
 nodes/imu_republisher_node.o: nodes/imu_republisher_node.cpp.o
 
@@ -376,19 +301,14 @@ help:
 	@echo "... depend"
 	@echo "... install/strip"
 	@echo "... install/local"
-	@echo "... sensor_msgs_generate_messages_cpp"
-	@echo "... sensor_msgs_generate_messages_eus"
-	@echo "... sensor_msgs_generate_messages_lisp"
-	@echo "... sensor_msgs_generate_messages_nodejs"
-	@echo "... sensor_msgs_generate_messages_py"
-	@echo "... kalman_filter"
-	@echo "... list_install_components"
+	@echo "... edit_cache"
+	@echo "... test"
+	@echo "... imu_republisher_node"
 	@echo "... kalman_filter_node"
 	@echo "... install"
-	@echo "... imu_republisher_node"
-	@echo "... test"
+	@echo "... list_install_components"
 	@echo "... rebuild_cache"
-	@echo "... edit_cache"
+	@echo "... kalman_filter"
 	@echo "... nodes/imu_republisher_node.o"
 	@echo "... nodes/imu_republisher_node.i"
 	@echo "... nodes/imu_republisher_node.s"

@@ -1,11 +1,11 @@
-obstacle_range: 3.0
-raytrace_range: 3.5
+obstacle_range: 0.05
+raytrace_range: 0.10
 
 # footprint: [[-0.105, -0.11], [-0.105, 0.11], [0.105, 0.11], [0.105, -0.11]]
-robot_radius: 0.105
+robot_radius: 0.2
 
-inflation_radius: 0.3
-cost_scaling_factor: 3.0
+inflation_radius: 0.25 # 0.3
+cost_scaling_factor: 10.0
 
 map_type: costmap
 observation_sources: scan

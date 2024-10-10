@@ -18,6 +18,7 @@ std::vector<geometry_msgs::Point> convertPixelsToMapWaypoints(
     const std::vector<geometry_msgs::Point> &waypoints)
 {
     std::vector<geometry_msgs::Point> map_waypoints;
+    std::cout << "Converting pixels to map waypoints" << std::endl;
 
     for (const auto &wp : waypoints) {
         navigation::ConvertPixelToMap srv;
@@ -61,12 +62,13 @@ bool convertWaypointsCallback(navigation::ConvertPixelWaypointsToMap::Request &r
 int main(int argc, char **argv) {
     ros::init(argc, argv, "pixel_waypoints_to_map_waypoints_converter");
     ros::NodeHandle nh;
+    ros::NodeHandle nh_;
 
     // Advertise the service
     ros::ServiceServer service = nh.advertiseService("convert_pixel_waypoints_to_map_waypoints", convertWaypointsCallback);
 
     // Initialize the service client to call the ConvertPixelToMap service
-    client = nh.serviceClient<navigation::ConvertPixelToMap>("convert_pixel_to_map");
+    client = nh_.serviceClient<navigation::ConvertPixelToMap>("convert_pixel_to_map");
 
     ROS_INFO("Service to convert pixel waypoints to map waypoints is ready.");
     ros::spin();

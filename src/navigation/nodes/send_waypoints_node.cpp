@@ -2,6 +2,7 @@
 #include "navigation/send_waypoints_to_navstack.h"
 #include "navigation/ConvertPixelWaypointsToMap.h"
 #include "bumperbot_utils/utils.h"
+#include <nav_msgs/Path.h>
 
 
 int main(int argc, char** argv) {
@@ -39,6 +40,7 @@ int main(int argc, char** argv) {
 
         // Send the converted map waypoints to the navigation stack
         if (!srv.response.map_waypoints.empty()) {
+            
             sendWaypointsToNavStack(srv.response.map_waypoints, ac);
         } else {
             ROS_ERROR("No map waypoints were loaded after conversion.");
