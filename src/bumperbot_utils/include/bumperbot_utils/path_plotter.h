@@ -1,7 +1,7 @@
 #ifndef PATH_PLOTTER_H
 #define PATH_PLOTTER_H
 #include <ros/ros.h>
-#include <geometry_msgs/PoseStamped.h>
+#include <geometry_msgs/PoseWithCovarianceStamped.h>
 #include <nav_msgs/Odometry.h>
 #include <nav_msgs/Path.h>
 
@@ -18,7 +18,7 @@ private:
 
     std::vector<geometry_msgs::PoseStamped> poses;
 
-    void odomCallback(const nav_msgs::Odometry::ConstPtr&);
+    void amclCallback(const geometry_msgs::PoseWithCovarianceStamped&);
 };
 
 #endif

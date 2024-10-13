@@ -1,6 +1,7 @@
 #include <ros/ros.h>
 #include <bumperbot_utils/utils.h> 
-#include <navigation/ConvertPixelToMap.h> 
+#include <navigation/ConvertPixelToMap.h>
+
 using namespace std;
 
 
@@ -12,18 +13,15 @@ std::string map_yaml_path_;
 bool convertPixelToMap(navigation::ConvertPixelToMap::Request &req,
                        navigation::ConvertPixelToMap::Response &res) 
 {
-    std::cout << "--- Loaded Map Metadata ---" << std::endl;
-    std::cout << "Map Yaml Path: " << map_yaml_path_ << std::endl;
-    std::cout << "Map Resolution: " << map_resolution_ << std::endl;
-    std::cout << "Map Origin: " << map_origin_x_ << ", " << map_origin_y_ << std::endl;
+    ROS_INFO("--- Loaded Map Metadata ---");
+    ROS_INFO("Map Yaml Path: %s", map_yaml_path_.c_str());
+    ROS_INFO("Map Resolution: %f", map_resolution_);
+    ROS_INFO("Map Origin: %f, %f", map_origin_x_, map_origin_y_);
 
     // Convert pixel coordinates to real-world coordinates using the utility function
-    // float real_x = req.pixel_x * map_resolution_ + map_origin_x_;
-    // float real_y = req.pixel_y * map_resolution_ + map_origin_y_;
-        
+    float real_x = req.pixel_x * map_resolution_ + map_origin_x_;
+    float real_y = req.pixel_y * map_resolution_ + map_origin_y_;
 
-    float real_x = (req.pixel_x + map_origin_x_) * map_resolution_;
-    float real_y = (req.pixel_y + map_origin_y_) * map_resolution_;
     // float real_x = (req.pixel_x - 100 ) * 0.025;
     // float real_y = (req.pixel_y - 2000 ) * 0.025;
 

@@ -17,7 +17,7 @@
     <arg name="wheel_radius_error" default="0.005" />
     <arg name="wheel_separation_error" default="0.02" />
     <!-- args: navigation.launch -->
-    <arg name="map_file" default="$(find navigation)/maps/my_world_map.yaml"/>  
+    <arg name="map_file" default="$(find navigation)/maps/my_world_map2.yaml"/>  
     <arg name="move_forward_only" default="true"/>
 
 

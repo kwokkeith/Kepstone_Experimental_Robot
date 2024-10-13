@@ -7,6 +7,7 @@ bumperbot_utils/CMakeFiles/path_plotter.dir/src/path_plotter.cpp.o: /opt/ros/noe
 bumperbot_utils/CMakeFiles/path_plotter.dir/src/path_plotter.cpp.o: /opt/ros/noetic/include/geometry_msgs/Pose.h
 bumperbot_utils/CMakeFiles/path_plotter.dir/src/path_plotter.cpp.o: /opt/ros/noetic/include/geometry_msgs/PoseStamped.h
 bumperbot_utils/CMakeFiles/path_plotter.dir/src/path_plotter.cpp.o: /opt/ros/noetic/include/geometry_msgs/PoseWithCovariance.h
+bumperbot_utils/CMakeFiles/path_plotter.dir/src/path_plotter.cpp.o: /opt/ros/noetic/include/geometry_msgs/PoseWithCovarianceStamped.h
 bumperbot_utils/CMakeFiles/path_plotter.dir/src/path_plotter.cpp.o: /opt/ros/noetic/include/geometry_msgs/Quaternion.h
 bumperbot_utils/CMakeFiles/path_plotter.dir/src/path_plotter.cpp.o: /opt/ros/noetic/include/geometry_msgs/Twist.h
 bumperbot_utils/CMakeFiles/path_plotter.dir/src/path_plotter.cpp.o: /opt/ros/noetic/include/geometry_msgs/TwistWithCovariance.h

@@ -2,6 +2,9 @@ global_costmap:
   global_frame: map
   robot_base_frame: base_footprint
 
+  width: 10.0
+  height: 10.0 
+
   update_frequency: 15.0
   publish_frequency: 15.0
   transform_tolerance: 0.5

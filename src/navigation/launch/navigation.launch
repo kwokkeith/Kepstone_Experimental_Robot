@@ -45,6 +45,9 @@
     <param name="waypoints_file" value="$(arg waypoints_file)" />
   </node>
 
+  <!-- robot previous path node -->
+  <node name="robot_path_publisher" pkg="bumperbot_utils" type="path_plotter_node" />
+
   <!-- rviz -->
   <node 
     pkg="rviz" 

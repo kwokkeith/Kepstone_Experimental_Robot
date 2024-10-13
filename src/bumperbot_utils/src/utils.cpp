@@ -30,7 +30,7 @@ bool Utils::loadMapYaml(const std::string& yaml_path, double& map_resolution, do
         map_origin_x = map_data["origin"][0].as<double>();
         map_origin_y = map_data["origin"][1].as<double>();
 
-        ROS_INFO("Map loaded: resolution = %f, origin = (%f, %f)", map_resolution, map_origin_x, map_origin_y);
+        ROS_DEBUG("Map loaded: resolution = %f, origin = (%f, %f)", map_resolution, map_origin_x, map_origin_y);
         return true;
     } catch (const YAML::Exception& e) {
         ROS_ERROR("Failed to load YAML file: %s", e.what());
