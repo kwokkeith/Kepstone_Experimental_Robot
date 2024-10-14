@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/GetAmclPose.h
+/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/include/navigation/GetAmclPose.h
 ros/service_traits.h
 -
 navigation/GetAmclPoseRequest.h
@@ -14,7 +14,7 @@ navigation/GetAmclPoseRequest.h
 navigation/GetAmclPoseResponse.h
 -
 
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/GetAmclPoseRequest.h
+/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/include/navigation/GetAmclPoseRequest.h
 string
 -
 vector
@@ -30,7 +30,7 @@ ros/builtin_message_traits.h
 ros/message_operations.h
 -
 
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/GetAmclPoseResponse.h
+/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/include/navigation/GetAmclPoseResponse.h
 string
 -
 vector
@@ -48,7 +48,7 @@ ros/message_operations.h
 geometry_msgs/PoseWithCovarianceStamped.h
 -
 
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/GetPixelPose.h
+/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/include/navigation/GetPixelPose.h
 ros/service_traits.h
 -
 navigation/GetPixelPoseRequest.h
@@ -56,7 +56,7 @@ navigation/GetPixelPoseRequest.h
 navigation/GetPixelPoseResponse.h
 -
 
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/GetPixelPoseRequest.h
+/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/include/navigation/GetPixelPoseRequest.h
 string
 -
 vector
@@ -72,7 +72,7 @@ ros/builtin_message_traits.h
 ros/message_operations.h
 -
 
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/GetPixelPoseResponse.h
+/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/include/navigation/GetPixelPoseResponse.h
 string
 -
 vector
@@ -90,7 +90,7 @@ ros/message_operations.h
 geometry_msgs/Point.h
 -
 
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/include/navigation/pixel_position_publisher.h
+/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/navigation/include/navigation/pixel_position_publisher.h
 ros/ros.h
 -
 geometry_msgs/PoseWithCovarianceStamped.h
@@ -102,11 +102,11 @@ navigation/GetPixelPose.h
 navigation/GetAmclPose.h
 -
 
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/nodes/pixel_position_publisher_node.cpp
+/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/navigation/nodes/pixel_position_publisher_node.cpp
 ros/ros.h
 -
 navigation/pixel_position_publisher.h
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/nodes/navigation/pixel_position_publisher.h
+/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/navigation/nodes/navigation/pixel_position_publisher.h
 string
 -
 
@@ -471,8 +471,6 @@ ros/init.h
 /opt/ros/noetic/include/ros/ros/init.h
 common.h
 /opt/ros/noetic/include/ros/common.h
-boost/bind.hpp
--
 xmlrpcpp/XmlRpcValue.h
 -
 
@@ -517,7 +515,7 @@ ros/message.h
 /opt/ros/noetic/include/ros/ros/message.h
 ros/serialization.h
 /opt/ros/noetic/include/ros/ros/serialization.h
-boost/bind.hpp
+boost/bind/bind.hpp
 -
 boost/thread/mutex.hpp
 -
