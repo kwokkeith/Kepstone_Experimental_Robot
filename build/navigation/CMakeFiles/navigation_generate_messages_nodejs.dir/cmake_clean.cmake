@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/ConvertPixelToMap.js"
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/ConvertPixelWaypointsToMap.js"
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/GetAmclPose.js"
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/GetPixelPose.js"
+  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/gennodejs/ros/navigation/srv/ConvertPixelToMap.js"
+  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/gennodejs/ros/navigation/srv/ConvertPixelWaypointsToMap.js"
+  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/gennodejs/ros/navigation/srv/GetAmclPose.js"
+  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/gennodejs/ros/navigation/srv/GetPixelPose.js"
   "CMakeFiles/navigation_generate_messages_nodejs"
 )
 

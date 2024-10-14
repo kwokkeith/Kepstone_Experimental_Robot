@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/bumperbot_localization/nodes/imu_republisher_node.cpp
+/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/bumperbot_localization/nodes/imu_republisher_node.cpp
 ros/ros.h
 -
 sensor_msgs/Imu.h
@@ -315,8 +315,6 @@ ros/init.h
 /opt/ros/noetic/include/ros/ros/init.h
 common.h
 /opt/ros/noetic/include/ros/common.h
-boost/bind.hpp
--
 xmlrpcpp/XmlRpcValue.h
 -
 
@@ -361,7 +359,7 @@ ros/message.h
 /opt/ros/noetic/include/ros/ros/message.h
 ros/serialization.h
 /opt/ros/noetic/include/ros/ros/serialization.h
-boost/bind.hpp
+boost/bind/bind.hpp
 -
 boost/thread/mutex.hpp
 -
