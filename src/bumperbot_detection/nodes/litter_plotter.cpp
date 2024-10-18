@@ -47,7 +47,7 @@ void LitterPlotter::litterCallback(const bumperbot_detection::LitterList::ConstP
         marker.type = visualization_msgs::Marker::SPHERE;
         marker.action = visualization_msgs::Marker::ADD;
         marker.pose.position = litter_point.point;
-        marker.pose.position.z = 0.0;  // Set z to 0 if needed
+        marker.pose.position.z = 0.0;  // Set z to 0
         marker.pose.orientation.w = 1.0;
         marker.lifetime = ros::Duration(0);
 

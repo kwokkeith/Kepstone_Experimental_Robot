@@ -47,4 +47,7 @@
         <arg name="move_forward_only"       value="$(arg move_forward_only)" />
     </include>
 
+    <!-- Launch Detection related nodes -->
+    <include file="$(find bumperbot_detection)/launch/litter_detection.launch"></include>
+
 </launch>

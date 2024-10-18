@@ -1,5 +1,4 @@
 #include "bumperbot_detection/litter_memory.h"
-#include "bumperbot_detection/LitterPoint.h"
 
 // Constructor to initialize the LitterMemory node
 LitterMemory::LitterMemory() 
@@ -14,6 +13,12 @@ LitterMemory::LitterMemory()
 
     // Initialize a publisher to publish all remembered litter points
     litter_pub_ = nh_.advertise<bumperbot_detection::LitterList>("litter_memory", 10);
+
+    // Initialize the service to get the remembered litter points
+    get_litter_service_ = nh_.advertiseService("litter_memory/get_litter_list", &LitterMemory::getLitterListCallback, this);
+
+    // Initialize the service to add a new litter point
+    add_litter_service_ = nh_.advertiseService("litter_memory/add_litter", &LitterMemory::addLitterCallback, this);
 
     // Initialize the service to delete litter by ID
     delete_litter_service_ = nh_.advertiseService("litter_memory/delete_litter", &LitterMemory::deleteLitterCallback, this);
@@ -145,6 +150,51 @@ bool LitterMemory::deleteLitterCallback(bumperbot_detection::DeleteLitter::Reque
 
     return true;
 }
+
+bool LitterMemory::getLitterListCallback(bumperbot_detection::GetLitterList::Request& req,
+                                         bumperbot_detection::GetLitterList::Response& res)
+{
+    // Fill the response with the remembered litter list
+    for (const auto& litter : remembered_litter_)
+    {
+        res.remembered_litter.litter_points.push_back(litter);  
+    }
+
+    return true;  // Return success
+}
+
+bool LitterMemory::addLitterCallback(bumperbot_detection::AddLitter::Request& req,
+                                     bumperbot_detection::AddLitter::Response& res)
+{
+    // Check if the new litter point is within the threshold distance from any existing points
+    if (!isDuplicate(req.litter_point))
+    {
+        // Create a new LitterPoint with an available or new ID
+        bumperbot_detection::LitterPoint new_litter;
+        new_litter.id = getNewID();
+        new_litter.point = req.litter_point.point;     // Copy point data
+        new_litter.header = req.litter_point.header;   // Copy header data
+
+        // Store the new litter point in memory
+        remembered_litter_.push_back(new_litter);
+        ROS_INFO("New litter point added manually with ID: %d", new_litter.id);
+
+        // Publish the entire list of remembered litter points
+        publishRememberedLitter();
+
+        res.success = true;
+        res.message = "Litter point added successfully";
+    }
+    else
+    {
+        ROS_WARN("Litter point ignored (duplicate)");
+        res.success = false;
+        res.message = "Litter point is too close to an existing one (duplicate)";
+    }
+
+    return true;
+}
+
 
 int main(int argc, char** argv)
 {

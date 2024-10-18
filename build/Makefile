@@ -1715,17 +1715,43 @@ waypoint_plotter_publisher_node/fast:
 .PHONY : waypoint_plotter_publisher_node/fast
 
 #=============================================================================
-# Target rules for targets named bumperbot_detection_generate_messages_eus
+# Target rules for targets named bumperbot_detection_gencpp
 
 # Build rule for target.
-bumperbot_detection_generate_messages_eus: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 bumperbot_detection_generate_messages_eus
-.PHONY : bumperbot_detection_generate_messages_eus
+bumperbot_detection_gencpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 bumperbot_detection_gencpp
+.PHONY : bumperbot_detection_gencpp
 
 # fast build rule for target.
-bumperbot_detection_generate_messages_eus/fast:
-	$(MAKE) -f bumperbot_detection/CMakeFiles/bumperbot_detection_generate_messages_eus.dir/build.make bumperbot_detection/CMakeFiles/bumperbot_detection_generate_messages_eus.dir/build
-.PHONY : bumperbot_detection_generate_messages_eus/fast
+bumperbot_detection_gencpp/fast:
+	$(MAKE) -f bumperbot_detection/CMakeFiles/bumperbot_detection_gencpp.dir/build.make bumperbot_detection/CMakeFiles/bumperbot_detection_gencpp.dir/build
+.PHONY : bumperbot_detection_gencpp/fast
+
+#=============================================================================
+# Target rules for targets named bumperbot_detection_gennodejs
+
+# Build rule for target.
+bumperbot_detection_gennodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 bumperbot_detection_gennodejs
+.PHONY : bumperbot_detection_gennodejs
+
+# fast build rule for target.
+bumperbot_detection_gennodejs/fast:
+	$(MAKE) -f bumperbot_detection/CMakeFiles/bumperbot_detection_gennodejs.dir/build.make bumperbot_detection/CMakeFiles/bumperbot_detection_gennodejs.dir/build
+.PHONY : bumperbot_detection_gennodejs/fast
+
+#=============================================================================
+# Target rules for targets named _bumperbot_detection_generate_messages_check_deps_DeleteLitter
+
+# Build rule for target.
+_bumperbot_detection_generate_messages_check_deps_DeleteLitter: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _bumperbot_detection_generate_messages_check_deps_DeleteLitter
+.PHONY : _bumperbot_detection_generate_messages_check_deps_DeleteLitter
+
+# fast build rule for target.
+_bumperbot_detection_generate_messages_check_deps_DeleteLitter/fast:
+	$(MAKE) -f bumperbot_detection/CMakeFiles/_bumperbot_detection_generate_messages_check_deps_DeleteLitter.dir/build.make bumperbot_detection/CMakeFiles/_bumperbot_detection_generate_messages_check_deps_DeleteLitter.dir/build
+.PHONY : _bumperbot_detection_generate_messages_check_deps_DeleteLitter/fast
 
 #=============================================================================
 # Target rules for targets named _bumperbot_detection_generate_messages_check_deps_LitterList
@@ -1741,30 +1767,17 @@ _bumperbot_detection_generate_messages_check_deps_LitterList/fast:
 .PHONY : _bumperbot_detection_generate_messages_check_deps_LitterList/fast
 
 #=============================================================================
-# Target rules for targets named bumperbot_detection_gencpp
+# Target rules for targets named bumperbot_detection_generate_messages_eus
 
 # Build rule for target.
-bumperbot_detection_gencpp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 bumperbot_detection_gencpp
-.PHONY : bumperbot_detection_gencpp
+bumperbot_detection_generate_messages_eus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 bumperbot_detection_generate_messages_eus
+.PHONY : bumperbot_detection_generate_messages_eus
 
 # fast build rule for target.
-bumperbot_detection_gencpp/fast:
-	$(MAKE) -f bumperbot_detection/CMakeFiles/bumperbot_detection_gencpp.dir/build.make bumperbot_detection/CMakeFiles/bumperbot_detection_gencpp.dir/build
-.PHONY : bumperbot_detection_gencpp/fast
-
-#=============================================================================
-# Target rules for targets named _bumperbot_detection_generate_messages_check_deps_DeleteLitter
-
-# Build rule for target.
-_bumperbot_detection_generate_messages_check_deps_DeleteLitter: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 _bumperbot_detection_generate_messages_check_deps_DeleteLitter
-.PHONY : _bumperbot_detection_generate_messages_check_deps_DeleteLitter
-
-# fast build rule for target.
-_bumperbot_detection_generate_messages_check_deps_DeleteLitter/fast:
-	$(MAKE) -f bumperbot_detection/CMakeFiles/_bumperbot_detection_generate_messages_check_deps_DeleteLitter.dir/build.make bumperbot_detection/CMakeFiles/_bumperbot_detection_generate_messages_check_deps_DeleteLitter.dir/build
-.PHONY : _bumperbot_detection_generate_messages_check_deps_DeleteLitter/fast
+bumperbot_detection_generate_messages_eus/fast:
+	$(MAKE) -f bumperbot_detection/CMakeFiles/bumperbot_detection_generate_messages_eus.dir/build.make bumperbot_detection/CMakeFiles/bumperbot_detection_generate_messages_eus.dir/build
+.PHONY : bumperbot_detection_generate_messages_eus/fast
 
 #=============================================================================
 # Target rules for targets named bumperbot_detection_generate_messages
@@ -1793,17 +1806,30 @@ litter_plotter_publisher_node/fast:
 .PHONY : litter_plotter_publisher_node/fast
 
 #=============================================================================
-# Target rules for targets named bumperbot_detection_geneus
+# Target rules for targets named bumperbot_detection_generate_messages_lisp
 
 # Build rule for target.
-bumperbot_detection_geneus: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 bumperbot_detection_geneus
-.PHONY : bumperbot_detection_geneus
+bumperbot_detection_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 bumperbot_detection_generate_messages_lisp
+.PHONY : bumperbot_detection_generate_messages_lisp
 
 # fast build rule for target.
-bumperbot_detection_geneus/fast:
-	$(MAKE) -f bumperbot_detection/CMakeFiles/bumperbot_detection_geneus.dir/build.make bumperbot_detection/CMakeFiles/bumperbot_detection_geneus.dir/build
-.PHONY : bumperbot_detection_geneus/fast
+bumperbot_detection_generate_messages_lisp/fast:
+	$(MAKE) -f bumperbot_detection/CMakeFiles/bumperbot_detection_generate_messages_lisp.dir/build.make bumperbot_detection/CMakeFiles/bumperbot_detection_generate_messages_lisp.dir/build
+.PHONY : bumperbot_detection_generate_messages_lisp/fast
+
+#=============================================================================
+# Target rules for targets named visualization_msgs_generate_messages_py
+
+# Build rule for target.
+visualization_msgs_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 visualization_msgs_generate_messages_py
+.PHONY : visualization_msgs_generate_messages_py
+
+# fast build rule for target.
+visualization_msgs_generate_messages_py/fast:
+	$(MAKE) -f bumperbot_detection/CMakeFiles/visualization_msgs_generate_messages_py.dir/build.make bumperbot_detection/CMakeFiles/visualization_msgs_generate_messages_py.dir/build
+.PHONY : visualization_msgs_generate_messages_py/fast
 
 #=============================================================================
 # Target rules for targets named visualization_msgs_generate_messages_eus
@@ -1819,30 +1845,30 @@ visualization_msgs_generate_messages_eus/fast:
 .PHONY : visualization_msgs_generate_messages_eus/fast
 
 #=============================================================================
-# Target rules for targets named bumperbot_detection_genlisp
+# Target rules for targets named visualization_msgs_generate_messages_nodejs
 
 # Build rule for target.
-bumperbot_detection_genlisp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 bumperbot_detection_genlisp
-.PHONY : bumperbot_detection_genlisp
+visualization_msgs_generate_messages_nodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 visualization_msgs_generate_messages_nodejs
+.PHONY : visualization_msgs_generate_messages_nodejs
 
 # fast build rule for target.
-bumperbot_detection_genlisp/fast:
-	$(MAKE) -f bumperbot_detection/CMakeFiles/bumperbot_detection_genlisp.dir/build.make bumperbot_detection/CMakeFiles/bumperbot_detection_genlisp.dir/build
-.PHONY : bumperbot_detection_genlisp/fast
+visualization_msgs_generate_messages_nodejs/fast:
+	$(MAKE) -f bumperbot_detection/CMakeFiles/visualization_msgs_generate_messages_nodejs.dir/build.make bumperbot_detection/CMakeFiles/visualization_msgs_generate_messages_nodejs.dir/build
+.PHONY : visualization_msgs_generate_messages_nodejs/fast
 
 #=============================================================================
-# Target rules for targets named visualization_msgs_generate_messages_lisp
+# Target rules for targets named litter_coordinate_transformer_publisher
 
 # Build rule for target.
-visualization_msgs_generate_messages_lisp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 visualization_msgs_generate_messages_lisp
-.PHONY : visualization_msgs_generate_messages_lisp
+litter_coordinate_transformer_publisher: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 litter_coordinate_transformer_publisher
+.PHONY : litter_coordinate_transformer_publisher
 
 # fast build rule for target.
-visualization_msgs_generate_messages_lisp/fast:
-	$(MAKE) -f bumperbot_detection/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/build.make bumperbot_detection/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/build
-.PHONY : visualization_msgs_generate_messages_lisp/fast
+litter_coordinate_transformer_publisher/fast:
+	$(MAKE) -f bumperbot_detection/CMakeFiles/litter_coordinate_transformer_publisher.dir/build.make bumperbot_detection/CMakeFiles/litter_coordinate_transformer_publisher.dir/build
+.PHONY : litter_coordinate_transformer_publisher/fast
 
 #=============================================================================
 # Target rules for targets named _bumperbot_detection_generate_messages_check_deps_LitterPoint
@@ -1871,17 +1897,56 @@ visualization_msgs_generate_messages_cpp/fast:
 .PHONY : visualization_msgs_generate_messages_cpp/fast
 
 #=============================================================================
-# Target rules for targets named bumperbot_detection_gennodejs
+# Target rules for targets named _bumperbot_detection_generate_messages_check_deps_AddLitter
 
 # Build rule for target.
-bumperbot_detection_gennodejs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 bumperbot_detection_gennodejs
-.PHONY : bumperbot_detection_gennodejs
+_bumperbot_detection_generate_messages_check_deps_AddLitter: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _bumperbot_detection_generate_messages_check_deps_AddLitter
+.PHONY : _bumperbot_detection_generate_messages_check_deps_AddLitter
 
 # fast build rule for target.
-bumperbot_detection_gennodejs/fast:
-	$(MAKE) -f bumperbot_detection/CMakeFiles/bumperbot_detection_gennodejs.dir/build.make bumperbot_detection/CMakeFiles/bumperbot_detection_gennodejs.dir/build
-.PHONY : bumperbot_detection_gennodejs/fast
+_bumperbot_detection_generate_messages_check_deps_AddLitter/fast:
+	$(MAKE) -f bumperbot_detection/CMakeFiles/_bumperbot_detection_generate_messages_check_deps_AddLitter.dir/build.make bumperbot_detection/CMakeFiles/_bumperbot_detection_generate_messages_check_deps_AddLitter.dir/build
+.PHONY : _bumperbot_detection_generate_messages_check_deps_AddLitter/fast
+
+#=============================================================================
+# Target rules for targets named bumperbot_detection_geneus
+
+# Build rule for target.
+bumperbot_detection_geneus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 bumperbot_detection_geneus
+.PHONY : bumperbot_detection_geneus
+
+# fast build rule for target.
+bumperbot_detection_geneus/fast:
+	$(MAKE) -f bumperbot_detection/CMakeFiles/bumperbot_detection_geneus.dir/build.make bumperbot_detection/CMakeFiles/bumperbot_detection_geneus.dir/build
+.PHONY : bumperbot_detection_geneus/fast
+
+#=============================================================================
+# Target rules for targets named visualization_msgs_generate_messages_lisp
+
+# Build rule for target.
+visualization_msgs_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 visualization_msgs_generate_messages_lisp
+.PHONY : visualization_msgs_generate_messages_lisp
+
+# fast build rule for target.
+visualization_msgs_generate_messages_lisp/fast:
+	$(MAKE) -f bumperbot_detection/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/build.make bumperbot_detection/CMakeFiles/visualization_msgs_generate_messages_lisp.dir/build
+.PHONY : visualization_msgs_generate_messages_lisp/fast
+
+#=============================================================================
+# Target rules for targets named bumperbot_detection_genlisp
+
+# Build rule for target.
+bumperbot_detection_genlisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 bumperbot_detection_genlisp
+.PHONY : bumperbot_detection_genlisp
+
+# fast build rule for target.
+bumperbot_detection_genlisp/fast:
+	$(MAKE) -f bumperbot_detection/CMakeFiles/bumperbot_detection_genlisp.dir/build.make bumperbot_detection/CMakeFiles/bumperbot_detection_genlisp.dir/build
+.PHONY : bumperbot_detection_genlisp/fast
 
 #=============================================================================
 # Target rules for targets named bumperbot_detection_generate_messages_py
@@ -1921,32 +1986,6 @@ bumperbot_detection_genpy: cmake_check_build_system
 bumperbot_detection_genpy/fast:
 	$(MAKE) -f bumperbot_detection/CMakeFiles/bumperbot_detection_genpy.dir/build.make bumperbot_detection/CMakeFiles/bumperbot_detection_genpy.dir/build
 .PHONY : bumperbot_detection_genpy/fast
-
-#=============================================================================
-# Target rules for targets named visualization_msgs_generate_messages_py
-
-# Build rule for target.
-visualization_msgs_generate_messages_py: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 visualization_msgs_generate_messages_py
-.PHONY : visualization_msgs_generate_messages_py
-
-# fast build rule for target.
-visualization_msgs_generate_messages_py/fast:
-	$(MAKE) -f bumperbot_detection/CMakeFiles/visualization_msgs_generate_messages_py.dir/build.make bumperbot_detection/CMakeFiles/visualization_msgs_generate_messages_py.dir/build
-.PHONY : visualization_msgs_generate_messages_py/fast
-
-#=============================================================================
-# Target rules for targets named bumperbot_detection_generate_messages_lisp
-
-# Build rule for target.
-bumperbot_detection_generate_messages_lisp: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 bumperbot_detection_generate_messages_lisp
-.PHONY : bumperbot_detection_generate_messages_lisp
-
-# fast build rule for target.
-bumperbot_detection_generate_messages_lisp/fast:
-	$(MAKE) -f bumperbot_detection/CMakeFiles/bumperbot_detection_generate_messages_lisp.dir/build.make bumperbot_detection/CMakeFiles/bumperbot_detection_generate_messages_lisp.dir/build
-.PHONY : bumperbot_detection_generate_messages_lisp/fast
 
 #=============================================================================
 # Target rules for targets named bumperbot_detection_generate_messages_cpp
@@ -2001,30 +2040,17 @@ litter_coordinate_subscriber/fast:
 .PHONY : litter_coordinate_subscriber/fast
 
 #=============================================================================
-# Target rules for targets named visualization_msgs_generate_messages_nodejs
+# Target rules for targets named _bumperbot_detection_generate_messages_check_deps_GetLitterList
 
 # Build rule for target.
-visualization_msgs_generate_messages_nodejs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 visualization_msgs_generate_messages_nodejs
-.PHONY : visualization_msgs_generate_messages_nodejs
+_bumperbot_detection_generate_messages_check_deps_GetLitterList: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _bumperbot_detection_generate_messages_check_deps_GetLitterList
+.PHONY : _bumperbot_detection_generate_messages_check_deps_GetLitterList
 
 # fast build rule for target.
-visualization_msgs_generate_messages_nodejs/fast:
-	$(MAKE) -f bumperbot_detection/CMakeFiles/visualization_msgs_generate_messages_nodejs.dir/build.make bumperbot_detection/CMakeFiles/visualization_msgs_generate_messages_nodejs.dir/build
-.PHONY : visualization_msgs_generate_messages_nodejs/fast
-
-#=============================================================================
-# Target rules for targets named litter_coordinate_transformer_publisher
-
-# Build rule for target.
-litter_coordinate_transformer_publisher: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 litter_coordinate_transformer_publisher
-.PHONY : litter_coordinate_transformer_publisher
-
-# fast build rule for target.
-litter_coordinate_transformer_publisher/fast:
-	$(MAKE) -f bumperbot_detection/CMakeFiles/litter_coordinate_transformer_publisher.dir/build.make bumperbot_detection/CMakeFiles/litter_coordinate_transformer_publisher.dir/build
-.PHONY : litter_coordinate_transformer_publisher/fast
+_bumperbot_detection_generate_messages_check_deps_GetLitterList/fast:
+	$(MAKE) -f bumperbot_detection/CMakeFiles/_bumperbot_detection_generate_messages_check_deps_GetLitterList.dir/build.make bumperbot_detection/CMakeFiles/_bumperbot_detection_generate_messages_check_deps_GetLitterList.dir/build
+.PHONY : _bumperbot_detection_generate_messages_check_deps_GetLitterList/fast
 
 # Help Target
 help:
@@ -2158,30 +2184,32 @@ help:
 	@echo "... convert_pixel_waypoints_to_map_waypoints_server_node"
 	@echo "... send_waypoints_to_navstack_node"
 	@echo "... waypoint_plotter_publisher_node"
-	@echo "... bumperbot_detection_generate_messages_eus"
-	@echo "... _bumperbot_detection_generate_messages_check_deps_LitterList"
 	@echo "... bumperbot_detection_gencpp"
+	@echo "... bumperbot_detection_gennodejs"
 	@echo "... _bumperbot_detection_generate_messages_check_deps_DeleteLitter"
+	@echo "... _bumperbot_detection_generate_messages_check_deps_LitterList"
+	@echo "... bumperbot_detection_generate_messages_eus"
 	@echo "... bumperbot_detection_generate_messages"
 	@echo "... litter_plotter_publisher_node"
-	@echo "... bumperbot_detection_geneus"
+	@echo "... bumperbot_detection_generate_messages_lisp"
+	@echo "... visualization_msgs_generate_messages_py"
 	@echo "... visualization_msgs_generate_messages_eus"
-	@echo "... bumperbot_detection_genlisp"
-	@echo "... visualization_msgs_generate_messages_lisp"
+	@echo "... visualization_msgs_generate_messages_nodejs"
+	@echo "... litter_coordinate_transformer_publisher"
 	@echo "... _bumperbot_detection_generate_messages_check_deps_LitterPoint"
 	@echo "... visualization_msgs_generate_messages_cpp"
-	@echo "... bumperbot_detection_gennodejs"
+	@echo "... _bumperbot_detection_generate_messages_check_deps_AddLitter"
+	@echo "... bumperbot_detection_geneus"
+	@echo "... visualization_msgs_generate_messages_lisp"
+	@echo "... bumperbot_detection_genlisp"
 	@echo "... bumperbot_detection_generate_messages_py"
 	@echo "... litter_memory_node"
 	@echo "... bumperbot_detection_genpy"
-	@echo "... visualization_msgs_generate_messages_py"
-	@echo "... bumperbot_detection_generate_messages_lisp"
 	@echo "... bumperbot_detection_generate_messages_cpp"
 	@echo "... bumperbot_detection_generate_messages_nodejs"
 	@echo "... litter_coordinate_transformer_publisher_node"
 	@echo "... litter_coordinate_subscriber"
-	@echo "... visualization_msgs_generate_messages_nodejs"
-	@echo "... litter_coordinate_transformer_publisher"
+	@echo "... _bumperbot_detection_generate_messages_check_deps_GetLitterList"
 .PHONY : help
 
 
