@@ -1,19 +1,29 @@
 <?xml version="1.0"?>
 
 <launch>
+    <!-- Load marker configuration from YAML file -->
+    <rosparam file="$(find bumperbot_detection)/config/marker_config.yaml" command="load" />
+
+
+    <!-- Litter detector (for coordinates of robot) -camera frame -->
     <node pkg="bumperbot_detection" type="get_coordinates.py" name="coordinate_detector" >
         <param name="launch_prefix" value="python3"/>
     </node>
 
+    <!-- Litter detection subscriber -->
     <node pkg="bumperbot_detection" type="coordinate_subscriber" name="coordinate_subscriber" output="screen" />
-
+  
+    <!-- Litter coordinate transformer publisher -Base frame -->
     <node pkg="bumperbot_detection" type="litter_coordinate_transformer_publisher_node" name="litter_coordinate_transformer_publisher_node" >
         <param name="base_frame"    value="base_footprint" />
         <param name="camera_frame"  value="dpcamera_link_optical"  />
     </node>
-
+  
+    <!-- Litter memory node (publishes memory and service for deleting litter) -->
     <node pkg="bumperbot_detection" type="litter_memory_node" name="litter_memory_node" >
         <param name="distance_threshold" value="10" />
     </node>
 
+    <!-- Litter Marker publisher node (For RVIZ visualization) -->
+    <node pkg="bumperbot_detection" type="litter_plotter_publisher_node" name="litter_plotter_publisher_node" output="screen"/>
 </launch>

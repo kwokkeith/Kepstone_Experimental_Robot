@@ -41,7 +41,7 @@
   </node>
 
   <!-- pixel position publisher (Publisher) -->
-  <node name="waypoint_plotter_publisher" pkg="navigation" type="waypoint_plotter_publisher">
+  <node name="waypoint_plotter_publisher" pkg="navigation" type="waypoint_plotter_publisher_node">
     <param name="waypoints_file" value="$(arg waypoints_file)" />
   </node>
 

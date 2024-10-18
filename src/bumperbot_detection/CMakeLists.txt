@@ -10,6 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
   tf2_ros
   tf2_geometry_msgs
   message_generation
+  visualization_msgs
 )
 
 find_package(Eigen3 REQUIRED)
@@ -58,6 +59,7 @@ catkin_package(
    tf2_ros
    tf2_geometry_msgs
    message_runtime
+   visualization_msgs
    
    DEPENDS Eigen3
 )
@@ -96,3 +98,8 @@ target_link_libraries(litter_memory_node ${catkin_LIBRARIES})
 # Litter Coordinate subscriber 
 add_executable(litter_coordinate_subscriber nodes/litter_coordinate_subscriber.cpp)
 target_link_libraries(litter_coordinate_subscriber ${catkin_LIBRARIES})
+
+# Litter Marker Publisher
+add_executable(litter_plotter_publisher_node nodes/litter_plotter.cpp)
+target_link_libraries(litter_plotter_publisher_node ${catkin_LIBRARIES})
+add_dependencies(litter_plotter_publisher_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})

@@ -2,7 +2,9 @@
 #include "bumperbot_detection/LitterPoint.h"
 
 // Constructor to initialize the LitterMemory node
-LitterMemory::LitterMemory() : current_id_(0)
+LitterMemory::LitterMemory() 
+   : current_id_(0),
+     tf_listener_(tf_buffer_)
 {
     // Set distance threshold for filtering duplicates
     nh_.param<double>("distance_threshold", distance_threshold_, 20.0);  // Load the distance threshold parameter
@@ -59,15 +61,30 @@ int LitterMemory::getNewID()
 
 // Callback to handle detected litter points
 void LitterMemory::litterCallback(const geometry_msgs::PointStamped::ConstPtr& litter_point)
-{
+{   
+    // Transform litter point from base to map frame
+    geometry_msgs::PointStamped litter_in_map_frame;
+
+    try {
+        geometry_msgs::TransformStamped transform_stamped = tf_buffer_.lookupTransform("map", "base_footprint", ros::Time(0), ros::Duration(1.0));
+
+        // Perform the transformation to the map frame
+        tf2::doTransform(*litter_point, litter_in_map_frame, transform_stamped);
+    }
+    catch (tf2::TransformException& ex)
+    {
+        ROS_WARN("Could not transform litter coordinates from camera_frame to map: %s", ex.what());
+        return;  // Skip further processing if transform fails
+    }
+
     // Check if the new litter point is within the threshold distance from any existing points
-    if (!isDuplicate(*litter_point))
+    if (!isDuplicate(litter_in_map_frame))
     {
         // Create a new LitterPoint with an available or new ID
         bumperbot_detection::LitterPoint new_litter;
         new_litter.id = getNewID();
-        new_litter.point = litter_point->point;    // Copy point data
-        new_litter.header = litter_point->header;  // Copy header data
+        new_litter.point = litter_in_map_frame.point;     // Copy point data
+        new_litter.header = litter_in_map_frame.header;   // Copy header data
 
         // Store the new litter point in memory
         remembered_litter_.push_back(new_litter);

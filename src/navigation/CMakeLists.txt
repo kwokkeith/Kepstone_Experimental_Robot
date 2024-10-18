@@ -100,9 +100,9 @@ add_dependencies(send_waypoints_to_navstack_node ${${PROJECT_NAME}_EXPORTED_TARG
 target_link_libraries(send_waypoints_to_navstack_node ${catkin_LIBRARIES} send_waypoints_to_navstack utils)
 
 # Executable waypoint plotter
-add_executable(waypoint_plotter_publisher src/waypoint_plotter.cpp)
-add_dependencies(waypoint_plotter_publisher ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(waypoint_plotter_publisher ${catkin_LIBRARIES})
+add_executable(waypoint_plotter_publisher_node src/waypoint_plotter.cpp)
+add_dependencies(waypoint_plotter_publisher_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(waypoint_plotter_publisher_node ${catkin_LIBRARIES})
 
 #############
 ## Install ##

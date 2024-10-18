@@ -6,8 +6,11 @@
 #include <bumperbot_detection/LitterList.h>
 #include <bumperbot_detection/DeleteLitter.h> 
 #include <bumperbot_detection/LitterPoint.h>
+#include <tf2_ros/transform_listener.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <vector>
 #include <queue>    // Recycle ID
+#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 
 class LitterMemory
 {
@@ -30,6 +33,11 @@ private:
     ros::Subscriber litter_sub_;  // Subscriber to litter points
     ros::Publisher litter_pub_;   // Publisher for remembered litter points
     ros::ServiceServer delete_litter_service_;  // Service to delete litter
+
+    // TF2 Buffer and Listener to manage transforms
+    tf2_ros::Buffer tf_buffer_;
+    tf2_ros::TransformListener tf_listener_;  // Initialize with the buffer in constructor
+
 
     // Vector to store all remembered litter points
     std::vector<bumperbot_detection::LitterPoint> remembered_litter_;

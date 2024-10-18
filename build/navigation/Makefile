@@ -588,19 +588,19 @@ send_waypoints_to_navstack_node/fast:
 .PHONY : send_waypoints_to_navstack_node/fast
 
 # Convenience name for target.
-navigation/CMakeFiles/waypoint_plotter_publisher.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/waypoint_plotter_publisher.dir/rule
-.PHONY : navigation/CMakeFiles/waypoint_plotter_publisher.dir/rule
+navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/rule
+.PHONY : navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/rule
 
 # Convenience name for target.
-waypoint_plotter_publisher: navigation/CMakeFiles/waypoint_plotter_publisher.dir/rule
+waypoint_plotter_publisher_node: navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/rule
 
-.PHONY : waypoint_plotter_publisher
+.PHONY : waypoint_plotter_publisher_node
 
 # fast build rule for target.
-waypoint_plotter_publisher/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/waypoint_plotter_publisher.dir/build.make navigation/CMakeFiles/waypoint_plotter_publisher.dir/build
-.PHONY : waypoint_plotter_publisher/fast
+waypoint_plotter_publisher_node/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/build.make navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/build
+.PHONY : waypoint_plotter_publisher_node/fast
 
 nodes/pixel_position_publisher_node.o: nodes/pixel_position_publisher_node.cpp.o
 
@@ -824,7 +824,7 @@ src/waypoint_plotter.o: src/waypoint_plotter.cpp.o
 
 # target to build an object file
 src/waypoint_plotter.cpp.o:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/waypoint_plotter_publisher.dir/build.make navigation/CMakeFiles/waypoint_plotter_publisher.dir/src/waypoint_plotter.cpp.o
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/build.make navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/src/waypoint_plotter.cpp.o
 .PHONY : src/waypoint_plotter.cpp.o
 
 src/waypoint_plotter.i: src/waypoint_plotter.cpp.i
@@ -833,7 +833,7 @@ src/waypoint_plotter.i: src/waypoint_plotter.cpp.i
 
 # target to preprocess a source file
 src/waypoint_plotter.cpp.i:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/waypoint_plotter_publisher.dir/build.make navigation/CMakeFiles/waypoint_plotter_publisher.dir/src/waypoint_plotter.cpp.i
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/build.make navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/src/waypoint_plotter.cpp.i
 .PHONY : src/waypoint_plotter.cpp.i
 
 src/waypoint_plotter.s: src/waypoint_plotter.cpp.s
@@ -842,7 +842,7 @@ src/waypoint_plotter.s: src/waypoint_plotter.cpp.s
 
 # target to generate assembly for a file
 src/waypoint_plotter.cpp.s:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/waypoint_plotter_publisher.dir/build.make navigation/CMakeFiles/waypoint_plotter_publisher.dir/src/waypoint_plotter.cpp.s
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/build.make navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/src/waypoint_plotter.cpp.s
 .PHONY : src/waypoint_plotter.cpp.s
 
 # Help Target
@@ -886,7 +886,7 @@ help:
 	@echo "... move_base_msgs_generate_messages_lisp"
 	@echo "... convert_pixel_waypoints_to_map_waypoints_server_node"
 	@echo "... send_waypoints_to_navstack_node"
-	@echo "... waypoint_plotter_publisher"
+	@echo "... waypoint_plotter_publisher_node"
 	@echo "... nodes/pixel_position_publisher_node.o"
 	@echo "... nodes/pixel_position_publisher_node.i"
 	@echo "... nodes/pixel_position_publisher_node.s"
