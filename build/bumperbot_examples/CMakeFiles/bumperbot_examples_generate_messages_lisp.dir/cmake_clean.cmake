@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/common-lisp/ros/bumperbot_examples/srv/AddTwoInts.lisp"
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/common-lisp/ros/bumperbot_examples/srv/GetTransform.lisp"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/common-lisp/ros/bumperbot_examples/srv/AddTwoInts.lisp"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/common-lisp/ros/bumperbot_examples/srv/GetTransform.lisp"
   "CMakeFiles/bumperbot_examples_generate_messages_lisp"
 )
 

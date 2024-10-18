@@ -67,14 +67,14 @@ set(bumperbot_controller_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(bumperbot_controller_SOURCE_PREFIX /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/bumperbot_controller)
-  set(bumperbot_controller_DEVEL_PREFIX /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel)
+  set(bumperbot_controller_SOURCE_PREFIX /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/bumperbot_controller)
+  set(bumperbot_controller_DEVEL_PREFIX /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel)
   set(bumperbot_controller_INSTALL_PREFIX "")
   set(bumperbot_controller_PREFIX ${bumperbot_controller_DEVEL_PREFIX})
 else()
   set(bumperbot_controller_SOURCE_PREFIX "")
   set(bumperbot_controller_DEVEL_PREFIX "")
-  set(bumperbot_controller_INSTALL_PREFIX /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/install)
+  set(bumperbot_controller_INSTALL_PREFIX /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/install)
   set(bumperbot_controller_PREFIX ${bumperbot_controller_INSTALL_PREFIX})
 endif()
 
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/install/lib;/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib;/opt/ros/noetic/lib)
+    foreach(path /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/install/lib;/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

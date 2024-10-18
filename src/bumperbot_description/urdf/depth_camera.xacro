@@ -4,7 +4,7 @@
     <joint name="camera_joint" type="fixed">
         <parent link="base_link"/>
         <child link="dpcamera_link"/>
-        <origin xyz="0.072 0.0 0.065" />
+        <origin xyz="0.072 0.0 0.065" rpy="0.0 0.2618 0.0"/>
     </joint>
 
     <link name="dpcamera_link">
@@ -34,6 +34,7 @@
             <update_rate>10</update_rate>
             <camera>
                 <horizontal_fov>1.089</horizontal_fov>
+                <vertical_fov>1.089</vertical_fov>
                 <image>
                     <format>B8G8R8</format>
                     <width>640</width>
@@ -57,7 +58,7 @@
                 <depthImageCameraInfoTopicName>/camera/depth/camera_info</depthImageCameraInfoTopicName>
                 <pointCloudTopicName>/camera/depth/points</pointCloudTopicName>
                 <frameName>dpcamera_link</frameName>
-                <pointCloudCutoff>0.5</pointCloudCutoff>
+                <pointCloudCutoff>0.05</pointCloudCutoff>
                 <pointCloudCutoffMax>3.0</pointCloudCutoffMax>
                 <distortionK1>0</distortionK1>
                 <distortionK2>0</distortionK2>

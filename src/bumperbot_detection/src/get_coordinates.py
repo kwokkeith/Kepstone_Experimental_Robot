@@ -7,14 +7,26 @@ from decimal import Decimal
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 import message_filters  # To synchronize color and depth frames
-from std_msgs.msg import Float32MultiArray
+from geometry_msgs.msg import PointStamped
+
+
+# This class is used to detect object (ball) and publish to camera_frame/detected_object_coordinates
+# Sub:
+#   /camera/color/image_raw
+# Pub:
+#   /camera_frame_detected_object_coordinates
+# Node Param:  
+#   camera_frame
 
 class BallDetector:
     def __init__(self):
         self.bridge_object = CvBridge()
         self.theta = 0.2618  # 30 degrees in radians
 
-        self.coord_publisher = rospy.Publisher('/object_coordinates', Float32MultiArray, queue_size=10)
+        # Get the camera frame from the ROS parameter server (default to 'dpcamera_link')
+        self.camera_frame = rospy.get_param('~camera_frame', 'dpcamera_link')
+
+        self.coord_publisher = rospy.Publisher('camera_frame/detected_object_coordinates', PointStamped, queue_size=10)
 
         # Subscribe to color and depth topics
         self.color_sub = message_filters.Subscriber("/camera/color/image_raw", Image)
@@ -64,19 +76,27 @@ class BallDetector:
             Ytemp = dist * (y - self.intrinsics['cy']) / self.intrinsics['fy']
             Ztemp = dist
 
-            Xtarget = Xtemp - 35  # Adjust for RGB camera module offset
+            Xtarget = Xtemp  # Adjust for RGB camera module offset
             Ytarget = -(Ztemp * math.sin(self.theta) + Ytemp * math.cos(self.theta))
             Ztarget = Ztemp * math.cos(self.theta) - Ytemp * math.sin(self.theta)
 
-            coord_msg = Float32MultiArray()
-            coord_msg.data = [Xtarget, Ytarget, Ztarget]
+            # Create a PointStamped message
+            point_msg = PointStamped()
+            point_msg.header.stamp = rospy.Time.now()     # Add a timestamp
+            point_msg.header.frame_id = self.camera_frame # Indicate the frame of reference
+            
+            # Point coordinates are in robot coordinate system (point) as opposed to the 
+            # optical coordinate system of camera (Xtarget, Ytarget, Ztarget)
+            point_msg.point.y = Xtarget
+            point_msg.point.z = Ytarget
+            point_msg.point.x = Ztarget
 
-            self.coord_publisher.publish(coord_msg)
+            self.coord_publisher.publish(point_msg)
 
             # Display coordinates on image
-            target_coordinates = f"({Decimal(Xtarget).quantize(Decimal('0'))}, " \
-                               f"{Decimal(Ytarget).quantize(Decimal('0'))}, " \
-                               f"{Decimal(Ztarget).quantize(Decimal('0'))})"
+            target_coordinates = f"({Decimal(point_msg.point.x).quantize(Decimal('0'))}, " \
+                                 f"{Decimal(point_msg.point.y).quantize(Decimal('0'))}, " \
+                                 f"{Decimal(point_msg.point.z).quantize(Decimal('0'))})"
             cv2.putText(image, target_coordinates, (x - 160, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
             # temp_coordinates = f"({Decimal(Xtemp).quantize(Decimal('0'))}, " \
             #                      f"{Decimal(Ytemp).quantize(Decimal('0'))}, " \
@@ -136,6 +156,7 @@ class BallDetector:
 
         # cv2.imshow("original", color_image)
         return color_image, center_coordinates_array  # Example: returning a single point in the center of the image
+
 
 if __name__ == "__main__":
     rospy.init_node('ball_detector', anonymous=True)

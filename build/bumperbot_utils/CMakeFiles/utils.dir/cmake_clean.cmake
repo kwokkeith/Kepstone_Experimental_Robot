@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/libutils.pdb"
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/libutils.so"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/libutils.pdb"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/libutils.so"
   "CMakeFiles/utils.dir/src/utils.cpp.o"
 )
 

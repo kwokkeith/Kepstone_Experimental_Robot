@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/bumperbot_controller/include/bumperbot_controller/simple_controller.h
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/bumperbot_controller/include/bumperbot_controller/simple_controller.h
 ros/ros.h
 -
 geometry_msgs/Twist.h
@@ -20,9 +20,9 @@ nav_msgs/Odometry.h
 geometry_msgs/TransformStamped.h
 -
 
-/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/bumperbot_controller/src/simple_controller.cpp
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/bumperbot_controller/src/simple_controller.cpp
 bumperbot_controller/simple_controller.h
-/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/bumperbot_controller/src/bumperbot_controller/simple_controller.h
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/bumperbot_controller/src/bumperbot_controller/simple_controller.h
 std_msgs/Float64.h
 -
 Eigen/Geometry

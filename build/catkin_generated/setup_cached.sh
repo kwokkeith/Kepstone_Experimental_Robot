@@ -7,4 +7,6 @@
 # new environment variables
 
 # modified environment variables
-export PWD='/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build'
+export LD_LIBRARY_PATH='/opt/ros/noetic/share/euslisp/jskeus/eus//Linux64/lib:/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib:/opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu:/opt/ros/noetic/share/euslisp/jskeus/eus//Linux64/lib:/opt/ros/noetic/share/euslisp/jskeus/eus//Linux64/lib:/opt/ros/noetic/share/euslisp/jskeus/eus//Linux64/lib'
+export PATH='/opt/ros/noetic/share/euslisp/jskeus/eus//Linux64/bin:/opt/ros/noetic/bin:/opt/ros/noetic/share/euslisp/jskeus/eus//Linux64/bin:/opt/ros/noetic/share/euslisp/jskeus/eus//Linux64/bin:/opt/ros/noetic/share/euslisp/jskeus/eus//Linux64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'
+export PWD='/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build'
