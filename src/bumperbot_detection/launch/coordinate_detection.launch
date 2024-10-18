@@ -12,4 +12,8 @@
         <param name="camera_frame"  value="dpcamera_link_optical"  />
     </node>
 
+    <node pkg="bumperbot_detection" type="litter_memory_node" name="litter_memory_node" >
+        <param name="distance_threshold" value="10" />
+    </node>
+
 </launch>

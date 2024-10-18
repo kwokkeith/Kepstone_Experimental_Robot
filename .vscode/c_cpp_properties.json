@@ -11,7 +11,10 @@
                 "${workspaceFolder}/src/bumperbot_utils/include",
                 "${workspaceFolder}/src/bumperbot_localization/include",
                 "${workspaceFolder}/src/navigation/include",
-                "${workspaceFolder}/src/bumperbot_detection/include"
+                "${workspaceFolder}/src/bumperbot_detection/include",
+                "${workspaceFolder}/devel/include",
+                "${workspaceFolder}/devel/include",
+                "${workspaceFolder}/devel/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

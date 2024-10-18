@@ -34,24 +34,25 @@ void LitterCoordinateTransformer::litterCoordinatesCallback(const geometry_msgs:
         // Lookup the transform from camera_frame to base_footprint
         geometry_msgs::TransformStamped transform_stamped = tf_buffer_.lookupTransform(base_frame_, camera_frame_, ros::Time(0), ros::Duration(1.0));
 
-        // Drop the rotation segment of the transform by setting the rotation to identity (no rotation)
-        transform_stamped.transform.rotation.x = 0.0;
-        transform_stamped.transform.rotation.y = 0.0;
-        transform_stamped.transform.rotation.z = 0.0;
-        transform_stamped.transform.rotation.w = 1.0;
-
-        // Transform the litter point to the base_footprint frame
+        // Drop the rotation segment by only using the translation part
         geometry_msgs::PointStamped litter_in_base_frame;
-        tf2::doTransform(*litter_point, litter_in_base_frame, transform_stamped);
+        litter_in_base_frame.header.frame_id = base_frame_;
+        litter_in_base_frame.header.stamp = litter_point->header.stamp;
 
-        // Extract x (side distance) and z (distance away)
+        // Apply translation from camera_frame to base_footprint
+        litter_in_base_frame.point.x = litter_point->point.x + transform_stamped.transform.translation.x;
+        litter_in_base_frame.point.y = litter_point->point.y + transform_stamped.transform.translation.y;
+        litter_in_base_frame.point.z = litter_point->point.z + transform_stamped.transform.translation.z;
+
+        // Extract x (side distance) and z (distance away) relative to base_footprint
         double x_side_distance = litter_in_base_frame.point.x;
         double z_distance_away = litter_in_base_frame.point.z;
 
         // Log the transformed coordinates
-        ROS_INFO("Litter coordinates (base_footprint): x = %.2f, z = %.2f", x_side_distance, z_distance_away);
+        ROS_INFO("Litter coordinates (base_footprint): x = %.2f, y = %.2f, z = %.2f", 
+                 litter_in_base_frame.point.x, litter_in_base_frame.point.y, litter_in_base_frame.point.z);
 
-        // Publisj the litter coordinates in base frame
+        // Publish the litter coordinates in base frame
         litter_coord_base_frame_pub_.publish(litter_in_base_frame);
     }
     catch (tf2::TransformException& ex)

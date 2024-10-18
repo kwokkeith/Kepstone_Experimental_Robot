@@ -14,23 +14,29 @@ find_package(catkin REQUIRED COMPONENTS
 
 find_package(Eigen3 REQUIRED)
 
-# add_message_files(
-#   FILES
-# )
+# Add message files
+add_message_files(
+  FILES
+  LitterList.msg
+  LitterPoint.msg
+)
 
-# add_service_files(
-#   FILES
-# )
+add_service_files(
+  FILES
+  DeleteLitter.srv
+)
 
 ################################################
 ## Declare ROS messages, services and actions ##
 ################################################
 
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs
-#   geometry_msgs
-# )
+# Generate added messages
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+  geometry_msgs
+)
+
 
 ###################################
 ## catkin specific configuration ##
@@ -74,15 +80,19 @@ include_directories(
 #   ${EIGEN3_LIBRARIES} 
 # )
 
-add_executable(coordinate_subscriber nodes/coordinate_subscriber.cpp)
-target_link_libraries(coordinate_subscriber ${catkin_LIBRARIES})
-
+# Litter Coordinate Transformer Publisher library (Camera frame to base frame)
 add_library(litter_coordinate_transformer_publisher src/litter_coordinate_transformer.cpp)
 add_dependencies(litter_coordinate_transformer_publisher ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(litter_coordinate_transformer_publisher ${catkin_LIBRARIES})
 
+# Litter Coordinate Transformer Publisher NODE 
 add_executable(litter_coordinate_transformer_publisher_node nodes/litter_coordinate_transformer_publisher.cpp)
-target_link_libraries(litter_coordinate_transformer_publisher_node 
-  litter_coordinate_transformer_publisher
-  ${catkin_LIBRARIES}
-)
+target_link_libraries(litter_coordinate_transformer_publisher_node litter_coordinate_transformer_publisher ${catkin_LIBRARIES})
+
+# Litter memory node
+add_executable(litter_memory_node nodes/litter_memory_node.cpp)
+target_link_libraries(litter_memory_node ${catkin_LIBRARIES})
+
+# Litter Coordinate subscriber 
+add_executable(litter_coordinate_subscriber nodes/litter_coordinate_subscriber.cpp)
+target_link_libraries(litter_coordinate_subscriber ${catkin_LIBRARIES})
