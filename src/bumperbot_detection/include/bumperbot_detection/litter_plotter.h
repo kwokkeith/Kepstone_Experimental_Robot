@@ -14,11 +14,14 @@ public:
     // Callback function to handle received litter points and convert them to markers
     void litterCallback(const bumperbot_detection::LitterList::ConstPtr& msg);
 
+    // Make this public so it can be accessed in the main function
+    ros::Publisher marker_pub_;
+    visualization_msgs::MarkerArray marker_array_;
+
 private:
     ros::NodeHandle nh_;  
     ros::Subscriber litter_sub_;  // Subscriber to the LitterList topic
-    ros::Publisher marker_pub_;   // Publisher for markers to be visualized
-
+    
     // Variables to store marker configuration
     std::string marker_namespace_;
     geometry_msgs::Vector3 marker_scale_;

@@ -27,55 +27,65 @@ LitterPlotter::LitterPlotter()
     litter_sub_ = nh_.subscribe("litter_memory", 10, &LitterPlotter::litterCallback, this);
     
     // Publisher for marker to be visualized
+    // marker_pub_ = nh_.advertise<visualization_msgs::MarkerArray>("litter_markers", 10);
     marker_pub_ = nh_.advertise<visualization_msgs::MarkerArray>("litter_markers", 10);
 }
 
-// Callback to process the litter points and convert them to markers for RVIZ
 void LitterPlotter::litterCallback(const bumperbot_detection::LitterList::ConstPtr& msg)
 {
-    // Create a MarkerArray
-    visualization_msgs::MarkerArray marker_array;
+    marker_array_.markers.clear();  // Clear previous markers
 
-    // Create markers for each litter point
     for (size_t i = 0; i < msg->litter_points.size(); ++i)
     {
         const auto& litter_point = msg->litter_points[i];
-        
+
         visualization_msgs::Marker marker;
         marker.header.frame_id = litter_point.header.frame_id;
         marker.header.stamp = ros::Time::now();
-        marker.ns = "litter_markers";
-        marker.id = litter_point.id;                        // Unique ID for each marker
+        marker.ns = marker_namespace_;
+        marker.id = litter_point.id;
         marker.type = visualization_msgs::Marker::SPHERE;
         marker.action = visualization_msgs::Marker::ADD;
-        marker.pose.position = litter_point.point;          // Set the position to the litter point
-        marker.pose.position.z = 0.0;                       // Default z to 0
-        marker.pose.orientation.w = 1.0;                    // Default orientation
-        marker.lifetime = ros::Duration(0);                 // Set 0 to display marker indefinitely
+        marker.pose.position = litter_point.point;
+        marker.pose.position.z = 0.0;  // Set z to 0 if needed
+        marker.pose.orientation.w = 1.0;
+        marker.lifetime = ros::Duration(0);
 
-         // Apply scale from marker config
-        marker.scale.x = 0.001;
-        marker.scale.y = 0.001;
-        marker.scale.z = 0.001;
+        // Set the scale
+        marker.scale.x = marker_scale_.x;
+        marker.scale.y = marker_scale_.y;
+        marker.scale.z = marker_scale_.z;
 
-        // Apply color from marker config
-        marker.color.r = 1.0f;
-        marker.color.g = 0.0f;
-        marker.color.b = 0.0f;
-        marker.color.a = 1.0;
+        // Set the color
+        marker.color.r = marker_color_.r;
+        marker.color.g = marker_color_.g;
+        marker.color.b = marker_color_.b;
+        marker.color.a = marker_color_.a;
 
-        marker_array.markers.push_back(marker); // Add the marker to the array
+        marker_array_.markers.push_back(marker);  // Store markers
     }
 
-    // Publish the marker array
-    marker_pub_.publish(marker_array);
+    // Publish the marker array immediately
+    marker_pub_.publish(marker_array_);
 }
+
 
 int main(int argc, char** argv)
 {
     ros::init(argc, argv, "rviz_litter_plotter");
 
     LitterPlotter plotter;
+
+    ros::Rate loop_rate(10);
+
+    while (ros::ok())
+    {
+        // Publish the stored marker array continuously
+        plotter.marker_pub_.publish(plotter.marker_array_);
+
+        ros::spinOnce();  // Handle callbacks (like litterCallback)
+        loop_rate.sleep(); // Sleep to maintain the loop rate
+    }
 
     ros::spin();
 
