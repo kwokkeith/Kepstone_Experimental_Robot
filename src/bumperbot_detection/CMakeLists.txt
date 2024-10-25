@@ -95,6 +95,7 @@ target_link_libraries(litter_coordinate_transformer_publisher_node litter_coordi
 
 # Litter memory node
 add_executable(litter_memory_node nodes/litter_memory_node.cpp)
+add_dependencies(litter_memory_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(litter_memory_node ${catkin_LIBRARIES})
 
 # Litter Coordinate subscriber 

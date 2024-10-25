@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src
+CMAKE_SOURCE_DIR = /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build
+CMAKE_BINARY_DIR = /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -137,14 +137,14 @@ install/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/CMakeFiles /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/navigation/CMakeFiles/progress.marks
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/CMakeFiles 0
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/CMakeFiles /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/navigation/CMakeFiles/progress.marks
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/clean
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/clean
 .PHONY : clean
 
 # The main clean target
@@ -154,22 +154,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/preinstall
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/preinstall
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 navigation/CMakeFiles/navigation_generate_messages_eus.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/navigation_generate_messages_eus.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/navigation_generate_messages_eus.dir/rule
 .PHONY : navigation/CMakeFiles/navigation_generate_messages_eus.dir/rule
 
 # Convenience name for target.
@@ -179,12 +179,12 @@ navigation_generate_messages_eus: navigation/CMakeFiles/navigation_generate_mess
 
 # fast build rule for target.
 navigation_generate_messages_eus/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/navigation_generate_messages_eus.dir/build.make navigation/CMakeFiles/navigation_generate_messages_eus.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/navigation_generate_messages_eus.dir/build.make navigation/CMakeFiles/navigation_generate_messages_eus.dir/build
 .PHONY : navigation_generate_messages_eus/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/navigation_generate_messages_cpp.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/navigation_generate_messages_cpp.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/navigation_generate_messages_cpp.dir/rule
 .PHONY : navigation/CMakeFiles/navigation_generate_messages_cpp.dir/rule
 
 # Convenience name for target.
@@ -194,12 +194,12 @@ navigation_generate_messages_cpp: navigation/CMakeFiles/navigation_generate_mess
 
 # fast build rule for target.
 navigation_generate_messages_cpp/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/navigation_generate_messages_cpp.dir/build.make navigation/CMakeFiles/navigation_generate_messages_cpp.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/navigation_generate_messages_cpp.dir/build.make navigation/CMakeFiles/navigation_generate_messages_cpp.dir/build
 .PHONY : navigation_generate_messages_cpp/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/navigation_gencpp.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/navigation_gencpp.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/navigation_gencpp.dir/rule
 .PHONY : navigation/CMakeFiles/navigation_gencpp.dir/rule
 
 # Convenience name for target.
@@ -209,12 +209,12 @@ navigation_gencpp: navigation/CMakeFiles/navigation_gencpp.dir/rule
 
 # fast build rule for target.
 navigation_gencpp/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/navigation_gencpp.dir/build.make navigation/CMakeFiles/navigation_gencpp.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/navigation_gencpp.dir/build.make navigation/CMakeFiles/navigation_gencpp.dir/build
 .PHONY : navigation_gencpp/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/pixel_position_publisher.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/pixel_position_publisher.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/pixel_position_publisher.dir/rule
 .PHONY : navigation/CMakeFiles/pixel_position_publisher.dir/rule
 
 # Convenience name for target.
@@ -224,12 +224,12 @@ pixel_position_publisher: navigation/CMakeFiles/pixel_position_publisher.dir/rul
 
 # fast build rule for target.
 pixel_position_publisher/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/pixel_position_publisher.dir/build.make navigation/CMakeFiles/pixel_position_publisher.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/pixel_position_publisher.dir/build.make navigation/CMakeFiles/pixel_position_publisher.dir/build
 .PHONY : pixel_position_publisher/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/pixel_position_publisher_node.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/pixel_position_publisher_node.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/pixel_position_publisher_node.dir/rule
 .PHONY : navigation/CMakeFiles/pixel_position_publisher_node.dir/rule
 
 # Convenience name for target.
@@ -239,12 +239,12 @@ pixel_position_publisher_node: navigation/CMakeFiles/pixel_position_publisher_no
 
 # fast build rule for target.
 pixel_position_publisher_node/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/pixel_position_publisher_node.dir/build.make navigation/CMakeFiles/pixel_position_publisher_node.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/pixel_position_publisher_node.dir/build.make navigation/CMakeFiles/pixel_position_publisher_node.dir/build
 .PHONY : pixel_position_publisher_node/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetAmclPose.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetAmclPose.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetAmclPose.dir/rule
 .PHONY : navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetAmclPose.dir/rule
 
 # Convenience name for target.
@@ -254,12 +254,12 @@ _navigation_generate_messages_check_deps_GetAmclPose: navigation/CMakeFiles/_nav
 
 # fast build rule for target.
 _navigation_generate_messages_check_deps_GetAmclPose/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetAmclPose.dir/build.make navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetAmclPose.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetAmclPose.dir/build.make navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetAmclPose.dir/build
 .PHONY : _navigation_generate_messages_check_deps_GetAmclPose/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelToMap.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelToMap.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelToMap.dir/rule
 .PHONY : navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelToMap.dir/rule
 
 # Convenience name for target.
@@ -269,12 +269,12 @@ _navigation_generate_messages_check_deps_ConvertPixelToMap: navigation/CMakeFile
 
 # fast build rule for target.
 _navigation_generate_messages_check_deps_ConvertPixelToMap/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelToMap.dir/build.make navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelToMap.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelToMap.dir/build.make navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelToMap.dir/build
 .PHONY : _navigation_generate_messages_check_deps_ConvertPixelToMap/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/move_base_msgs_generate_messages_py.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/move_base_msgs_generate_messages_py.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/move_base_msgs_generate_messages_py.dir/rule
 .PHONY : navigation/CMakeFiles/move_base_msgs_generate_messages_py.dir/rule
 
 # Convenience name for target.
@@ -284,12 +284,12 @@ move_base_msgs_generate_messages_py: navigation/CMakeFiles/move_base_msgs_genera
 
 # fast build rule for target.
 move_base_msgs_generate_messages_py/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/move_base_msgs_generate_messages_py.dir/build.make navigation/CMakeFiles/move_base_msgs_generate_messages_py.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/move_base_msgs_generate_messages_py.dir/build.make navigation/CMakeFiles/move_base_msgs_generate_messages_py.dir/build
 .PHONY : move_base_msgs_generate_messages_py/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/send_waypoints_to_navstack.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/send_waypoints_to_navstack.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/send_waypoints_to_navstack.dir/rule
 .PHONY : navigation/CMakeFiles/send_waypoints_to_navstack.dir/rule
 
 # Convenience name for target.
@@ -299,12 +299,12 @@ send_waypoints_to_navstack: navigation/CMakeFiles/send_waypoints_to_navstack.dir
 
 # fast build rule for target.
 send_waypoints_to_navstack/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack.dir/build
 .PHONY : send_waypoints_to_navstack/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetPixelPose.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetPixelPose.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetPixelPose.dir/rule
 .PHONY : navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetPixelPose.dir/rule
 
 # Convenience name for target.
@@ -314,12 +314,12 @@ _navigation_generate_messages_check_deps_GetPixelPose: navigation/CMakeFiles/_na
 
 # fast build rule for target.
 _navigation_generate_messages_check_deps_GetPixelPose/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetPixelPose.dir/build.make navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetPixelPose.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetPixelPose.dir/build.make navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetPixelPose.dir/build
 .PHONY : _navigation_generate_messages_check_deps_GetPixelPose/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/navigation_gennodejs.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/navigation_gennodejs.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/navigation_gennodejs.dir/rule
 .PHONY : navigation/CMakeFiles/navigation_gennodejs.dir/rule
 
 # Convenience name for target.
@@ -329,12 +329,12 @@ navigation_gennodejs: navigation/CMakeFiles/navigation_gennodejs.dir/rule
 
 # fast build rule for target.
 navigation_gennodejs/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/navigation_gennodejs.dir/build.make navigation/CMakeFiles/navigation_gennodejs.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/navigation_gennodejs.dir/build.make navigation/CMakeFiles/navigation_gennodejs.dir/build
 .PHONY : navigation_gennodejs/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/navigation_generate_messages.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/navigation_generate_messages.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/navigation_generate_messages.dir/rule
 .PHONY : navigation/CMakeFiles/navigation_generate_messages.dir/rule
 
 # Convenience name for target.
@@ -344,12 +344,12 @@ navigation_generate_messages: navigation/CMakeFiles/navigation_generate_messages
 
 # fast build rule for target.
 navigation_generate_messages/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/navigation_generate_messages.dir/build.make navigation/CMakeFiles/navigation_generate_messages.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/navigation_generate_messages.dir/build.make navigation/CMakeFiles/navigation_generate_messages.dir/build
 .PHONY : navigation_generate_messages/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/navigation_genpy.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/navigation_genpy.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/navigation_genpy.dir/rule
 .PHONY : navigation/CMakeFiles/navigation_genpy.dir/rule
 
 # Convenience name for target.
@@ -359,12 +359,12 @@ navigation_genpy: navigation/CMakeFiles/navigation_genpy.dir/rule
 
 # fast build rule for target.
 navigation_genpy/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/navigation_genpy.dir/build.make navigation/CMakeFiles/navigation_genpy.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/navigation_genpy.dir/build.make navigation/CMakeFiles/navigation_genpy.dir/build
 .PHONY : navigation_genpy/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/move_base_msgs_generate_messages_eus.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/move_base_msgs_generate_messages_eus.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/move_base_msgs_generate_messages_eus.dir/rule
 .PHONY : navigation/CMakeFiles/move_base_msgs_generate_messages_eus.dir/rule
 
 # Convenience name for target.
@@ -374,12 +374,12 @@ move_base_msgs_generate_messages_eus: navigation/CMakeFiles/move_base_msgs_gener
 
 # fast build rule for target.
 move_base_msgs_generate_messages_eus/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/move_base_msgs_generate_messages_eus.dir/build.make navigation/CMakeFiles/move_base_msgs_generate_messages_eus.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/move_base_msgs_generate_messages_eus.dir/build.make navigation/CMakeFiles/move_base_msgs_generate_messages_eus.dir/build
 .PHONY : move_base_msgs_generate_messages_eus/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/move_base_msgs_generate_messages_cpp.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/move_base_msgs_generate_messages_cpp.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/move_base_msgs_generate_messages_cpp.dir/rule
 .PHONY : navigation/CMakeFiles/move_base_msgs_generate_messages_cpp.dir/rule
 
 # Convenience name for target.
@@ -389,12 +389,12 @@ move_base_msgs_generate_messages_cpp: navigation/CMakeFiles/move_base_msgs_gener
 
 # fast build rule for target.
 move_base_msgs_generate_messages_cpp/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/move_base_msgs_generate_messages_cpp.dir/build.make navigation/CMakeFiles/move_base_msgs_generate_messages_cpp.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/move_base_msgs_generate_messages_cpp.dir/build.make navigation/CMakeFiles/move_base_msgs_generate_messages_cpp.dir/build
 .PHONY : move_base_msgs_generate_messages_cpp/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/rule
 .PHONY : navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/rule
 
 # Convenience name for target.
@@ -404,12 +404,12 @@ move_base_msgs_generate_messages_nodejs: navigation/CMakeFiles/move_base_msgs_ge
 
 # fast build rule for target.
 move_base_msgs_generate_messages_nodejs/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/build.make navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/build.make navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/build
 .PHONY : move_base_msgs_generate_messages_nodejs/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/get_pixel_pose_server_node.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/get_pixel_pose_server_node.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/get_pixel_pose_server_node.dir/rule
 .PHONY : navigation/CMakeFiles/get_pixel_pose_server_node.dir/rule
 
 # Convenience name for target.
@@ -419,12 +419,12 @@ get_pixel_pose_server_node: navigation/CMakeFiles/get_pixel_pose_server_node.dir
 
 # fast build rule for target.
 get_pixel_pose_server_node/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/get_pixel_pose_server_node.dir/build.make navigation/CMakeFiles/get_pixel_pose_server_node.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/get_pixel_pose_server_node.dir/build.make navigation/CMakeFiles/get_pixel_pose_server_node.dir/build
 .PHONY : get_pixel_pose_server_node/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/navigation_geneus.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/navigation_geneus.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/navigation_geneus.dir/rule
 .PHONY : navigation/CMakeFiles/navigation_geneus.dir/rule
 
 # Convenience name for target.
@@ -434,12 +434,12 @@ navigation_geneus: navigation/CMakeFiles/navigation_geneus.dir/rule
 
 # fast build rule for target.
 navigation_geneus/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/navigation_geneus.dir/build.make navigation/CMakeFiles/navigation_geneus.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/navigation_geneus.dir/build.make navigation/CMakeFiles/navigation_geneus.dir/build
 .PHONY : navigation_geneus/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/navigation_genlisp.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/navigation_genlisp.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/navigation_genlisp.dir/rule
 .PHONY : navigation/CMakeFiles/navigation_genlisp.dir/rule
 
 # Convenience name for target.
@@ -449,12 +449,12 @@ navigation_genlisp: navigation/CMakeFiles/navigation_genlisp.dir/rule
 
 # fast build rule for target.
 navigation_genlisp/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/navigation_genlisp.dir/build.make navigation/CMakeFiles/navigation_genlisp.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/navigation_genlisp.dir/build.make navigation/CMakeFiles/navigation_genlisp.dir/build
 .PHONY : navigation_genlisp/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/navigation_generate_messages_py.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/navigation_generate_messages_py.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/navigation_generate_messages_py.dir/rule
 .PHONY : navigation/CMakeFiles/navigation_generate_messages_py.dir/rule
 
 # Convenience name for target.
@@ -464,12 +464,12 @@ navigation_generate_messages_py: navigation/CMakeFiles/navigation_generate_messa
 
 # fast build rule for target.
 navigation_generate_messages_py/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/navigation_generate_messages_py.dir/build.make navigation/CMakeFiles/navigation_generate_messages_py.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/navigation_generate_messages_py.dir/build.make navigation/CMakeFiles/navigation_generate_messages_py.dir/build
 .PHONY : navigation_generate_messages_py/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/navigation_generate_messages_nodejs.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/navigation_generate_messages_nodejs.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/navigation_generate_messages_nodejs.dir/rule
 .PHONY : navigation/CMakeFiles/navigation_generate_messages_nodejs.dir/rule
 
 # Convenience name for target.
@@ -479,12 +479,12 @@ navigation_generate_messages_nodejs: navigation/CMakeFiles/navigation_generate_m
 
 # fast build rule for target.
 navigation_generate_messages_nodejs/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/navigation_generate_messages_nodejs.dir/build.make navigation/CMakeFiles/navigation_generate_messages_nodejs.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/navigation_generate_messages_nodejs.dir/build.make navigation/CMakeFiles/navigation_generate_messages_nodejs.dir/build
 .PHONY : navigation_generate_messages_nodejs/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap.dir/rule
 .PHONY : navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap.dir/rule
 
 # Convenience name for target.
@@ -494,12 +494,12 @@ _navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap: navigation/
 
 # fast build rule for target.
 _navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap.dir/build.make navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap.dir/build.make navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap.dir/build
 .PHONY : _navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/get_amcl_pose_server_node.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/get_amcl_pose_server_node.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/get_amcl_pose_server_node.dir/rule
 .PHONY : navigation/CMakeFiles/get_amcl_pose_server_node.dir/rule
 
 # Convenience name for target.
@@ -509,12 +509,12 @@ get_amcl_pose_server_node: navigation/CMakeFiles/get_amcl_pose_server_node.dir/r
 
 # fast build rule for target.
 get_amcl_pose_server_node/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/get_amcl_pose_server_node.dir/build.make navigation/CMakeFiles/get_amcl_pose_server_node.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/get_amcl_pose_server_node.dir/build.make navigation/CMakeFiles/get_amcl_pose_server_node.dir/build
 .PHONY : get_amcl_pose_server_node/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/navigation_generate_messages_lisp.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/navigation_generate_messages_lisp.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/navigation_generate_messages_lisp.dir/rule
 .PHONY : navigation/CMakeFiles/navigation_generate_messages_lisp.dir/rule
 
 # Convenience name for target.
@@ -524,12 +524,12 @@ navigation_generate_messages_lisp: navigation/CMakeFiles/navigation_generate_mes
 
 # fast build rule for target.
 navigation_generate_messages_lisp/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/navigation_generate_messages_lisp.dir/build.make navigation/CMakeFiles/navigation_generate_messages_lisp.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/navigation_generate_messages_lisp.dir/build.make navigation/CMakeFiles/navigation_generate_messages_lisp.dir/build
 .PHONY : navigation_generate_messages_lisp/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/rule
 .PHONY : navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/rule
 
 # Convenience name for target.
@@ -539,12 +539,12 @@ convert_pixel_to_map_server_node: navigation/CMakeFiles/convert_pixel_to_map_ser
 
 # fast build rule for target.
 convert_pixel_to_map_server_node/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/build
 .PHONY : convert_pixel_to_map_server_node/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/move_base_msgs_generate_messages_lisp.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/move_base_msgs_generate_messages_lisp.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/move_base_msgs_generate_messages_lisp.dir/rule
 .PHONY : navigation/CMakeFiles/move_base_msgs_generate_messages_lisp.dir/rule
 
 # Convenience name for target.
@@ -554,12 +554,12 @@ move_base_msgs_generate_messages_lisp: navigation/CMakeFiles/move_base_msgs_gene
 
 # fast build rule for target.
 move_base_msgs_generate_messages_lisp/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/move_base_msgs_generate_messages_lisp.dir/build.make navigation/CMakeFiles/move_base_msgs_generate_messages_lisp.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/move_base_msgs_generate_messages_lisp.dir/build.make navigation/CMakeFiles/move_base_msgs_generate_messages_lisp.dir/build
 .PHONY : move_base_msgs_generate_messages_lisp/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/rule
 .PHONY : navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/rule
 
 # Convenience name for target.
@@ -569,12 +569,12 @@ convert_pixel_waypoints_to_map_waypoints_server_node: navigation/CMakeFiles/conv
 
 # fast build rule for target.
 convert_pixel_waypoints_to_map_waypoints_server_node/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/build
 .PHONY : convert_pixel_waypoints_to_map_waypoints_server_node/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/rule
 .PHONY : navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/rule
 
 # Convenience name for target.
@@ -584,12 +584,12 @@ send_waypoints_to_navstack_node: navigation/CMakeFiles/send_waypoints_to_navstac
 
 # fast build rule for target.
 send_waypoints_to_navstack_node/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/build
 .PHONY : send_waypoints_to_navstack_node/fast
 
 # Convenience name for target.
 navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/rule
 .PHONY : navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/rule
 
 # Convenience name for target.
@@ -599,7 +599,7 @@ waypoint_plotter_publisher_node: navigation/CMakeFiles/waypoint_plotter_publishe
 
 # fast build rule for target.
 waypoint_plotter_publisher_node/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/build.make navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/build.make navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/build
 .PHONY : waypoint_plotter_publisher_node/fast
 
 nodes/pixel_position_publisher_node.o: nodes/pixel_position_publisher_node.cpp.o
@@ -608,7 +608,7 @@ nodes/pixel_position_publisher_node.o: nodes/pixel_position_publisher_node.cpp.o
 
 # target to build an object file
 nodes/pixel_position_publisher_node.cpp.o:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/pixel_position_publisher_node.dir/build.make navigation/CMakeFiles/pixel_position_publisher_node.dir/nodes/pixel_position_publisher_node.cpp.o
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/pixel_position_publisher_node.dir/build.make navigation/CMakeFiles/pixel_position_publisher_node.dir/nodes/pixel_position_publisher_node.cpp.o
 .PHONY : nodes/pixel_position_publisher_node.cpp.o
 
 nodes/pixel_position_publisher_node.i: nodes/pixel_position_publisher_node.cpp.i
@@ -617,7 +617,7 @@ nodes/pixel_position_publisher_node.i: nodes/pixel_position_publisher_node.cpp.i
 
 # target to preprocess a source file
 nodes/pixel_position_publisher_node.cpp.i:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/pixel_position_publisher_node.dir/build.make navigation/CMakeFiles/pixel_position_publisher_node.dir/nodes/pixel_position_publisher_node.cpp.i
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/pixel_position_publisher_node.dir/build.make navigation/CMakeFiles/pixel_position_publisher_node.dir/nodes/pixel_position_publisher_node.cpp.i
 .PHONY : nodes/pixel_position_publisher_node.cpp.i
 
 nodes/pixel_position_publisher_node.s: nodes/pixel_position_publisher_node.cpp.s
@@ -626,7 +626,7 @@ nodes/pixel_position_publisher_node.s: nodes/pixel_position_publisher_node.cpp.s
 
 # target to generate assembly for a file
 nodes/pixel_position_publisher_node.cpp.s:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/pixel_position_publisher_node.dir/build.make navigation/CMakeFiles/pixel_position_publisher_node.dir/nodes/pixel_position_publisher_node.cpp.s
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/pixel_position_publisher_node.dir/build.make navigation/CMakeFiles/pixel_position_publisher_node.dir/nodes/pixel_position_publisher_node.cpp.s
 .PHONY : nodes/pixel_position_publisher_node.cpp.s
 
 nodes/send_waypoints_node.o: nodes/send_waypoints_node.cpp.o
@@ -635,7 +635,7 @@ nodes/send_waypoints_node.o: nodes/send_waypoints_node.cpp.o
 
 # target to build an object file
 nodes/send_waypoints_node.cpp.o:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/nodes/send_waypoints_node.cpp.o
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/nodes/send_waypoints_node.cpp.o
 .PHONY : nodes/send_waypoints_node.cpp.o
 
 nodes/send_waypoints_node.i: nodes/send_waypoints_node.cpp.i
@@ -644,7 +644,7 @@ nodes/send_waypoints_node.i: nodes/send_waypoints_node.cpp.i
 
 # target to preprocess a source file
 nodes/send_waypoints_node.cpp.i:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/nodes/send_waypoints_node.cpp.i
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/nodes/send_waypoints_node.cpp.i
 .PHONY : nodes/send_waypoints_node.cpp.i
 
 nodes/send_waypoints_node.s: nodes/send_waypoints_node.cpp.s
@@ -653,7 +653,7 @@ nodes/send_waypoints_node.s: nodes/send_waypoints_node.cpp.s
 
 # target to generate assembly for a file
 nodes/send_waypoints_node.cpp.s:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/nodes/send_waypoints_node.cpp.s
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack_node.dir/nodes/send_waypoints_node.cpp.s
 .PHONY : nodes/send_waypoints_node.cpp.s
 
 src/convert_pixel_to_map_server.o: src/convert_pixel_to_map_server.cpp.o
@@ -662,7 +662,7 @@ src/convert_pixel_to_map_server.o: src/convert_pixel_to_map_server.cpp.o
 
 # target to build an object file
 src/convert_pixel_to_map_server.cpp.o:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/src/convert_pixel_to_map_server.cpp.o
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/src/convert_pixel_to_map_server.cpp.o
 .PHONY : src/convert_pixel_to_map_server.cpp.o
 
 src/convert_pixel_to_map_server.i: src/convert_pixel_to_map_server.cpp.i
@@ -671,7 +671,7 @@ src/convert_pixel_to_map_server.i: src/convert_pixel_to_map_server.cpp.i
 
 # target to preprocess a source file
 src/convert_pixel_to_map_server.cpp.i:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/src/convert_pixel_to_map_server.cpp.i
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/src/convert_pixel_to_map_server.cpp.i
 .PHONY : src/convert_pixel_to_map_server.cpp.i
 
 src/convert_pixel_to_map_server.s: src/convert_pixel_to_map_server.cpp.s
@@ -680,7 +680,7 @@ src/convert_pixel_to_map_server.s: src/convert_pixel_to_map_server.cpp.s
 
 # target to generate assembly for a file
 src/convert_pixel_to_map_server.cpp.s:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/src/convert_pixel_to_map_server.cpp.s
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/src/convert_pixel_to_map_server.cpp.s
 .PHONY : src/convert_pixel_to_map_server.cpp.s
 
 src/convert_pixels_to_mapwaypoints_server.o: src/convert_pixels_to_mapwaypoints_server.cpp.o
@@ -689,7 +689,7 @@ src/convert_pixels_to_mapwaypoints_server.o: src/convert_pixels_to_mapwaypoints_
 
 # target to build an object file
 src/convert_pixels_to_mapwaypoints_server.cpp.o:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/src/convert_pixels_to_mapwaypoints_server.cpp.o
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/src/convert_pixels_to_mapwaypoints_server.cpp.o
 .PHONY : src/convert_pixels_to_mapwaypoints_server.cpp.o
 
 src/convert_pixels_to_mapwaypoints_server.i: src/convert_pixels_to_mapwaypoints_server.cpp.i
@@ -698,7 +698,7 @@ src/convert_pixels_to_mapwaypoints_server.i: src/convert_pixels_to_mapwaypoints_
 
 # target to preprocess a source file
 src/convert_pixels_to_mapwaypoints_server.cpp.i:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/src/convert_pixels_to_mapwaypoints_server.cpp.i
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/src/convert_pixels_to_mapwaypoints_server.cpp.i
 .PHONY : src/convert_pixels_to_mapwaypoints_server.cpp.i
 
 src/convert_pixels_to_mapwaypoints_server.s: src/convert_pixels_to_mapwaypoints_server.cpp.s
@@ -707,7 +707,7 @@ src/convert_pixels_to_mapwaypoints_server.s: src/convert_pixels_to_mapwaypoints_
 
 # target to generate assembly for a file
 src/convert_pixels_to_mapwaypoints_server.cpp.s:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/src/convert_pixels_to_mapwaypoints_server.cpp.s
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_waypoints_to_map_waypoints_server_node.dir/src/convert_pixels_to_mapwaypoints_server.cpp.s
 .PHONY : src/convert_pixels_to_mapwaypoints_server.cpp.s
 
 src/get_amcl_pose_server.o: src/get_amcl_pose_server.cpp.o
@@ -716,7 +716,7 @@ src/get_amcl_pose_server.o: src/get_amcl_pose_server.cpp.o
 
 # target to build an object file
 src/get_amcl_pose_server.cpp.o:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/get_amcl_pose_server_node.dir/build.make navigation/CMakeFiles/get_amcl_pose_server_node.dir/src/get_amcl_pose_server.cpp.o
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/get_amcl_pose_server_node.dir/build.make navigation/CMakeFiles/get_amcl_pose_server_node.dir/src/get_amcl_pose_server.cpp.o
 .PHONY : src/get_amcl_pose_server.cpp.o
 
 src/get_amcl_pose_server.i: src/get_amcl_pose_server.cpp.i
@@ -725,7 +725,7 @@ src/get_amcl_pose_server.i: src/get_amcl_pose_server.cpp.i
 
 # target to preprocess a source file
 src/get_amcl_pose_server.cpp.i:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/get_amcl_pose_server_node.dir/build.make navigation/CMakeFiles/get_amcl_pose_server_node.dir/src/get_amcl_pose_server.cpp.i
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/get_amcl_pose_server_node.dir/build.make navigation/CMakeFiles/get_amcl_pose_server_node.dir/src/get_amcl_pose_server.cpp.i
 .PHONY : src/get_amcl_pose_server.cpp.i
 
 src/get_amcl_pose_server.s: src/get_amcl_pose_server.cpp.s
@@ -734,7 +734,7 @@ src/get_amcl_pose_server.s: src/get_amcl_pose_server.cpp.s
 
 # target to generate assembly for a file
 src/get_amcl_pose_server.cpp.s:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/get_amcl_pose_server_node.dir/build.make navigation/CMakeFiles/get_amcl_pose_server_node.dir/src/get_amcl_pose_server.cpp.s
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/get_amcl_pose_server_node.dir/build.make navigation/CMakeFiles/get_amcl_pose_server_node.dir/src/get_amcl_pose_server.cpp.s
 .PHONY : src/get_amcl_pose_server.cpp.s
 
 src/get_pixel_pose_server.o: src/get_pixel_pose_server.cpp.o
@@ -743,7 +743,7 @@ src/get_pixel_pose_server.o: src/get_pixel_pose_server.cpp.o
 
 # target to build an object file
 src/get_pixel_pose_server.cpp.o:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/get_pixel_pose_server_node.dir/build.make navigation/CMakeFiles/get_pixel_pose_server_node.dir/src/get_pixel_pose_server.cpp.o
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/get_pixel_pose_server_node.dir/build.make navigation/CMakeFiles/get_pixel_pose_server_node.dir/src/get_pixel_pose_server.cpp.o
 .PHONY : src/get_pixel_pose_server.cpp.o
 
 src/get_pixel_pose_server.i: src/get_pixel_pose_server.cpp.i
@@ -752,7 +752,7 @@ src/get_pixel_pose_server.i: src/get_pixel_pose_server.cpp.i
 
 # target to preprocess a source file
 src/get_pixel_pose_server.cpp.i:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/get_pixel_pose_server_node.dir/build.make navigation/CMakeFiles/get_pixel_pose_server_node.dir/src/get_pixel_pose_server.cpp.i
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/get_pixel_pose_server_node.dir/build.make navigation/CMakeFiles/get_pixel_pose_server_node.dir/src/get_pixel_pose_server.cpp.i
 .PHONY : src/get_pixel_pose_server.cpp.i
 
 src/get_pixel_pose_server.s: src/get_pixel_pose_server.cpp.s
@@ -761,7 +761,7 @@ src/get_pixel_pose_server.s: src/get_pixel_pose_server.cpp.s
 
 # target to generate assembly for a file
 src/get_pixel_pose_server.cpp.s:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/get_pixel_pose_server_node.dir/build.make navigation/CMakeFiles/get_pixel_pose_server_node.dir/src/get_pixel_pose_server.cpp.s
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/get_pixel_pose_server_node.dir/build.make navigation/CMakeFiles/get_pixel_pose_server_node.dir/src/get_pixel_pose_server.cpp.s
 .PHONY : src/get_pixel_pose_server.cpp.s
 
 src/pixel_position_publisher.o: src/pixel_position_publisher.cpp.o
@@ -770,7 +770,7 @@ src/pixel_position_publisher.o: src/pixel_position_publisher.cpp.o
 
 # target to build an object file
 src/pixel_position_publisher.cpp.o:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/pixel_position_publisher.dir/build.make navigation/CMakeFiles/pixel_position_publisher.dir/src/pixel_position_publisher.cpp.o
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/pixel_position_publisher.dir/build.make navigation/CMakeFiles/pixel_position_publisher.dir/src/pixel_position_publisher.cpp.o
 .PHONY : src/pixel_position_publisher.cpp.o
 
 src/pixel_position_publisher.i: src/pixel_position_publisher.cpp.i
@@ -779,7 +779,7 @@ src/pixel_position_publisher.i: src/pixel_position_publisher.cpp.i
 
 # target to preprocess a source file
 src/pixel_position_publisher.cpp.i:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/pixel_position_publisher.dir/build.make navigation/CMakeFiles/pixel_position_publisher.dir/src/pixel_position_publisher.cpp.i
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/pixel_position_publisher.dir/build.make navigation/CMakeFiles/pixel_position_publisher.dir/src/pixel_position_publisher.cpp.i
 .PHONY : src/pixel_position_publisher.cpp.i
 
 src/pixel_position_publisher.s: src/pixel_position_publisher.cpp.s
@@ -788,7 +788,7 @@ src/pixel_position_publisher.s: src/pixel_position_publisher.cpp.s
 
 # target to generate assembly for a file
 src/pixel_position_publisher.cpp.s:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/pixel_position_publisher.dir/build.make navigation/CMakeFiles/pixel_position_publisher.dir/src/pixel_position_publisher.cpp.s
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/pixel_position_publisher.dir/build.make navigation/CMakeFiles/pixel_position_publisher.dir/src/pixel_position_publisher.cpp.s
 .PHONY : src/pixel_position_publisher.cpp.s
 
 src/send_waypoints_to_navstack.o: src/send_waypoints_to_navstack.cpp.o
@@ -797,7 +797,7 @@ src/send_waypoints_to_navstack.o: src/send_waypoints_to_navstack.cpp.o
 
 # target to build an object file
 src/send_waypoints_to_navstack.cpp.o:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack.dir/src/send_waypoints_to_navstack.cpp.o
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack.dir/src/send_waypoints_to_navstack.cpp.o
 .PHONY : src/send_waypoints_to_navstack.cpp.o
 
 src/send_waypoints_to_navstack.i: src/send_waypoints_to_navstack.cpp.i
@@ -806,7 +806,7 @@ src/send_waypoints_to_navstack.i: src/send_waypoints_to_navstack.cpp.i
 
 # target to preprocess a source file
 src/send_waypoints_to_navstack.cpp.i:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack.dir/src/send_waypoints_to_navstack.cpp.i
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack.dir/src/send_waypoints_to_navstack.cpp.i
 .PHONY : src/send_waypoints_to_navstack.cpp.i
 
 src/send_waypoints_to_navstack.s: src/send_waypoints_to_navstack.cpp.s
@@ -815,7 +815,7 @@ src/send_waypoints_to_navstack.s: src/send_waypoints_to_navstack.cpp.s
 
 # target to generate assembly for a file
 src/send_waypoints_to_navstack.cpp.s:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack.dir/src/send_waypoints_to_navstack.cpp.s
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/send_waypoints_to_navstack.dir/build.make navigation/CMakeFiles/send_waypoints_to_navstack.dir/src/send_waypoints_to_navstack.cpp.s
 .PHONY : src/send_waypoints_to_navstack.cpp.s
 
 src/waypoint_plotter.o: src/waypoint_plotter.cpp.o
@@ -824,7 +824,7 @@ src/waypoint_plotter.o: src/waypoint_plotter.cpp.o
 
 # target to build an object file
 src/waypoint_plotter.cpp.o:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/build.make navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/src/waypoint_plotter.cpp.o
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/build.make navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/src/waypoint_plotter.cpp.o
 .PHONY : src/waypoint_plotter.cpp.o
 
 src/waypoint_plotter.i: src/waypoint_plotter.cpp.i
@@ -833,7 +833,7 @@ src/waypoint_plotter.i: src/waypoint_plotter.cpp.i
 
 # target to preprocess a source file
 src/waypoint_plotter.cpp.i:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/build.make navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/src/waypoint_plotter.cpp.i
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/build.make navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/src/waypoint_plotter.cpp.i
 .PHONY : src/waypoint_plotter.cpp.i
 
 src/waypoint_plotter.s: src/waypoint_plotter.cpp.s
@@ -842,7 +842,7 @@ src/waypoint_plotter.s: src/waypoint_plotter.cpp.s
 
 # target to generate assembly for a file
 src/waypoint_plotter.cpp.s:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/build.make navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/src/waypoint_plotter.cpp.s
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/build.make navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/src/waypoint_plotter.cpp.s
 .PHONY : src/waypoint_plotter.cpp.s
 
 # Help Target
@@ -925,6 +925,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

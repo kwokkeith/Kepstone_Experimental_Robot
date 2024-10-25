@@ -1,0 +1,7 @@
+image: my_world_map3.pgm
+resolution: 0.05
+origin: [-7.500000, -7.500000, 0.000000] # Origin in metres!
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
+

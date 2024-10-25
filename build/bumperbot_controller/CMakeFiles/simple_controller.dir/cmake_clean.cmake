@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/libsimple_controller.pdb"
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/libsimple_controller.so"
+  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/libsimple_controller.pdb"
+  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/libsimple_controller.so"
   "CMakeFiles/simple_controller.dir/src/simple_controller.cpp.o"
 )
 
