@@ -39,6 +39,7 @@ public:
 
 private:
     ros::NodeHandle nh_;          
+    ros::NodeHandle pnh_;
     ros::Subscriber litter_sub_;  // Subscriber to litter points
     ros::Publisher litter_pub_;   // Publisher for remembered litter points
     ros::ServiceServer delete_litter_service_;  // Service to delete litter

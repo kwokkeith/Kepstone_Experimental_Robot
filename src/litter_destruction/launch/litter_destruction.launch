@@ -1,0 +1,3 @@
+<launch>
+    <node name="litter_destroy" pkg="litter_destruction" type="litter_destroy.py" output="screen" />
+</launch>

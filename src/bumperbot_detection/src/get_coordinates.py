@@ -113,7 +113,12 @@ class BallDetector:
 
         # Calculate and display FPS
         self.new_frame_time = rospy.Time.now().to_sec()
-        fps = 1 / (self.new_frame_time - self.prev_frame_time)
+
+        # Check for division by 0
+        if (self.new_frame_time - self.prev_frame_time) > 0:
+            fps = 1 / (self.new_frame_time - self.prev_frame_time)
+        else:
+            fps = 0  # Default value to avoid division by zero
         fps_text = str(int(fps))
         cv2.putText(image, fps_text, (20, 20), cv2.FONT_HERSHEY_SIMPLEX, 1, (100, 255, 0), 3, cv2.LINE_AA)
         self.prev_frame_time = self.new_frame_time

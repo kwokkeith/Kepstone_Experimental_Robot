@@ -3,10 +3,13 @@
 // Constructor to initialize the LitterMemory node
 LitterMemory::LitterMemory() 
    : current_id_(0),
+     pnh_("~"),
      tf_listener_(tf_buffer_)
 {
+    
     // Set distance threshold for filtering duplicates
-    nh_.param<double>("distance_threshold", distance_threshold_, 20.0);  // Load the distance threshold parameter
+    // TODO: Parameter not loading from launch file
+    pnh_.param<double>("distance_threshold", distance_threshold_, 5.0);  // Load the distance threshold parameter
 
     // Initialize the subscriber to get litter coordinates in base frame
     litter_sub_ = nh_.subscribe("base_frame/detected_object_coordinates", 10, &LitterMemory::litterCallback, this);
@@ -75,6 +78,7 @@ void LitterMemory::litterCallback(const geometry_msgs::PointStamped::ConstPtr& l
 
         // Perform the transformation to the map frame
         tf2::doTransform(*litter_point, litter_in_map_frame, transform_stamped);
+        ROS_DEBUG("Transformed litter point to map frame: x=%f, y=%f, z=%f", litter_in_map_frame.point.x, litter_in_map_frame.point.y, litter_in_map_frame.point.z);
     }
     catch (tf2::TransformException& ex)
     {

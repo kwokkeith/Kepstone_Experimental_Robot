@@ -418,6 +418,9 @@ bumperbot_description_SOURCE_DIR:STATIC=/home/keith/Documents/Capstone/Robot_Kep
 //Value Computed by CMake
 bumperbot_detection_BINARY_DIR:STATIC=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/bumperbot_detection
 
+//The directory containing a CMake configuration file for bumperbot_detection.
+bumperbot_detection_DIR:PATH=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/bumperbot_detection/cmake
+
 //Value Computed by CMake
 bumperbot_detection_SOURCE_DIR:STATIC=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/bumperbot_detection
 
@@ -519,10 +522,16 @@ gtest_main_LIB_DEPENDS:STATIC=general;gtest;
 kalman_filter_LIB_DEPENDS:STATIC=general;/opt/ros/noetic/lib/libroscpp.so;general;/usr/lib/x86_64-linux-gnu/libpthread.so;general;/usr/lib/x86_64-linux-gnu/libboost_chrono.so.1.71.0;general;/usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.71.0;general;/opt/ros/noetic/lib/librosconsole.so;general;/opt/ros/noetic/lib/librosconsole_log4cxx.so;general;/opt/ros/noetic/lib/librosconsole_backend_interface.so;general;/usr/lib/x86_64-linux-gnu/liblog4cxx.so;general;/usr/lib/x86_64-linux-gnu/libboost_regex.so.1.71.0;general;/opt/ros/noetic/lib/libxmlrpcpp.so;general;/opt/ros/noetic/lib/libroscpp_serialization.so;general;/opt/ros/noetic/lib/librostime.so;general;/usr/lib/x86_64-linux-gnu/libboost_date_time.so.1.71.0;general;/opt/ros/noetic/lib/libcpp_common.so;general;/usr/lib/x86_64-linux-gnu/libboost_system.so.1.71.0;general;/usr/lib/x86_64-linux-gnu/libboost_thread.so.1.71.0;general;/usr/lib/x86_64-linux-gnu/libconsole_bridge.so.0.4;
 
 //Path to a library.
-lib:FILEPATH=/usr/lib/liborocos-kdl.so
+lib:FILEPATH=/opt/ros/noetic/lib/libtf.so
 
 //Dependencies for the target
 litter_coordinate_transformer_publisher_LIB_DEPENDS:STATIC=general;/usr/lib/liborocos-kdl.so;general;/usr/lib/liborocos-kdl.so;general;/opt/ros/noetic/lib/libtf2_ros.so;general;/opt/ros/noetic/lib/libactionlib.so;general;/opt/ros/noetic/lib/libmessage_filters.so;general;/opt/ros/noetic/lib/libroscpp.so;general;/usr/lib/x86_64-linux-gnu/libpthread.so;general;/usr/lib/x86_64-linux-gnu/libboost_chrono.so.1.71.0;general;/usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.71.0;general;/opt/ros/noetic/lib/librosconsole.so;general;/opt/ros/noetic/lib/librosconsole_log4cxx.so;general;/opt/ros/noetic/lib/librosconsole_backend_interface.so;general;/usr/lib/x86_64-linux-gnu/liblog4cxx.so;general;/usr/lib/x86_64-linux-gnu/libboost_regex.so.1.71.0;general;/opt/ros/noetic/lib/libxmlrpcpp.so;general;/opt/ros/noetic/lib/libtf2.so;general;/opt/ros/noetic/lib/libroscpp_serialization.so;general;/opt/ros/noetic/lib/librostime.so;general;/usr/lib/x86_64-linux-gnu/libboost_date_time.so.1.71.0;general;/opt/ros/noetic/lib/libcpp_common.so;general;/usr/lib/x86_64-linux-gnu/libboost_system.so.1.71.0;general;/usr/lib/x86_64-linux-gnu/libboost_thread.so.1.71.0;general;/usr/lib/x86_64-linux-gnu/libconsole_bridge.so.0.4;
+
+//Value Computed by CMake
+litter_destruction_BINARY_DIR:STATIC=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/litter_destruction
+
+//Value Computed by CMake
+litter_destruction_SOURCE_DIR:STATIC=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/litter_destruction
 
 //The directory containing a CMake configuration file for message_filters.
 message_filters_DIR:PATH=/opt/ros/noetic/share/message_filters/cmake
@@ -541,6 +550,9 @@ nav_msgs_DIR:PATH=/opt/ros/noetic/share/nav_msgs/cmake
 
 //Value Computed by CMake
 navigation_BINARY_DIR:STATIC=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/navigation
+
+//The directory containing a CMake configuration file for navigation.
+navigation_DIR:PATH=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/navigation/cmake
 
 //Value Computed by CMake
 navigation_SOURCE_DIR:STATIC=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation
@@ -771,7 +783,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=11
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=12
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
