@@ -8,7 +8,6 @@ LitterMemory::LitterMemory()
 {
     
     // Set distance threshold for filtering duplicates
-    // TODO: Parameter not loading from launch file
     pnh_.param<double>("distance_threshold", distance_threshold_, 5.0);  // Load the distance threshold parameter
 
     // Initialize the subscriber to get litter coordinates in base frame
@@ -16,6 +15,9 @@ LitterMemory::LitterMemory()
 
     // Initialize a publisher to publish all remembered litter points
     litter_pub_ = nh_.advertise<bumperbot_detection::LitterList>("litter_memory", 10);
+
+    // Initialize a publisher to publish new litter points
+    new_litter_pub_ = nh_.advertise<bumperbot_detection::LitterPoint>("litter_memory/new_litter", 10);
 
     // Initialize the service to get the remembered litter points
     get_litter_service_ = nh_.advertiseService("litter_memory/get_litter_list", &LitterMemory::getLitterListCallback, this);
@@ -98,6 +100,9 @@ void LitterMemory::litterCallback(const geometry_msgs::PointStamped::ConstPtr& l
         // Store the new litter point in memory
         remembered_litter_.push_back(new_litter);
         ROS_INFO("New litter point remembered with ID: %d", new_litter.id);
+
+        // Publish only the new litter point
+        new_litter_pub_.publish(new_litter);
 
         // Publish the entire list of remembered litter points
         publishRememberedLitter();

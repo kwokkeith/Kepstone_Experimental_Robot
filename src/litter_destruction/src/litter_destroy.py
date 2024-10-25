@@ -49,25 +49,27 @@ class LitterManager:
         self.global_boundary_center = None            # Center of global boundary
         self.distance_threshold = distance_threshold  # Radius for the global boundary
 
-        rospy.Subscriber("base_frame/detected_object_coordinates", PointStamped, self.detection_callback)
+        rospy.Subscriber("/litter_memory/new_litter", LitterPoint, self.detection_callback)
         self.make_plan_srv = rospy.ServiceProxy('/move_base/make_plan', GetPlan)
         self.get_litter_list_srv = rospy.ServiceProxy('/litter_memory/get_litter_list', GetLitterList)  # Define the service client for getting litter list
         self.delete_litter_srv = rospy.ServiceProxy('/litter_memory/delete_litter', DeleteLitter)       # Define the service client for deleting litter
         self.robot = robot
 
-    def litter_point_to_tuple(self, litter):
-        return (litter.x, litter.y, litter.z)
+    def litter_point_to_tuple(self, litter_point):
+        return (litter_point.point.x, litter_point.point.y, litter_point.point.z)
 
-
-    def detection_callback(self, detected_litter_stamped):
+    def detection_callback(self, detected_litter):
         # Extract Point data from PointStamped
-        detected_litter = detected_litter_stamped.point
-        detected_litter_tuple = self.litter_point_to_tuple(detected_litter)
+        # (id, x, y, z)
+        detected_litter_tuple = (detected_litter.id,
+                             detected_litter.point.x,
+                             detected_litter.point.y,
+                             detected_litter.point.z)
 
         # Establish a global boundary only if litter is within the threshold distance
         if self.global_boundary_center is None:
             # First detection: Set global boundary center if within threshold
-            if self.is_within_threshold(detected_litter, self.get_robot_position()):
+            if self.is_within_threshold(detected_litter.point, self.get_robot_position()):
                 rospy.loginfo(f"Detected Litter is within threshold of {self.distance_threshold}")
                 # Start running the global boundary clearing of litter
                 # Entry code of cleaning algorithm by setting global boundary
@@ -85,10 +87,8 @@ class LitterManager:
                     self.set_litter.clear() # Clean the set litter if this is a new run
                     # Add only known litter within the global boundary to the local set
                     for litter in known_litter:
-                        rospy.loginfo(f"Checking {litter} \n within global boundary")
-                        litter = litter.point
-                        litter_tuple = self.litter_point_to_tuple(litter)
-                        if self.is_within_threshold(litter, self.global_boundary_center):
+                        litter_tuple = (litter.id, litter.point.x, litter.point.y, litter.point.z)
+                        if self.is_within_threshold(litter.point, self.global_boundary_center):
                             self.set_litter.add(litter_tuple)
                     
                     rospy.loginfo(f"updated set litter: {self.set_litter}")
@@ -101,10 +101,11 @@ class LitterManager:
             else:
                 rospy.loginfo("Detected litter is outside initial threshold; no boundary set.")
                 return  # Ignore this detection
+            
         # if litter is within global boundary
-        elif self.within_global_boundary(detected_litter):
+        elif self.within_global_boundary(detected_litter.point):
             with self.litter_mutex:
-                if detected_litter_tuple not in self.set_litter:
+                if detected_litter.id not in {id for (id, _, _, _) in self.set_litter}:
                     self.set_litter.add(detected_litter_tuple)
 
                     # Push the new detected litter with its distance to the min_heap 
@@ -173,8 +174,8 @@ class LitterManager:
             rospy.wait_for_service('/move_base/make_plan', timeout=5)  # Wait with a 5-second timeout
             plan = self.make_plan_srv(start=start, goal=goal, tolerance=0.5).plan.poses
             distance = self.calculate_path_distance(plan)
-            rospy.loginfo(f"Distance from \n{start.pose.position} to \n{goal.pose.position}\n = {distance}")
-
+            # rospy.loginfo(f"Distance from \n{start.pose.position} to \n{goal.pose.position}\n = {distance}")
+            rospy.loginfo(f"\n\nset_litter: {self.set_litter}")
             return self.calculate_path_distance(plan)
         except rospy.ROSException as e:
             rospy.logwarn("Service /move_base/make_plan is unavailable or timed out.")
@@ -191,16 +192,41 @@ class LitterManager:
         return total_distance
 
     def push_min_heap(self, litter_tuple):
-        # Pushes the litter onto the min heap with the distance from the start position
-        litter_point = Point(*litter_tuple)
-        dist = self.get_distance_to_litter(self.start_pos, litter_point) # Get distance to litter from starting position
-        heapq.heappush(self.min_heap_litter, (dist, litter_point))
+        """Push a tuple (distance, LitterPoint) onto the heap."""
+        litter_id, x, y, z = litter_tuple
+        litter_point = LitterPoint()
+        litter_point.id = litter_id
+        litter_point.point = Point(x, y, z)
+
+        # Calculate distance from start position
+        distance = self.get_distance_to_litter(self.start_pos, litter_point.point)
+        heapq.heappush(self.min_heap_litter, (distance, litter_point))
+        rospy.loginfo(f"Min Heap: {self.min_heap_litter}")
+
 
     def update_min_heap(self):
-        # Clear and rebuild min heap with updated start_pos distances
+        """Rebuild the heap using current litter distances."""
         self.min_heap_litter.clear()
-        for litter in self.set_litter:
-            self.push_min_heap(litter)
+        for litter_tuple in self.set_litter:
+            self.push_min_heap(litter_tuple)
+
+    def delete_litter(self, litter_id):
+        """Remove a litter by ID from the memory and set."""
+        rospy.wait_for_service('/litter_memory/delete_litter')
+        try:
+            # Create a request for deleting litter by ID
+            response = self.delete_litter_srv(DeleteLitter(id=litter_id))
+            if response.success:
+                rospy.loginfo(f"Litter with ID {litter_id} deleted successfully.")
+                # Remove from `set_litter`
+                self.set_litter = {l for l in self.set_litter if l[0] != litter_id}
+            else:
+                rospy.logwarn(f"Failed to delete litter with ID {litter_id}: {response.message}")
+            return response.success
+        except rospy.ServiceException as e:
+            rospy.logerr(f"Service call to delete litter ID {litter_id} failed: {e}")
+            return False
+
 
 def main():
     # Initialize the ROS node
@@ -214,40 +240,23 @@ def main():
     rospy.loginfo("Robot and manager initialized. Starting main loop.")
 
     while not rospy.is_shutdown():
-        # Ensure heap is populated
         if manager.min_heap_litter and manager.set_litter:
-            # Select the closest litter based on min heap
-            _, target_point = heapq.heappop(manager.min_heap_litter)
-            rospy.loginfo(f"Moving to litter at position: {target_point}")
+            # Pop the closest litter item based on distance
+            _, target_litter = heapq.heappop(manager.min_heap_litter)
+            rospy.loginfo(f"Moving to litter at position: {target_litter.point}")
 
             # Move robot to the target litter
-            robot.move_to(target_point)
+            robot.move_to(target_litter.point)
             robot.navigate_client.wait_for_result()  # Wait until reached
 
             # Start executing cleaning procedure
             robot.destroy_litter()
 
-            # Remove target from memory and update start position
-            with manager.litter_mutex:
-                rospy.wait_for_service('/litter_memory/delete_litter')
-                try:
-                    response = manager.delete_litter_srv(Point(*target_tuple))
-                    if response.success:
-                        rospy.loginfo(f"Litter at position {target_tuple} successfully deleted.")
-                    else:
-                        rospy.logwarn(f"Failed to delete litter at position {target_tuple}.")
-                except rospy.ServiceException as e:
-                    rospy.logerr(f"Service call failed: {e}")
-
-                manager.set_litter.discard(target_tuple)
-                manager.start_pos = target_point  # Update start position to cleared litter position
-
-            # Rebuild the heap with updated start position
-            manager.update_min_heap()
-
-            # Wait until cleaning procedure is done
-            robot.destroy_client.wait_for_result()  
+            if manager.delete_litter(target_litter.id):
+                rospy.loginfo(f"Litter with ID {target_litter.id} successfully deleted.")
+                manager.set_litter.discard(target_litter)
+                manager.start_pos = target_litter.point
+                manager.update_min_heap()
 
 if __name__ == "__main__":
     main()
-
