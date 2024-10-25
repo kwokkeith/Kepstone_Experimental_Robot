@@ -1,0 +1,23 @@
+def detect_litter(set_litter, min_heap_litter,
+                  start_pos, mutex_set_litter, 
+                  mutex_heap, mutex_start_pos):
+  # Subscribe to the litter detection
+  ros.subscribe("base_frame/detected_object_coordinates", detection_callback)
+
+
+def detection_callback():
+  # check if litter within global boundary
+  if (detected_litter.pos.within_global_bound(global_boundary)):
+    mutex_set_litter.get()
+    mutex_heap.get()
+    mutex_start_pos.get()
+
+    if (detected_litter not in set_litter):
+      set_litter.add(detected_litter)
+      add_litter_to_memory(detected_litter)
+      dist = get_distance_to_litter(detected_litter, start_pos)
+      min_heap_litter.push((dist, detected_litter))
+
+    mutex_start_pos.release()
+    mutex_heap.release()
+    mutex.set_litter.release()

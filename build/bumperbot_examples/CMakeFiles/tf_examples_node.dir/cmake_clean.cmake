@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/bumperbot_examples/tf_examples_node"
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/bumperbot_examples/tf_examples_node.pdb"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/bumperbot_examples/tf_examples_node"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/bumperbot_examples/tf_examples_node.pdb"
   "CMakeFiles/tf_examples_node.dir/nodes/tf_examples_node.cpp.o"
   "CMakeFiles/tf_examples_node.dir/src/tf_examples.cpp.o"
 )

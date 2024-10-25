@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/libtf_examples.pdb"
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/libtf_examples.so"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/libtf_examples.pdb"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/libtf_examples.so"
   "CMakeFiles/tf_examples.dir/src/tf_examples.cpp.o"
 )
 

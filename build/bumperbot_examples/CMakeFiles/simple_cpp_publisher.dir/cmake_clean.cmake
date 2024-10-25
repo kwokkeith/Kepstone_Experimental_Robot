@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/bumperbot_examples/simple_cpp_publisher"
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/bumperbot_examples/simple_cpp_publisher.pdb"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/bumperbot_examples/simple_cpp_publisher"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/bumperbot_examples/simple_cpp_publisher.pdb"
   "CMakeFiles/simple_cpp_publisher.dir/nodes/simple_publisher.cpp.o"
 )
 

@@ -1,0 +1,16 @@
+""" Constructs the min heap from the litter set """
+
+def create_litter_min_heap(set_litter, mutex_start_pos):
+  mutex_start_pos.get()
+  start_pos_temp = start_pos
+  mutex_start_pos.release()
+
+  # Greedy search the nearest litter
+  # Maintain a heap structure 
+  mutex_heap.get() # Get mutex for the shared variable (min_heap_litter)
+  for litter in set_litter:
+    dist = get_distance_to_litter(litter, start_pos_temp) # Get distance to litter using ROS planner
+
+    # Heap of containing set of (distance to litter, litter object)
+    min_heap_litter.push((dist, litter))
+  mutex_heap.release()

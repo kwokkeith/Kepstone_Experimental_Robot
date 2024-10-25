@@ -1,0 +1,112 @@
+while sweepMode:
+  if (litter):
+    # Global boundary is the first major boundary that we will maintain an invariant that
+    # all litter are removed within this boundary at the end of this sequence 
+    global_boundary = get_global_bound(robot.pos()) # From amcl position
+    known_litter = get_litter_from_memory() # Service call to the robot memory
+
+    # Shared Variable: Start position (to calculate distance of litter from)
+    start_pos = global_boundary.pos() # centre of global boundary position
+    mutex_start_pos = create_mutex() # mutex for shared variable (start_pos)
+
+    # Note: known_litter would be in list format 
+    # Set of litter (SET) in memory within the global boundary
+    set_litter = get_litter_from_memory_within_global_boundary(known_litter, global_boundary)
+    mutex_set_litter = create_mutex() # mutex for shared variable (set_litter)
+
+
+    # Heap to allow popping of next (optimal) litter
+    min_heap_litter = heap.heapq() 
+    mutex_heap = create_mutex() # mutex for the shared variable (min_heap_litter)
+
+    # Update Heap with litter within boundary
+    mutex_heap.get()
+    for litter in set_litter:
+      # Get distance to litter using ROS planner
+      dist = get_distance_to_litter(litter) 
+      # Heap of containing set of (distance to litter, litter object)
+      min_heap_litter.push((dist, litter))
+
+    # Gets the coordinate of the litter with minimum distance
+    # Could use Greedy (nearest neighbor) -> Dynamic environment and real time calculation
+    # Could also use TSP if number of litter is ls_litter is lower than 12
+    # For now we will just focus on Greedy (nearest neighbor)
+    # Greedy would get the distance from current robot position to litter 
+    # using ros navigation planner's distance
+    target = min_heap_litter.pop()
+    mutex_heap.release()
+
+    # Sends move command to the coordinate of the nearest litter 
+    # This is an asynchronous call
+    robot.path_set(target)
+  
+    # Maintain subscription to the litter memory
+    # if we get receive a detected litter then we disrupt and check if it
+    # is within the global boundary.
+    # This would be called with a different process with shared variable set_litter
+    # Run detection procedure to run in different process
+    detect_litter(set_litter, min_heap_litter, start_pos, mutex_set_litter, mutex_heap, mutex_start_pos)  
+
+    while (set_litter):
+      mutex_set_litter.get()                
+      set_litter.remove(target)             # Remove the target litter from set
+      remove_litter_from_memory(target)     # Remove litter from the robot memory
+      mutex_set_litter.release()
+
+      # Set start position to current target position
+      mutex_start_pos.get()
+      start_pos = target
+      mutex_start_pos.release()
+
+      # Async the heap creation for the next target (with new start position)
+      async_create_heap = async(create_litter_min_heap(set_litter, mutex_start_pos))
+
+      # Block until robot reaches waypoint
+      if (robot.reach_waypoint()): 
+        # Define a local boundary around litter centre to figure out
+        # if we should clear any nearby litter within this local boundary
+        local_boundary = get_local_bound() # Could be the current position of the robot
+
+        # Send robot command to execute cleaning procedure
+        async_destroy = async(robot.destroy_litter()) # Send command asynchronously
+
+        # --- ROBOT CLEANING BEGIN ---
+
+        # Check from robot memory if there are any litter within local boundary
+        known_litter = get_litter_from_memory() # Service call to the robot memory
+        
+        # Check if any known_litter is within the local boundary
+        for (litter in known_litter):
+          if (litter in set_litter): # Litter is already in the set_litter
+            continue 
+          if (check_within_local_boundary(litter)): # within means (distance from centre)
+            # Litter is within local boundary
+            # Ensure that litter is not already in the list 
+              mutex_set_litter.get()
+              mutex_heap.get()
+
+              set_litter.add(litter)
+
+              # Do not need to get start_pos mutex as this process is the only one 
+              # editing it and we are reading from it
+              get_distance_to_litter(litter, start_pos) 
+    
+              min_heap_litter.push(litter)
+
+              mutex_heap.release()
+              mutex_set_litter.release()
+
+        # --- WAITING FOR ROBOT TO FINISH CLEANING ---
+        # Synchronise and wait for robot to finish cleaning sequence
+        _ = async_block(async_destroy)
+
+        # Get next target from the min litter heap
+        mutex_heap.get()
+        target = min_heap_litter.pop()
+        mutex_heap.release()
+
+        # Sends move command to the coordinate of the nearest litter 
+        # This is an asynchronous call
+        robot.path_set(target)
+
+
