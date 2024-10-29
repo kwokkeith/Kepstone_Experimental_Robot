@@ -71,6 +71,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/litter_destruction/package.xml"
   "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/litter_destruction/setup.py"
   "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/litter_destruction/src/litter_destroy.py"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/litter_destruction/src/litter_destruction/litter_manager.py"
   "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/CMakeLists.txt"
   "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/package.xml"
   "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/src/waypoint_nav.py"
