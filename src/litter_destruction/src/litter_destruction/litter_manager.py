@@ -5,6 +5,7 @@ import math
 from geometry_msgs.msg import Point, PoseStamped
 from bumperbot_detection.msg import  LitterPoint
 from nav_msgs.srv import GetPlan
+from navigation.srv import GetAmclPose
 from bumperbot_detection.srv import DeleteLitter, GetLitterList
 from visualization_msgs.msg import Marker
 
@@ -28,7 +29,11 @@ class LitterManager:
         self.delete_litter_srv = rospy.ServiceProxy('/litter_memory/delete_litter', DeleteLitter)              # Define the service client for deleting litter
         self.global_boundary_marker_pub = rospy.Publisher("global_boundary_marker", Marker, queue_size=10)     # Define publisher for global boundary marker
         self.local_boundary_marker_pub = rospy.Publisher("local_boundary_marker", Marker, queue_size=10)       # Define publisher for local boundary marker
-        self.robot = robot
+
+        # Initialize service client for getting the current AMCL position
+        rospy.wait_for_service('/get_amcl_pose')
+        self.get_pose_srv = rospy.ServiceProxy('/get_amcl_pose', GetAmclPose)
+
 
 
     def litter_point_to_tuple(self, litter_point):
@@ -176,8 +181,14 @@ class LitterManager:
 
 
     def get_robot_position(self):
-        """Gets the current robot position by polling the amcl service"""
-        return self.robot.get_current_position()
+        """Call the /get_amcl_pose service to get the robot's current position."""
+        try:
+            response = self.get_pose_srv()
+            # Accessing position correctly within PoseWithCovarianceStamped
+            return response.pose.pose.pose.position
+        except rospy.ServiceException as e:
+            rospy.logwarn("Service call to /get_amcl_pose failed, returning None for position.")
+            return None
 
 
     def get_distance_to_litter(self, start_pos, litter):
@@ -328,3 +339,8 @@ class LitterManager:
 
         # Publish the marker
         self.local_boundary_marker_pub.publish(marker)
+
+    
+    def has_litter_to_clear(self):
+        """Checks if there are still litter to clear"""
+        return len(self.set_litter) > 0

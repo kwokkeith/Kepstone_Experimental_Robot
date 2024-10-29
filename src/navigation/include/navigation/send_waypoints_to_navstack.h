@@ -12,7 +12,7 @@
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
 // Function sends a goal to move_base
-void sendGoal(const geometry_msgs::Point& waypoint, MoveBaseClient &ac);
+bool sendGoal(const geometry_msgs::Point& waypoint, MoveBaseClient &ac);
 
 // Function sends waypoints to the navigation stack
 void sendWaypointsToNavStack(const std::vector<geometry_msgs::Point> &waypoints, MoveBaseClient &ac);

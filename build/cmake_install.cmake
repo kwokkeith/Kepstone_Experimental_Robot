@@ -136,9 +136,9 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/bumperbot_localization/cmake_install.cmake")
   include("/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/bumperbot_controller/cmake_install.cmake")
   include("/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/bumperbot_examples/cmake_install.cmake")
-  include("/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/navigation/cmake_install.cmake")
   include("/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/bumperbot_detection/cmake_install.cmake")
   include("/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/litter_destruction/cmake_install.cmake")
+  include("/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/navigation/cmake_install.cmake")
 
 endif()
 

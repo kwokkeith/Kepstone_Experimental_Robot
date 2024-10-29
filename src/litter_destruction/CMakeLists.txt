@@ -15,7 +15,6 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   bumperbot_detection
   nav_msgs
-  navigation
 )
 
 catkin_python_setup()
@@ -39,10 +38,10 @@ catkin_python_setup()
 # )
 
 # Generate actions in the 'action' folder
-add_action_files(
-  FILES
-  Navigate.action
-)
+# add_action_files(
+#   FILES
+#   Navigate.action
+# )
 
 # Generate added messages
 generate_messages(
@@ -71,7 +70,6 @@ catkin_package(
     geometry_msgs 
     bumperbot_detection
     nav_msgs
-    navigation
     message_runtime
 )
 

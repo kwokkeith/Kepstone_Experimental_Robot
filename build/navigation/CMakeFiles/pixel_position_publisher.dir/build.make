@@ -79,6 +79,8 @@ pixel_position_publisher_EXTERNAL_OBJECTS =
 
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/libpixel_position_publisher.so: navigation/CMakeFiles/pixel_position_publisher.dir/src/pixel_position_publisher.cpp.o
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/libpixel_position_publisher.so: navigation/CMakeFiles/pixel_position_publisher.dir/build.make
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/libpixel_position_publisher.so: /usr/lib/liborocos-kdl.so
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/libpixel_position_publisher.so: /usr/lib/liborocos-kdl.so
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/libpixel_position_publisher.so: /opt/ros/noetic/lib/libtf.so
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/libpixel_position_publisher.so: /opt/ros/noetic/lib/libtf2_ros.so
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/libpixel_position_publisher.so: /opt/ros/noetic/lib/libactionlib.so

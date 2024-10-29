@@ -10,6 +10,7 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   message_generation
   bumperbot_utils
+  litter_destruction
   tf
   nav_msgs
 )
@@ -28,6 +29,8 @@ add_service_files(
   GetPixelPose.srv
   ConvertPixelToMap.srv
   ConvertPixelWaypointsToMap.srv
+  InitiateCoveragePath.srv
+  getWaypoints.srv
 )
 
 # Generate messages and services with any dependencies
@@ -45,6 +48,7 @@ catkin_package(
     geometry_msgs 
     message_runtime 
     bumperbot_utils 
+    litter_destruction
     tf
 )
 
@@ -64,10 +68,15 @@ add_library(pixel_position_publisher src/pixel_position_publisher.cpp)
 add_dependencies(pixel_position_publisher ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(pixel_position_publisher ${catkin_LIBRARIES} yaml-cpp)
 
-# Library for send waypoints to navstack 
-add_library(send_waypoints_to_navstack src/send_waypoints_to_navstack.cpp)
-add_dependencies(send_waypoints_to_navstack ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(send_waypoints_to_navstack ${catkin_LIBRARIES})
+# Library for waypoint manager
+add_library(waypoint_manager src/waypoint_manager.cpp)
+add_dependencies(waypoint_manager ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(waypoint_manager ${catkin_LIBRARIES})
+
+# Executable for waypoint manager
+add_executable(waypoint_manager_node nodes/waypoint_manager_node.cpp)
+add_dependencies(waypoint_manager_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_generate_messages_cpp)
+target_link_libraries(waypoint_manager_node ${catkin_LIBRARIES} waypoint_manager utils)
 
 # Executable node for pixel position publisher
 add_executable(pixel_position_publisher_node nodes/pixel_position_publisher_node.cpp)
@@ -94,11 +103,6 @@ add_executable(convert_pixel_waypoints_to_map_waypoints_server_node src/convert_
 add_dependencies(convert_pixel_waypoints_to_map_waypoints_server_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_generate_messages_cpp)
 target_link_libraries(convert_pixel_waypoints_to_map_waypoints_server_node ${catkin_LIBRARIES} utils)
 
-# Executable node for send waypoints to navstack node
-add_executable(send_waypoints_to_navstack_node nodes/send_waypoints_node.cpp)
-add_dependencies(send_waypoints_to_navstack_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_generate_messages_cpp)
-target_link_libraries(send_waypoints_to_navstack_node ${catkin_LIBRARIES} send_waypoints_to_navstack utils)
-
 # Executable waypoint plotter
 add_executable(waypoint_plotter_publisher_node src/waypoint_plotter.cpp)
 add_dependencies(waypoint_plotter_publisher_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
@@ -111,5 +115,6 @@ target_link_libraries(waypoint_plotter_publisher_node ${catkin_LIBRARIES})
 # Install Python programs
 catkin_install_python(PROGRAMS
   src/waypoint_nav.py
+  nodes/robot_controller_node.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

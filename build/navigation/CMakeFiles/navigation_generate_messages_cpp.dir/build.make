@@ -57,16 +57,18 @@ navigation/CMakeFiles/navigation_generate_messages_cpp: /home/keith/Documents/Ca
 navigation/CMakeFiles/navigation_generate_messages_cpp: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/GetPixelPose.h
 navigation/CMakeFiles/navigation_generate_messages_cpp: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/ConvertPixelToMap.h
 navigation/CMakeFiles/navigation_generate_messages_cpp: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/ConvertPixelWaypointsToMap.h
+navigation/CMakeFiles/navigation_generate_messages_cpp: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/InitiateCoveragePath.h
+navigation/CMakeFiles/navigation_generate_messages_cpp: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/getWaypoints.h
 
 
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/GetAmclPose.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/GetAmclPose.h: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetAmclPose.srv
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/GetAmclPose.h: /opt/ros/noetic/share/geometry_msgs/msg/PoseWithCovarianceStamped.msg
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/GetAmclPose.h: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/GetAmclPose.h: /opt/ros/noetic/share/std_msgs/msg/Header.msg
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/GetAmclPose.h: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/GetAmclPose.h: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/GetAmclPose.h: /opt/ros/noetic/share/std_msgs/msg/Header.msg
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/GetAmclPose.h: /opt/ros/noetic/share/geometry_msgs/msg/PoseWithCovariance.msg
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/GetAmclPose.h: /opt/ros/noetic/share/geometry_msgs/msg/PoseWithCovarianceStamped.msg
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/GetAmclPose.h: /opt/ros/noetic/share/gencpp/msg.h.template
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/GetAmclPose.h: /opt/ros/noetic/share/gencpp/srv.h.template
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating C++ code from navigation/GetAmclPose.srv"
@@ -95,11 +97,28 @@ navigation/CMakeFiles/navigation_generate_messages_cpp: /home/keith/Documents/Ca
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generating C++ code from navigation/ConvertPixelWaypointsToMap.srv"
 	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation && /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/ConvertPixelWaypointsToMap.srv -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p navigation -o /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation -e /opt/ros/noetic/share/gencpp/cmake/..
 
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/InitiateCoveragePath.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/InitiateCoveragePath.h: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/InitiateCoveragePath.srv
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/InitiateCoveragePath.h: /opt/ros/noetic/share/gencpp/msg.h.template
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/InitiateCoveragePath.h: /opt/ros/noetic/share/gencpp/srv.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating C++ code from navigation/InitiateCoveragePath.srv"
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation && /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/InitiateCoveragePath.srv -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p navigation -o /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation -e /opt/ros/noetic/share/gencpp/cmake/..
+
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/getWaypoints.h: /opt/ros/noetic/lib/gencpp/gen_cpp.py
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/getWaypoints.h: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/getWaypoints.srv
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/getWaypoints.h: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/getWaypoints.h: /opt/ros/noetic/share/gencpp/msg.h.template
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/getWaypoints.h: /opt/ros/noetic/share/gencpp/srv.h.template
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating C++ code from navigation/getWaypoints.srv"
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation && /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/getWaypoints.srv -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p navigation -o /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation -e /opt/ros/noetic/share/gencpp/cmake/..
+
 navigation_generate_messages_cpp: navigation/CMakeFiles/navigation_generate_messages_cpp
 navigation_generate_messages_cpp: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/GetAmclPose.h
 navigation_generate_messages_cpp: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/GetPixelPose.h
 navigation_generate_messages_cpp: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/ConvertPixelToMap.h
 navigation_generate_messages_cpp: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/ConvertPixelWaypointsToMap.h
+navigation_generate_messages_cpp: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/InitiateCoveragePath.h
+navigation_generate_messages_cpp: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/getWaypoints.h
 navigation_generate_messages_cpp: navigation/CMakeFiles/navigation_generate_messages_cpp.dir/build.make
 
 .PHONY : navigation_generate_messages_cpp

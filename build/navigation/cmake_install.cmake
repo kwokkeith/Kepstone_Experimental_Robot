@@ -43,6 +43,8 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
     "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetPixelPose.srv"
     "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/ConvertPixelToMap.srv"
     "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/ConvertPixelWaypointsToMap.srv"
+    "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/InitiateCoveragePath.srv"
+    "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/getWaypoints.srv"
     )
 endif()
 
@@ -95,5 +97,9 @@ endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/navigation" TYPE PROGRAM FILES "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/navigation/catkin_generated/installspace/waypoint_nav.py")
+endif()
+
+if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/navigation" TYPE PROGRAM FILES "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/navigation/catkin_generated/installspace/robot_controller_node.py")
 endif()
 

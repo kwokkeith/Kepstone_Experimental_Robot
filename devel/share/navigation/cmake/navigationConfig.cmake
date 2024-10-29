@@ -185,7 +185,7 @@ foreach(t ${navigation_EXPORTED_TARGETS})
   endif()
 endforeach()
 
-set(depends "std_msgs;geometry_msgs;message_runtime;bumperbot_utils;tf")
+set(depends "std_msgs;geometry_msgs;message_runtime;bumperbot_utils;litter_destruction;tf")
 foreach(depend ${depends})
   string(REPLACE " " ";" depend_list ${depend})
   # the package name of the dependency must be kept in a unique variable so that it is not overwritten in recursive calls

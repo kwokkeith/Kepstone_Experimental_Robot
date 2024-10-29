@@ -21,8 +21,11 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include"
   "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/include"
   "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/bumperbot_utils/include"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/litter_destruction/include"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/bumperbot_detection/include"
   "/opt/ros/noetic/include"
   "/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"
+  "/usr/include/eigen3"
   )
 
 # Targets to which this target links.
