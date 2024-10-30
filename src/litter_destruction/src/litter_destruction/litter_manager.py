@@ -90,59 +90,59 @@ class LitterManager:
 
 
     def detection_callback(self, detected_litter):
-        """Callback function for when litter is detected"""
-        # Extract Point data from PointStamped
-        # (id, x, y, z)
+        """Callback function for when litter is detected."""
+        # Convert detected litter point to a tuple (id, x, y, z)
         detected_litter_tuple = self.litter_point_to_tuple(detected_litter)
 
-        # Establish a global boundary only if litter is within the threshold distance
+        # Check if global boundary needs to be established
         if self.global_boundary_center is None:
-            # First detection: Set global boundary center if within threshold
+            # Set global boundary if the litter is within threshold distance
             if self.is_within_threshold(detected_litter.point, self.get_robot_position()):
                 rospy.loginfo(f"Detected Litter is within threshold of {self.distance_threshold}")
-                # Start running the global boundary clearing of litter
-                # Entry code of cleaning algorithm by setting global boundary
                 self.global_boundary_center = self.get_robot_position()
                 self.start_pos = self.global_boundary_center
-                self.publish_global_boundary_marker()  # Publish the marker after setting the boundary center
+                self.publish_global_boundary_marker()
 
-                # Get known litter from robot memory
+                # Populate `self.set_litter` with known litter within the global boundary
                 known_litter = self.get_known_litter()
-
                 rospy.loginfo(f"Global Boundary: {self.global_boundary_center}")
                 rospy.loginfo(f"Known Litter: {known_litter}")
 
                 with self.litter_mutex:
-                    rospy.loginfo(f"Collected litter mutex")
-                    self.set_litter.clear() # Clean the set litter if this is a new run
-                    # Add only known litter within the global boundary to the local set
+                    self.set_litter.clear()  # Clear any previous litter data
                     for litter in known_litter:
                         litter_tuple = self.litter_point_to_tuple(litter)
                         if self.is_within_threshold(litter.point, self.global_boundary_center):
                             self.set_litter.add(litter_tuple)
-                    
-                    rospy.loginfo(f"updated set litter: {self.set_litter}")
 
-                    self.update_min_heap() # Rebuild heap with new litter start position
-
-                    rospy.loginfo(f"Updated min heap: {self.min_heap_litter}")
-                    rospy.loginfo(f"Global boundary set at {self.global_boundary_center}")
-
+                    self.update_min_heap()
+                    rospy.loginfo(f"Set litter initialized within global boundary: {self.set_litter}")
             else:
                 rospy.loginfo("Detected litter is outside initial threshold; no boundary set.")
-                return  # Ignore this detection
-            
-        # if litter is within global boundary
-        elif self.within_global_boundary(detected_litter.point):
-            with self.litter_mutex:
-                if detected_litter.id not in {id for (id, _, _, _) in self.set_litter}:
-                    self.set_litter.add(detected_litter_tuple)
+                return  # Ignore detection outside threshold
+        else:
+            # Check if the litter is within the global boundary
+            if self.within_global_boundary(detected_litter.point):
+                with self.litter_mutex:
+                    # Add litter to `self.set_litter` if it’s not already there
+                    if detected_litter_tuple not in self.set_litter:
+                        self.set_litter.add(detected_litter_tuple)
+                        self.update_min_heap()
+                        rospy.loginfo(f"Added litter within global boundary: {detected_litter_tuple}")
 
-                    # Push the new detected litter with its distance to the min_heap 
-                    self.update_min_heap()  
+            # Additional check: if within the local boundary, add to `self.set_litter`
+            if self.local_boundary_center and self.local_boundary_radius > 0:
+                distance_to_local_center = self.calculate_euclidean_distance(detected_litter.point, self.local_boundary_center)
+                if distance_to_local_center <= self.local_boundary_radius:
+                    with self.litter_mutex:
+                        if detected_litter_tuple not in self.set_litter:
+                            self.set_litter.add(detected_litter_tuple)
+                            self.update_min_heap()
+                            rospy.loginfo(f"Added litter within local boundary: {detected_litter_tuple}")
 
         # Clear the boundary if all litter within it is cleared
         self.check_and_clear_boundary()
+
 
 
     def get_known_litter(self):

@@ -17,14 +17,17 @@ class RobotMode(Enum):
 
 class RobotController:
     def __init__(self):
+        self.litter_picking_waypoint_topic = '/litter_picking/waypoint'
+        self.coverage_path_waypoint_topic  = '/coverage_path/next_waypoint'
+
         ## Publishers
         # Publisher to control mux input selection
         self.mux_select_pub = rospy.Publisher('/waypoint_mux/select', String, queue_size=10)
 
         ## Subscribers
         # Subscriptions to the waypoint topics for each mode
-        rospy.Subscriber('/litter_picking/waypoint', Point, self.litter_waypoint_callback)
-        rospy.Subscriber('/coverage_path/next_waypoint', Point, self.coverage_waypoint_callback)
+        rospy.Subscriber(self.litter_picking_waypoint_topic, Point, self.litter_waypoint_callback)
+        rospy.Subscriber(self.coverage_path_waypoint_topic, Point, self.coverage_waypoint_callback)
 
         ## Service Clients
         # Service to update waypoint_manager (get next waypoint)
@@ -75,7 +78,17 @@ class RobotController:
     def switch_mode(self, mode):
         """Switch the robot's mode and update the mux topic selection."""
         self.mode = mode
-        topic_name = '/litter_picking/waypoint' if mode == RobotMode.LITTER_PICKING else '/coverage_path/next_waypoint'
+        
+        if mode == RobotMode.IDLE:
+            topic_name = '' 
+        elif mode == RobotMode.COVERAGE:
+            topic_name = self.coverage_path_waypoint_topic 
+        elif mode == RobotMode.LITTER_PICKING:
+            topic_name = self.litter_picking_waypoint_topic 
+        else:
+            rospy.WARN("In switch_mode, `mode` argument provided invalid")
+            return
+        
         self.mux_select_pub.publish(String(topic_name))
         rospy.loginfo(f"Switched to {mode.name} mode, using topic: {topic_name}")
 
