@@ -17,7 +17,7 @@
   
     <!-- Litter memory node (publishes memory and service for deleting litter) -->
     <node pkg="bumperbot_detection" type="litter_memory_node" name="litter_memory_node" >
-        <param name="distance_threshold" value="1.0" />
+        <param name="distance_threshold" value="0.3" />
     </node>
 
     <!-- Litter Marker publisher node (For RVIZ visualization) -->

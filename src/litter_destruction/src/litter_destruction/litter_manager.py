@@ -63,7 +63,10 @@ class LitterManager:
         """Service handler to return the current set of litter."""
         response = GetLitterSetResponse()
 
-        with self.litter_mutex:
+        with self.litter_mutex:     
+            if not self.set_litter:
+                rospy.logwarn("No litter points in set_litter.")
+
             for litter_tuple in self.set_litter:
                 litter_id, x, y, z = litter_tuple
                 litter_point = LitterPoint()
@@ -71,7 +74,13 @@ class LitterManager:
                 litter_point.point.x = x
                 litter_point.point.y = y
                 litter_point.point.z = z
+
+                rospy.loginfo(f"Adding litter to response: ID={litter_id}, x={x}, y={y}, z={z}")
                 response.litter_points.append(litter_point)
+        
+        # Debug: Log the total count of litter points in the response
+        rospy.loginfo(f"Total litter points in response: {len(response.litter_points)}")
+
         return response
 
 
@@ -208,7 +217,7 @@ class LitterManager:
                 litter_tuple = self.litter_point_to_tuple(litter)
                 if litter_tuple not in self.set_litter:
                     self.set_litter.add(litter_tuple)
-                    self.push_min_heap(litter)  # Add to min_heap based on distance
+                    self.push_min_heap(litter_tuple)  # Add to min_heap based on distance
 
 
     def calculate_euclidean_distance(self, point1, point2):
