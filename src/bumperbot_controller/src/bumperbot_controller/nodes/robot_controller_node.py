@@ -2,11 +2,11 @@ import rospy
 from geometry_msgs.msg import Point
 from std_msgs.msg import String
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
-from actionlib import SimpleActionClient
+from actionlib import SimpleActionClient, GoalStatus
 from enum import Enum
 from bumperbot_detection.msg import LitterPoint
 from std_srvs.srv import SetBool
-from navigation.srv import InitiateCoveragePath, InitiateCoveragePathRequest
+from navigation.srv import InitiateCoveragePath, InitiateCoveragePathRequest, InitiateCoveragePathResponse
 from litter_destruction.srv import GlobalBoundaryCenter
 from litter_destruction.srv import GetNextLitter
 from litter_destruction.srv import RemoveLitter, RemoveLitterRequest 
@@ -50,8 +50,9 @@ class RobotController:
         self.has_litter_to_clear = rospy.ServiceProxy('/litter_manager/has_litter_to_clear', HasLitterToClear)                       # Service to check if any more litter to clear (litter manager)
 
         ## Service Servers
-        rospy.Service('/robot_controller/mode_switch', ModeSwitch, self.handle_mode_switch)                     # Service server to request mode switch
-        rospy.Service('/robot_controller/get_current_mode', GetCurrentMode, self.handle_get_current_mode)       # Service server to request current mode
+        rospy.Service('/robot_controller/mode_switch', ModeSwitch, self.handle_mode_switch)                          # Service server to request mode switch
+        rospy.Service('/robot_controller/get_current_mode', GetCurrentMode, self.handle_get_current_mode)            # Service server to request current mode
+        rospy.Service('/robot_controller/initiate_coverage', InitiateCoveragePath, self.handle_initiate_coverage)    # Service server to initiate coverage
 
         ## Configurations
         # ROS action client for move_base
@@ -62,6 +63,36 @@ class RobotController:
         self.mode = RobotMode.IDLE
         self.global_boundary_center = Point()
         rospy.loginfo("RobotController initialized and waiting for waypoints.")
+
+
+    def handle_initiate_coverage(self, req):
+        """Service handler to initiate coverage path"""
+        response = InitiateCoveragePathResponse()
+        try:
+            # Set the waypoints file path
+            request = InitiateCoveragePathRequest(waypoints_file=req.waypoints_file)
+
+            # Call the service to initiate coverage
+            service_response = self.initiate_coverage_path(request)
+
+            if service_response.success:
+                rospy.loginfo("Coverage path initiated successfully.")
+                response.success = True
+                response.message = "Coverage path successfully initiated."
+
+                # Set mode to COVERAGE if initiation was successful
+                self.switch_mode(RobotMode.COVERAGE)
+            else:
+                rospy.logwarn(f"Coverage path initiation failed: {service_response.message}")
+                response.success = False
+                response.message = f"Failed to initiate coverage path: {service_response.message}"
+
+        except rospy.ServiceException as e:
+            rospy.logerr(f"Service call to initiate coverage path failed: {e}")
+            response.success = False
+            response.message = f"Service call failed: {e}"
+
+        return response
 
 
     def handle_get_current_mode(self, req):
@@ -148,8 +179,8 @@ class RobotController:
         goal = MoveBaseGoal()
         goal.target_pose.header.frame_id = "map"
         goal.target_pose.header.stamp = rospy.Time.now()
-        goal.target_pose.pose.position.x = waypoint.point.x
-        goal.target_pose.pose.position.y = waypoint.point.y
+        goal.target_pose.pose.position.x = waypoint.x
+        goal.target_pose.pose.position.y = waypoint.y
         goal.target_pose.pose.position.z = 0.0
 
         # Set Orientation
@@ -159,7 +190,7 @@ class RobotController:
         self.move_base_client.send_goal(goal)
         self.move_base_client.wait_for_result()
 
-        if self.move_base_client.get_state() == SimpleActionClient.SimpleGoalState.SUCCEEDED:
+        if self.move_base_client.get_state() == GoalStatus.SUCCEEDED:
             rospy.loginfo(f"Reached waypoint: {waypoint}")
             return True
         else:
@@ -174,6 +205,7 @@ class RobotController:
         if not response.success:
             rospy.WARN("Failed to call service /litter_manager/get_next_litter in perform_litter_mode")
             return      # Skip the rest
+        
         while not rospy.is_shutdown() and self.mode == RobotMode.LITTER_PICKING:
             # Get the next litter waypoint
             try:
@@ -182,7 +214,7 @@ class RobotController:
                 rospy.logwarn(f"Failed to get litter waypoint from topic: {e}")
                 break
 
-            rospy.loginfo(f"Navigating to \n{litter_point.point}")
+            rospy.loginfo(f"Navigating to \n{litter_point}")
             # Navigate to the litter waypoint
             if self.navigate_to_waypoint(litter_point.point):
                  # Wait until the robot reaches the waypoint before proceeding
@@ -243,7 +275,36 @@ class RobotController:
 
 
     def perform_coverage_mode(self):
-        pass
+        """Performs the coverage path following in COVERAGE mode."""
+        rospy.loginfo("Starting coverage path mode.")
+        
+        # Wait for a new waypoint on the topic
+        while not rospy.is_shutdown() and self.mode == RobotMode.COVERAGE:
+            try:
+                # Get the next waypoint from /waypoint_manager/next_waypoint
+                waypoint = rospy.wait_for_message(self.coverage_path_waypoint_topic, Point, timeout=5)
+                
+                # Send the robot to the waypoint
+                if self.navigate_to_waypoint(waypoint):
+                    # If the waypoint is reached, request the next one
+                    response = self.update_waypoint_status(data=True)
+                    
+                    # Check if we successfully updated to the next waypoint
+                    if not response.success:
+                        rospy.loginfo("All waypoints cleared for coverage path.")
+                        break  # Exit the loop if all waypoints are cleared
+
+                    rospy.loginfo(f"Reached waypoint {waypoint}. Moving to next.")
+                else:
+                    rospy.logwarn(f"Failed to reach waypoint: {waypoint}. Retrying...")
+            
+            except rospy.ROSException as e:
+                rospy.logwarn(f"Timeout or issue while waiting for next coverage waypoint: {e}")
+                break  # Exit if there’s an issue in fetching the next waypoint
+        
+        # Switch to IDLE mode after completing all waypoints
+        rospy.loginfo("Coverage path completed. Switching to IDLE mode.")
+        self.switch_mode(RobotMode.IDLE)
 
 
     def handle_litter_detection(self):
@@ -271,7 +332,7 @@ class RobotController:
     def litter_waypoint_callback(self, waypoint):
         """Litter waypoints callback for litter picking mode."""
         if self.mode == RobotMode.LITTER_PICKING:
-            self.navigate_to_waypoint(waypoint)
+            self.navigate_to_waypoint(waypoint.point)
 
 
 def main():

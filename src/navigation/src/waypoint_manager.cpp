@@ -9,6 +9,9 @@ WaypointManager::WaypointManager(ros::NodeHandle& nh)
     update_waypoint_service_ = nh_.advertiseService("/waypoint_manager/get_next_waypoint", &WaypointManager::getNextWaypoint, this);
     initiate_coverage_service_ = nh_.advertiseService("/waypoint_manager/initiate_coverage_path", &WaypointManager::initiateCoveragePath, this);
     get_waypoints_service_ = nh_.advertiseService("/waypoint_manager/get_waypoints", &WaypointManager::getWaypoints, this);
+    
+    // Timer to continuously publish waypoints
+    waypoint_timer_ = nh_.createTimer(ros::Duration(1.0), &WaypointManager::timerCallback, this); // Set the rate as needed
 }
 
 // Service to initiate coverage path by loading waypoints from file
@@ -40,6 +43,13 @@ bool WaypointManager::initiateCoveragePath(navigation::InitiateCoveragePath::Req
     }
     return true;
 }
+
+
+// Timer callback to publish next waypoint continuously
+void WaypointManager::timerCallback(const ros::TimerEvent&) {
+    publishNextWaypoint();
+}
+
 
 // Service to get loaded waypoints from waypoint manager
 bool WaypointManager::getWaypoints(navigation::GetWaypoints::Request& req,
