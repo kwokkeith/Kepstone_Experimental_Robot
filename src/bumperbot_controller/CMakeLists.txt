@@ -11,6 +11,8 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  move_base
+  actionlib
   geometry_msgs
   sensor_msgs
   nav_msgs
@@ -27,6 +29,7 @@ find_package(Eigen3 REQUIRED)
 add_service_files(
   FILES
   ModeSwitch.srv
+  GetCurrentMode.srv
 )
 
 # Declare messages
@@ -42,6 +45,8 @@ catkin_package(
   INCLUDE_DIRS include
   CATKIN_DEPENDS 
     std_msgs
+    move_base
+    actionlib
     geometry_msgs
     sensor_msgs
     nav_msgs

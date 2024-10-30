@@ -12,6 +12,7 @@ from litter_destruction.srv import GetNextLitter
 from litter_destruction.srv import RemoveLitter, RemoveLitterRequest 
 from litter_destruction.srv import HasLitterToClear
 from bumperbot_controller.srv import ModeSwitch, ModeSwitchResponse
+from bumperbot_controller.srv import GetCurrentMode, GetCurrentModeResponse
 
 # Enum for robot modes
 class RobotMode(Enum):
@@ -49,17 +50,30 @@ class RobotController:
         self.has_litter_to_clear = rospy.ServiceProxy('/litter_manager/has_litter_to_clear', HasLitterToClear)                       # Service to check if any more litter to clear (litter manager)
 
         ## Service Servers
-        rospy.ServiceProxy('/robot_manager/req_mode', ModeSwitch, self.handle_mode_switch)    # Service server to request mode switch
+        rospy.Service('/robot_controller/mode_switch', ModeSwitch, self.handle_mode_switch)                     # Service server to request mode switch
+        rospy.Service('/robot_controller/get_current_mode', GetCurrentMode, self.handle_get_current_mode)       # Service server to request current mode
 
         ## Configurations
         # ROS action client for move_base
         self.move_base_client = SimpleActionClient('move_base', MoveBaseAction)
         self.move_base_client.wait_for_server()
 
-        # State and configuration variables
+
         self.mode = RobotMode.IDLE
         self.global_boundary_center = Point()
         rospy.loginfo("RobotController initialized and waiting for waypoints.")
+
+
+    def handle_get_current_mode(self, req):
+        """Service handler to get current mode of robot controller"""
+        response = GetCurrentModeResponse()
+        try:
+            response.mode = self.mode.value
+            response.success = True
+        except:
+            response.mode = -1
+            response.success = False
+        return response
 
 
     def handle_mode_switch(self, req):
@@ -88,9 +102,11 @@ class RobotController:
         if mode == RobotMode.IDLE:
             topic_name = '' 
         elif mode == RobotMode.COVERAGE:
-            topic_name = self.coverage_path_waypoint_topic 
+            topic_name = self.coverage_path_waypoint_topic
+            self.perform_coverage_mode() 
         elif mode == RobotMode.LITTER_PICKING:
             topic_name = self.litter_picking_waypoint_topic 
+            self.perform_litter_mode()
         else:
             rospy.WARN("In switch_mode, `mode` argument provided invalid")
             return
@@ -122,11 +138,22 @@ class RobotController:
 
     def navigate_to_waypoint(self, waypoint):
         """Send a waypoint goal to move_base."""
+        # Ensure connection to move_base action server
+        # Wait for the server to be available
+        if not self.move_base_client.wait_for_server(timeout=rospy.Duration(5.0)):
+            rospy.logwarn("move_base action server is not available.")
+            return False
+
+        # Prepare goal
         goal = MoveBaseGoal()
         goal.target_pose.header.frame_id = "map"
         goal.target_pose.header.stamp = rospy.Time.now()
-        goal.target_pose.pose.position = waypoint
-        goal.target_pose.pose.orientation.w = 1.0  # Facing forward
+        goal.target_pose.pose.position.x = waypoint.point.x
+        goal.target_pose.pose.position.y = waypoint.point.y
+        goal.target_pose.pose.position.z = 0.0
+
+        # Set Orientation
+        goal.target_pose.pose.orientation.w = 1.0       # No rotation (facing forward)
 
         rospy.loginfo(f"Sending waypoint to move_base: {waypoint}")
         self.move_base_client.send_goal(goal)
@@ -142,7 +169,12 @@ class RobotController:
 
     def perform_litter_mode(self):
         """Performs the litter clearing algorithm in LITTER_PICKING mode."""
-        while not rospy.is_shutdown():
+        rospy.loginfo("Performing litter mode...")
+        response = self.get_next_litter()
+        if not response.success:
+            rospy.WARN("Failed to call service /litter_manager/get_next_litter in perform_litter_mode")
+            return      # Skip the rest
+        while not rospy.is_shutdown() and self.mode == RobotMode.LITTER_PICKING:
             # Get the next litter waypoint
             try:
                 litter_point = rospy.wait_for_message(self.litter_picking_waypoint_topic, LitterPoint, timeout=5)
@@ -150,6 +182,7 @@ class RobotController:
                 rospy.logwarn(f"Failed to get litter waypoint from topic: {e}")
                 break
 
+            rospy.loginfo(f"Navigating to \n{litter_point.point}")
             # Navigate to the litter waypoint
             if self.navigate_to_waypoint(litter_point.point):
                  # Wait until the robot reaches the waypoint before proceeding
@@ -197,7 +230,20 @@ class RobotController:
                     break
             else:
                 rospy.logwarn("Failed to reach the litter waypoint.")
-        
+
+
+    def connect_to_move_base(self):
+        """Establish or re-establish connection with the move_base action server."""
+        rospy.loginfo("Connecting to move_base action server...")
+        if not self.move_base_client.wait_for_server(rospy.Duration(5)):
+            rospy.logwarn("Failed to connect to move_base. Retrying...")
+            return False
+        rospy.loginfo("Connected to move_base action server.")
+        return True
+
+
+    def perform_coverage_mode(self):
+        pass
 
 
     def handle_litter_detection(self):
@@ -206,14 +252,14 @@ class RobotController:
             rospy.sleep(0.1)
 
         # Return to coverage mode and publish the last incomplete waypoint
-        self.handle_waypoint(self.global_boundary_center)
+        self.navigate_to_waypoint(self.global_boundary_center)
         self.switch_mode(RobotMode.COVERAGE)
 
 
     def coverage_waypoint_callback(self, waypoint):
         """Coverage waypoints callback for coverage mode."""
         if self.mode == RobotMode.COVERAGE:
-            success = self.handle_waypoint(waypoint)
+            success = self.navigate_to_waypoint(waypoint)
             if success:
                 response = self.update_waypoint_status(data=True)
                 if response.sucess:
@@ -225,7 +271,7 @@ class RobotController:
     def litter_waypoint_callback(self, waypoint):
         """Litter waypoints callback for litter picking mode."""
         if self.mode == RobotMode.LITTER_PICKING:
-            self.handle_waypoint(waypoint)
+            self.navigate_to_waypoint(waypoint)
 
 
 def main():

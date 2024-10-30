@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/install/lib;/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib;/opt/ros/noetic/lib)
+    foreach(path /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/install/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
@@ -185,7 +185,7 @@ foreach(t ${bumperbot_controller_EXPORTED_TARGETS})
   endif()
 endforeach()
 
-set(depends "std_msgs;geometry_msgs;sensor_msgs;nav_msgs;message_runtime;tf2;tf2_ros;navigation;litter_destruction")
+set(depends "std_msgs;move_base;actionlib;geometry_msgs;sensor_msgs;nav_msgs;message_runtime;tf2;tf2_ros;navigation;litter_destruction")
 foreach(depend ${depends})
   string(REPLACE " " ";" depend_list ${depend})
   # the package name of the dependency must be kept in a unique variable so that it is not overwritten in recursive calls

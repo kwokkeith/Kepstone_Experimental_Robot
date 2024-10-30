@@ -1,0 +1,7 @@
+<launch>
+    <node name="litter_manager_node" pkg="litter_destruction" type="litter_manager_node.py" output="screen" >
+        <param name="distance_threshold" value="2.0" />
+        <param name="min_local_radius"   value="0.5" />
+        <param name="max_local_radius"   value="1.5" />
+    </node>
+</launch>

@@ -82,5 +82,6 @@ include_directories(
 catkin_install_python(PROGRAMS
   src/litter_destroy.py
   src/litter_destruction/litter_manager.py
+  src/litter_manager_node.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

@@ -9,6 +9,7 @@
 (ros::load-ros-package "actionlib_msgs")
 (ros::load-ros-package "bumperbot_detection")
 (ros::load-ros-package "geometry_msgs")
+(ros::load-ros-package "litter_destruction")
 (ros::load-ros-package "move_base_msgs")
 (ros::load-ros-package "nav_msgs")
 (ros::load-ros-package "roscpp")
