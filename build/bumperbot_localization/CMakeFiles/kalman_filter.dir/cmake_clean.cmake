@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/libkalman_filter.pdb"
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/libkalman_filter.so"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/libkalman_filter.pdb"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/libkalman_filter.so"
   "CMakeFiles/kalman_filter.dir/src/kalman_filter.cpp.o"
 )
 

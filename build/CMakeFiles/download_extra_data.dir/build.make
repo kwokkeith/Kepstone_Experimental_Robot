@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src
+CMAKE_SOURCE_DIR = /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build
+CMAKE_BINARY_DIR = /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build
 
 # Utility rule file for download_extra_data.
 
@@ -67,6 +67,6 @@ CMakeFiles/download_extra_data.dir/clean:
 .PHONY : CMakeFiles/download_extra_data.dir/clean
 
 CMakeFiles/download_extra_data.dir/depend:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/CMakeFiles/download_extra_data.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/CMakeFiles/download_extra_data.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/download_extra_data.dir/depend
 

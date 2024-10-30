@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/navigation/get_amcl_pose_server_node"
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/navigation/get_amcl_pose_server_node.pdb"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/navigation/get_amcl_pose_server_node"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/navigation/get_amcl_pose_server_node.pdb"
   "CMakeFiles/get_amcl_pose_server_node.dir/src/get_amcl_pose_server.cpp.o"
 )
 

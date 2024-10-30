@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src
+CMAKE_SOURCE_DIR = /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build
+CMAKE_BINARY_DIR = /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build
 
 # Utility rule file for move_base_msgs_generate_messages_nodejs.
 
@@ -63,10 +63,10 @@ navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/build: move_ba
 .PHONY : navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/build
 
 navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/clean:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/navigation && $(CMAKE_COMMAND) -P CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/cmake_clean.cmake
+	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/navigation && $(CMAKE_COMMAND) -P CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/cmake_clean.cmake
 .PHONY : navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/clean
 
 navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/depend:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/navigation /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/navigation /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/navigation /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : navigation/CMakeFiles/move_base_msgs_generate_messages_nodejs.dir/depend
 

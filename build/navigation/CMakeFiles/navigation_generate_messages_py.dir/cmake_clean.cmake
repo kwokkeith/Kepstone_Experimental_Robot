@@ -1,11 +1,11 @@
 file(REMOVE_RECURSE
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_ConvertPixelToMap.py"
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_ConvertPixelWaypointsToMap.py"
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_GetAmclPose.py"
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_GetPixelPose.py"
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_GetWaypoints.py"
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_InitiateCoveragePath.py"
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/__init__.py"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/python3/dist-packages/navigation/srv/_ConvertPixelToMap.py"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/python3/dist-packages/navigation/srv/_ConvertPixelWaypointsToMap.py"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/python3/dist-packages/navigation/srv/_GetAmclPose.py"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/python3/dist-packages/navigation/srv/_GetPixelPose.py"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/python3/dist-packages/navigation/srv/_GetWaypoints.py"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/python3/dist-packages/navigation/srv/_InitiateCoveragePath.py"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/python3/dist-packages/navigation/srv/__init__.py"
   "CMakeFiles/navigation_generate_messages_py"
 )
 
