@@ -41,7 +41,7 @@ def main():
             ### Start executing cleaning procedure
             # robot.destroy_litter()
 
-            time.sleep(20)
+            time.sleep(20) # Simulate robot moving to litter
 
             if manager.delete_litter(target_litter):
                 rospy.loginfo(f"Litter with ID {target_litter.id} successfully deleted.")

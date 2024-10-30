@@ -171,8 +171,10 @@ class LitterManager:
         with self.litter_mutex:
             if len(self.set_litter) == 0:
                 rospy.loginfo("All litter within the global boundary cleared.")
-                self.global_boundary_center = None  # Reset the boundary
+                self.global_boundary_center = None  # Reset the global boundary
+                self.local_boundary_center = None   # Reset the local boundary
                 self.publish_global_boundary_marker()
+                self.publish_local_boundary_marker()
 
 
     def compute_local_boundary_radius(self, litter_position):
@@ -297,9 +299,14 @@ class LitterManager:
             response = self.delete_litter_srv(DeleteLitterRequest(id=litter.id))
             if response.success:
                 rospy.loginfo(f"Litter with ID {litter.id} deleted successfully.")
+                
                 # Remove from `set_litter`
                 tuple_litter = self.litter_point_to_tuple(litter)
                 self.set_litter.discard(tuple_litter)
+                
+                # Check if we nede to clear boundary.
+                self.check_and_clear_boundary()
+
             else:
                 rospy.logwarn(f"Failed to delete litter with ID {litter.id}: {response.message}")
             return response.success
@@ -356,7 +363,10 @@ class LitterManager:
         marker.type = Marker.CYLINDER  # Use cylinder for circular boundary
         marker.action = Marker.ADD if self.local_boundary_center else Marker.DELETE
 
-        if self.local_boundary_center:
+        if self.local_boundary_center is None:
+            # No local boundary; clear the marker
+            marker.action = Marker.DELETE
+        else:
             # Set position at the center of the local boundary
             marker.pose.position = self.local_boundary_center
             marker.pose.orientation.x = 0.0
@@ -374,9 +384,6 @@ class LitterManager:
             marker.color.g = 0.0
             marker.color.b = 0.0
             marker.color.a = 0.5  # Semi-transparent
-        else:
-            # No local boundary; clear the marker
-            marker.action = Marker.DELETE
 
         # Publish the marker
         self.local_boundary_marker_pub.publish(marker)

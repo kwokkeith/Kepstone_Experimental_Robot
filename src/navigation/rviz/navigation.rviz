@@ -12,6 +12,7 @@ Panels:
         - /Local Map1/Polygon1
         - /Local Map1/Costmap1
         - /Local Map1/Planner1
+        - /MarkerArray1
         - /MarkerArray1/Namespaces1
       Splitter Ratio: 0.5
     Tree Height: 659
@@ -392,7 +393,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/MarkerArray
       Enabled: true
-      Marker Topic: /litter_markers
+      Marker Topic: /litter_plotter/litter_markers
       Name: MarkerArray
       Namespaces:
         {}
