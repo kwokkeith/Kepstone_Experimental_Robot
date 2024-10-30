@@ -42,8 +42,8 @@ bool WaypointManager::initiateCoveragePath(navigation::InitiateCoveragePath::Req
 }
 
 // Service to get loaded waypoints from waypoint manager
-bool WaypointManager::getWaypoints(navigation::getWaypoints::Request& req,
-                                   navigation::getWaypoints::Response& res) {
+bool WaypointManager::getWaypoints(navigation::GetWaypoints::Request& req,
+                                   navigation::GetWaypoints::Response& res) {
     res.waypoints = waypoints_;
     return true;
 }

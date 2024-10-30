@@ -58,17 +58,17 @@ navigation/CMakeFiles/navigation_generate_messages_nodejs: /home/keith/Documents
 navigation/CMakeFiles/navigation_generate_messages_nodejs: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/ConvertPixelToMap.js
 navigation/CMakeFiles/navigation_generate_messages_nodejs: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/ConvertPixelWaypointsToMap.js
 navigation/CMakeFiles/navigation_generate_messages_nodejs: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/InitiateCoveragePath.js
-navigation/CMakeFiles/navigation_generate_messages_nodejs: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/getWaypoints.js
+navigation/CMakeFiles/navigation_generate_messages_nodejs: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/GetWaypoints.js
 
 
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/GetAmclPose.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/GetAmclPose.js: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetAmclPose.srv
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/GetAmclPose.js: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/GetAmclPose.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/GetAmclPose.js: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/GetAmclPose.js: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/GetAmclPose.js: /opt/ros/noetic/share/std_msgs/msg/Header.msg
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/GetAmclPose.js: /opt/ros/noetic/share/geometry_msgs/msg/PoseWithCovariance.msg
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/GetAmclPose.js: /opt/ros/noetic/share/geometry_msgs/msg/PoseWithCovarianceStamped.msg
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/GetAmclPose.js: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Javascript code from navigation/GetAmclPose.srv"
 	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/navigation && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetAmclPose.srv -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p navigation -o /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv
 
@@ -94,11 +94,11 @@ navigation/CMakeFiles/navigation_generate_messages_nodejs: /home/keith/Documents
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating Javascript code from navigation/InitiateCoveragePath.srv"
 	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/navigation && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/InitiateCoveragePath.srv -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p navigation -o /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv
 
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/getWaypoints.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/getWaypoints.js: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/getWaypoints.srv
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/getWaypoints.js: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating Javascript code from navigation/getWaypoints.srv"
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/navigation && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/getWaypoints.srv -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p navigation -o /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/GetWaypoints.js: /opt/ros/noetic/lib/gennodejs/gen_nodejs.py
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/GetWaypoints.js: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetWaypoints.srv
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/GetWaypoints.js: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating Javascript code from navigation/GetWaypoints.srv"
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/navigation && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/gennodejs/cmake/../../../lib/gennodejs/gen_nodejs.py /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetWaypoints.srv -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p navigation -o /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv
 
 navigation_generate_messages_nodejs: navigation/CMakeFiles/navigation_generate_messages_nodejs
 navigation_generate_messages_nodejs: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/GetAmclPose.js
@@ -106,7 +106,7 @@ navigation_generate_messages_nodejs: /home/keith/Documents/Capstone/Robot_Kepsto
 navigation_generate_messages_nodejs: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/ConvertPixelToMap.js
 navigation_generate_messages_nodejs: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/ConvertPixelWaypointsToMap.js
 navigation_generate_messages_nodejs: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/InitiateCoveragePath.js
-navigation_generate_messages_nodejs: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/getWaypoints.js
+navigation_generate_messages_nodejs: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/GetWaypoints.js
 navigation_generate_messages_nodejs: navigation/CMakeFiles/navigation_generate_messages_nodejs.dir/build.make
 
 .PHONY : navigation_generate_messages_nodejs

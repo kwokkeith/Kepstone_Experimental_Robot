@@ -10,7 +10,9 @@
         "./devel/lib",
         "./src/litter_destruction/src",
         "./devel/lib",
-        "./devel/lib"
+        "./devel/lib",
+        "./devel/lib",
+        "./src/litter_destruction/src"
     ],
     "cmake.ignoreCMakeListsMissing": true,
     "ros.distro": "noetic",

@@ -44,7 +44,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
     "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/ConvertPixelToMap.srv"
     "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/ConvertPixelWaypointsToMap.srv"
     "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/InitiateCoveragePath.srv"
-    "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/getWaypoints.srv"
+    "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetWaypoints.srv"
     )
 endif()
 

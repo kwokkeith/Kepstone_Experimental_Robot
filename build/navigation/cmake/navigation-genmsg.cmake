@@ -19,7 +19,7 @@ add_custom_target(navigation_generate_messages ALL)
 
 get_filename_component(_filename "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetAmclPose.srv" NAME_WE)
 add_custom_target(_navigation_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "navigation" "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetAmclPose.srv" "geometry_msgs/Point:std_msgs/Header:geometry_msgs/Pose:geometry_msgs/Quaternion:geometry_msgs/PoseWithCovariance:geometry_msgs/PoseWithCovarianceStamped"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "navigation" "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetAmclPose.srv" "geometry_msgs/Pose:geometry_msgs/Quaternion:std_msgs/Header:geometry_msgs/PoseWithCovariance:geometry_msgs/PoseWithCovarianceStamped:geometry_msgs/Point"
 )
 
 get_filename_component(_filename "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetPixelPose.srv" NAME_WE)
@@ -42,9 +42,9 @@ add_custom_target(_navigation_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "navigation" "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/InitiateCoveragePath.srv" ""
 )
 
-get_filename_component(_filename "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/getWaypoints.srv" NAME_WE)
+get_filename_component(_filename "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetWaypoints.srv" NAME_WE)
 add_custom_target(_navigation_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "navigation" "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/getWaypoints.srv" "geometry_msgs/Point"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "navigation" "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetWaypoints.srv" "geometry_msgs/Point"
 )
 
 #
@@ -58,7 +58,7 @@ add_custom_target(_navigation_generate_messages_check_deps_${_filename}
 _generate_srv_cpp(navigation
   "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetAmclPose.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovarianceStamped.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovarianceStamped.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/navigation
 )
 _generate_srv_cpp(navigation
@@ -86,7 +86,7 @@ _generate_srv_cpp(navigation
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/navigation
 )
 _generate_srv_cpp(navigation
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/getWaypoints.srv"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetWaypoints.srv"
   "${MSG_I_FLAGS}"
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/navigation
@@ -114,7 +114,7 @@ get_filename_component(_filename "/home/keith/Documents/Capstone/Robot_Kepstone/
 add_dependencies(navigation_generate_messages_cpp _navigation_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/InitiateCoveragePath.srv" NAME_WE)
 add_dependencies(navigation_generate_messages_cpp _navigation_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/getWaypoints.srv" NAME_WE)
+get_filename_component(_filename "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetWaypoints.srv" NAME_WE)
 add_dependencies(navigation_generate_messages_cpp _navigation_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -131,7 +131,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS navigation_generate_messages_cpp)
 _generate_srv_eus(navigation
   "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetAmclPose.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovarianceStamped.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovarianceStamped.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/navigation
 )
 _generate_srv_eus(navigation
@@ -159,7 +159,7 @@ _generate_srv_eus(navigation
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/navigation
 )
 _generate_srv_eus(navigation
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/getWaypoints.srv"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetWaypoints.srv"
   "${MSG_I_FLAGS}"
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/navigation
@@ -187,7 +187,7 @@ get_filename_component(_filename "/home/keith/Documents/Capstone/Robot_Kepstone/
 add_dependencies(navigation_generate_messages_eus _navigation_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/InitiateCoveragePath.srv" NAME_WE)
 add_dependencies(navigation_generate_messages_eus _navigation_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/getWaypoints.srv" NAME_WE)
+get_filename_component(_filename "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetWaypoints.srv" NAME_WE)
 add_dependencies(navigation_generate_messages_eus _navigation_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -204,7 +204,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS navigation_generate_messages_eus)
 _generate_srv_lisp(navigation
   "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetAmclPose.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovarianceStamped.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovarianceStamped.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/navigation
 )
 _generate_srv_lisp(navigation
@@ -232,7 +232,7 @@ _generate_srv_lisp(navigation
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/navigation
 )
 _generate_srv_lisp(navigation
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/getWaypoints.srv"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetWaypoints.srv"
   "${MSG_I_FLAGS}"
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/navigation
@@ -260,7 +260,7 @@ get_filename_component(_filename "/home/keith/Documents/Capstone/Robot_Kepstone/
 add_dependencies(navigation_generate_messages_lisp _navigation_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/InitiateCoveragePath.srv" NAME_WE)
 add_dependencies(navigation_generate_messages_lisp _navigation_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/getWaypoints.srv" NAME_WE)
+get_filename_component(_filename "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetWaypoints.srv" NAME_WE)
 add_dependencies(navigation_generate_messages_lisp _navigation_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -277,7 +277,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS navigation_generate_messages_lisp)
 _generate_srv_nodejs(navigation
   "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetAmclPose.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovarianceStamped.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovarianceStamped.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/navigation
 )
 _generate_srv_nodejs(navigation
@@ -305,7 +305,7 @@ _generate_srv_nodejs(navigation
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/navigation
 )
 _generate_srv_nodejs(navigation
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/getWaypoints.srv"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetWaypoints.srv"
   "${MSG_I_FLAGS}"
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/navigation
@@ -333,7 +333,7 @@ get_filename_component(_filename "/home/keith/Documents/Capstone/Robot_Kepstone/
 add_dependencies(navigation_generate_messages_nodejs _navigation_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/InitiateCoveragePath.srv" NAME_WE)
 add_dependencies(navigation_generate_messages_nodejs _navigation_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/getWaypoints.srv" NAME_WE)
+get_filename_component(_filename "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetWaypoints.srv" NAME_WE)
 add_dependencies(navigation_generate_messages_nodejs _navigation_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -350,7 +350,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS navigation_generate_messages_nodejs
 _generate_srv_py(navigation
   "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetAmclPose.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovarianceStamped.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovariance.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/PoseWithCovarianceStamped.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/navigation
 )
 _generate_srv_py(navigation
@@ -378,7 +378,7 @@ _generate_srv_py(navigation
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/navigation
 )
 _generate_srv_py(navigation
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/getWaypoints.srv"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetWaypoints.srv"
   "${MSG_I_FLAGS}"
   "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/navigation
@@ -406,7 +406,7 @@ get_filename_component(_filename "/home/keith/Documents/Capstone/Robot_Kepstone/
 add_dependencies(navigation_generate_messages_py _navigation_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/InitiateCoveragePath.srv" NAME_WE)
 add_dependencies(navigation_generate_messages_py _navigation_generate_messages_check_deps_${_filename})
-get_filename_component(_filename "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/getWaypoints.srv" NAME_WE)
+get_filename_component(_filename "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetWaypoints.srv" NAME_WE)
 add_dependencies(navigation_generate_messages_py _navigation_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility

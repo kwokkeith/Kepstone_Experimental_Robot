@@ -7,6 +7,7 @@
 ;;
 (ros::load-ros-package "actionlib")
 (ros::load-ros-package "actionlib_msgs")
+(ros::load-ros-package "bumperbot_detection")
 (ros::load-ros-package "geometry_msgs")
 (ros::load-ros-package "move_base_msgs")
 (ros::load-ros-package "nav_msgs")
@@ -18,4 +19,5 @@
 (ros::load-ros-package "tf")
 (ros::load-ros-package "tf2_msgs")
 (ros::load-ros-package "topic_tools")
+(ros::load-ros-package "visualization_msgs")
 (ros::load-ros-package "navigation")

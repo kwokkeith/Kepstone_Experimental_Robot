@@ -1,0 +1,4 @@
+# srv/GlobalBoundaryCenter.srv
+---
+geometry_msgs/Point center
+bool valid  

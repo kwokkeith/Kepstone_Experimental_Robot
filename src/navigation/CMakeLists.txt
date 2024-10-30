@@ -30,7 +30,7 @@ add_service_files(
   ConvertPixelToMap.srv
   ConvertPixelWaypointsToMap.srv
   InitiateCoveragePath.srv
-  getWaypoints.srv
+  GetWaypoints.srv
 )
 
 # Generate messages and services with any dependencies
@@ -61,6 +61,7 @@ include_directories(
   include
   ${catkin_INCLUDE_DIRS}
   ${bumperbot_utils_INCLUDE_DIRS}
+  ${litter_destruction_INCLUDE_DIRS}
 )
 
 # Library for pixel position publisher
@@ -108,6 +109,7 @@ add_executable(waypoint_plotter_publisher_node src/waypoint_plotter.cpp)
 add_dependencies(waypoint_plotter_publisher_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(waypoint_plotter_publisher_node ${catkin_LIBRARIES})
 
+
 #############
 ## Install ##
 #############
@@ -115,6 +117,6 @@ target_link_libraries(waypoint_plotter_publisher_node ${catkin_LIBRARIES})
 # Install Python programs
 catkin_install_python(PROGRAMS
   src/waypoint_nav.py
-  nodes/robot_controller_node.py
+  src/navigation/nodes/robot_controller_node.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

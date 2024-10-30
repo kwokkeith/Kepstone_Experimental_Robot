@@ -4,30 +4,29 @@ from std_msgs.msg import String
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from actionlib import SimpleActionClient
 from enum import Enum
-from litter_destruction.litter_manager import LitterManager
-from navigation.waypoint_manager import WaypointManager
 from std_srvs.srv import SetBool
 from navigation.srv import InitiateCoveragePath
+from litter_destruction.srv import GlobalBoundaryCenter
 
 # Enum for robot modes
 class RobotMode(Enum):
-    COVERAGE = 1
-    LITTER_PICKING = 2
+    IDLE = 1
+    COVERAGE = 2
+    LITTER_PICKING = 3
 
 
 class RobotController:
-    def __init__(self, waypoint_manager, litter_manager):
-        # Initialize managers
-        self.waypoint_manager = waypoint_manager
-        self.litter_manager = litter_manager
-
-        # ROS action client for move_base
-        self.move_base_client = SimpleActionClient('move_base', MoveBaseAction)
-        self.move_base_client.wait_for_server()
-        
+    def __init__(self):
+        ## Publishers
         # Publisher to control mux input selection
         self.mux_select_pub = rospy.Publisher('/waypoint_mux/select', String, queue_size=10)
 
+        ## Subscribers
+        # Subscriptions to the waypoint topics for each mode
+        rospy.Subscriber('/litter_picking/waypoint', Point, self.litter_waypoint_callback)
+        rospy.Subscriber('/coverage_path/next_waypoint', Point, self.coverage_waypoint_callback)
+
+        ## Service Clients
         # Service to update waypoint_manager (get next waypoint)
         rospy.wait_for_service('/waypoint_manager/update_waypoint_status')
         self.update_waypoint_status = rospy.ServiceProxy('/waypoint_manager/update_waypoint_status', SetBool)
@@ -36,14 +35,21 @@ class RobotController:
         rospy.wait_for_service('/waypoint_manager/initiate_coverage_path')
         self.initiate_coverage_path = rospy.ServiceProxy('/waypoint_manager/initiate_coverage_path', InitiateCoveragePath)        
         
+        # Service to get global boundary center
+        rospy.wait_for_service('/litter_manager/get_global_boundary_center')
+        self.get_global_boundary_center = rospy.ServiceProxy('/litter_manager/get_global_boundary_center', GlobalBoundaryCenter)
+
+        ## Service Servers
+
+        ## Configurations
+        # ROS action client for move_base
+        self.move_base_client = SimpleActionClient('move_base', MoveBaseAction)
+        self.move_base_client.wait_for_server()
+
         # State and configuration variables
-        self.mode = RobotMode.COVERAGE
+        self.mode = RobotMode.IDLE
         self.global_boundary_center = Point()
         rospy.loginfo("RobotController initialized and waiting for waypoints.")
-
-        # Subscriptions to the waypoint topics for each mode
-        rospy.Subscriber('/litter_picking/waypoint', Point, self.litter_waypoint_callback)
-        rospy.Subscriber('/coverage_path/next_waypoint', Point, self.coverage_waypoint_callback)
 
 
     def initiate_coverage_mode(self, waypoints_file_path):
@@ -57,6 +63,7 @@ class RobotController:
             response = self.initiate_coverage_path(request)
 
             if response.success:
+                self.mode = RobotMode.COVERAGE
                 rospy.loginfo("Coverage path initiated successfully.")
             else:
                 rospy.logwarn(f"Failed to initiate coverage path: {response.message}")
@@ -96,7 +103,12 @@ class RobotController:
     def handle_litter_detection(self):
         """Switch to litter picking mode, clear litter, then return to coverage mode."""
         if not self.global_boundary_center:
-            self.global_boundary_center = self.litter_manager.global_boundary_center
+            response = self.get_global_boundary_center(GlobalBoundaryCenter())
+            if response.valid:
+                self.global_boundary_center = response.center
+            else:
+                rospy.logwarn(f"Failed to get global boundary center")
+                return
 
         # Switch to litter picking mode
         self.switch_mode(RobotMode.LITTER_PICKING)
@@ -129,17 +141,7 @@ class RobotController:
 
 def main():
     rospy.init_node('robot_controller_node')
-
-    # Load coverage waypoints as an example
-    coverage_waypoints = [Point(x=1, y=1), Point(x=2, y=2), Point(x=3, y=3)]
-
-    # Initialize managers and controller
-    nh = rospy.NodeHandle()
-    waypoint_manager = WaypointManager(nh)
-    litter_manager = LitterManager(distance_threshold=2.0, min_local_radius=0.5, max_local_radius=1.5)
-    controller = RobotController(waypoint_manager, litter_manager)
-
-    controller.initiate_coverage_mode(coverage_waypoints)
+    controller = RobotController()
     rospy.spin()
 
 if __name__ == '__main__':

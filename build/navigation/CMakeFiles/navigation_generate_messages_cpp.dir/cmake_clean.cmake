@@ -3,8 +3,8 @@ file(REMOVE_RECURSE
   "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/ConvertPixelWaypointsToMap.h"
   "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/GetAmclPose.h"
   "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/GetPixelPose.h"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/GetWaypoints.h"
   "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/InitiateCoveragePath.h"
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include/navigation/getWaypoints.h"
   "CMakeFiles/navigation_generate_messages_cpp"
 )
 

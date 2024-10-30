@@ -5,7 +5,7 @@
 #include <geometry_msgs/Point.h>
 #include <std_srvs/SetBool.h>
 #include "navigation/InitiateCoveragePath.h"
-#include "navigation/getWaypoints.h"
+#include "navigation/GetWaypoints.h"
 
 class WaypointManager {
 public:
@@ -14,8 +14,8 @@ public:
                               navigation::InitiateCoveragePath::Response& res);
     void publishNextWaypoint();
     bool updateWaypointStatus(std_srvs::SetBool::Request& req, std_srvs::SetBool::Response& res);
-    bool getWaypoints(navigation::getWaypoints::Request& req,
-                      navigation::getWaypoints::Response& res);
+    bool getWaypoints(navigation::GetWaypoints::Request& req,
+                      navigation::GetWaypoints::Response& res);
 
 private:
     ros::NodeHandle nh_;

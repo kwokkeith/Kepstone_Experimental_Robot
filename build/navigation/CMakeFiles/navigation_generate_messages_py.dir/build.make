@@ -58,18 +58,18 @@ navigation/CMakeFiles/navigation_generate_messages_py: /home/keith/Documents/Cap
 navigation/CMakeFiles/navigation_generate_messages_py: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_ConvertPixelToMap.py
 navigation/CMakeFiles/navigation_generate_messages_py: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_ConvertPixelWaypointsToMap.py
 navigation/CMakeFiles/navigation_generate_messages_py: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_InitiateCoveragePath.py
-navigation/CMakeFiles/navigation_generate_messages_py: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_getWaypoints.py
+navigation/CMakeFiles/navigation_generate_messages_py: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_GetWaypoints.py
 navigation/CMakeFiles/navigation_generate_messages_py: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/__init__.py
 
 
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_GetAmclPose.py: /opt/ros/noetic/lib/genpy/gensrv_py.py
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_GetAmclPose.py: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetAmclPose.srv
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_GetAmclPose.py: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_GetAmclPose.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_GetAmclPose.py: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_GetAmclPose.py: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_GetAmclPose.py: /opt/ros/noetic/share/std_msgs/msg/Header.msg
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_GetAmclPose.py: /opt/ros/noetic/share/geometry_msgs/msg/PoseWithCovariance.msg
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_GetAmclPose.py: /opt/ros/noetic/share/geometry_msgs/msg/PoseWithCovarianceStamped.msg
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_GetAmclPose.py: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python code from SRV navigation/GetAmclPose"
 	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/navigation && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/gensrv_py.py /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetAmclPose.srv -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p navigation -o /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv
 
@@ -95,11 +95,11 @@ navigation/CMakeFiles/navigation_generate_messages_py: /home/keith/Documents/Cap
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating Python code from SRV navigation/InitiateCoveragePath"
 	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/navigation && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/gensrv_py.py /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/InitiateCoveragePath.srv -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p navigation -o /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv
 
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_getWaypoints.py: /opt/ros/noetic/lib/genpy/gensrv_py.py
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_getWaypoints.py: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/getWaypoints.srv
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_getWaypoints.py: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating Python code from SRV navigation/getWaypoints"
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/navigation && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/gensrv_py.py /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/getWaypoints.srv -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p navigation -o /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_GetWaypoints.py: /opt/ros/noetic/lib/genpy/gensrv_py.py
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_GetWaypoints.py: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetWaypoints.srv
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_GetWaypoints.py: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating Python code from SRV navigation/GetWaypoints"
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/navigation && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/gensrv_py.py /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetWaypoints.srv -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p navigation -o /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv
 
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/__init__.py: /opt/ros/noetic/lib/genpy/genmsg_py.py
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/__init__.py: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_GetAmclPose.py
@@ -107,7 +107,7 @@ navigation/CMakeFiles/navigation_generate_messages_py: /home/keith/Documents/Cap
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/__init__.py: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_ConvertPixelToMap.py
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/__init__.py: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_ConvertPixelWaypointsToMap.py
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/__init__.py: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_InitiateCoveragePath.py
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/__init__.py: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_getWaypoints.py
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/__init__.py: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_GetWaypoints.py
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating Python srv __init__.py for navigation"
 	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/navigation && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv --initpy
 
@@ -117,7 +117,7 @@ navigation_generate_messages_py: /home/keith/Documents/Capstone/Robot_Kepstone/T
 navigation_generate_messages_py: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_ConvertPixelToMap.py
 navigation_generate_messages_py: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_ConvertPixelWaypointsToMap.py
 navigation_generate_messages_py: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_InitiateCoveragePath.py
-navigation_generate_messages_py: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_getWaypoints.py
+navigation_generate_messages_py: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/_GetWaypoints.py
 navigation_generate_messages_py: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/lib/python3/dist-packages/navigation/srv/__init__.py
 navigation_generate_messages_py: navigation/CMakeFiles/navigation_generate_messages_py.dir/build.make
 

@@ -58,18 +58,18 @@ navigation/CMakeFiles/navigation_generate_messages_eus: /home/keith/Documents/Ca
 navigation/CMakeFiles/navigation_generate_messages_eus: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/ConvertPixelToMap.l
 navigation/CMakeFiles/navigation_generate_messages_eus: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/ConvertPixelWaypointsToMap.l
 navigation/CMakeFiles/navigation_generate_messages_eus: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/InitiateCoveragePath.l
-navigation/CMakeFiles/navigation_generate_messages_eus: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/getWaypoints.l
+navigation/CMakeFiles/navigation_generate_messages_eus: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/GetWaypoints.l
 navigation/CMakeFiles/navigation_generate_messages_eus: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/manifest.l
 
 
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/GetAmclPose.l: /opt/ros/noetic/lib/geneus/gen_eus.py
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/GetAmclPose.l: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetAmclPose.srv
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/GetAmclPose.l: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/GetAmclPose.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/GetAmclPose.l: /opt/ros/noetic/share/geometry_msgs/msg/Pose.msg
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/GetAmclPose.l: /opt/ros/noetic/share/geometry_msgs/msg/Quaternion.msg
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/GetAmclPose.l: /opt/ros/noetic/share/std_msgs/msg/Header.msg
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/GetAmclPose.l: /opt/ros/noetic/share/geometry_msgs/msg/PoseWithCovariance.msg
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/GetAmclPose.l: /opt/ros/noetic/share/geometry_msgs/msg/PoseWithCovarianceStamped.msg
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/GetAmclPose.l: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating EusLisp code from navigation/GetAmclPose.srv"
 	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/navigation && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetAmclPose.srv -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p navigation -o /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv
 
@@ -95,11 +95,11 @@ navigation/CMakeFiles/navigation_generate_messages_eus: /home/keith/Documents/Ca
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generating EusLisp code from navigation/InitiateCoveragePath.srv"
 	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/navigation && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/InitiateCoveragePath.srv -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p navigation -o /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv
 
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/getWaypoints.l: /opt/ros/noetic/lib/geneus/gen_eus.py
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/getWaypoints.l: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/getWaypoints.srv
-/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/getWaypoints.l: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating EusLisp code from navigation/getWaypoints.srv"
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/navigation && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/getWaypoints.srv -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p navigation -o /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/GetWaypoints.l: /opt/ros/noetic/lib/geneus/gen_eus.py
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/GetWaypoints.l: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetWaypoints.srv
+/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/GetWaypoints.l: /opt/ros/noetic/share/geometry_msgs/msg/Point.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generating EusLisp code from navigation/GetWaypoints.srv"
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/navigation && ../catkin_generated/env_cached.sh /usr/bin/python3 /opt/ros/noetic/share/geneus/cmake/../../../lib/geneus/gen_eus.py /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/srv/GetWaypoints.srv -Igeometry_msgs:/opt/ros/noetic/share/geometry_msgs/cmake/../msg -Istd_msgs:/opt/ros/noetic/share/std_msgs/cmake/../msg -p navigation -o /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv
 
 /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/manifest.l: /opt/ros/noetic/lib/geneus/gen_eus.py
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Generating EusLisp manifest code for navigation"
@@ -111,7 +111,7 @@ navigation_generate_messages_eus: /home/keith/Documents/Capstone/Robot_Kepstone/
 navigation_generate_messages_eus: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/ConvertPixelToMap.l
 navigation_generate_messages_eus: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/ConvertPixelWaypointsToMap.l
 navigation_generate_messages_eus: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/InitiateCoveragePath.l
-navigation_generate_messages_eus: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/getWaypoints.l
+navigation_generate_messages_eus: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/srv/GetWaypoints.l
 navigation_generate_messages_eus: /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/roseus/ros/navigation/manifest.l
 navigation_generate_messages_eus: navigation/CMakeFiles/navigation_generate_messages_eus.dir/build.make
 

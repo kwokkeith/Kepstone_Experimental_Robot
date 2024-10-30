@@ -48,6 +48,13 @@
   <!-- robot previous path node -->
   <node name="robot_path_publisher" pkg="bumperbot_utils" type="path_plotter_node" />
 
+  <!-- robot controller node -->
+  <node name="robot_controller_node" pkg="navigation" type="robot_controller_node.py" />   
+
+  <!-- Setup waypoint manager -->
+  <node name="waypoint_manager_node" pkg="navigation" type="waypoint_manager_node"/>
+
+
   <!-- rviz -->
   <node 
     pkg="rviz" 

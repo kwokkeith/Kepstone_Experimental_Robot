@@ -3,8 +3,8 @@ file(REMOVE_RECURSE
   "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/ConvertPixelWaypointsToMap.js"
   "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/GetAmclPose.js"
   "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/GetPixelPose.js"
+  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/GetWaypoints.js"
   "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/InitiateCoveragePath.js"
-  "/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/share/gennodejs/ros/navigation/srv/getWaypoints.js"
   "CMakeFiles/navigation_generate_messages_nodejs"
 )
 

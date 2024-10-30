@@ -28,8 +28,8 @@ def main():
     while not rospy.is_shutdown():
         if manager.min_heap_litter and manager.set_litter:
             # Pop the closest litter item based on distance
-            _, target_litter = heapq.heappop(manager.min_heap_litter)
-            rospy.loginfo(f"Moving to litter at position: {target_litter.point}")
+            _, target_litter = manager.pop_min_heap() 
+            rospy.loginfo(f"Moving to litter at position: \n{target_litter.point}")
 
              # Set the local boundary and process additional litter within it
             manager.process_target_litter(target_litter)
@@ -41,9 +41,10 @@ def main():
             ### Start executing cleaning procedure
             # robot.destroy_litter()
 
-            if manager.delete_litter(target_litter.id):
+            time.sleep(20)
+
+            if manager.delete_litter(target_litter):
                 rospy.loginfo(f"Litter with ID {target_litter.id} successfully deleted.")
-                manager.set_litter.discard(target_litter)
                 manager.start_pos = target_litter.point
                 manager.update_min_heap()
 

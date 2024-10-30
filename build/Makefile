@@ -1689,6 +1689,32 @@ litter_destruction_generate_messages/fast:
 .PHONY : litter_destruction_generate_messages/fast
 
 #=============================================================================
+# Target rules for targets named litter_destruction_generate_messages_py
+
+# Build rule for target.
+litter_destruction_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 litter_destruction_generate_messages_py
+.PHONY : litter_destruction_generate_messages_py
+
+# fast build rule for target.
+litter_destruction_generate_messages_py/fast:
+	$(MAKE) -f litter_destruction/CMakeFiles/litter_destruction_generate_messages_py.dir/build.make litter_destruction/CMakeFiles/litter_destruction_generate_messages_py.dir/build
+.PHONY : litter_destruction_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named _litter_destruction_generate_messages_check_deps_GetLitterSet
+
+# Build rule for target.
+_litter_destruction_generate_messages_check_deps_GetLitterSet: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _litter_destruction_generate_messages_check_deps_GetLitterSet
+.PHONY : _litter_destruction_generate_messages_check_deps_GetLitterSet
+
+# fast build rule for target.
+_litter_destruction_generate_messages_check_deps_GetLitterSet/fast:
+	$(MAKE) -f litter_destruction/CMakeFiles/_litter_destruction_generate_messages_check_deps_GetLitterSet.dir/build.make litter_destruction/CMakeFiles/_litter_destruction_generate_messages_check_deps_GetLitterSet.dir/build
+.PHONY : _litter_destruction_generate_messages_check_deps_GetLitterSet/fast
+
+#=============================================================================
 # Target rules for targets named litter_destruction_generate_messages_cpp
 
 # Build rule for target.
@@ -1754,6 +1780,32 @@ litter_destruction_generate_messages_lisp/fast:
 .PHONY : litter_destruction_generate_messages_lisp/fast
 
 #=============================================================================
+# Target rules for targets named _litter_destruction_generate_messages_check_deps_GlobalBoundaryCenter
+
+# Build rule for target.
+_litter_destruction_generate_messages_check_deps_GlobalBoundaryCenter: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _litter_destruction_generate_messages_check_deps_GlobalBoundaryCenter
+.PHONY : _litter_destruction_generate_messages_check_deps_GlobalBoundaryCenter
+
+# fast build rule for target.
+_litter_destruction_generate_messages_check_deps_GlobalBoundaryCenter/fast:
+	$(MAKE) -f litter_destruction/CMakeFiles/_litter_destruction_generate_messages_check_deps_GlobalBoundaryCenter.dir/build.make litter_destruction/CMakeFiles/_litter_destruction_generate_messages_check_deps_GlobalBoundaryCenter.dir/build
+.PHONY : _litter_destruction_generate_messages_check_deps_GlobalBoundaryCenter/fast
+
+#=============================================================================
+# Target rules for targets named litter_destruction_generate_messages_nodejs
+
+# Build rule for target.
+litter_destruction_generate_messages_nodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 litter_destruction_generate_messages_nodejs
+.PHONY : litter_destruction_generate_messages_nodejs
+
+# fast build rule for target.
+litter_destruction_generate_messages_nodejs/fast:
+	$(MAKE) -f litter_destruction/CMakeFiles/litter_destruction_generate_messages_nodejs.dir/build.make litter_destruction/CMakeFiles/litter_destruction_generate_messages_nodejs.dir/build
+.PHONY : litter_destruction_generate_messages_nodejs/fast
+
+#=============================================================================
 # Target rules for targets named litter_destruction_genlisp
 
 # Build rule for target.
@@ -1780,19 +1832,6 @@ litter_destruction_gennodejs/fast:
 .PHONY : litter_destruction_gennodejs/fast
 
 #=============================================================================
-# Target rules for targets named litter_destruction_generate_messages_nodejs
-
-# Build rule for target.
-litter_destruction_generate_messages_nodejs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 litter_destruction_generate_messages_nodejs
-.PHONY : litter_destruction_generate_messages_nodejs
-
-# fast build rule for target.
-litter_destruction_generate_messages_nodejs/fast:
-	$(MAKE) -f litter_destruction/CMakeFiles/litter_destruction_generate_messages_nodejs.dir/build.make litter_destruction/CMakeFiles/litter_destruction_generate_messages_nodejs.dir/build
-.PHONY : litter_destruction_generate_messages_nodejs/fast
-
-#=============================================================================
 # Target rules for targets named litter_destruction_genpy
 
 # Build rule for target.
@@ -1806,19 +1845,6 @@ litter_destruction_genpy/fast:
 .PHONY : litter_destruction_genpy/fast
 
 #=============================================================================
-# Target rules for targets named litter_destruction_generate_messages_py
-
-# Build rule for target.
-litter_destruction_generate_messages_py: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 litter_destruction_generate_messages_py
-.PHONY : litter_destruction_generate_messages_py
-
-# fast build rule for target.
-litter_destruction_generate_messages_py/fast:
-	$(MAKE) -f litter_destruction/CMakeFiles/litter_destruction_generate_messages_py.dir/build.make litter_destruction/CMakeFiles/litter_destruction_generate_messages_py.dir/build
-.PHONY : litter_destruction_generate_messages_py/fast
-
-#=============================================================================
 # Target rules for targets named waypoint_plotter_publisher_node
 
 # Build rule for target.
@@ -1830,19 +1856,6 @@ waypoint_plotter_publisher_node: cmake_check_build_system
 waypoint_plotter_publisher_node/fast:
 	$(MAKE) -f navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/build.make navigation/CMakeFiles/waypoint_plotter_publisher_node.dir/build
 .PHONY : waypoint_plotter_publisher_node/fast
-
-#=============================================================================
-# Target rules for targets named _navigation_generate_messages_check_deps_getWaypoints
-
-# Build rule for target.
-_navigation_generate_messages_check_deps_getWaypoints: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 _navigation_generate_messages_check_deps_getWaypoints
-.PHONY : _navigation_generate_messages_check_deps_getWaypoints
-
-# fast build rule for target.
-_navigation_generate_messages_check_deps_getWaypoints/fast:
-	$(MAKE) -f navigation/CMakeFiles/_navigation_generate_messages_check_deps_getWaypoints.dir/build.make navigation/CMakeFiles/_navigation_generate_messages_check_deps_getWaypoints.dir/build
-.PHONY : _navigation_generate_messages_check_deps_getWaypoints/fast
 
 #=============================================================================
 # Target rules for targets named navigation_generate_messages_cpp
@@ -1934,6 +1947,19 @@ _navigation_generate_messages_check_deps_GetAmclPose: cmake_check_build_system
 _navigation_generate_messages_check_deps_GetAmclPose/fast:
 	$(MAKE) -f navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetAmclPose.dir/build.make navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetAmclPose.dir/build
 .PHONY : _navigation_generate_messages_check_deps_GetAmclPose/fast
+
+#=============================================================================
+# Target rules for targets named _navigation_generate_messages_check_deps_GetWaypoints
+
+# Build rule for target.
+_navigation_generate_messages_check_deps_GetWaypoints: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _navigation_generate_messages_check_deps_GetWaypoints
+.PHONY : _navigation_generate_messages_check_deps_GetWaypoints
+
+# fast build rule for target.
+_navigation_generate_messages_check_deps_GetWaypoints/fast:
+	$(MAKE) -f navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetWaypoints.dir/build.make navigation/CMakeFiles/_navigation_generate_messages_check_deps_GetWaypoints.dir/build
+.PHONY : _navigation_generate_messages_check_deps_GetWaypoints/fast
 
 #=============================================================================
 # Target rules for targets named _navigation_generate_messages_check_deps_ConvertPixelToMap
@@ -2038,32 +2064,6 @@ navigation_genpy: cmake_check_build_system
 navigation_genpy/fast:
 	$(MAKE) -f navigation/CMakeFiles/navigation_genpy.dir/build.make navigation/CMakeFiles/navigation_genpy.dir/build
 .PHONY : navigation_genpy/fast
-
-#=============================================================================
-# Target rules for targets named get_amcl_pose_server_node
-
-# Build rule for target.
-get_amcl_pose_server_node: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 get_amcl_pose_server_node
-.PHONY : get_amcl_pose_server_node
-
-# fast build rule for target.
-get_amcl_pose_server_node/fast:
-	$(MAKE) -f navigation/CMakeFiles/get_amcl_pose_server_node.dir/build.make navigation/CMakeFiles/get_amcl_pose_server_node.dir/build
-.PHONY : get_amcl_pose_server_node/fast
-
-#=============================================================================
-# Target rules for targets named _navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap
-
-# Build rule for target.
-_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 _navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap
-.PHONY : _navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap
-
-# fast build rule for target.
-_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap/fast:
-	$(MAKE) -f navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap.dir/build.make navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap.dir/build
-.PHONY : _navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap/fast
 
 #=============================================================================
 # Target rules for targets named move_base_msgs_generate_messages_cpp
@@ -2194,6 +2194,32 @@ waypoint_manager_node: cmake_check_build_system
 waypoint_manager_node/fast:
 	$(MAKE) -f navigation/CMakeFiles/waypoint_manager_node.dir/build.make navigation/CMakeFiles/waypoint_manager_node.dir/build
 .PHONY : waypoint_manager_node/fast
+
+#=============================================================================
+# Target rules for targets named _navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap
+
+# Build rule for target.
+_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap
+.PHONY : _navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap
+
+# fast build rule for target.
+_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap/fast:
+	$(MAKE) -f navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap.dir/build.make navigation/CMakeFiles/_navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap.dir/build
+.PHONY : _navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap/fast
+
+#=============================================================================
+# Target rules for targets named get_amcl_pose_server_node
+
+# Build rule for target.
+get_amcl_pose_server_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 get_amcl_pose_server_node
+.PHONY : get_amcl_pose_server_node
+
+# fast build rule for target.
+get_amcl_pose_server_node/fast:
+	$(MAKE) -f navigation/CMakeFiles/get_amcl_pose_server_node.dir/build.make navigation/CMakeFiles/get_amcl_pose_server_node.dir/build
+.PHONY : get_amcl_pose_server_node/fast
 
 #=============================================================================
 # Target rules for targets named navigation_generate_messages_lisp
@@ -2351,18 +2377,19 @@ help:
 	@echo "... litter_coordinate_subscriber"
 	@echo "... _bumperbot_detection_generate_messages_check_deps_GetLitterList"
 	@echo "... litter_destruction_generate_messages"
+	@echo "... litter_destruction_generate_messages_py"
+	@echo "... _litter_destruction_generate_messages_check_deps_GetLitterSet"
 	@echo "... litter_destruction_generate_messages_cpp"
 	@echo "... litter_destruction_geneus"
 	@echo "... litter_destruction_gencpp"
 	@echo "... litter_destruction_generate_messages_eus"
 	@echo "... litter_destruction_generate_messages_lisp"
+	@echo "... _litter_destruction_generate_messages_check_deps_GlobalBoundaryCenter"
+	@echo "... litter_destruction_generate_messages_nodejs"
 	@echo "... litter_destruction_genlisp"
 	@echo "... litter_destruction_gennodejs"
-	@echo "... litter_destruction_generate_messages_nodejs"
 	@echo "... litter_destruction_genpy"
-	@echo "... litter_destruction_generate_messages_py"
 	@echo "... waypoint_plotter_publisher_node"
-	@echo "... _navigation_generate_messages_check_deps_getWaypoints"
 	@echo "... navigation_generate_messages_cpp"
 	@echo "... pixel_position_publisher_node"
 	@echo "... pixel_position_publisher"
@@ -2370,6 +2397,7 @@ help:
 	@echo "... navigation_gencpp"
 	@echo "... navigation_generate_messages_eus"
 	@echo "... _navigation_generate_messages_check_deps_GetAmclPose"
+	@echo "... _navigation_generate_messages_check_deps_GetWaypoints"
 	@echo "... _navigation_generate_messages_check_deps_ConvertPixelToMap"
 	@echo "... move_base_msgs_generate_messages_py"
 	@echo "... _navigation_generate_messages_check_deps_GetPixelPose"
@@ -2378,8 +2406,6 @@ help:
 	@echo "... navigation_gennodejs"
 	@echo "... navigation_generate_messages"
 	@echo "... navigation_genpy"
-	@echo "... get_amcl_pose_server_node"
-	@echo "... _navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap"
 	@echo "... move_base_msgs_generate_messages_cpp"
 	@echo "... move_base_msgs_generate_messages_nodejs"
 	@echo "... get_pixel_pose_server_node"
@@ -2390,6 +2416,8 @@ help:
 	@echo "... move_base_msgs_generate_messages_eus"
 	@echo "... waypoint_manager"
 	@echo "... waypoint_manager_node"
+	@echo "... _navigation_generate_messages_check_deps_ConvertPixelWaypointsToMap"
+	@echo "... get_amcl_pose_server_node"
 	@echo "... navigation_generate_messages_lisp"
 	@echo "... convert_pixel_to_map_server_node"
 .PHONY : help
