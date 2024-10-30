@@ -4,13 +4,16 @@ import heapq
 import math
 from geometry_msgs.msg import Point, PoseStamped
 from bumperbot_detection.msg import  LitterPoint
+from std_msgs.msg import Header
 from nav_msgs.srv import GetPlan
 from navigation.srv import GetAmclPose
 from bumperbot_detection.srv import DeleteLitterRequest, DeleteLitter, GetLitterList
 from visualization_msgs.msg import Marker
 from litter_destruction.srv import GlobalBoundaryCenter, GlobalBoundaryCenterResponse
 from litter_destruction.srv import GetLitterSet, GetLitterSetResponse
-
+from litter_destruction.srv import GetNextLitter, GetNextLitterResponse
+from litter_destruction.srv import RemoveLitter, RemoveLitterRequest, RemoveLitterResponse
+from litter_destruction.srv import HasLitterToClear, HasLitterToClearResponse
 
 class LitterManager:
     def __init__(self, distance_threshold=5, min_local_radius=1, max_local_radius=3):
@@ -26,15 +29,19 @@ class LitterManager:
         self.local_boundary_radius = 0                # Radius of local boundary
 
         ## Publisher
-        self.global_boundary_marker_pub = rospy.Publisher("global_boundary_marker", Marker, queue_size=10)     # Define publisher for global boundary marker
-        self.local_boundary_marker_pub = rospy.Publisher("local_boundary_marker", Marker, queue_size=10)       # Define publisher for local boundary marker
+        self.global_boundary_marker_pub = rospy.Publisher("global_boundary_marker", Marker, queue_size=10)              # Define publisher for global boundary marker
+        self.local_boundary_marker_pub  = rospy.Publisher("local_boundary_marker", Marker, queue_size=10)               # Define publisher for local boundary marker
+        self.next_waypoint_pub          = rospy.Publisher("/litter_manager/next_waypoint",LitterPoint, queue_size=3)    # Define publisher for next waypoint 
 
         ## Subscribers
         rospy.Subscriber("/litter_memory/new_litter", LitterPoint, self.detection_callback)
         
         ## Service Servers
         rospy.Service("/litter_manager/get_global_boundary_center", GlobalBoundaryCenter, self.handle_get_global_boundary_center)   # Define service server to get global boundary center
-        self.get_litter_set_srv = rospy.Service("/litter_manager/get_litter_set", GetLitterSet, self.handle_get_litter_set)         # Define service server to get litter set
+        rospy.Service("/litter_manager/get_litter_set", GetLitterSet, self.handle_get_litter_set)                                   # Define service server to get litter set
+        rospy.Service("/litter_manager/get_next_litter", GetNextLitter, self.handle_get_next_litter)                                # Define service server to get next litter
+        rospy.Service("/litter_manager/has_litter_to_clear", HasLitterToClearResponse, self.handle_has_litter_to_clear)             # Define service server to check if there is still litter in set
+        rospy.Service("/litter_manager/delete_litter", RemoveLitter, self.handle_remove_litter)                                     # Define service server to delete litter from litter manager
 
         ## Service Clients
         rospy.wait_for_service('/move_base/make_plan')
@@ -42,10 +49,11 @@ class LitterManager:
         rospy.wait_for_service('/litter_memory/delete_litter')
         rospy.wait_for_service('get_amcl_pose')
 
-        self.make_plan_srv = rospy.ServiceProxy('/move_base/make_plan', GetPlan)
+        self.make_plan_srv       = rospy.ServiceProxy('/move_base/make_plan', GetPlan)
         self.get_litter_list_srv = rospy.ServiceProxy('/litter_memory/get_litter_list', GetLitterList)         # Define the service client for getting litter list
-        self.delete_litter_srv = rospy.ServiceProxy('/litter_memory/delete_litter', DeleteLitter)              # Define the service client for deleting litter
-        self.get_pose_srv = rospy.ServiceProxy('get_amcl_pose', GetAmclPose)                                   # Define service client for getting amcl pose
+        self.delete_litter_srv   = rospy.ServiceProxy('/litter_memory/delete_litter', DeleteLitter)            # Define the service client for deleting litter
+        self.get_pose_srv        = rospy.ServiceProxy('get_amcl_pose', GetAmclPose)                            # Define service client for getting amcl pose
+        self.req_litter_mode     = rospy.ServiceProxy('/robot_controller/mode_switch', )
 
 
     def handle_get_global_boundary_center(self, req):
@@ -84,8 +92,45 @@ class LitterManager:
         return response
 
 
+    def handle_get_next_litter(self, req):
+        """Service handler to pop the next litter target from the min-heap and return it as a LitterPoint."""
+        response = GetNextLitterResponse()
+        
+        with self.litter_mutex:
+            if not self.min_heap_litter:
+                rospy.loginfo("No litter points in min_heap_litter.")
+
+                return response
+
+            # Pop the closest litter point from the heap
+            _, next_litter = self.pop_min_heap()
+
+            # Fill in the response LitterPoint
+            litter_msg = LitterPoint()
+            litter_msg.header = Header(stamp=rospy.Time.now(), frame_id="map")
+            litter_msg.point = next_litter.point
+            litter_msg.id = next_litter.id
+
+            response.next_litter = litter_msg
+            response.success = True
+
+            rospy.loginfo(f"Next litter to navigate: ID={litter_msg.id}, Position={litter_msg.point}")
+
+            # Publish the next waypoint
+            response = self.next_waypoint_pub(litter_msg)
+        
+        return response
+
+
+    def handle_remove_litter(self, req):    
+        """Service handler to remove litter from the litter manager memory (Litter is "Cleared")"""
+        response = RemoveLitterResponse()
+        response.success = self.delete_litter(req.litter)
+        return response 
+
+
     def litter_point_to_tuple(self, litter_point):
-        """Helper function to convert litter to tuple for storing in set"""
+        """Helper function to convert litter to tuple for storing in set (hashable)"""
         return (litter_point.id, litter_point.point.x, litter_point.point.y, litter_point.point.z)
 
 
@@ -277,9 +322,11 @@ class LitterManager:
             total_distance += segment_distance
         return total_distance
 
+
     def pop_min_heap(self):
         """Pop a tuple (distance, LitterPoint) from min_heap to get next litter target"""
         return heapq.heappop(self.min_heap_litter)
+
 
     def push_min_heap(self, litter_tuple):
         """Push a tuple (distance, LitterPoint) onto the min-heap."""
@@ -397,7 +444,19 @@ class LitterManager:
         # Publish the marker
         self.local_boundary_marker_pub.publish(marker)
 
-    
+
+    def handle_has_litter_to_clear(self, req):
+        """Service handler to check if there is litter left to clear."""
+        response = HasLitterToClearResponse()
+        try: 
+            response.has_litter = self.has_litter_to_clear()
+            rospy.loginfo(f"Has litter to clear: {response.has_litter}")
+            response.success = True
+        except:
+            response.success = False
+        return response
+
+
     def has_litter_to_clear(self):
         """Checks if there are still litter to clear"""
         return len(self.set_litter) > 0

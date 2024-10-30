@@ -14,11 +14,29 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   sensor_msgs
   nav_msgs
+  message_generation
   tf2
   tf2_ros
+  navigation
+  litter_destruction
 )
 
 find_package(Eigen3 REQUIRED)
+
+# Declare services
+add_service_files(
+  FILES
+  ModeSwitch.srv
+)
+
+# Declare messages
+generate_messages(
+  DEPENDENCIES
+    geometry_msgs
+    std_msgs 
+    navigation
+    litter_destruction
+)
 
 catkin_package(
   INCLUDE_DIRS include
@@ -27,8 +45,11 @@ catkin_package(
     geometry_msgs
     sensor_msgs
     nav_msgs
+    message_runtime
     tf2
     tf2_ros
+    navigation
+    litter_destruction
   DEPENDS Eigen3
 )
 
@@ -42,9 +63,16 @@ include_directories(
   ${EIGEN3_INCLUDE_DIRS}
 )
 
+
 #############
 ## Install ##
 #############
+
+# Install Python programs
+catkin_install_python(PROGRAMS
+  src/bumperbot_controller/nodes/robot_controller_node.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
 add_library(simple_controller src/simple_controller.cpp)
 add_dependencies(simple_controller ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})

@@ -13,7 +13,7 @@ public:
     bool initiateCoveragePath(navigation::InitiateCoveragePath::Request& req,
                               navigation::InitiateCoveragePath::Response& res);
     void publishNextWaypoint();
-    bool updateWaypointStatus(std_srvs::SetBool::Request& req, std_srvs::SetBool::Response& res);
+    bool getNextWaypoint(std_srvs::SetBool::Request& req, std_srvs::SetBool::Response& res);
     bool getWaypoints(navigation::GetWaypoints::Request& req,
                       navigation::GetWaypoints::Response& res);
 

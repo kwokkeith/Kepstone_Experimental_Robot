@@ -117,6 +117,5 @@ target_link_libraries(waypoint_plotter_publisher_node ${catkin_LIBRARIES})
 # Install Python programs
 catkin_install_python(PROGRAMS
   src/waypoint_nav.py
-  src/navigation/nodes/robot_controller_node.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

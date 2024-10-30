@@ -92,16 +92,6 @@ install/fast: preinstall/fast
 	/usr/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
 
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-
-.PHONY : list_install_components/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -134,6 +124,16 @@ test:
 test/fast: test
 
 .PHONY : test/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -168,19 +168,19 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
-bumperbot_controller/CMakeFiles/noisy_controller_node.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/noisy_controller_node.dir/rule
-.PHONY : bumperbot_controller/CMakeFiles/noisy_controller_node.dir/rule
+bumperbot_controller/CMakeFiles/noisy_controller.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/noisy_controller.dir/rule
+.PHONY : bumperbot_controller/CMakeFiles/noisy_controller.dir/rule
 
 # Convenience name for target.
-noisy_controller_node: bumperbot_controller/CMakeFiles/noisy_controller_node.dir/rule
+noisy_controller: bumperbot_controller/CMakeFiles/noisy_controller.dir/rule
 
-.PHONY : noisy_controller_node
+.PHONY : noisy_controller
 
 # fast build rule for target.
-noisy_controller_node/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/noisy_controller_node.dir/build.make bumperbot_controller/CMakeFiles/noisy_controller_node.dir/build
-.PHONY : noisy_controller_node/fast
+noisy_controller/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/noisy_controller.dir/build.make bumperbot_controller/CMakeFiles/noisy_controller.dir/build
+.PHONY : noisy_controller/fast
 
 # Convenience name for target.
 bumperbot_controller/CMakeFiles/simple_controller_node.dir/rule:
@@ -198,19 +198,199 @@ simple_controller_node/fast:
 .PHONY : simple_controller_node/fast
 
 # Convenience name for target.
-bumperbot_controller/CMakeFiles/noisy_controller.dir/rule:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/noisy_controller.dir/rule
-.PHONY : bumperbot_controller/CMakeFiles/noisy_controller.dir/rule
+bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages.dir/rule
+.PHONY : bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages.dir/rule
 
 # Convenience name for target.
-noisy_controller: bumperbot_controller/CMakeFiles/noisy_controller.dir/rule
+bumperbot_controller_generate_messages: bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages.dir/rule
 
-.PHONY : noisy_controller
+.PHONY : bumperbot_controller_generate_messages
 
 # fast build rule for target.
-noisy_controller/fast:
-	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/noisy_controller.dir/build.make bumperbot_controller/CMakeFiles/noisy_controller.dir/build
-.PHONY : noisy_controller/fast
+bumperbot_controller_generate_messages/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages.dir/build.make bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages.dir/build
+.PHONY : bumperbot_controller_generate_messages/fast
+
+# Convenience name for target.
+bumperbot_controller/CMakeFiles/bumperbot_controller_gencpp.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/bumperbot_controller_gencpp.dir/rule
+.PHONY : bumperbot_controller/CMakeFiles/bumperbot_controller_gencpp.dir/rule
+
+# Convenience name for target.
+bumperbot_controller_gencpp: bumperbot_controller/CMakeFiles/bumperbot_controller_gencpp.dir/rule
+
+.PHONY : bumperbot_controller_gencpp
+
+# fast build rule for target.
+bumperbot_controller_gencpp/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/bumperbot_controller_gencpp.dir/build.make bumperbot_controller/CMakeFiles/bumperbot_controller_gencpp.dir/build
+.PHONY : bumperbot_controller_gencpp/fast
+
+# Convenience name for target.
+bumperbot_controller/CMakeFiles/bumperbot_controller_genlisp.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/bumperbot_controller_genlisp.dir/rule
+.PHONY : bumperbot_controller/CMakeFiles/bumperbot_controller_genlisp.dir/rule
+
+# Convenience name for target.
+bumperbot_controller_genlisp: bumperbot_controller/CMakeFiles/bumperbot_controller_genlisp.dir/rule
+
+.PHONY : bumperbot_controller_genlisp
+
+# fast build rule for target.
+bumperbot_controller_genlisp/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/bumperbot_controller_genlisp.dir/build.make bumperbot_controller/CMakeFiles/bumperbot_controller_genlisp.dir/build
+.PHONY : bumperbot_controller_genlisp/fast
+
+# Convenience name for target.
+bumperbot_controller/CMakeFiles/bumperbot_controller_gennodejs.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/bumperbot_controller_gennodejs.dir/rule
+.PHONY : bumperbot_controller/CMakeFiles/bumperbot_controller_gennodejs.dir/rule
+
+# Convenience name for target.
+bumperbot_controller_gennodejs: bumperbot_controller/CMakeFiles/bumperbot_controller_gennodejs.dir/rule
+
+.PHONY : bumperbot_controller_gennodejs
+
+# fast build rule for target.
+bumperbot_controller_gennodejs/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/bumperbot_controller_gennodejs.dir/build.make bumperbot_controller/CMakeFiles/bumperbot_controller_gennodejs.dir/build
+.PHONY : bumperbot_controller_gennodejs/fast
+
+# Convenience name for target.
+bumperbot_controller/CMakeFiles/bumperbot_controller_genpy.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/bumperbot_controller_genpy.dir/rule
+.PHONY : bumperbot_controller/CMakeFiles/bumperbot_controller_genpy.dir/rule
+
+# Convenience name for target.
+bumperbot_controller_genpy: bumperbot_controller/CMakeFiles/bumperbot_controller_genpy.dir/rule
+
+.PHONY : bumperbot_controller_genpy
+
+# fast build rule for target.
+bumperbot_controller_genpy/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/bumperbot_controller_genpy.dir/build.make bumperbot_controller/CMakeFiles/bumperbot_controller_genpy.dir/build
+.PHONY : bumperbot_controller_genpy/fast
+
+# Convenience name for target.
+bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_eus.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_eus.dir/rule
+.PHONY : bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_eus.dir/rule
+
+# Convenience name for target.
+bumperbot_controller_generate_messages_eus: bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_eus.dir/rule
+
+.PHONY : bumperbot_controller_generate_messages_eus
+
+# fast build rule for target.
+bumperbot_controller_generate_messages_eus/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_eus.dir/build.make bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_eus.dir/build
+.PHONY : bumperbot_controller_generate_messages_eus/fast
+
+# Convenience name for target.
+bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_cpp.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_cpp.dir/rule
+.PHONY : bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+bumperbot_controller_generate_messages_cpp: bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_cpp.dir/rule
+
+.PHONY : bumperbot_controller_generate_messages_cpp
+
+# fast build rule for target.
+bumperbot_controller_generate_messages_cpp/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_cpp.dir/build.make bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_cpp.dir/build
+.PHONY : bumperbot_controller_generate_messages_cpp/fast
+
+# Convenience name for target.
+bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_lisp.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_lisp.dir/rule
+.PHONY : bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+bumperbot_controller_generate_messages_lisp: bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_lisp.dir/rule
+
+.PHONY : bumperbot_controller_generate_messages_lisp
+
+# fast build rule for target.
+bumperbot_controller_generate_messages_lisp/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_lisp.dir/build.make bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_lisp.dir/build
+.PHONY : bumperbot_controller_generate_messages_lisp/fast
+
+# Convenience name for target.
+bumperbot_controller/CMakeFiles/bumperbot_controller_geneus.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/bumperbot_controller_geneus.dir/rule
+.PHONY : bumperbot_controller/CMakeFiles/bumperbot_controller_geneus.dir/rule
+
+# Convenience name for target.
+bumperbot_controller_geneus: bumperbot_controller/CMakeFiles/bumperbot_controller_geneus.dir/rule
+
+.PHONY : bumperbot_controller_geneus
+
+# fast build rule for target.
+bumperbot_controller_geneus/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/bumperbot_controller_geneus.dir/build.make bumperbot_controller/CMakeFiles/bumperbot_controller_geneus.dir/build
+.PHONY : bumperbot_controller_geneus/fast
+
+# Convenience name for target.
+bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_py.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_py.dir/rule
+.PHONY : bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_py.dir/rule
+
+# Convenience name for target.
+bumperbot_controller_generate_messages_py: bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_py.dir/rule
+
+.PHONY : bumperbot_controller_generate_messages_py
+
+# fast build rule for target.
+bumperbot_controller_generate_messages_py/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_py.dir/build.make bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_py.dir/build
+.PHONY : bumperbot_controller_generate_messages_py/fast
+
+# Convenience name for target.
+bumperbot_controller/CMakeFiles/noisy_controller_node.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/noisy_controller_node.dir/rule
+.PHONY : bumperbot_controller/CMakeFiles/noisy_controller_node.dir/rule
+
+# Convenience name for target.
+noisy_controller_node: bumperbot_controller/CMakeFiles/noisy_controller_node.dir/rule
+
+.PHONY : noisy_controller_node
+
+# fast build rule for target.
+noisy_controller_node/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/noisy_controller_node.dir/build.make bumperbot_controller/CMakeFiles/noisy_controller_node.dir/build
+.PHONY : noisy_controller_node/fast
+
+# Convenience name for target.
+bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_nodejs.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_nodejs.dir/rule
+.PHONY : bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_nodejs.dir/rule
+
+# Convenience name for target.
+bumperbot_controller_generate_messages_nodejs: bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_nodejs.dir/rule
+
+.PHONY : bumperbot_controller_generate_messages_nodejs
+
+# fast build rule for target.
+bumperbot_controller_generate_messages_nodejs/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_nodejs.dir/build.make bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_nodejs.dir/build
+.PHONY : bumperbot_controller_generate_messages_nodejs/fast
+
+# Convenience name for target.
+bumperbot_controller/CMakeFiles/_bumperbot_controller_generate_messages_check_deps_ModeSwitch.dir/rule:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller/CMakeFiles/_bumperbot_controller_generate_messages_check_deps_ModeSwitch.dir/rule
+.PHONY : bumperbot_controller/CMakeFiles/_bumperbot_controller_generate_messages_check_deps_ModeSwitch.dir/rule
+
+# Convenience name for target.
+_bumperbot_controller_generate_messages_check_deps_ModeSwitch: bumperbot_controller/CMakeFiles/_bumperbot_controller_generate_messages_check_deps_ModeSwitch.dir/rule
+
+.PHONY : _bumperbot_controller_generate_messages_check_deps_ModeSwitch
+
+# fast build rule for target.
+_bumperbot_controller_generate_messages_check_deps_ModeSwitch/fast:
+	cd /home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/build && $(MAKE) -f bumperbot_controller/CMakeFiles/_bumperbot_controller_generate_messages_check_deps_ModeSwitch.dir/build.make bumperbot_controller/CMakeFiles/_bumperbot_controller_generate_messages_check_deps_ModeSwitch.dir/build
+.PHONY : _bumperbot_controller_generate_messages_check_deps_ModeSwitch/fast
 
 # Convenience name for target.
 bumperbot_controller/CMakeFiles/simple_controller.dir/rule:
@@ -344,13 +524,25 @@ help:
 	@echo "... install/strip"
 	@echo "... install/local"
 	@echo "... install"
-	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... test"
-	@echo "... noisy_controller_node"
-	@echo "... simple_controller_node"
 	@echo "... noisy_controller"
+	@echo "... simple_controller_node"
+	@echo "... bumperbot_controller_generate_messages"
+	@echo "... bumperbot_controller_gencpp"
+	@echo "... bumperbot_controller_genlisp"
+	@echo "... bumperbot_controller_gennodejs"
+	@echo "... bumperbot_controller_genpy"
+	@echo "... bumperbot_controller_generate_messages_eus"
+	@echo "... bumperbot_controller_generate_messages_cpp"
+	@echo "... bumperbot_controller_generate_messages_lisp"
+	@echo "... list_install_components"
+	@echo "... bumperbot_controller_geneus"
+	@echo "... bumperbot_controller_generate_messages_py"
+	@echo "... noisy_controller_node"
+	@echo "... bumperbot_controller_generate_messages_nodejs"
+	@echo "... _bumperbot_controller_generate_messages_check_deps_ModeSwitch"
 	@echo "... simple_controller"
 	@echo "... nodes/noisy_controller_node.o"
 	@echo "... nodes/noisy_controller_node.i"

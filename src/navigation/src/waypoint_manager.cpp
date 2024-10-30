@@ -6,7 +6,7 @@
 WaypointManager::WaypointManager(ros::NodeHandle& nh)
     : nh_(nh), current_index_(0) {
     waypoint_pub_ = nh_.advertise<geometry_msgs::Point>("/coverage_path/next_waypoint", 10);
-    update_waypoint_service_ = nh_.advertiseService("/waypoint_manager/update_waypoint_status", &WaypointManager::updateWaypointStatus, this);
+    update_waypoint_service_ = nh_.advertiseService("/waypoint_manager/get_next_waypoint", &WaypointManager::getNextWaypoint, this);
     initiate_coverage_service_ = nh_.advertiseService("/waypoint_manager/initiate_coverage_path", &WaypointManager::initiateCoveragePath, this);
     get_waypoints_service_ = nh_.advertiseService("/waypoint_manager/get_waypoints", &WaypointManager::getWaypoints, this);
 }
@@ -59,7 +59,7 @@ void WaypointManager::publishNextWaypoint() {
 }
 
 // Mark the current waypoint as completed and publish the next waypoint
-bool WaypointManager::updateWaypointStatus(std_srvs::SetBool::Request& req, std_srvs::SetBool::Response& res) {
+bool WaypointManager::getNextWaypoint(std_srvs::SetBool::Request& req, std_srvs::SetBool::Response& res) {
     if (req.data && current_index_ < waypoints_.size()) {
         ROS_INFO("Marking waypoint (%.2f, %.2f) as completed.", waypoints_[current_index_].x, waypoints_[current_index_].y);
         current_index_++;

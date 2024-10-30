@@ -177,7 +177,7 @@ foreach(library ${libraries})
   endif()
 endforeach()
 
-set(bumperbot_controller_EXPORTED_TARGETS "")
+set(bumperbot_controller_EXPORTED_TARGETS "bumperbot_controller_generate_messages_cpp;bumperbot_controller_generate_messages_eus;bumperbot_controller_generate_messages_lisp;bumperbot_controller_generate_messages_nodejs;bumperbot_controller_generate_messages_py")
 # create dummy targets for exported code generation targets to make life of users easier
 foreach(t ${bumperbot_controller_EXPORTED_TARGETS})
   if(NOT TARGET ${t})
@@ -185,7 +185,7 @@ foreach(t ${bumperbot_controller_EXPORTED_TARGETS})
   endif()
 endforeach()
 
-set(depends "std_msgs;geometry_msgs;sensor_msgs;nav_msgs;tf2;tf2_ros")
+set(depends "std_msgs;geometry_msgs;sensor_msgs;nav_msgs;message_runtime;tf2;tf2_ros;navigation;litter_destruction")
 foreach(depend ${depends})
   string(REPLACE " " ";" depend_list ${depend})
   # the package name of the dependency must be kept in a unique variable so that it is not overwritten in recursive calls
@@ -214,7 +214,7 @@ foreach(depend ${depends})
   _list_append_deduplicate(bumperbot_controller_EXPORTED_TARGETS ${${bumperbot_controller_dep}_EXPORTED_TARGETS})
 endforeach()
 
-set(pkg_cfg_extras "")
+set(pkg_cfg_extras "bumperbot_controller-msg-extras.cmake")
 foreach(extra ${pkg_cfg_extras})
   if(NOT IS_ABSOLUTE ${extra})
     set(extra ${bumperbot_controller_DIR}/${extra})

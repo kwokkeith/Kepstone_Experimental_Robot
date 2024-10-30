@@ -1026,58 +1026,6 @@ kalman_filter/fast:
 .PHONY : kalman_filter/fast
 
 #=============================================================================
-# Target rules for targets named noisy_controller_node
-
-# Build rule for target.
-noisy_controller_node: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 noisy_controller_node
-.PHONY : noisy_controller_node
-
-# fast build rule for target.
-noisy_controller_node/fast:
-	$(MAKE) -f bumperbot_controller/CMakeFiles/noisy_controller_node.dir/build.make bumperbot_controller/CMakeFiles/noisy_controller_node.dir/build
-.PHONY : noisy_controller_node/fast
-
-#=============================================================================
-# Target rules for targets named simple_controller_node
-
-# Build rule for target.
-simple_controller_node: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 simple_controller_node
-.PHONY : simple_controller_node
-
-# fast build rule for target.
-simple_controller_node/fast:
-	$(MAKE) -f bumperbot_controller/CMakeFiles/simple_controller_node.dir/build.make bumperbot_controller/CMakeFiles/simple_controller_node.dir/build
-.PHONY : simple_controller_node/fast
-
-#=============================================================================
-# Target rules for targets named noisy_controller
-
-# Build rule for target.
-noisy_controller: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 noisy_controller
-.PHONY : noisy_controller
-
-# fast build rule for target.
-noisy_controller/fast:
-	$(MAKE) -f bumperbot_controller/CMakeFiles/noisy_controller.dir/build.make bumperbot_controller/CMakeFiles/noisy_controller.dir/build
-.PHONY : noisy_controller/fast
-
-#=============================================================================
-# Target rules for targets named simple_controller
-
-# Build rule for target.
-simple_controller: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 simple_controller
-.PHONY : simple_controller
-
-# fast build rule for target.
-simple_controller/fast:
-	$(MAKE) -f bumperbot_controller/CMakeFiles/simple_controller.dir/build.make bumperbot_controller/CMakeFiles/simple_controller.dir/build
-.PHONY : simple_controller/fast
-
-#=============================================================================
 # Target rules for targets named simple_cpp_service_server
 
 # Build rule for target.
@@ -1676,17 +1624,17 @@ _bumperbot_detection_generate_messages_check_deps_GetLitterList/fast:
 .PHONY : _bumperbot_detection_generate_messages_check_deps_GetLitterList/fast
 
 #=============================================================================
-# Target rules for targets named litter_destruction_generate_messages
+# Target rules for targets named litter_destruction_genpy
 
 # Build rule for target.
-litter_destruction_generate_messages: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 litter_destruction_generate_messages
-.PHONY : litter_destruction_generate_messages
+litter_destruction_genpy: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 litter_destruction_genpy
+.PHONY : litter_destruction_genpy
 
 # fast build rule for target.
-litter_destruction_generate_messages/fast:
-	$(MAKE) -f litter_destruction/CMakeFiles/litter_destruction_generate_messages.dir/build.make litter_destruction/CMakeFiles/litter_destruction_generate_messages.dir/build
-.PHONY : litter_destruction_generate_messages/fast
+litter_destruction_genpy/fast:
+	$(MAKE) -f litter_destruction/CMakeFiles/litter_destruction_genpy.dir/build.make litter_destruction/CMakeFiles/litter_destruction_genpy.dir/build
+.PHONY : litter_destruction_genpy/fast
 
 #=============================================================================
 # Target rules for targets named litter_destruction_generate_messages_py
@@ -1702,6 +1650,32 @@ litter_destruction_generate_messages_py/fast:
 .PHONY : litter_destruction_generate_messages_py/fast
 
 #=============================================================================
+# Target rules for targets named litter_destruction_gennodejs
+
+# Build rule for target.
+litter_destruction_gennodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 litter_destruction_gennodejs
+.PHONY : litter_destruction_gennodejs
+
+# fast build rule for target.
+litter_destruction_gennodejs/fast:
+	$(MAKE) -f litter_destruction/CMakeFiles/litter_destruction_gennodejs.dir/build.make litter_destruction/CMakeFiles/litter_destruction_gennodejs.dir/build
+.PHONY : litter_destruction_gennodejs/fast
+
+#=============================================================================
+# Target rules for targets named litter_destruction_generate_messages
+
+# Build rule for target.
+litter_destruction_generate_messages: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 litter_destruction_generate_messages
+.PHONY : litter_destruction_generate_messages
+
+# fast build rule for target.
+litter_destruction_generate_messages/fast:
+	$(MAKE) -f litter_destruction/CMakeFiles/litter_destruction_generate_messages.dir/build.make litter_destruction/CMakeFiles/litter_destruction_generate_messages.dir/build
+.PHONY : litter_destruction_generate_messages/fast
+
+#=============================================================================
 # Target rules for targets named _litter_destruction_generate_messages_check_deps_GetLitterSet
 
 # Build rule for target.
@@ -1713,6 +1687,45 @@ _litter_destruction_generate_messages_check_deps_GetLitterSet: cmake_check_build
 _litter_destruction_generate_messages_check_deps_GetLitterSet/fast:
 	$(MAKE) -f litter_destruction/CMakeFiles/_litter_destruction_generate_messages_check_deps_GetLitterSet.dir/build.make litter_destruction/CMakeFiles/_litter_destruction_generate_messages_check_deps_GetLitterSet.dir/build
 .PHONY : _litter_destruction_generate_messages_check_deps_GetLitterSet/fast
+
+#=============================================================================
+# Target rules for targets named _litter_destruction_generate_messages_check_deps_GetNextLitter
+
+# Build rule for target.
+_litter_destruction_generate_messages_check_deps_GetNextLitter: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _litter_destruction_generate_messages_check_deps_GetNextLitter
+.PHONY : _litter_destruction_generate_messages_check_deps_GetNextLitter
+
+# fast build rule for target.
+_litter_destruction_generate_messages_check_deps_GetNextLitter/fast:
+	$(MAKE) -f litter_destruction/CMakeFiles/_litter_destruction_generate_messages_check_deps_GetNextLitter.dir/build.make litter_destruction/CMakeFiles/_litter_destruction_generate_messages_check_deps_GetNextLitter.dir/build
+.PHONY : _litter_destruction_generate_messages_check_deps_GetNextLitter/fast
+
+#=============================================================================
+# Target rules for targets named _litter_destruction_generate_messages_check_deps_HasLitterToClear
+
+# Build rule for target.
+_litter_destruction_generate_messages_check_deps_HasLitterToClear: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _litter_destruction_generate_messages_check_deps_HasLitterToClear
+.PHONY : _litter_destruction_generate_messages_check_deps_HasLitterToClear
+
+# fast build rule for target.
+_litter_destruction_generate_messages_check_deps_HasLitterToClear/fast:
+	$(MAKE) -f litter_destruction/CMakeFiles/_litter_destruction_generate_messages_check_deps_HasLitterToClear.dir/build.make litter_destruction/CMakeFiles/_litter_destruction_generate_messages_check_deps_HasLitterToClear.dir/build
+.PHONY : _litter_destruction_generate_messages_check_deps_HasLitterToClear/fast
+
+#=============================================================================
+# Target rules for targets named _litter_destruction_generate_messages_check_deps_RemoveLitter
+
+# Build rule for target.
+_litter_destruction_generate_messages_check_deps_RemoveLitter: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _litter_destruction_generate_messages_check_deps_RemoveLitter
+.PHONY : _litter_destruction_generate_messages_check_deps_RemoveLitter
+
+# fast build rule for target.
+_litter_destruction_generate_messages_check_deps_RemoveLitter/fast:
+	$(MAKE) -f litter_destruction/CMakeFiles/_litter_destruction_generate_messages_check_deps_RemoveLitter.dir/build.make litter_destruction/CMakeFiles/_litter_destruction_generate_messages_check_deps_RemoveLitter.dir/build
+.PHONY : _litter_destruction_generate_messages_check_deps_RemoveLitter/fast
 
 #=============================================================================
 # Target rules for targets named litter_destruction_generate_messages_cpp
@@ -1817,32 +1830,6 @@ litter_destruction_genlisp: cmake_check_build_system
 litter_destruction_genlisp/fast:
 	$(MAKE) -f litter_destruction/CMakeFiles/litter_destruction_genlisp.dir/build.make litter_destruction/CMakeFiles/litter_destruction_genlisp.dir/build
 .PHONY : litter_destruction_genlisp/fast
-
-#=============================================================================
-# Target rules for targets named litter_destruction_gennodejs
-
-# Build rule for target.
-litter_destruction_gennodejs: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 litter_destruction_gennodejs
-.PHONY : litter_destruction_gennodejs
-
-# fast build rule for target.
-litter_destruction_gennodejs/fast:
-	$(MAKE) -f litter_destruction/CMakeFiles/litter_destruction_gennodejs.dir/build.make litter_destruction/CMakeFiles/litter_destruction_gennodejs.dir/build
-.PHONY : litter_destruction_gennodejs/fast
-
-#=============================================================================
-# Target rules for targets named litter_destruction_genpy
-
-# Build rule for target.
-litter_destruction_genpy: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 litter_destruction_genpy
-.PHONY : litter_destruction_genpy
-
-# fast build rule for target.
-litter_destruction_genpy/fast:
-	$(MAKE) -f litter_destruction/CMakeFiles/litter_destruction_genpy.dir/build.make litter_destruction/CMakeFiles/litter_destruction_genpy.dir/build
-.PHONY : litter_destruction_genpy/fast
 
 #=============================================================================
 # Target rules for targets named waypoint_plotter_publisher_node
@@ -2247,6 +2234,214 @@ convert_pixel_to_map_server_node/fast:
 	$(MAKE) -f navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/build.make navigation/CMakeFiles/convert_pixel_to_map_server_node.dir/build
 .PHONY : convert_pixel_to_map_server_node/fast
 
+#=============================================================================
+# Target rules for targets named noisy_controller
+
+# Build rule for target.
+noisy_controller: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 noisy_controller
+.PHONY : noisy_controller
+
+# fast build rule for target.
+noisy_controller/fast:
+	$(MAKE) -f bumperbot_controller/CMakeFiles/noisy_controller.dir/build.make bumperbot_controller/CMakeFiles/noisy_controller.dir/build
+.PHONY : noisy_controller/fast
+
+#=============================================================================
+# Target rules for targets named simple_controller_node
+
+# Build rule for target.
+simple_controller_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 simple_controller_node
+.PHONY : simple_controller_node
+
+# fast build rule for target.
+simple_controller_node/fast:
+	$(MAKE) -f bumperbot_controller/CMakeFiles/simple_controller_node.dir/build.make bumperbot_controller/CMakeFiles/simple_controller_node.dir/build
+.PHONY : simple_controller_node/fast
+
+#=============================================================================
+# Target rules for targets named bumperbot_controller_generate_messages
+
+# Build rule for target.
+bumperbot_controller_generate_messages: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller_generate_messages
+.PHONY : bumperbot_controller_generate_messages
+
+# fast build rule for target.
+bumperbot_controller_generate_messages/fast:
+	$(MAKE) -f bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages.dir/build.make bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages.dir/build
+.PHONY : bumperbot_controller_generate_messages/fast
+
+#=============================================================================
+# Target rules for targets named bumperbot_controller_gencpp
+
+# Build rule for target.
+bumperbot_controller_gencpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller_gencpp
+.PHONY : bumperbot_controller_gencpp
+
+# fast build rule for target.
+bumperbot_controller_gencpp/fast:
+	$(MAKE) -f bumperbot_controller/CMakeFiles/bumperbot_controller_gencpp.dir/build.make bumperbot_controller/CMakeFiles/bumperbot_controller_gencpp.dir/build
+.PHONY : bumperbot_controller_gencpp/fast
+
+#=============================================================================
+# Target rules for targets named bumperbot_controller_genlisp
+
+# Build rule for target.
+bumperbot_controller_genlisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller_genlisp
+.PHONY : bumperbot_controller_genlisp
+
+# fast build rule for target.
+bumperbot_controller_genlisp/fast:
+	$(MAKE) -f bumperbot_controller/CMakeFiles/bumperbot_controller_genlisp.dir/build.make bumperbot_controller/CMakeFiles/bumperbot_controller_genlisp.dir/build
+.PHONY : bumperbot_controller_genlisp/fast
+
+#=============================================================================
+# Target rules for targets named bumperbot_controller_gennodejs
+
+# Build rule for target.
+bumperbot_controller_gennodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller_gennodejs
+.PHONY : bumperbot_controller_gennodejs
+
+# fast build rule for target.
+bumperbot_controller_gennodejs/fast:
+	$(MAKE) -f bumperbot_controller/CMakeFiles/bumperbot_controller_gennodejs.dir/build.make bumperbot_controller/CMakeFiles/bumperbot_controller_gennodejs.dir/build
+.PHONY : bumperbot_controller_gennodejs/fast
+
+#=============================================================================
+# Target rules for targets named bumperbot_controller_genpy
+
+# Build rule for target.
+bumperbot_controller_genpy: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller_genpy
+.PHONY : bumperbot_controller_genpy
+
+# fast build rule for target.
+bumperbot_controller_genpy/fast:
+	$(MAKE) -f bumperbot_controller/CMakeFiles/bumperbot_controller_genpy.dir/build.make bumperbot_controller/CMakeFiles/bumperbot_controller_genpy.dir/build
+.PHONY : bumperbot_controller_genpy/fast
+
+#=============================================================================
+# Target rules for targets named bumperbot_controller_generate_messages_eus
+
+# Build rule for target.
+bumperbot_controller_generate_messages_eus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller_generate_messages_eus
+.PHONY : bumperbot_controller_generate_messages_eus
+
+# fast build rule for target.
+bumperbot_controller_generate_messages_eus/fast:
+	$(MAKE) -f bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_eus.dir/build.make bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_eus.dir/build
+.PHONY : bumperbot_controller_generate_messages_eus/fast
+
+#=============================================================================
+# Target rules for targets named bumperbot_controller_generate_messages_cpp
+
+# Build rule for target.
+bumperbot_controller_generate_messages_cpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller_generate_messages_cpp
+.PHONY : bumperbot_controller_generate_messages_cpp
+
+# fast build rule for target.
+bumperbot_controller_generate_messages_cpp/fast:
+	$(MAKE) -f bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_cpp.dir/build.make bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_cpp.dir/build
+.PHONY : bumperbot_controller_generate_messages_cpp/fast
+
+#=============================================================================
+# Target rules for targets named bumperbot_controller_generate_messages_lisp
+
+# Build rule for target.
+bumperbot_controller_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller_generate_messages_lisp
+.PHONY : bumperbot_controller_generate_messages_lisp
+
+# fast build rule for target.
+bumperbot_controller_generate_messages_lisp/fast:
+	$(MAKE) -f bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_lisp.dir/build.make bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_lisp.dir/build
+.PHONY : bumperbot_controller_generate_messages_lisp/fast
+
+#=============================================================================
+# Target rules for targets named bumperbot_controller_geneus
+
+# Build rule for target.
+bumperbot_controller_geneus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller_geneus
+.PHONY : bumperbot_controller_geneus
+
+# fast build rule for target.
+bumperbot_controller_geneus/fast:
+	$(MAKE) -f bumperbot_controller/CMakeFiles/bumperbot_controller_geneus.dir/build.make bumperbot_controller/CMakeFiles/bumperbot_controller_geneus.dir/build
+.PHONY : bumperbot_controller_geneus/fast
+
+#=============================================================================
+# Target rules for targets named bumperbot_controller_generate_messages_py
+
+# Build rule for target.
+bumperbot_controller_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller_generate_messages_py
+.PHONY : bumperbot_controller_generate_messages_py
+
+# fast build rule for target.
+bumperbot_controller_generate_messages_py/fast:
+	$(MAKE) -f bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_py.dir/build.make bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_py.dir/build
+.PHONY : bumperbot_controller_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named noisy_controller_node
+
+# Build rule for target.
+noisy_controller_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 noisy_controller_node
+.PHONY : noisy_controller_node
+
+# fast build rule for target.
+noisy_controller_node/fast:
+	$(MAKE) -f bumperbot_controller/CMakeFiles/noisy_controller_node.dir/build.make bumperbot_controller/CMakeFiles/noisy_controller_node.dir/build
+.PHONY : noisy_controller_node/fast
+
+#=============================================================================
+# Target rules for targets named bumperbot_controller_generate_messages_nodejs
+
+# Build rule for target.
+bumperbot_controller_generate_messages_nodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 bumperbot_controller_generate_messages_nodejs
+.PHONY : bumperbot_controller_generate_messages_nodejs
+
+# fast build rule for target.
+bumperbot_controller_generate_messages_nodejs/fast:
+	$(MAKE) -f bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_nodejs.dir/build.make bumperbot_controller/CMakeFiles/bumperbot_controller_generate_messages_nodejs.dir/build
+.PHONY : bumperbot_controller_generate_messages_nodejs/fast
+
+#=============================================================================
+# Target rules for targets named _bumperbot_controller_generate_messages_check_deps_ModeSwitch
+
+# Build rule for target.
+_bumperbot_controller_generate_messages_check_deps_ModeSwitch: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _bumperbot_controller_generate_messages_check_deps_ModeSwitch
+.PHONY : _bumperbot_controller_generate_messages_check_deps_ModeSwitch
+
+# fast build rule for target.
+_bumperbot_controller_generate_messages_check_deps_ModeSwitch/fast:
+	$(MAKE) -f bumperbot_controller/CMakeFiles/_bumperbot_controller_generate_messages_check_deps_ModeSwitch.dir/build.make bumperbot_controller/CMakeFiles/_bumperbot_controller_generate_messages_check_deps_ModeSwitch.dir/build
+.PHONY : _bumperbot_controller_generate_messages_check_deps_ModeSwitch/fast
+
+#=============================================================================
+# Target rules for targets named simple_controller
+
+# Build rule for target.
+simple_controller: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 simple_controller
+.PHONY : simple_controller
+
+# fast build rule for target.
+simple_controller/fast:
+	$(MAKE) -f bumperbot_controller/CMakeFiles/simple_controller.dir/build.make bumperbot_controller/CMakeFiles/simple_controller.dir/build
+.PHONY : simple_controller/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -2326,10 +2521,6 @@ help:
 	@echo "... imu_republisher_node"
 	@echo "... kalman_filter_node"
 	@echo "... kalman_filter"
-	@echo "... noisy_controller_node"
-	@echo "... simple_controller_node"
-	@echo "... noisy_controller"
-	@echo "... simple_controller"
 	@echo "... simple_cpp_service_server"
 	@echo "... tf_examples_node"
 	@echo "... simple_cpp_publisher"
@@ -2376,9 +2567,14 @@ help:
 	@echo "... litter_coordinate_transformer_publisher_node"
 	@echo "... litter_coordinate_subscriber"
 	@echo "... _bumperbot_detection_generate_messages_check_deps_GetLitterList"
-	@echo "... litter_destruction_generate_messages"
+	@echo "... litter_destruction_genpy"
 	@echo "... litter_destruction_generate_messages_py"
+	@echo "... litter_destruction_gennodejs"
+	@echo "... litter_destruction_generate_messages"
 	@echo "... _litter_destruction_generate_messages_check_deps_GetLitterSet"
+	@echo "... _litter_destruction_generate_messages_check_deps_GetNextLitter"
+	@echo "... _litter_destruction_generate_messages_check_deps_HasLitterToClear"
+	@echo "... _litter_destruction_generate_messages_check_deps_RemoveLitter"
 	@echo "... litter_destruction_generate_messages_cpp"
 	@echo "... litter_destruction_geneus"
 	@echo "... litter_destruction_gencpp"
@@ -2387,8 +2583,6 @@ help:
 	@echo "... _litter_destruction_generate_messages_check_deps_GlobalBoundaryCenter"
 	@echo "... litter_destruction_generate_messages_nodejs"
 	@echo "... litter_destruction_genlisp"
-	@echo "... litter_destruction_gennodejs"
-	@echo "... litter_destruction_genpy"
 	@echo "... waypoint_plotter_publisher_node"
 	@echo "... navigation_generate_messages_cpp"
 	@echo "... pixel_position_publisher_node"
@@ -2420,6 +2614,22 @@ help:
 	@echo "... get_amcl_pose_server_node"
 	@echo "... navigation_generate_messages_lisp"
 	@echo "... convert_pixel_to_map_server_node"
+	@echo "... noisy_controller"
+	@echo "... simple_controller_node"
+	@echo "... bumperbot_controller_generate_messages"
+	@echo "... bumperbot_controller_gencpp"
+	@echo "... bumperbot_controller_genlisp"
+	@echo "... bumperbot_controller_gennodejs"
+	@echo "... bumperbot_controller_genpy"
+	@echo "... bumperbot_controller_generate_messages_eus"
+	@echo "... bumperbot_controller_generate_messages_cpp"
+	@echo "... bumperbot_controller_generate_messages_lisp"
+	@echo "... bumperbot_controller_geneus"
+	@echo "... bumperbot_controller_generate_messages_py"
+	@echo "... noisy_controller_node"
+	@echo "... bumperbot_controller_generate_messages_nodejs"
+	@echo "... _bumperbot_controller_generate_messages_check_deps_ModeSwitch"
+	@echo "... simple_controller"
 .PHONY : help
 
 

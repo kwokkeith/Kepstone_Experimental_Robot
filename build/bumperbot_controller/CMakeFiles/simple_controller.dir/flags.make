@@ -6,5 +6,5 @@ CXX_FLAGS = -fPIC
 
 CXX_DEFINES = -DROSCONSOLE_BACKEND_LOG4CXX -DROS_BUILD_SHARED_LIBS=1 -DROS_PACKAGE_NAME=\"bumperbot_controller\" -Dsimple_controller_EXPORTS
 
-CXX_INCLUDES = -I/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/bumperbot_controller/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/eigen3 
+CXX_INCLUDES = -I/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/devel/include -I/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/bumperbot_controller/include -I/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/navigation/include -I/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/bumperbot_utils/include -I/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/litter_destruction/include -I/home/keith/Documents/Capstone/Robot_Kepstone/Test_Robot/src/bumperbot_detection/include -I/opt/ros/noetic/include -I/opt/ros/noetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp -I/usr/include/eigen3 
 

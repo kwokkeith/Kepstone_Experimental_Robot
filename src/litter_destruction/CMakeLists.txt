@@ -24,6 +24,9 @@ add_service_files(
   FILES
   GlobalBoundaryCenter.srv
   GetLitterSet.srv
+  GetNextLitter.srv
+  RemoveLitter.srv
+  HasLitterToClear.srv
 )
 
 # Uncomment if you have actions defined
