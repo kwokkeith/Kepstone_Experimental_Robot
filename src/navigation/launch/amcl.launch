@@ -1,8 +1,26 @@
 <?xml version="1.0" ?>
 
 <launch>
+  <!-- Converts 3D lidar PointCloud to LaserScan -->
+  <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
+    <param name="target_frame" value="base_link"/>
+    <param name="min_height" value="0.0"/>
+    <param name="max_height" value="10.0"/>
+    <param name="angle_min" value="-3.14"/>  <!-- Set FOV parameters -->
+    <param name="angle_max" value="3.14"/>
+    <param name="range_min" value="0.1"/>
+    <param name="range_max" value="100.0"/>
+    <param name="scan_time" value="0.1"/>
+    <param name="transform_tolerance" value="0.01"/>
+    <param name="use_inf" value="true"/>
+    <param name="inf_epsilon" value="1.0"/>
+    <param name="angle_increment" value="0.004363"/>  <!-- 0.25 degrees: for sensor fusion-->
+    <remap from="cloud_in" to="/bumperbot/laser/3d_front/scan"/>
+    <remap from="scan" to="/bumperbot/laser/3d_front/laser_scan"/>  <!-- 3D Lidar LaserScan output-->
+</node>
+
   <!-- Arguments -->
-  <arg name="scan_topic"     default="/bumperbot/laser/scan"/>
+  <arg name="scan_topic"     default="/bumperbot/laser/fused_scan"/>
   <arg name="initial_pose_x" default="0.0"/>
   <arg name="initial_pose_y" default="0.0"/>
   <arg name="initial_pose_a" default="0.0"/>
@@ -17,8 +35,8 @@
     <param name="update_min_a"              value="0.10"/>
     <param name="resample_interval"         value="1"/>
     <param name="transform_tolerance"       value="0.2"/>
-    <param name="recovery_alpha_slow"       value="0.00"/>
-    <param name="recovery_alpha_fast"       value="0.00"/>
+    <param name="recovery_alpha_slow"       value="0.001"/>
+    <param name="recovery_alpha_fast"       value="0.10"/>
     <param name="initial_pose_x"            value="$(arg initial_pose_x)"/>
     <param name="initial_pose_y"            value="$(arg initial_pose_y)"/>
     <param name="initial_pose_a"            value="$(arg initial_pose_a)"/>

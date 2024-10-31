@@ -1,7 +1,7 @@
 # generated from genmsg/cmake/pkg-genmsg.context.in
 
 messages_str = ""
-services_str = "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/navigation/srv/GetAmclPose.srv;/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/navigation/srv/GetPixelPose.srv;/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/navigation/srv/ConvertPixelToMap.srv;/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/navigation/srv/ConvertPixelWaypointsToMap.srv;/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/navigation/srv/InitiateCoveragePath.srv;/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/navigation/srv/GetWaypoints.srv"
+services_str = "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/navigation/srv/GetAmclPose.srv;/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/navigation/srv/GetPixelPose.srv;/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/navigation/srv/ConvertPixelToMap.srv;/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/navigation/srv/ConvertPixelWaypointsToMap.srv;/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/navigation/srv/InitiateCoveragePath.srv;/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/navigation/srv/GetWaypoints.srv"
 pkg_name = "navigation"
 dependencies_str = "geometry_msgs;std_msgs"
 langs = "gencpp;geneus;genlisp;gennodejs;genpy"

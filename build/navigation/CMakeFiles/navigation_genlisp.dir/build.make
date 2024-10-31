@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src
+CMAKE_SOURCE_DIR = /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build
+CMAKE_BINARY_DIR = /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build
 
 # Utility rule file for navigation_genlisp.
 
@@ -63,10 +63,10 @@ navigation/CMakeFiles/navigation_genlisp.dir/build: navigation_genlisp
 .PHONY : navigation/CMakeFiles/navigation_genlisp.dir/build
 
 navigation/CMakeFiles/navigation_genlisp.dir/clean:
-	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/navigation && $(CMAKE_COMMAND) -P CMakeFiles/navigation_genlisp.dir/cmake_clean.cmake
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/navigation && $(CMAKE_COMMAND) -P CMakeFiles/navigation_genlisp.dir/cmake_clean.cmake
 .PHONY : navigation/CMakeFiles/navigation_genlisp.dir/clean
 
 navigation/CMakeFiles/navigation_genlisp.dir/depend:
-	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/navigation /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/navigation /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/navigation/CMakeFiles/navigation_genlisp.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/navigation /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/navigation /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/navigation/CMakeFiles/navigation_genlisp.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : navigation/CMakeFiles/navigation_genlisp.dir/depend
 

@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/libpath_plotter.pdb"
-  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/libpath_plotter.so"
+  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/libpath_plotter.pdb"
+  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/libpath_plotter.so"
   "CMakeFiles/path_plotter.dir/src/path_plotter.cpp.o"
 )
 

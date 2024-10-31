@@ -54,6 +54,9 @@
     <!-- Launch Detection related nodes -->
     <include file="$(find bumperbot_detection)/launch/litter_detection.launch"></include>
 
+    <!-- Launch localization node -->
+    <include file="$(find bumperbot_localization)/launch/local_localization.launch"/>
+    
     <!-- Launch Litter Manager Node (For litter picking) -->
     <include file="$(find litter_destruction)/launch/litter_manager.launch"></include>
 

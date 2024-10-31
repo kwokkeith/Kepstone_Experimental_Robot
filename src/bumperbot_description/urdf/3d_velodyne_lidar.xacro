@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+
+<robot name="bumperbot" xmlns:xacro="http://ros.org/wiki/xacro">
+    <!-- Velodyne 3D Lidar -->
+    <link name="velodyne_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.02" length="0.01"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.02" length="0.01"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.01"/>
+            <origin xyz="0 0 0"/>
+            <inertia ixx="1e-7" ixy="0" ixz="0" iyy="1e-7" iyz="0" izz="1e-7"/>
+        </inertial>
+
+    </link>
+
+    <joint name="velodyne_joint" type="fixed">
+        <axis xyz="0 1 0" />
+        <parent link="base_link"/>
+        <child link="velodyne_link"/>
+        <origin xyz="0 0 0.08" rpy="0 0 0"/>  <!-- Adjust position as needed -->
+    </joint>
+
+    <!-- Gazebo: Velodyne Sensor -->
+    <gazebo reference="velodyne_link">
+        <sensor type="gpu_ray" name="velodyne_sensor">
+            <pose>0 0 0 0 0 0</pose>
+            <visualize>false</visualize>
+            <update_rate>20</update_rate>
+            <ray>
+                <scan>
+                    <horizontal>
+                        <samples>1440</samples>
+                        <resolution>1</resolution>
+                        <min_angle>${-pi}</min_angle>  <!-- -180 degrees -->
+                        <max_angle>${pi}</max_angle>   <!-- 180 degrees -->
+                    </horizontal>
+                    <vertical>
+                        <samples>16</samples>
+                        <resolution>1</resolution>
+                        <min_angle>0</min_angle>   <!-- Vertical min angle -->
+                        <max_angle>0.2618</max_angle>   <!-- Vertical max angle -->
+                    </vertical>
+                </scan>
+                <range>
+                    <min>0.1</min>
+                    <max>70.0</max>
+                    <resolution>0.001</resolution>
+                </range>
+                <noise>
+                    <type>gaussian</type>
+                    <mean>0.0</mean>
+                    <stddev>0.01</stddev>
+                </noise>
+            </ray>
+            <plugin name="velodyne_control" filename="libgazebo_ros_velodyne_gpu_laser.so">
+                <topicName>/bumperbot/laser/3d_front/scan</topicName>
+                <frameName>velodyne_link</frameName>
+                <min_range>0.1</min_range>
+                <max_range>130</max_range>
+                <gaussianNoise>0.01</gaussianNoise>
+                <organize_cloud>true</organize_cloud>
+            </plugin>
+        </sensor>
+    </gazebo>
+
+
+
+</robot>
