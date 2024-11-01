@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/include/bumperbot_examples/AddTwoInts.h"
-  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/include/bumperbot_examples/GetTransform.h"
+  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/include/bumperbot_examples/AddTwoInts.h"
+  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/include/bumperbot_examples/GetTransform.h"
   "CMakeFiles/bumperbot_examples_generate_messages_cpp"
 )
 

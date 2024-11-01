@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/bumperbot_examples/simple_cpp_subscriber"
-  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/bumperbot_examples/simple_cpp_subscriber.pdb"
+  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/bumperbot_examples/simple_cpp_subscriber"
+  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/bumperbot_examples/simple_cpp_subscriber.pdb"
   "CMakeFiles/simple_cpp_subscriber.dir/nodes/simple_subscriber.cpp.o"
 )
 

@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src
+CMAKE_SOURCE_DIR = /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build
+CMAKE_BINARY_DIR = /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -137,9 +137,9 @@ test/fast: test
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/CMakeFiles /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/CMakeFiles /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -987,45 +987,6 @@ path_plotter_node/fast:
 .PHONY : path_plotter_node/fast
 
 #=============================================================================
-# Target rules for targets named imu_republisher_node
-
-# Build rule for target.
-imu_republisher_node: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 imu_republisher_node
-.PHONY : imu_republisher_node
-
-# fast build rule for target.
-imu_republisher_node/fast:
-	$(MAKE) -f bumperbot_localization/CMakeFiles/imu_republisher_node.dir/build.make bumperbot_localization/CMakeFiles/imu_republisher_node.dir/build
-.PHONY : imu_republisher_node/fast
-
-#=============================================================================
-# Target rules for targets named kalman_filter_node
-
-# Build rule for target.
-kalman_filter_node: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 kalman_filter_node
-.PHONY : kalman_filter_node
-
-# fast build rule for target.
-kalman_filter_node/fast:
-	$(MAKE) -f bumperbot_localization/CMakeFiles/kalman_filter_node.dir/build.make bumperbot_localization/CMakeFiles/kalman_filter_node.dir/build
-.PHONY : kalman_filter_node/fast
-
-#=============================================================================
-# Target rules for targets named kalman_filter
-
-# Build rule for target.
-kalman_filter: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 kalman_filter
-.PHONY : kalman_filter
-
-# fast build rule for target.
-kalman_filter/fast:
-	$(MAKE) -f bumperbot_localization/CMakeFiles/kalman_filter.dir/build.make bumperbot_localization/CMakeFiles/kalman_filter.dir/build
-.PHONY : kalman_filter/fast
-
-#=============================================================================
 # Target rules for targets named simple_cpp_service_server
 
 # Build rule for target.
@@ -1622,6 +1583,58 @@ _bumperbot_detection_generate_messages_check_deps_GetLitterList: cmake_check_bui
 _bumperbot_detection_generate_messages_check_deps_GetLitterList/fast:
 	$(MAKE) -f bumperbot_detection/CMakeFiles/_bumperbot_detection_generate_messages_check_deps_GetLitterList.dir/build.make bumperbot_detection/CMakeFiles/_bumperbot_detection_generate_messages_check_deps_GetLitterList.dir/build
 .PHONY : _bumperbot_detection_generate_messages_check_deps_GetLitterList/fast
+
+#=============================================================================
+# Target rules for targets named lidar_fusion
+
+# Build rule for target.
+lidar_fusion: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 lidar_fusion
+.PHONY : lidar_fusion
+
+# fast build rule for target.
+lidar_fusion/fast:
+	$(MAKE) -f bumperbot_localization/CMakeFiles/lidar_fusion.dir/build.make bumperbot_localization/CMakeFiles/lidar_fusion.dir/build
+.PHONY : lidar_fusion/fast
+
+#=============================================================================
+# Target rules for targets named imu_republisher_node
+
+# Build rule for target.
+imu_republisher_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 imu_republisher_node
+.PHONY : imu_republisher_node
+
+# fast build rule for target.
+imu_republisher_node/fast:
+	$(MAKE) -f bumperbot_localization/CMakeFiles/imu_republisher_node.dir/build.make bumperbot_localization/CMakeFiles/imu_republisher_node.dir/build
+.PHONY : imu_republisher_node/fast
+
+#=============================================================================
+# Target rules for targets named kalman_filter_node
+
+# Build rule for target.
+kalman_filter_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 kalman_filter_node
+.PHONY : kalman_filter_node
+
+# fast build rule for target.
+kalman_filter_node/fast:
+	$(MAKE) -f bumperbot_localization/CMakeFiles/kalman_filter_node.dir/build.make bumperbot_localization/CMakeFiles/kalman_filter_node.dir/build
+.PHONY : kalman_filter_node/fast
+
+#=============================================================================
+# Target rules for targets named kalman_filter
+
+# Build rule for target.
+kalman_filter: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 kalman_filter
+.PHONY : kalman_filter
+
+# fast build rule for target.
+kalman_filter/fast:
+	$(MAKE) -f bumperbot_localization/CMakeFiles/kalman_filter.dir/build.make bumperbot_localization/CMakeFiles/kalman_filter.dir/build
+.PHONY : kalman_filter/fast
 
 #=============================================================================
 # Target rules for targets named litter_destruction_genpy
@@ -2622,9 +2635,6 @@ help:
 	@echo "... tf2_msgs_generate_messages_lisp"
 	@echo "... tf2_msgs_generate_messages_nodejs"
 	@echo "... path_plotter_node"
-	@echo "... imu_republisher_node"
-	@echo "... kalman_filter_node"
-	@echo "... kalman_filter"
 	@echo "... simple_cpp_service_server"
 	@echo "... tf_examples_node"
 	@echo "... simple_cpp_publisher"
@@ -2671,6 +2681,10 @@ help:
 	@echo "... litter_coordinate_transformer_publisher_node"
 	@echo "... litter_coordinate_subscriber"
 	@echo "... _bumperbot_detection_generate_messages_check_deps_GetLitterList"
+	@echo "... lidar_fusion"
+	@echo "... imu_republisher_node"
+	@echo "... kalman_filter_node"
+	@echo "... kalman_filter"
 	@echo "... litter_destruction_genpy"
 	@echo "... litter_destruction_generate_messages_py"
 	@echo "... litter_destruction_gennodejs"

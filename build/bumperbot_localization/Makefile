@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src
+CMAKE_SOURCE_DIR = /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build
+CMAKE_BINARY_DIR = /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -137,14 +137,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/CMakeFiles /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/bumperbot_localization/CMakeFiles/progress.marks
-	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_localization/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/CMakeFiles 0
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/CMakeFiles /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/bumperbot_localization/CMakeFiles/progress.marks
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_localization/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_localization/clean
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_localization/clean
 .PHONY : clean
 
 # The main clean target
@@ -154,22 +154,37 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_localization/preinstall
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_localization/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_localization/preinstall
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_localization/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
+bumperbot_localization/CMakeFiles/lidar_fusion.dir/rule:
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_localization/CMakeFiles/lidar_fusion.dir/rule
+.PHONY : bumperbot_localization/CMakeFiles/lidar_fusion.dir/rule
+
+# Convenience name for target.
+lidar_fusion: bumperbot_localization/CMakeFiles/lidar_fusion.dir/rule
+
+.PHONY : lidar_fusion
+
+# fast build rule for target.
+lidar_fusion/fast:
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/lidar_fusion.dir/build.make bumperbot_localization/CMakeFiles/lidar_fusion.dir/build
+.PHONY : lidar_fusion/fast
+
+# Convenience name for target.
 bumperbot_localization/CMakeFiles/imu_republisher_node.dir/rule:
-	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_localization/CMakeFiles/imu_republisher_node.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_localization/CMakeFiles/imu_republisher_node.dir/rule
 .PHONY : bumperbot_localization/CMakeFiles/imu_republisher_node.dir/rule
 
 # Convenience name for target.
@@ -179,12 +194,12 @@ imu_republisher_node: bumperbot_localization/CMakeFiles/imu_republisher_node.dir
 
 # fast build rule for target.
 imu_republisher_node/fast:
-	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/imu_republisher_node.dir/build.make bumperbot_localization/CMakeFiles/imu_republisher_node.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/imu_republisher_node.dir/build.make bumperbot_localization/CMakeFiles/imu_republisher_node.dir/build
 .PHONY : imu_republisher_node/fast
 
 # Convenience name for target.
 bumperbot_localization/CMakeFiles/kalman_filter_node.dir/rule:
-	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_localization/CMakeFiles/kalman_filter_node.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_localization/CMakeFiles/kalman_filter_node.dir/rule
 .PHONY : bumperbot_localization/CMakeFiles/kalman_filter_node.dir/rule
 
 # Convenience name for target.
@@ -194,12 +209,12 @@ kalman_filter_node: bumperbot_localization/CMakeFiles/kalman_filter_node.dir/rul
 
 # fast build rule for target.
 kalman_filter_node/fast:
-	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/kalman_filter_node.dir/build.make bumperbot_localization/CMakeFiles/kalman_filter_node.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/kalman_filter_node.dir/build.make bumperbot_localization/CMakeFiles/kalman_filter_node.dir/build
 .PHONY : kalman_filter_node/fast
 
 # Convenience name for target.
 bumperbot_localization/CMakeFiles/kalman_filter.dir/rule:
-	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_localization/CMakeFiles/kalman_filter.dir/rule
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f CMakeFiles/Makefile2 bumperbot_localization/CMakeFiles/kalman_filter.dir/rule
 .PHONY : bumperbot_localization/CMakeFiles/kalman_filter.dir/rule
 
 # Convenience name for target.
@@ -209,7 +224,7 @@ kalman_filter: bumperbot_localization/CMakeFiles/kalman_filter.dir/rule
 
 # fast build rule for target.
 kalman_filter/fast:
-	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/kalman_filter.dir/build.make bumperbot_localization/CMakeFiles/kalman_filter.dir/build
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/kalman_filter.dir/build.make bumperbot_localization/CMakeFiles/kalman_filter.dir/build
 .PHONY : kalman_filter/fast
 
 nodes/imu_republisher_node.o: nodes/imu_republisher_node.cpp.o
@@ -218,7 +233,7 @@ nodes/imu_republisher_node.o: nodes/imu_republisher_node.cpp.o
 
 # target to build an object file
 nodes/imu_republisher_node.cpp.o:
-	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/imu_republisher_node.dir/build.make bumperbot_localization/CMakeFiles/imu_republisher_node.dir/nodes/imu_republisher_node.cpp.o
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/imu_republisher_node.dir/build.make bumperbot_localization/CMakeFiles/imu_republisher_node.dir/nodes/imu_republisher_node.cpp.o
 .PHONY : nodes/imu_republisher_node.cpp.o
 
 nodes/imu_republisher_node.i: nodes/imu_republisher_node.cpp.i
@@ -227,7 +242,7 @@ nodes/imu_republisher_node.i: nodes/imu_republisher_node.cpp.i
 
 # target to preprocess a source file
 nodes/imu_republisher_node.cpp.i:
-	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/imu_republisher_node.dir/build.make bumperbot_localization/CMakeFiles/imu_republisher_node.dir/nodes/imu_republisher_node.cpp.i
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/imu_republisher_node.dir/build.make bumperbot_localization/CMakeFiles/imu_republisher_node.dir/nodes/imu_republisher_node.cpp.i
 .PHONY : nodes/imu_republisher_node.cpp.i
 
 nodes/imu_republisher_node.s: nodes/imu_republisher_node.cpp.s
@@ -236,7 +251,7 @@ nodes/imu_republisher_node.s: nodes/imu_republisher_node.cpp.s
 
 # target to generate assembly for a file
 nodes/imu_republisher_node.cpp.s:
-	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/imu_republisher_node.dir/build.make bumperbot_localization/CMakeFiles/imu_republisher_node.dir/nodes/imu_republisher_node.cpp.s
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/imu_republisher_node.dir/build.make bumperbot_localization/CMakeFiles/imu_republisher_node.dir/nodes/imu_republisher_node.cpp.s
 .PHONY : nodes/imu_republisher_node.cpp.s
 
 nodes/kalman_filter_node.o: nodes/kalman_filter_node.cpp.o
@@ -245,7 +260,7 @@ nodes/kalman_filter_node.o: nodes/kalman_filter_node.cpp.o
 
 # target to build an object file
 nodes/kalman_filter_node.cpp.o:
-	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/kalman_filter_node.dir/build.make bumperbot_localization/CMakeFiles/kalman_filter_node.dir/nodes/kalman_filter_node.cpp.o
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/kalman_filter_node.dir/build.make bumperbot_localization/CMakeFiles/kalman_filter_node.dir/nodes/kalman_filter_node.cpp.o
 .PHONY : nodes/kalman_filter_node.cpp.o
 
 nodes/kalman_filter_node.i: nodes/kalman_filter_node.cpp.i
@@ -254,7 +269,7 @@ nodes/kalman_filter_node.i: nodes/kalman_filter_node.cpp.i
 
 # target to preprocess a source file
 nodes/kalman_filter_node.cpp.i:
-	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/kalman_filter_node.dir/build.make bumperbot_localization/CMakeFiles/kalman_filter_node.dir/nodes/kalman_filter_node.cpp.i
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/kalman_filter_node.dir/build.make bumperbot_localization/CMakeFiles/kalman_filter_node.dir/nodes/kalman_filter_node.cpp.i
 .PHONY : nodes/kalman_filter_node.cpp.i
 
 nodes/kalman_filter_node.s: nodes/kalman_filter_node.cpp.s
@@ -263,7 +278,7 @@ nodes/kalman_filter_node.s: nodes/kalman_filter_node.cpp.s
 
 # target to generate assembly for a file
 nodes/kalman_filter_node.cpp.s:
-	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/kalman_filter_node.dir/build.make bumperbot_localization/CMakeFiles/kalman_filter_node.dir/nodes/kalman_filter_node.cpp.s
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/kalman_filter_node.dir/build.make bumperbot_localization/CMakeFiles/kalman_filter_node.dir/nodes/kalman_filter_node.cpp.s
 .PHONY : nodes/kalman_filter_node.cpp.s
 
 src/kalman_filter.o: src/kalman_filter.cpp.o
@@ -272,7 +287,7 @@ src/kalman_filter.o: src/kalman_filter.cpp.o
 
 # target to build an object file
 src/kalman_filter.cpp.o:
-	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/kalman_filter.dir/build.make bumperbot_localization/CMakeFiles/kalman_filter.dir/src/kalman_filter.cpp.o
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/kalman_filter.dir/build.make bumperbot_localization/CMakeFiles/kalman_filter.dir/src/kalman_filter.cpp.o
 .PHONY : src/kalman_filter.cpp.o
 
 src/kalman_filter.i: src/kalman_filter.cpp.i
@@ -281,7 +296,7 @@ src/kalman_filter.i: src/kalman_filter.cpp.i
 
 # target to preprocess a source file
 src/kalman_filter.cpp.i:
-	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/kalman_filter.dir/build.make bumperbot_localization/CMakeFiles/kalman_filter.dir/src/kalman_filter.cpp.i
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/kalman_filter.dir/build.make bumperbot_localization/CMakeFiles/kalman_filter.dir/src/kalman_filter.cpp.i
 .PHONY : src/kalman_filter.cpp.i
 
 src/kalman_filter.s: src/kalman_filter.cpp.s
@@ -290,8 +305,35 @@ src/kalman_filter.s: src/kalman_filter.cpp.s
 
 # target to generate assembly for a file
 src/kalman_filter.cpp.s:
-	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/kalman_filter.dir/build.make bumperbot_localization/CMakeFiles/kalman_filter.dir/src/kalman_filter.cpp.s
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/kalman_filter.dir/build.make bumperbot_localization/CMakeFiles/kalman_filter.dir/src/kalman_filter.cpp.s
 .PHONY : src/kalman_filter.cpp.s
+
+src/lidar_fusion.o: src/lidar_fusion.cpp.o
+
+.PHONY : src/lidar_fusion.o
+
+# target to build an object file
+src/lidar_fusion.cpp.o:
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/lidar_fusion.dir/build.make bumperbot_localization/CMakeFiles/lidar_fusion.dir/src/lidar_fusion.cpp.o
+.PHONY : src/lidar_fusion.cpp.o
+
+src/lidar_fusion.i: src/lidar_fusion.cpp.i
+
+.PHONY : src/lidar_fusion.i
+
+# target to preprocess a source file
+src/lidar_fusion.cpp.i:
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/lidar_fusion.dir/build.make bumperbot_localization/CMakeFiles/lidar_fusion.dir/src/lidar_fusion.cpp.i
+.PHONY : src/lidar_fusion.cpp.i
+
+src/lidar_fusion.s: src/lidar_fusion.cpp.s
+
+.PHONY : src/lidar_fusion.s
+
+# target to generate assembly for a file
+src/lidar_fusion.cpp.s:
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(MAKE) -f bumperbot_localization/CMakeFiles/lidar_fusion.dir/build.make bumperbot_localization/CMakeFiles/lidar_fusion.dir/src/lidar_fusion.cpp.s
+.PHONY : src/lidar_fusion.cpp.s
 
 # Help Target
 help:
@@ -303,6 +345,7 @@ help:
 	@echo "... install/local"
 	@echo "... edit_cache"
 	@echo "... test"
+	@echo "... lidar_fusion"
 	@echo "... imu_republisher_node"
 	@echo "... kalman_filter_node"
 	@echo "... install"
@@ -318,6 +361,9 @@ help:
 	@echo "... src/kalman_filter.o"
 	@echo "... src/kalman_filter.i"
 	@echo "... src/kalman_filter.s"
+	@echo "... src/lidar_fusion.o"
+	@echo "... src/lidar_fusion.i"
+	@echo "... src/lidar_fusion.s"
 .PHONY : help
 
 
@@ -329,6 +375,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

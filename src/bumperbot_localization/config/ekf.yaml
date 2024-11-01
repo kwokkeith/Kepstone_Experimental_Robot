@@ -52,8 +52,8 @@ odom0: bumperbot_controller/odom_noisy
 # if unspecified, effectively making this parameter required for each sensor.
 odom0_config: [false, false, false,
                false, false, false,
-               true,  false,  false,
-               false, false, false,
+               true,  true,  false,
+               false, false, true,
                false, false, false]
 
 # [ADVANCED] When measuring one pose variable with two sensors, a situation can arise in which both sensors under-
@@ -127,3 +127,11 @@ initial_estimate_covariance: [1e-9, 0,    0,    0,    0,    0,    0,    0,    0,
                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     1e-9, 0,    0,
                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    1e-9, 0,
                               0,    0,    0,    0,    0,    0,    0,    0,    0,    0,     0,     0,     0,    0,    1e-9]
+
+# Fused LiDAR Input (LaserScan)
+laser0: /bumperbot/laser/fused_scan
+laser0_config: [true, true, false,  # Use x, y positions, ignore z position
+                false, false, true, # Ignore roll and pitch, use yaw
+                false, false, false, # Do not use velocities from LaserScan
+                false, false, false, # Do not use angular velocities
+                false, false, false] # Do not use linear accelerations
