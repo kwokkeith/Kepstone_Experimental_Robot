@@ -1,8 +1,8 @@
-# Install script for directory: /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/bumperbot_examples
+# Install script for directory: /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/bumperbot_examples
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/install")
+  set(CMAKE_INSTALL_PREFIX "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -39,55 +39,55 @@ endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/bumperbot_examples/srv" TYPE FILE FILES
-    "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/bumperbot_examples/srv/AddTwoInts.srv"
-    "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/bumperbot_examples/srv/GetTransform.srv"
+    "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/bumperbot_examples/srv/AddTwoInts.srv"
+    "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/bumperbot_examples/srv/GetTransform.srv"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/bumperbot_examples/cmake" TYPE FILE FILES "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/bumperbot_examples/catkin_generated/installspace/bumperbot_examples-msg-paths.cmake")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/bumperbot_examples/cmake" TYPE FILE FILES "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/bumperbot_examples/catkin_generated/installspace/bumperbot_examples-msg-paths.cmake")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/include/bumperbot_examples")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/include/bumperbot_examples")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/roseus/ros" TYPE DIRECTORY FILES "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/roseus/ros/bumperbot_examples")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/roseus/ros" TYPE DIRECTORY FILES "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/share/roseus/ros/bumperbot_examples")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/common-lisp/ros" TYPE DIRECTORY FILES "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/common-lisp/ros/bumperbot_examples")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/common-lisp/ros" TYPE DIRECTORY FILES "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/share/common-lisp/ros/bumperbot_examples")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/gennodejs/ros" TYPE DIRECTORY FILES "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/gennodejs/ros/bumperbot_examples")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/gennodejs/ros" TYPE DIRECTORY FILES "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/share/gennodejs/ros/bumperbot_examples")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  execute_process(COMMAND "/usr/bin/python3" -m compileall "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/python3/dist-packages/bumperbot_examples")
+  execute_process(COMMAND "/usr/bin/python3" -m compileall "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/python3/dist-packages/bumperbot_examples")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python3/dist-packages" TYPE DIRECTORY FILES "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/python3/dist-packages/bumperbot_examples")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python3/dist-packages" TYPE DIRECTORY FILES "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/python3/dist-packages/bumperbot_examples")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/bumperbot_examples/catkin_generated/installspace/bumperbot_examples.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/bumperbot_examples/catkin_generated/installspace/bumperbot_examples.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/bumperbot_examples/cmake" TYPE FILE FILES "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/bumperbot_examples/catkin_generated/installspace/bumperbot_examples-msg-extras.cmake")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/bumperbot_examples/cmake" TYPE FILE FILES "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/bumperbot_examples/catkin_generated/installspace/bumperbot_examples-msg-extras.cmake")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/bumperbot_examples/cmake" TYPE FILE FILES
-    "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/bumperbot_examples/catkin_generated/installspace/bumperbot_examplesConfig.cmake"
-    "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/bumperbot_examples/catkin_generated/installspace/bumperbot_examplesConfig-version.cmake"
+    "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/bumperbot_examples/catkin_generated/installspace/bumperbot_examplesConfig.cmake"
+    "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/bumperbot_examples/catkin_generated/installspace/bumperbot_examplesConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/bumperbot_examples" TYPE FILE FILES "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/bumperbot_examples/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/bumperbot_examples" TYPE FILE FILES "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/bumperbot_examples/package.xml")
 endif()
 

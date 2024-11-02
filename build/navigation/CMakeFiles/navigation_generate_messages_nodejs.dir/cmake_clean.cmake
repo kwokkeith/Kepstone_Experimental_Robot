@@ -1,10 +1,10 @@
 file(REMOVE_RECURSE
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/gennodejs/ros/navigation/srv/ConvertPixelToMap.js"
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/gennodejs/ros/navigation/srv/ConvertPixelWaypointsToMap.js"
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/gennodejs/ros/navigation/srv/GetAmclPose.js"
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/gennodejs/ros/navigation/srv/GetPixelPose.js"
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/gennodejs/ros/navigation/srv/GetWaypoints.js"
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/gennodejs/ros/navigation/srv/InitiateCoveragePath.js"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/share/gennodejs/ros/navigation/srv/ConvertPixelToMap.js"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/share/gennodejs/ros/navigation/srv/ConvertPixelWaypointsToMap.js"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/share/gennodejs/ros/navigation/srv/GetAmclPose.js"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/share/gennodejs/ros/navigation/srv/GetPixelPose.js"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/share/gennodejs/ros/navigation/srv/GetWaypoints.js"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/share/gennodejs/ros/navigation/srv/InitiateCoveragePath.js"
   "CMakeFiles/navigation_generate_messages_nodejs"
 )
 

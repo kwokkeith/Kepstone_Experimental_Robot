@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src
+CMAKE_SOURCE_DIR = /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build
+CMAKE_BINARY_DIR = /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build
 
 # Utility rule file for bumperbot_examples_genlisp.
 
@@ -63,10 +63,10 @@ bumperbot_examples/CMakeFiles/bumperbot_examples_genlisp.dir/build: bumperbot_ex
 .PHONY : bumperbot_examples/CMakeFiles/bumperbot_examples_genlisp.dir/build
 
 bumperbot_examples/CMakeFiles/bumperbot_examples_genlisp.dir/clean:
-	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/bumperbot_examples && $(CMAKE_COMMAND) -P CMakeFiles/bumperbot_examples_genlisp.dir/cmake_clean.cmake
+	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/bumperbot_examples && $(CMAKE_COMMAND) -P CMakeFiles/bumperbot_examples_genlisp.dir/cmake_clean.cmake
 .PHONY : bumperbot_examples/CMakeFiles/bumperbot_examples_genlisp.dir/clean
 
 bumperbot_examples/CMakeFiles/bumperbot_examples_genlisp.dir/depend:
-	cd /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/bumperbot_examples /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/bumperbot_examples /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/bumperbot_examples/CMakeFiles/bumperbot_examples_genlisp.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/bumperbot_examples /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/bumperbot_examples /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/bumperbot_examples/CMakeFiles/bumperbot_examples_genlisp.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : bumperbot_examples/CMakeFiles/bumperbot_examples_genlisp.dir/depend
 

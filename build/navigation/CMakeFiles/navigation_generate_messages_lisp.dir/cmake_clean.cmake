@@ -1,10 +1,10 @@
 file(REMOVE_RECURSE
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/common-lisp/ros/navigation/srv/ConvertPixelToMap.lisp"
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/common-lisp/ros/navigation/srv/ConvertPixelWaypointsToMap.lisp"
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/common-lisp/ros/navigation/srv/GetAmclPose.lisp"
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/common-lisp/ros/navigation/srv/GetPixelPose.lisp"
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/common-lisp/ros/navigation/srv/GetWaypoints.lisp"
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/common-lisp/ros/navigation/srv/InitiateCoveragePath.lisp"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/share/common-lisp/ros/navigation/srv/ConvertPixelToMap.lisp"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/share/common-lisp/ros/navigation/srv/ConvertPixelWaypointsToMap.lisp"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/share/common-lisp/ros/navigation/srv/GetAmclPose.lisp"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/share/common-lisp/ros/navigation/srv/GetPixelPose.lisp"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/share/common-lisp/ros/navigation/srv/GetWaypoints.lisp"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/share/common-lisp/ros/navigation/srv/InitiateCoveragePath.lisp"
   "CMakeFiles/navigation_generate_messages_lisp"
 )
 

@@ -1,8 +1,8 @@
-# Install script for directory: /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/navigation
+# Install script for directory: /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/navigation
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/install")
+  set(CMAKE_INSTALL_PREFIX "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -39,63 +39,63 @@ endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/navigation/srv" TYPE FILE FILES
-    "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/navigation/srv/GetAmclPose.srv"
-    "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/navigation/srv/GetPixelPose.srv"
-    "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/navigation/srv/ConvertPixelToMap.srv"
-    "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/navigation/srv/ConvertPixelWaypointsToMap.srv"
-    "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/navigation/srv/InitiateCoveragePath.srv"
-    "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/navigation/srv/GetWaypoints.srv"
+    "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/navigation/srv/GetAmclPose.srv"
+    "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/navigation/srv/GetPixelPose.srv"
+    "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/navigation/srv/ConvertPixelToMap.srv"
+    "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/navigation/srv/ConvertPixelWaypointsToMap.srv"
+    "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/navigation/srv/InitiateCoveragePath.srv"
+    "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/navigation/srv/GetWaypoints.srv"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/navigation/cmake" TYPE FILE FILES "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/navigation/catkin_generated/installspace/navigation-msg-paths.cmake")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/navigation/cmake" TYPE FILE FILES "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/navigation/catkin_generated/installspace/navigation-msg-paths.cmake")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/include/navigation")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/include/navigation")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/roseus/ros" TYPE DIRECTORY FILES "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/roseus/ros/navigation")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/roseus/ros" TYPE DIRECTORY FILES "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/share/roseus/ros/navigation")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/common-lisp/ros" TYPE DIRECTORY FILES "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/common-lisp/ros/navigation")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/common-lisp/ros" TYPE DIRECTORY FILES "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/share/common-lisp/ros/navigation")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/gennodejs/ros" TYPE DIRECTORY FILES "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/gennodejs/ros/navigation")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/gennodejs/ros" TYPE DIRECTORY FILES "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/share/gennodejs/ros/navigation")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  execute_process(COMMAND "/usr/bin/python3" -m compileall "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/python3/dist-packages/navigation")
+  execute_process(COMMAND "/usr/bin/python3" -m compileall "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/python3/dist-packages/navigation")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python3/dist-packages" TYPE DIRECTORY FILES "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/python3/dist-packages/navigation")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/python3/dist-packages" TYPE DIRECTORY FILES "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/python3/dist-packages/navigation")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/navigation/catkin_generated/installspace/navigation.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/navigation/catkin_generated/installspace/navigation.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/navigation/cmake" TYPE FILE FILES "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/navigation/catkin_generated/installspace/navigation-msg-extras.cmake")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/navigation/cmake" TYPE FILE FILES "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/navigation/catkin_generated/installspace/navigation-msg-extras.cmake")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/navigation/cmake" TYPE FILE FILES
-    "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/navigation/catkin_generated/installspace/navigationConfig.cmake"
-    "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/navigation/catkin_generated/installspace/navigationConfig-version.cmake"
+    "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/navigation/catkin_generated/installspace/navigationConfig.cmake"
+    "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/navigation/catkin_generated/installspace/navigationConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/navigation" TYPE FILE FILES "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/navigation/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/navigation" TYPE FILE FILES "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/navigation/package.xml")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/navigation" TYPE PROGRAM FILES "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build/navigation/catkin_generated/installspace/waypoint_nav.py")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/navigation" TYPE PROGRAM FILES "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build/navigation/catkin_generated/installspace/waypoint_nav.py")
 endif()
 

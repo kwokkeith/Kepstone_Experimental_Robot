@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/bumperbot_examples/nodes/simple_publisher.cpp
+/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/bumperbot_examples/nodes/simple_publisher.cpp
 ros/ros.h
 -
 std_msgs/String.h

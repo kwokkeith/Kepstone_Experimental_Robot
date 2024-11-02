@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/libpixel_position_publisher.pdb"
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/libpixel_position_publisher.so"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/libpixel_position_publisher.pdb"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/libpixel_position_publisher.so"
   "CMakeFiles/pixel_position_publisher.dir/src/pixel_position_publisher.cpp.o"
 )
 

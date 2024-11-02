@@ -67,14 +67,14 @@ set(bumperbot_utils_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
-  set(bumperbot_utils_SOURCE_PREFIX /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/bumperbot_utils)
-  set(bumperbot_utils_DEVEL_PREFIX /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel)
+  set(bumperbot_utils_SOURCE_PREFIX /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/bumperbot_utils)
+  set(bumperbot_utils_DEVEL_PREFIX /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel)
   set(bumperbot_utils_INSTALL_PREFIX "")
   set(bumperbot_utils_PREFIX ${bumperbot_utils_DEVEL_PREFIX})
 else()
   set(bumperbot_utils_SOURCE_PREFIX "")
   set(bumperbot_utils_DEVEL_PREFIX "")
-  set(bumperbot_utils_INSTALL_PREFIX /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/install)
+  set(bumperbot_utils_INSTALL_PREFIX /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/install)
   set(bumperbot_utils_PREFIX ${bumperbot_utils_INSTALL_PREFIX})
 endif()
 
@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(bumperbot_utils_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/bumperbot_utils/include " STREQUAL " ")
+if(NOT "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/bumperbot_utils/include " STREQUAL " ")
   set(bumperbot_utils_INCLUDE_DIRS "")
-  set(_include_dirs "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/bumperbot_utils/include")
+  set(_include_dirs "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/bumperbot_utils/include")
   if(NOT " " STREQUAL " ")
     set(_report "Check the issue tracker '' and consider creating a ticket if the problem has not been reported yet.")
   elseif(NOT " " STREQUAL " ")
@@ -110,7 +110,7 @@ if(NOT "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/bumperbot_ut
         message(FATAL_ERROR "Project 'bumperbot_utils' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  ${_report}")
       endif()
     else()
-      message(FATAL_ERROR "Project 'bumperbot_utils' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/bumperbot_utils/${idir}'.  ${_report}")
+      message(FATAL_ERROR "Project 'bumperbot_utils' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/bumperbot_utils/${idir}'.  ${_report}")
     endif()
     _list_append_unique(bumperbot_utils_INCLUDE_DIRS ${include})
   endforeach()
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib;/opt/ros/noetic/lib)
+    foreach(path /home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

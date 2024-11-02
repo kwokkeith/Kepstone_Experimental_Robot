@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/bumperbot_examples/simple_cpp_service_client"
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/bumperbot_examples/simple_cpp_service_client.pdb"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/bumperbot_examples/simple_cpp_service_client"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/bumperbot_examples/simple_cpp_service_client.pdb"
   "CMakeFiles/simple_cpp_service_client.dir/nodes/simple_service_client.cpp.o"
 )
 

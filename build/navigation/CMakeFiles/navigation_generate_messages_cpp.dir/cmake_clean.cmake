@@ -1,10 +1,10 @@
 file(REMOVE_RECURSE
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/include/navigation/ConvertPixelToMap.h"
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/include/navigation/ConvertPixelWaypointsToMap.h"
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/include/navigation/GetAmclPose.h"
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/include/navigation/GetPixelPose.h"
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/include/navigation/GetWaypoints.h"
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/include/navigation/InitiateCoveragePath.h"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/include/navigation/ConvertPixelToMap.h"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/include/navigation/ConvertPixelWaypointsToMap.h"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/include/navigation/GetAmclPose.h"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/include/navigation/GetPixelPose.h"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/include/navigation/GetWaypoints.h"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/include/navigation/InitiateCoveragePath.h"
   "CMakeFiles/navigation_generate_messages_cpp"
 )
 

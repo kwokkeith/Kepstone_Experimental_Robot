@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/bumperbot_utils/path_plotter_node"
-  "/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/bumperbot_utils/path_plotter_node.pdb"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/bumperbot_utils/path_plotter_node"
+  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/lib/bumperbot_utils/path_plotter_node.pdb"
   "CMakeFiles/path_plotter_node.dir/nodes/path_plotter_node.cpp.o"
 )
 

@@ -7,10 +7,8 @@
 # new environment variables
 
 # modified environment variables
-export CMAKE_PREFIX_PATH="/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel:$CMAKE_PREFIX_PATH"
-export LD_LIBRARY_PATH="/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib:$LD_LIBRARY_PATH"
-export PKG_CONFIG_PATH="/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/pkgconfig:$PKG_CONFIG_PATH"
-export PWD='/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/build'
-export PYTHONPATH="/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/lib/python3/dist-packages:$PYTHONPATH"
-export ROSLISP_PACKAGE_DIRECTORIES='/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/share/common-lisp'
-export ROS_PACKAGE_PATH="/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src:$ROS_PACKAGE_PATH"
+export CMAKE_PREFIX_PATH="/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel:$CMAKE_PREFIX_PATH"
+export LD_LIBRARY_PATH='/opt/ros/noetic/share/euslisp/jskeus/eus//Linux64/lib:/opt/ros/noetic/lib:/opt/ros/noetic/lib/x86_64-linux-gnu:/opt/ros/noetic/share/euslisp/jskeus/eus//Linux64/lib'
+export PATH='/opt/ros/noetic/share/euslisp/jskeus/eus//Linux64/bin:/opt/ros/noetic/bin:/opt/ros/noetic/share/euslisp/jskeus/eus//Linux64/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'
+export PWD='/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/build'
+export ROS_PACKAGE_PATH='/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src:/opt/ros/noetic/share'

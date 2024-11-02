@@ -128,8 +128,14 @@ class RobotController:
 
     def switch_mode(self, mode):
         """Switch the robot's mode and update the mux topic selection."""
+        # Cancel any active move_base goals to avoid conflicts
+        rospy.loginfo("Cancelling active goals before switching mode.")
+        self.move_base_client.cancel_all_goals() 
+
+        # Set new mode
         self.mode = mode
         
+        # Determining topic based on mode and start the appropriate mode function
         if mode == RobotMode.IDLE:
             topic_name = '' 
         elif mode == RobotMode.COVERAGE:

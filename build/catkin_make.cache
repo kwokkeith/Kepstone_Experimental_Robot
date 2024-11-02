@@ -1,2 +1,2 @@
 bumperbot_controller:bumperbot_description:bumperbot_detection:bumperbot_examples:bumperbot_localization:bumperbot_utils:litter_destruction:navigation
--DCATKIN_DEVEL_PREFIX=/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel -DCMAKE_INSTALL_PREFIX=/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/install -G Unix Makefiles
+-DCATKIN_DEVEL_PREFIX=/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel -DCMAKE_INSTALL_PREFIX=/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/install -G Unix Makefiles

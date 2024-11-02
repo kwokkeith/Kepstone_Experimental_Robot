@@ -1,8 +1,8 @@
-prefix=/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel
+prefix=/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel
 
 Name: bumperbot_examples
 Description: Description of bumperbot_examples
 Version: 0.0.0
-Cflags: -I/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/devel/include -I/home/gl/Documents/CAPSTONE/Kepstone_Experimental_Robot/src/bumperbot_examples/include
+Cflags: -I/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/devel/include -I/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/bumperbot_examples/include
 Libs: -L${prefix}/lib 
 Requires: tf2_ros geometry_msgs
