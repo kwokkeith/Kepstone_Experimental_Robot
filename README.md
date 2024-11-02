@@ -1,2 +1,4 @@
-** To Install all dependencies use **
+## To install dependencies
+```
 rosdep install --from-paths src --ignore-src -r -y
+```
