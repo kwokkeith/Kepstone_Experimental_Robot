@@ -136,7 +136,6 @@ class RobotController:
             rospy.loginfo("Switched to IDLE mode.")
             topic_name = '' 
 
-
         elif mode == RobotMode.COVERAGE:
             # First call to set coverage to not complete
             self.coverage_complete = False
@@ -196,7 +195,7 @@ class RobotController:
         else:
             rospy.logwarn("In switch_mode, `mode` argument provided invalid")
             return
-        
+    
         self.mux_select_pub.publish(String(topic_name))
         rospy.loginfo(f"Switched to {mode.name} mode, using next waypoint topic: {topic_name}")
 
