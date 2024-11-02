@@ -8,6 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   actionlib
   geometry_msgs
   nav_msgs
+  navfn
   message_generation
   bumperbot_detection
   visualization_msgs
@@ -58,6 +59,7 @@ catkin_package(
     geometry_msgs 
     bumperbot_detection
     nav_msgs
+    navfn
     visualization_msgs
     message_runtime
     bumperbot_utils

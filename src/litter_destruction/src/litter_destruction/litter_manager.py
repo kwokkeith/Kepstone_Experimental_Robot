@@ -6,6 +6,7 @@ from geometry_msgs.msg import Point, PoseStamped
 from bumperbot_detection.msg import  LitterPoint
 from std_msgs.msg import Header
 from nav_msgs.srv import GetPlan
+from navfn.srv import MakeNavPlan, MakeNavPlanRequest
 from navigation.srv import GetAmclPose
 from bumperbot_detection.srv import DeleteLitterRequest, DeleteLitter, GetLitterList
 from visualization_msgs.msg import Marker
@@ -28,11 +29,13 @@ class LitterManager:
         self.min_local_radius = min_local_radius      # Min radius of local boundary
         self.max_local_radius = max_local_radius      # Max radius of local boundary
         self.local_boundary_radius = 0                # Radius of local boundary
+        self.planner_service = "/planner_only/navfn_planner/make_plan"
+        self.next_litter = None                       # To store the next litter to continuously publish
 
         ## Publisher
         self.global_boundary_marker_pub = rospy.Publisher("global_boundary_marker", Marker, queue_size=10)              # Define publisher for global boundary marker
         self.local_boundary_marker_pub  = rospy.Publisher("local_boundary_marker", Marker, queue_size=10)               # Define publisher for local boundary marker
-        self.next_waypoint_pub          = rospy.Publisher("/litter_manager/next_waypoint", LitterPoint, queue_size=5)   # Define publisher for next waypoint 
+        self.next_waypoint_pub          = rospy.Publisher("/litter_manager/next_waypoint", LitterPoint, queue_size=10)  # Define publisher for next waypoint 
 
         ## Subscribers
         rospy.Subscriber("/litter_memory/new_litter", LitterPoint, self.detection_callback)
@@ -45,15 +48,16 @@ class LitterManager:
         rospy.Service("/litter_manager/delete_litter", RemoveLitter, self.handle_remove_litter)                                     # Define service server to delete litter from litter manager
 
         ## Service Clients
-        rospy.wait_for_service('/move_base/make_plan')
+        rospy.wait_for_service(self.planner_service)
         rospy.wait_for_service('/litter_memory/get_litter_list')
         rospy.wait_for_service('/litter_memory/delete_litter')
-        rospy.wait_for_service('get_amcl_pose')
+        rospy.wait_for_service('/get_amcl_pose')
+        rospy.wait_for_service('/robot_controller/mode_switch')
 
-        self.make_plan_srv       = rospy.ServiceProxy('/move_base/make_plan', GetPlan)
+        self.make_plan_srv       = rospy.ServiceProxy(self.planner_service, MakeNavPlan)                       # Define service client to make plans using planner_only move_base node (not actual move_base)
         self.get_litter_list_srv = rospy.ServiceProxy('/litter_memory/get_litter_list', GetLitterList)         # Define the service client for getting litter list
         self.delete_litter_srv   = rospy.ServiceProxy('/litter_memory/delete_litter', DeleteLitter)            # Define the service client for deleting litter
-        self.get_pose_srv        = rospy.ServiceProxy('get_amcl_pose', GetAmclPose)                            # Define service client for getting amcl pose
+        self.get_pose_srv        = rospy.ServiceProxy('/get_amcl_pose', GetAmclPose)                           # Define service client for getting amcl pose
         self.req_mode            = rospy.ServiceProxy('/robot_controller/mode_switch', ModeSwitch)             # Define service client for changing robot controller to litter mode
 
         threading.Thread(target=self.next_waypoint_publisher, daemon=True).start()    # To continuously publish next waypoint
@@ -110,16 +114,16 @@ class LitterManager:
 
             # Pop the closest litter point from the heap
             try:
-                _, next_litter = self.pop_min_heap()
+                _, _, self.next_litter = self.pop_min_heap()
 
                 # Process next litter
-                self.process_target_litter(next_litter)
+                self.process_target_litter(self.next_litter)
 
                 # Fill in the response LitterPoint
                 litter_msg = LitterPoint()
                 litter_msg.header = Header(stamp=rospy.Time.now(), frame_id="map")
-                litter_msg.point = next_litter.point
-                litter_msg.id = next_litter.id
+                litter_msg.point = self.next_litter.point
+                litter_msg.id = self.next_litter.id
 
                 response.next_litter = litter_msg
                 response.success = True
@@ -127,7 +131,7 @@ class LitterManager:
                 rospy.loginfo(f"Next litter to navigate: ID={litter_msg.id}, Position={litter_msg.point}")
 
                 # Publish the next waypoint
-                response = self.next_waypoint_pub.publish(litter_msg)
+                self.next_waypoint_pub.publish(litter_msg)
             
             except IndexError:
                 # Handle case where pop_min_heap fails
@@ -146,20 +150,17 @@ class LitterManager:
 
     def next_waypoint_publisher(self):
         """Continuously publish the next waypoint from min_heap_litter."""
-        rate = rospy.Rate(1)  # Adjust frequency as needed, e.g., 1 Hz
+        rate = rospy.Rate(10)  # Publish frequency, 10 Hz
 
         while not rospy.is_shutdown():
-            if self.min_heap_litter:  # Check if there are waypoints available
-                with self.litter_mutex:
-                    _, next_litter = self.min_heap_litter[0]  # Peek at the top of the heap
-
+            if self.next_litter:  # Check if there is a next target waypoint
                 # Publish the next waypoint without removing it from the heap
                 litter_msg = LitterPoint()
                 litter_msg.header = Header(stamp=rospy.Time.now(), frame_id="map")
-                litter_msg.point = next_litter.point
-                litter_msg.id = next_litter.id
+                litter_msg.point = self.next_litter.point
+                litter_msg.id = self.next_litter.id
                 self.next_waypoint_pub.publish(litter_msg)
-                rospy.loginfo(f"Publishing next litter waypoint: ID={litter_msg.id}, Position=\n{litter_msg.point}")
+                rospy.loginfo(f"Publishing next litter waypoint: \nID={litter_msg.id}, Position=\n{litter_msg.point}")
             else:
                 rospy.loginfo("No waypoints in min_heap_litter to publish.")
 
@@ -281,6 +282,9 @@ class LitterManager:
                 self.local_boundary_center = None   # Reset the local boundary
                 self.publish_global_boundary_marker()
                 self.publish_local_boundary_marker()
+                
+                # Since there is no more litter then remove it from next waypoint
+                self.next_litter = None
 
 
     def compute_local_boundary_radius(self, litter_position):
@@ -350,16 +354,27 @@ class LitterManager:
         goal.pose.position = litter
         goal.pose.orientation.w = 1.0
 
-        # Make a plan request to move_base/make_plan
+        # Make a plan request to nav planner
         try:
-            rospy.wait_for_service('/move_base/make_plan', timeout=5)  # Wait with a 5-second timeout
-            plan = self.make_plan_srv(start=start, goal=goal, tolerance=0.5).plan.poses
+            rospy.loginfo("Getting distance to litter using ROS Planner")
+            plan_request = MakeNavPlanRequest()
+            plan_request.start = start
+            plan_request.goal = goal
+            # Call the navfn service
+            plan_response = self.make_plan_srv(plan_request)
+
+            # Check if a valid path was returned
+            if not plan_response.path:
+                rospy.logwarn("No path returned by the planner; returning infinite distance.")
+                return float('inf')
+
+            plan = plan_response.path
             distance = self.calculate_path_distance(plan)
-            # rospy.loginfo(f"Distance from \n{start.pose.position} to \n{goal.pose.position}\n = {distance}")
-            rospy.loginfo(f"\n\nset_litter: {self.set_litter}")
+            rospy.loginfo(f"Distance from \n{start.pose.position} to \n{goal.pose.position}\n = {distance}")
+            #rospy.loginfo(f"\n\nset_litter: {self.set_litter}")
             return distance 
         except rospy.ROSException as e:
-            rospy.logwarn("Service /move_base/make_plan is unavailable or timed out.")
+            rospy.logwarn(f"Service {self.planner_service} is unavailable or timed out.")
             return float('inf')
 
 
@@ -389,7 +404,7 @@ class LitterManager:
 
         # Calculate distance from start position
         distance = self.get_distance_to_litter(self.start_pos, litter_point.point)
-        heapq.heappush(self.min_heap_litter, (distance, litter_point))
+        heapq.heappush(self.min_heap_litter, (distance, litter_id, litter_point))
         rospy.loginfo(f"Min Heap: {self.min_heap_litter}")
 
 

@@ -22,6 +22,7 @@
   <build_depend>actionlib_msgs</build_depend>
   <build_depend>visualization_msgs</build_depend>
   <build_depend>bumperbot_utils</build_depend>
+  <build_depend>navfn</build_depend>
 
   <!-- Execution dependencies -->
   <exec_depend>rospy</exec_depend>
@@ -34,6 +35,7 @@
   <exec_depend>nav_msgs</exec_depend>
   <exec_depend>visualization_msgs</exec_depend>
   <exec_depend>bumperbot_utils</exec_depend>
+  <exec_depend>navfn</exec_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
