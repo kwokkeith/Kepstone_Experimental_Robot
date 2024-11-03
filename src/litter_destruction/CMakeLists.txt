@@ -61,19 +61,18 @@ generate_messages(
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
-catkin_package(
-  INCLUDE_DIRS include
-  CATKIN_DEPENDS 
-    roscpp 
-    rospy 
-    actionlib 
-    actionlib_msgs
-    geometry_msgs 
-    bumperbot_detection
-    nav_msgs
-    navigation
-    message_runtime
-)
+	catkin_package(
+	  CATKIN_DEPENDS 
+	    roscpp 
+	    rospy 
+	    actionlib 
+	    actionlib_msgs
+	    geometry_msgs 
+	    bumperbot_detection
+	    nav_msgs
+	    navigation
+	    message_runtime
+	)
 
 ###########
 ## Build ##

@@ -1,0 +1,7 @@
+<launch>
+    <!-- Start rosbridge server for ROS-WebSocket communication -->
+    <node name="rosbridge_websocket" pkg="rosbridge_server" type="rosbridge_websocket" output="screen"/>
+
+    <!-- Start the web server using exec tag with nohup, escaping & as &amp; -->
+    <node name="http_server" pkg="bumperbot_graphical_interface" type="start_web_server.sh"/>
+</launch>

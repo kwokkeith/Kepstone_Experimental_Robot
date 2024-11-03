@@ -1,10 +1,8 @@
-<?xml version="1.0" ?>
-
 <launch>
-  <!-- Arguments -->
-  <arg name="waypoints_text_file" default="$(find navigation)/waypoints/waypoints.txt"/>  
+    <!-- Start rosbridge server for ROS-WebSocket communication -->
+    <node name="rosbridge_websocket" pkg="rosbridge_server" type="rosbridge_websocket" output="screen"/>
 
-  <!-- Send waypoint to navstack node -->
-  <node name="send_waypoints_node" pkg="navigation" type="send_waypoints_to_navstack_node" args="$(arg waypoints_text_file)"/>
-
+    <!-- Start a simple HTTP server for web files -->
+    <node pkg="roslaunch" type="node" name="web_server" output="screen"
+          args="$(find bumperbot_graphical_interface)/start_web_server.sh"/>
 </launch>

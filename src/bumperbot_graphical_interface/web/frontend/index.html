@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>testui</title>
+    <script src="https://cdn.jsdelivr.net/npm/roslib@1/build/roslib.js"></script>
+    <script src="https://docs.opencv.org/3.4.0/opencv.js"></script>
+</head>
+<body>
+    <h2>Display image with OpenCV.js</h2>
+    <canvas id="canvas" width="300" height="300"></canvas>
+    <button onclick="submitPoints()">Submit Points</button>
+    <script src="opencv_script.js"> </script>
+
+    <h1>navlistener</h1>
+    <script src="rosbridge_script.js"></script>
+    <button onclick="startNode()">Start node</button>
+    <button onclick="stopNode()">Stop node</button>
+
+
+</body>
+</html>
