@@ -14,7 +14,9 @@
                 "${workspaceFolder}/src/bumperbot_detection/include",
                 "${workspaceFolder}/devel/include",
                 "${workspaceFolder}/devel/include",
-                "${workspaceFolder}/devel/include"
+                "${workspaceFolder}/devel/include",
+                "${workspaceFolder}/devel/include",
+                "${workspaceFolder}/src/litter_destruction/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

@@ -15,12 +15,18 @@
   <build_depend>roscpp</build_depend>
   <build_depend>rospy</build_depend>
   <build_depend>std_msgs</build_depend>
+  <build_depend>actionlib</build_depend>
+  <build_depend>move_base</build_depend>
   <build_depend>geometry_msgs</build_depend>
   <build_depend>eigen</build_depend>
   <build_depend>sensor_msgs</build_depend>
   <build_depend>nav_msgs</build_depend>
+  <build_depend>message_generation</build_depend>
   <build_depend>tf2</build_depend>
   <build_depend>tf2_ros</build_depend>
+  <build_depend>navigation</build_depend>
+  <build_depend>litter_destruction</build_depend>
+ 
   <build_export_depend>roscpp</build_export_depend>
   <build_export_depend>rospy</build_export_depend>
   <build_export_depend>eigen</build_export_depend>
@@ -28,14 +34,22 @@
   <build_export_depend>nav_msgs</build_export_depend>
   <build_export_depend>tf2</build_export_depend>
   <build_export_depend>tf2_ros</build_export_depend>
+  <build_export_depend>navigation</build_export_depend>
+  <build_export_depend>litter_destruction</build_export_depend>
+ 
   <exec_depend>roscpp</exec_depend>
   <exec_depend>rospy</exec_depend>
   <exec_depend>std_msgs</exec_depend>
+  <exec_depend>actionlib</exec_depend>
+  <exec_depend>move_base</exec_depend>
   <exec_depend>geometry_msgs</exec_depend>
   <exec_depend>eigen</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
   <exec_depend>nav_msgs</exec_depend>
+  <exec_depend>message_runtime</exec_depend>
   <exec_depend>tf2</exec_depend>
   <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>navigation</exec_depend>
+  <exec_depend>litter_destruction</exec_depend>
 
 </package>

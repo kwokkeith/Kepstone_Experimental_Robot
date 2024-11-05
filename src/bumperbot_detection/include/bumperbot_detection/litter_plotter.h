@@ -20,12 +20,14 @@ public:
 
 private:
     ros::NodeHandle nh_;  
-    ros::Subscriber litter_sub_;  // Subscriber to the LitterList topic
+    ros::Subscriber litter_sub_;               // Subscriber to the LitterList topic
     
     // Variables to store marker configuration
     std::string marker_namespace_;
     geometry_msgs::Vector3 marker_scale_;
     std_msgs::ColorRGBA marker_color_;
+
+    std::set<int> previous_litter_ids_;       // Store previously rendered IDs
 };
 
 #endif  

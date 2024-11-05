@@ -12,6 +12,8 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   nav_msgs
   sensor_msgs
+  message_filters
+  geometry_msgs
 )
 
 catkin_package(
@@ -41,3 +43,7 @@ target_link_libraries(kalman_filter_node ${catkin_LIBRARIES} kalman_filter)
 
 add_executable(imu_republisher_node nodes/imu_republisher_node.cpp)
 target_link_libraries(imu_republisher_node ${catkin_LIBRARIES})
+
+add_executable(lidar_fusion src/lidar_fusion.cpp)
+add_dependencies(lidar_fusion ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(lidar_fusion ${catkin_LIBRARIES} ${Eigen_LIBRARIES})

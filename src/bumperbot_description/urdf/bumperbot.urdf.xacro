@@ -182,8 +182,9 @@
 
     
     <!-- Lidar -->
-    <xacro:include filename="lidar.xacro" />
-
+    <xacro:include filename="3d_velodyne_lidar.xacro" />
+    <xacro:include filename="2d_lidar.xacro" />
+ 
     <!-- Depth Camera (RGBD) -->
     <xacro:include filename="depth_camera.xacro" />
 

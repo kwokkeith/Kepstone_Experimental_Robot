@@ -88,21 +88,11 @@ class BallDetector:
             
             # Point coordinates are in robot coordinate system (point) as opposed to the 
             # optical coordinate system of camera (Xtarget, Ytarget, Ztarget)
-            point_msg.point.y = Xtarget
+            point_msg.point.y = -Xtarget
             point_msg.point.z = Ytarget
             point_msg.point.x = Ztarget
 
             self.coord_publisher.publish(point_msg)
-
-            # Display coordinates on image
-            # target_coordinates = f"({Decimal(point_msg.point.x).quantize(Decimal('0'))}, " \
-            #                      f"{Decimal(point_msg.point.y).quantize(Decimal('0'))}, " \
-            #                      f"{Decimal(point_msg.point.z).quantize(Decimal('0'))})"
-            # cv2.putText(image, target_coordinates, (x - 160, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-            # temp_coordinates = f"({Decimal(Xtemp).quantize(Decimal('0'))}, " \
-            #                      f"{Decimal(Ytemp).quantize(Decimal('0'))}, " \
-            #                      f"{Decimal(dist).quantize(Decimal('0'))})"
-            # cv2.putText(image, temp_coordinates, (x - 100, y + 100), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 0), 2)
 
             # Display coordinates on image with up to 3 decimal places
             target_coordinates = f"({point_msg.point.x:.3f}, {point_msg.point.y:.3f}, {point_msg.point.z:.3f})"
