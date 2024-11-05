@@ -4,4 +4,9 @@
 
     <!-- Start the web server using exec tag with nohup, escaping & as &amp; -->
     <node name="http_server" pkg="bumperbot_graphical_interface" type="start_web_server.sh"/>
+
+    <!-- Parameters and nodes from coverage_planner.launch -->
+    <param name="parameter_file_path" value="$(find coverage_planner)/config/params.config"/>
+
+    <node name="coverage_planner_node" pkg="coverage_planner" type="coverage_planner_node" output="screen"/>
 </launch>

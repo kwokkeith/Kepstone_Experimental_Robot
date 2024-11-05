@@ -14,6 +14,7 @@
 #include <ros/package.h>
 #include <unistd.h>
 #include <limits.h>
+#include "std_msgs/String.h"
 
 std::string PARAMETER_FILE_PATH;
 std::string WAYPOINT_COORDINATE_FILE_PATH;
@@ -108,23 +109,24 @@ bool LoadParameters() {
   return true;
 }
 
-void mouseCallback(int event, int x, int y, int flags, void* param) {
-    if (event == cv::EVENT_LBUTTONDOWN && selected_points.size() < 4) {
+void roiPointsCallback(const std_msgs::String::ConstPtr& msg) {
+    std::istringstream iss(msg->data);
+    selected_points.clear();
+    int x, y;
+    while (iss >> x >> y) {
         selected_points.push_back(cv::Point(x, y));
-        std::cout << "Point" << selected_points.size() << ": " << x << "," << y << std::endl;
-        cv::circle(img_copy, cv::Point(x, y), 2, cv::Scalar(0, 0, 255), -1);
-        cv::imshow("Select 4 points", img_copy);
-        if (selected_points.size() == 4) {
-          std::ofstream outFile(REGION_OF_INTEREST_FILE_PATH);
-          if (outFile.is_open()){
+    }
+
+    if (selected_points.size() == 4) {
+        std::ofstream outFile(REGION_OF_INTEREST_FILE_PATH);
+        if (outFile.is_open()) {
             for (const auto& point : selected_points) {
-              //outFile << point.x << " " << point.y << "\n";
+                outFile << point.x << " " << point.y << "\n";
             }
             outFile.close();
-            std::cout << "ROI points are saved to roi_points.txt" <<std::endl;
-          } else {
-            std::cerr << "unable to open file" << std::endl;
-          }
+            std::cout << "ROI points are saved to roi_points.txt" << std::endl;
+        } else {
+            std::cerr << "Unable to open file" << std::endl;
         }
     }
 }
@@ -151,7 +153,7 @@ std::pair<cv::Mat, cv::Point> cropAndTransform(const cv::Mat& img) {
 
 
 int main(int argc, char** argv) {
-  ros::init(argc,argv,"coverage_planner_node");
+  ros::init(argc, argv, "coverage_planner_node");
   ros::NodeHandle nh;
   ROS_INFO("Coverage Planner Node Started");
 
@@ -165,26 +167,23 @@ int main(int argc, char** argv) {
 
   // Load parameters from config file
   if (!LoadParameters()) {
-    ROS_INFO("Param error");
+    ROS_INFO("ERROR LOADING PARAMETERS");
     return EXIT_FAILURE;
   }
 
-  ROS_INFO("cv step");
+  ros::Subscriber sub = nh.subscribe("/roi_points",1000, roiPointsCallback);
 
   // Read image to be processed
   cv::Mat original_img = cv::imread(image_path);
   //cv::imshow("Original Image", original_img);
   cv::Mat img = cv::imread(image_path);
-    img_copy = img.clone();
-  ROS_INFO("cv error");
+  img_copy = img.clone();
 
   if(crop_region){
-    cv::imshow("Select 4 points", img_copy);
+    while (selected_points.size() < 4 && ros::ok()) {
+      ros::spinOnce();
+    }
 
-    //Set mouse callback
-    cv::setMouseCallback("Select 4 points", mouseCallback, nullptr);
-    cv::waitKey(0);
-    //cv::destroyWindow("Select 4 points");
     auto crop = cropAndTransform(img);
     cv::Mat result = crop.first;
     top_left=crop.second; //redundant?
@@ -194,6 +193,9 @@ int main(int argc, char** argv) {
         cv::destroyWindow("Cropped Image");
         img=result;
     }
+    start_x = top_left.x;
+    start_y = top_left.y;
+    ROS_INFO("Using top-left corner as starting point: (%d, %d)", start_x, start_y);
   }
 
   std::cout << "Read map" << std::endl;

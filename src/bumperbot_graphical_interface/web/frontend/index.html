@@ -3,21 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>testui</title>
+    <title>Robot Interface</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/roslib@1/build/roslib.js"></script>
     <script src="https://docs.opencv.org/3.4.0/opencv.js"></script>
 </head>
 <body>
-    <h2>Display image with OpenCV.js</h2>
-    <canvas id="canvas" width="300" height="300"></canvas>
-    <button onclick="submitPoints()">Submit Points</button>
-    <script src="opencv_script.js"> </script>
+    <!-- Fixed Menu Button (Top Left) -->
+    <div class="menu-button" id="menu-button">
+        <i class="fa-solid fa-bars" id="menu-icon" onclick="toggleMenu()"></i>
+    </div>
 
-    <h1>navlistener</h1>
-    <script src="rosbridge_script.js"></script>
-    <button onclick="startNode()">Start node</button>
-    <button onclick="stopNode()">Stop node</button>
+    <!-- Fixed Fullscreen Button (Top Right) -->
+    <div class="fullscreen-button">
+        <i class="fa-solid fa-minimize" id="fullscreen-icon" onclick="toggleFullscreen()"></i>
+    </div>
 
+    <!-- Login Page -->
+    <div id="login-page" class="page">
+        <h2>Login</h2>
+        <form onsubmit="return checkLogin()">
+            <input type="text" placeholder="Username" id="username" value="admin" required>
+            <input type="password" placeholder="Password" id="password" value="password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p id="login-error" style="color: red; display: none;">Incorrect login, please try again.</p>
+    </div>
 
+    <!-- Main Page -->
+    <div id="main-page" class="page" style="display: none;">
+        <main>
+            <h2>Robot Status</h2>
+            <div class="status">
+                <p>Battery: <span id="battery-status">100%</span></p>
+                <p>Status: <span id="robot-status">Docking Station</span></p>
+                <p>Health: <span id="robot-health">Full Health</span></p>
+            </div>
+        </main>
+    </div>
+
+    <!-- Sliding Menu -->
+    <div id="menu" class="slide-menu">
+        <a href="#" onclick="showPage('main')">Dashboard</a>
+        <a href="#" onclick="showPage('saved-zones')">Saved Zones</a>
+        <a href="#" onclick="showPage('settings')">Settings</a>
+    </div>
+
+    <!-- Saved Zones Page -->
+    <div id="saved-zones-page" class="page" style="display: none;">
+        <h2>Saved Zones</h2>
+        <canvas id="canvas" width="300" height="300"></canvas>
+        <button onclick="submitPoints()">Submit Points</button>
+        <script src="opencv_script.js"> </script>
+        <h2>navlistener</h2>
+        <script src="rosbridge_script.js"></script>
+        <button onclick="startNode()">Start node</button>
+        <button onclick="stopNode()">Stop node</button>
+    </div>
+
+    <!-- Settings Page -->
+    <div id="settings-page" class="page" style="display: none;">
+        <h2>Settings</h2>
+        <button onclick="localizeRobot()">Local Localization</button>
+        <button onclick="adjustBrightness()">Screen Brightness</button>
+    </div>
+
+    <script src="webpage.js"></script>
 </body>
 </html>
