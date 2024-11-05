@@ -9,7 +9,6 @@ project(bumperbot_graphical_interface)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
-  rosbridge_suite
   roscpp
   rospy
   std_msgs
