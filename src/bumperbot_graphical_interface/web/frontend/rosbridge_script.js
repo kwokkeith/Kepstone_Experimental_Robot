@@ -14,31 +14,22 @@ ros.on('close', function() {
     console.log('Connection to websocket server closed.');
 });
 
-// Subscribing to Topic
-var listener = new ROSLIB.Topic({
-    ros : ros,
-    name : '/move_base/result',
-    messageType : 'move_base_msgs/MoveBaseActionResult'
+// Define a ROS service client to start the node
+var startNodeService = new ROSLIB.Service({
+    ros: ros,
+    name: '/start_coverage_planner', // Replace with your actual service name
+    serviceType: 'std_srvs/Trigger' // Replace with the appropriate service type
 });
 
-var isListening = false;
-
 function startNode() {
-    if (!isListening) {
-        listener.subscribe(function(message) {
-            console.log('Received message on ' + listener.name + ': ' + message.status.goal_id.id);
-            //console.log(message); // Log the entire message object
+    // Create a request object
+    var request = new ROSLIB.ServiceRequest({});
 
-        });
-        isListening = true;
-        console.log("Started listening on " + listener.name);
-    }
-}
-
-function stopNode() {
-    if (isListening) {
-        listener.unsubscribe();
-        isListening = false;
-        console.log("Stopped listening on " + listener.name);
-    }
+    // Call the service to start the node
+    startNodeService.callService(request, function(result) {
+        console.log('Service call result:', result);
+        console.log("Started coverage_planner_node");
+    }, function(error) {
+        console.error('Service call failed:', error);
+    });
 }

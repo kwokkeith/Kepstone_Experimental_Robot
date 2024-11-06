@@ -52,14 +52,15 @@
 
     <!-- Saved Zones Page -->
     <div id="saved-zones-page" class="page" style="display: none;">
+        <!--Testing section-->    
+        <h2>Start the Coverage_Planner node first</h2>
+        <script src="rosbridge_script.js"></script>
+        <button onclick="startNode()">start coverage_planner_node</button>
+        <!--Section to interact with Coverage_planner-->
         <h2>Saved Zones</h2>
         <canvas id="canvas" width="300" height="300"></canvas>
         <button onclick="submitPoints()">Submit Points</button>
         <script src="opencv_script.js"> </script>
-        <h2>navlistener</h2>
-        <script src="rosbridge_script.js"></script>
-        <button onclick="startNode()">Start node</button>
-        <button onclick="stopNode()">Stop node</button>
     </div>
 
     <!-- Settings Page -->
