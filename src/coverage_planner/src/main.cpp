@@ -39,6 +39,8 @@ uint subdivision_dist;
 std::vector<cv::Point> selected_points;
 cv::Mat img_copy;
 cv::Point top_left;
+std::string mapName;
+bool mapName_received = false;
 
 bool LoadParameters() {
   // Print the current working directory
@@ -134,6 +136,12 @@ void roiPointsCallback(const std_msgs::String::ConstPtr& msg) {
 }
 */
 
+void mapNameCallback(const std_msgs::String::ConstPtr& msg) {
+    mapName = msg->data; //Save map name
+    ROS_INFO("Received map name: %s", msg->data.c_str());
+    mapName_received = true;
+}
+
 void mouseCallback(int event, int x, int y, int flags, void* param) {
   if (event == cv::EVENT_LBUTTONDOWN && selected_points.size() < 4) {
     selected_points.push_back(cv::Point(x, y));
@@ -168,14 +176,13 @@ int main(int argc, char** argv) {
   ros::init(argc, argv, "coverage_planner_node");
   ros::NodeHandle nh;
   ROS_INFO("Coverage Planner Node Started");
-
+  // Get the parameter file path
   nh.getParam("parameter_file_path", PARAMETER_FILE_PATH);
 
   // Resolve file paths relative to the package directory
   std::string package_path = ros::package::getPath("coverage_planner");
-  //WAYPOINT_COORDINATE_FILE_PATH = package_path + "/result/waypoints.txt";
   std::string GUI_package_path = ros::package::getPath("bumperbot_graphical_interface");
-  WAYPOINT_COORDINATE_FILE_PATH = GUI_package_path + "/web/ros-frontend/public/saved_zones/waypoints.txt";
+  
   EXTERNAL_POLYGON_FILE_PATH = package_path + "/result/ext_polygon_coord.txt";
   REGION_OF_INTEREST_FILE_PATH = package_path + "/result/roi_points.txt";
 
@@ -186,7 +193,12 @@ int main(int argc, char** argv) {
   }
 
   //ros::Subscriber sub = nh.subscribe("/roi_points",1000, roiPointsCallback); //only use this if ROI is selected from webapp!!
-
+  ros::Subscriber sub = nh.subscribe("/new_map_name", 1, mapNameCallback);
+  while (ros::ok() && !mapName_received) {
+    ros::spinOnce();
+    ros::Duration(0.1).sleep(); //Sleep for 100 ms
+  };
+  WAYPOINT_COORDINATE_FILE_PATH = GUI_package_path + "/web/ros-frontend/public/temp_zone/waypoints_"+mapName+".txt";
   // Read image to be processed
   cv::Mat original_img = cv::imread(image_path);
   //cv::imshow("Original Image", original_img);
@@ -799,8 +811,8 @@ for (size_t i = 1; i < way_points.size(); ++i) {
     out << p2.x << " " << (2*y_center-p2.y) << std::endl;
   }
   out.close();
-  std::string result_image_path = package_path + "/result/image_result.png";
-  std::string GUI_result_path = GUI_package_path + "/web/ros-frontend/public/saved_zones/image_result.png";
+  //std::string result_image_path = package_path + "/result/image_result.png";
+  std::string GUI_result_path = GUI_package_path + "/web/ros-frontend/public/temp_zone/image_" + mapName + ".png";
   cv::waitKey();
   cv::imwrite(GUI_result_path, original_img);
 #else
@@ -881,6 +893,6 @@ for (size_t i = 1; i < way_points.size(); ++i) {
   cv::waitKey(1000);
 
 #endif
-
+  
   return 0;
 }

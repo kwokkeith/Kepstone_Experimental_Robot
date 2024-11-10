@@ -1,5 +1,5 @@
 // src/App.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './index.css'; // For global styles
 import LoginPage from './components/LoginPage';
 import MainPage from './components/MainPage';

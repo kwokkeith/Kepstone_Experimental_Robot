@@ -51,3 +51,40 @@ export function publishPoint() {
 
   return pointPublisher;
 }
+
+export function publishmapName({ mapName }) {
+  // Initialize ROS connection 
+  var ros = new ROSLIB.Ros({
+    url: 'ws://localhost:9090'
+  });
+  
+  ros.on('connection', function() {
+    console.log('Map name publisher is now connected to websocket server.');
+  });
+  ros.on('error', function(error) {
+    console.error('Error connecting to ROSBridge for the map name publisher:', error);
+  });
+  ros.on('connection', function() {
+    console.log('Map name publisher is disconnected from ROSBridge');
+  });
+
+  const topic = new ROSLIB.Topic({
+    ros: ros,
+    name: '/new_map_name',
+    messageType: 'std_msgs/String'
+  });
+
+  // Create a ROS message
+  const message = new ROSLIB.Message({ data: mapName });
+
+  // Publish the message multiple times
+  function publishMultipleTimes(times) {
+    for (let i = 0; i < times; i++) {
+      setTimeout(() => {
+        topic.publish(message);
+        console.log(`Published message ${i + 1} times`);
+      }, i * 1000); // Delay of 1 second between each publish
+    }
+  }
+  publishMultipleTimes(5);
+}
