@@ -67,6 +67,7 @@ bool LoadParameters() {
 
       // Resolve the image path relative to the current working directory
       std::string package_path = ros::package::getPath("coverage_planner");
+      std::string GUI_package_path = ros::package::getPath("bumperbot_graphical_interface");
       image_path = package_path + "/" + image_path;
       ROS_INFO("Resolved IMAGE_PATH: %s", image_path.c_str());
     } else if (param == "ROBOT_SIZE") {
@@ -109,6 +110,7 @@ bool LoadParameters() {
   return true;
 }
 
+/* Only used if ROI is selected on webapp!!
 void roiPointsCallback(const std_msgs::String::ConstPtr& msg) {
     std::istringstream iss(msg->data);
     selected_points.clear();
@@ -129,6 +131,16 @@ void roiPointsCallback(const std_msgs::String::ConstPtr& msg) {
             std::cerr << "Unable to open file" << std::endl;
         }
     }
+}
+*/
+
+void mouseCallback(int event, int x, int y, int flags, void* param) {
+  if (event == cv::EVENT_LBUTTONDOWN && selected_points.size() < 4) {
+    selected_points.push_back(cv::Point(x, y));
+    std::cout << "Point"<< selected_points.size() << ": " << x << y << std::endl;
+    cv::circle(img_copy, cv::Point(x, y), 2, cv::Scalar(0, 0, 255), -1);
+    cv::imshow("Select 4 points", img_copy);
+  }
 }
 
 // Function to crop and transform the image based on selected points
@@ -161,7 +173,9 @@ int main(int argc, char** argv) {
 
   // Resolve file paths relative to the package directory
   std::string package_path = ros::package::getPath("coverage_planner");
-  WAYPOINT_COORDINATE_FILE_PATH = package_path + "/result/waypoints.txt";
+  //WAYPOINT_COORDINATE_FILE_PATH = package_path + "/result/waypoints.txt";
+  std::string GUI_package_path = ros::package::getPath("bumperbot_graphical_interface");
+  WAYPOINT_COORDINATE_FILE_PATH = GUI_package_path + "/web/ros-frontend/public/saved_zones/waypoints.txt";
   EXTERNAL_POLYGON_FILE_PATH = package_path + "/result/ext_polygon_coord.txt";
   REGION_OF_INTEREST_FILE_PATH = package_path + "/result/roi_points.txt";
 
@@ -171,7 +185,7 @@ int main(int argc, char** argv) {
     return EXIT_FAILURE;
   }
 
-  ros::Subscriber sub = nh.subscribe("/roi_points",1000, roiPointsCallback);
+  //ros::Subscriber sub = nh.subscribe("/roi_points",1000, roiPointsCallback); //only use this if ROI is selected from webapp!!
 
   // Read image to be processed
   cv::Mat original_img = cv::imread(image_path);
@@ -180,17 +194,23 @@ int main(int argc, char** argv) {
   img_copy = img.clone();
 
   if(crop_region){
+    cv::imshow("Select 4 points", img_copy);
+    cv::setMouseCallback("Select 4 points", mouseCallback, nullptr);
+    cv::waitKey(0);
+    cv::destroyWindow("Select 4 points");
+
+    /* Only use this if ROI is selected from webapp!!
     while (selected_points.size() < 4 && ros::ok()) {
       ros::spinOnce();
     }
-
+    */
     auto crop = cropAndTransform(img);
     cv::Mat result = crop.first;
     top_left=crop.second; //redundant?
     if (!result.empty()) {
-        cv::imshow("Cropped Image", result);
-        cv::waitKey(0);
-        cv::destroyWindow("Cropped Image");
+        //cv::imshow("Cropped Image", result);
+        //cv::waitKey(0);
+        //cv::destroyWindow("Cropped Image");
         img=result;
     }
     start_x = top_left.x;
@@ -256,7 +276,7 @@ int main(int argc, char** argv) {
   /*std::cout << "Open Kernel applied" << std::endl;*/
   /**/
   ROS_INFO("Displaying image for preprocessing");
-  cv::imshow("preprocess", img_);
+  //cv::imshow("preprocess", img_);
   cv::waitKey();
   std::string preprocess_img_path = package_path + "/result/processed_img.png";
   cv::imwrite(preprocess_img_path, img_);
@@ -322,6 +342,7 @@ int main(int argc, char** argv) {
 
   cv::imshow("polygons", poly_canvas);
   cv::waitKey();
+  cv::destroyWindow("polygons");
 
   cv::Mat poly_img = cv::Mat(img.rows, img.cols, CV_8UC3);
   poly_img.setTo(255);
@@ -779,8 +800,9 @@ for (size_t i = 1; i < way_points.size(); ++i) {
   }
   out.close();
   std::string result_image_path = package_path + "/result/image_result.png";
+  std::string GUI_result_path = GUI_package_path + "/web/ros-frontend/public/saved_zones/image_result.png";
   cv::waitKey();
-  cv::imwrite(result_image_path, original_img);
+  cv::imwrite(GUI_result_path, original_img);
 #else
 
   cv::Point p1, p2;
