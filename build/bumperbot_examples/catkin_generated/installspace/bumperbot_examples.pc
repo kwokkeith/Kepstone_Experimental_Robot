@@ -1,8 +1,0 @@
-prefix=/home/keith/Documents/bumperbot_robot/install
-
-Name: bumperbot_examples
-Description: Description of bumperbot_examples
-Version: 0.0.0
-Cflags: -I${prefix}/include
-Libs: -L${prefix}/lib 
-Requires: turtlesim tf2_ros geometry_msgs
