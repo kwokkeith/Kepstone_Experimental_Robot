@@ -71,6 +71,7 @@ class RobotController:
 
         rospy.loginfo("RobotController initialized and waiting for waypoints.")
 
+
     def handle_initiate_coverage(self, req):
         """Service handler to initiate coverage path"""
         response = InitiateCoveragePathResponse()
@@ -145,6 +146,7 @@ class RobotController:
 
             # Prioritise LITTER_PICKING mode before switching to COVERAGE
             if self.has_litter_to_clear().has_litter:
+                self.move_base_client.cancel_all_goals()
                 self.switch_mode(RobotMode.LITTER_PICKING)
                 return    
             rospy.loginfo("Switched to COVERAGE mode.")
@@ -399,7 +401,6 @@ class RobotController:
                     # Check if we successfully updated to the next waypoint
                     if not response.success:
                         rospy.loginfo("All waypoints cleared for coverage path.")
-                        self.coverage_complete = True # Set flag to indicate coverage completed
                         break  # Exit the loop if all waypoints are cleared
 
                     rospy.loginfo(f"Reached waypoint {waypoint}. Moving to next.")
@@ -410,30 +411,11 @@ class RobotController:
                 rospy.logwarn(f"Timeout or issue while waiting for next coverage waypoint: {e}")
                 break  # Exit if there’s an issue in fetching the next waypoint
 
-        if (self.is_coverage_complete):
-            # Switch to IDLE mode after completing all waypoints
-            rospy.loginfo("Coverage path completed. Switching to IDLE mode.")
-            self.switch_mode(RobotMode.IDLE)
+        # if (self.is_coverage_complete):
+        #     # Switch to IDLE mode after completing all waypoints
+        #     rospy.loginfo("Coverage path completed. Switching to IDLE mode.")
+        #     self.switch_mode(RobotMode.IDLE)
 
-
-    def coverage_waypoint_callback(self, waypoint):
-        """Coverage waypoints callback for coverage mode."""
-        if self.mode == RobotMode.COVERAGE:
-            # success = self.navigate_to_waypoint(waypoint)
-            # if success:
-            #     response = self.update_waypoint_status(data=True)
-            #     if response.success:
-            #         rospy.loginfo(f"Service call successful: {response.message}")
-            pass
-                
-
-    def litter_waypoint_callback(self, waypoint):
-        """Litter waypoints callback for litter picking mode."""
-        if self.mode == RobotMode.LITTER_PICKING:
-            # self.navigate_to_waypoint(waypoint.point)
-            # Handled by topic of next waypoint
-            # TODO: Change /next_waypoint topic to a service instead then this callback would not be needed
-            pass
 
     def is_coverage_complete(self):
         """Checks if a coverage is completed ONLY after it has been initalised"""

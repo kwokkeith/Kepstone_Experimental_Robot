@@ -59,7 +59,7 @@ bool WaypointManager::getNextTargetWaypoint(navigation::GetNextWaypoint::Request
     }
     else {
         res.point = geometry_msgs::Point(); // Empty Point
-        res.success = true;
+        res.success = false;
         ROS_INFO("All waypoints completed.");
     }
     return true;
