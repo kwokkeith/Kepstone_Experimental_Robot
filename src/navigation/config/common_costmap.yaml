@@ -1,0 +1,14 @@
+obstacle_range: 0.05
+raytrace_range: 0.10
+
+# footprint: [[-0.105, -0.11], [-0.105, 0.11], [0.105, 0.11], [0.105, -0.11]]
+robot_radius: 0.15
+
+inflation_radius: 0.2 # 0.3
+cost_scaling_factor: 10.0
+
+map_type: costmap
+observation_sources: scan
+scan: {sensor_frame: lidar_left_link, data_type: LaserScan, topic: /bumperbot/laser/2d_left/scan, marking: true, clearing: true}
+scan: {sensor_frame: lidar_right_link, data_type: LaserScan, topic: /bumperbot/laser/2d_right/scan, marking: true, clearing: true}
+scan: {sensor_frame: velodyne_link, data_type: LaserScan, topic: /bumperbot/laser/3d_front/laser_scan, marking: true, clearing: true, truemax_obstacle_height: 5.0, min_obstacle_height: 0.1}

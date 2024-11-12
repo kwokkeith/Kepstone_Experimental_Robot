@@ -16,6 +16,6 @@
 
     <!-- Call urdf model into the robot using node provided by gazebo -->
     <node pkg="gazebo_ros" type="spawn_model" name="spawn_model"
-            args="-unpause -urdf -model robot -param robot_description"
+            args="-unpause -urdf -model bumperbot -param robot_description"
             output="screen" respawn="false" />
 </launch>

@@ -1,0 +1,12 @@
+# Navigate.action
+
+# Goal definition
+geometry_msgs/Point target  # The target location for navigation
+
+---
+# Result definition
+bool success  # Whether the navigation was successful
+
+---
+# Feedback definition
+string status  # Status updates like "Navigating", "Reached Target", etc.

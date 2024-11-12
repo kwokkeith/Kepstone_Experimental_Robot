@@ -1,0 +1,6 @@
+# Request
+int32 mode
+---
+# Response
+bool success
+string message 

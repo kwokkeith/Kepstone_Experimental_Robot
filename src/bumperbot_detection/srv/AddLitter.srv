@@ -1,0 +1,5 @@
+# AddLitter.srv
+geometry_msgs/PointStamped litter_point  # The point to be added
+---
+bool success          # Whether the litter was successfully added
+string message        

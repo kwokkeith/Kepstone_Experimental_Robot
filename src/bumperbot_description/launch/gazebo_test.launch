@@ -1,0 +1,21 @@
+<launch>
+    <arg name="model" default="$(find bumperbot_description)/urdf/bumperbot.urdf.xacro"/>
+    <arg name="world" default="$(find bumperbot_description)/worlds/test_world2.sdf"/>
+
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)" />
+
+    <!-- call another launch file using include -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="paused"        value="false"/>
+        <arg name="use_sim_time"  value="true"/>
+        <arg name="gui"           value="true"/>
+        <arg name="headless"      value="false"/>
+        <arg name="debug"         value="false"/>
+        <arg name="world_name"    value="$(arg world)"/>
+      </include>
+
+    <!-- Call urdf model into the robot using node provided by gazebo -->
+    <node pkg="gazebo_ros" type="spawn_model" name="spawn_model"
+            args="-unpause -urdf -model robot -param robot_description -x 0 -y 0 -z 0.2"
+            output="screen" respawn="false" />
+</launch>

@@ -1,0 +1,5 @@
+# Request
+string waypoint_file
+---
+# Response
+geometry_msgs/Point[] map_waypoints

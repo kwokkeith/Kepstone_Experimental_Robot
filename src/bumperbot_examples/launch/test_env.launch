@@ -1,0 +1,63 @@
+<!-- This launchfile piggybags other launch files to start a 
+ test environment for our test robot -->
+
+<launch>
+    <!-- @@@@@@@@@@@@ -->
+    <!-- ARGUMENTS -->
+    <!-- @@@@@@@@@@@@ -->
+
+    <!-- args: gazebo_test.launch -->
+    <arg name="model" default="$(find bumperbot_description)/urdf/bumperbot.urdf.xacro"/>
+    <arg name="world" default="$(find bumperbot_description)/worlds/test_world2.sdf"/>
+    <!-- args: controller.launch -->
+    <arg name="wheel_radius" default="0.033"/>
+    <arg name="wheel_separation" default="0.17"/>
+    <arg name="use_python" default="false"/>
+    <arg name="is_simple" default="false"/> 
+    <arg name="wheel_radius_error" default="0.005" />
+    <arg name="wheel_separation_error" default="0.02" />
+    <!-- args: navigation.launch -->
+    <arg name="map_file" default="$(find navigation)/maps/my_world_map2.yaml"/>  
+    <arg name="move_forward_only" default="true"/>
+
+
+    <!-- @@@@@@@@@@@@ -->
+    <!-- LAUNCH FILES -->
+    <!-- @@@@@@@@@@@@ -->
+
+    <!-- Launch Gazebo test world -->
+    <include file="$(find bumperbot_description)/launch/gazebo_test.launch" >
+        <arg name="model"         value="$(arg model)" />
+        <arg name="world"         value="$(arg world)" />
+    </include>
+
+    <!-- Launch Controller for Test Robot -->
+    <include file="$(find bumperbot_controller)/launch/controller.launch" >
+        <arg name="wheel_radius"            value="$(arg wheel_radius)" />
+        <arg name="wheel_separation"        value="$(arg wheel_separation)" />
+        <arg name="use_python"              value="$(arg use_python)" />
+        <arg name="is_simple"               value="$(arg is_simple)" /> 
+        <arg name="wheel_radius_error"      value="$(arg wheel_radius_error)" />
+        <arg name="wheel_separation_error"  value="$(arg wheel_separation_error)" />
+    </include>
+
+    <!-- Launch robot controller -->
+    <node name="robot_controller_node" pkg="bumperbot_controller" type="robot_controller_node.py" output="screen"/>
+
+
+    <!-- Launch navigation (amcl & move base node) -->
+    <include file="$(find navigation)/launch/navigation.launch" >
+        <arg name="map_file"                value="$(arg map_file)" />
+        <arg name="move_forward_only"       value="$(arg move_forward_only)" />
+    </include>
+
+    <!-- Launch Detection related nodes -->
+    <include file="$(find bumperbot_detection)/launch/litter_detection.launch"></include>
+
+    <!-- Launch localization node -->
+    <include file="$(find bumperbot_localization)/launch/local_localization.launch"/>
+    
+    <!-- Launch Litter Manager Node (For litter picking) -->
+    <include file="$(find litter_destruction)/launch/litter_manager.launch"></include>
+
+</launch>

@@ -180,14 +180,25 @@
         <axis xyz="0 0 0" />
     </joint>
 
-    <!-- Insert Can
-    <link name="can_link">
-    <visual>
-        <origin xyz="0.03 0.03 0" rpy="1.57 0 0"/>
-        <geometry>
-            <mesh filename="package://bumperbot_description/meshes/can.STL" />
-        </geometry> 
-    </visual>
+    
+    <!-- Lidar -->
+    <xacro:include filename="3d_velodyne_lidar.xacro" />
+    <xacro:include filename="2d_lidar.xacro" />
+ 
+    <!-- Depth Camera (RGBD) -->
+    <xacro:include filename="depth_camera.xacro" />
+
+
+
+
+    <!-- Insert Can -->
+    <!-- <link name="can_link">
+        <visual>
+            <origin xyz="0.03 0.03 0" rpy="1.57 0 0"/>
+            <geometry>
+                <mesh filename="package://bumperbot_description/meshes/can.STL" />
+            </geometry> 
+        </visual>
     </link>
 
     <joint name="can_joint" type="fixed">

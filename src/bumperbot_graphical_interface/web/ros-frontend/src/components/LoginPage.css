@@ -1,0 +1,84 @@
+/* Define spacing variables */
+:root {
+  --spacing-small: 0.5rem;
+  --spacing-medium: 1rem;
+  --spacing-large: 1.5rem;
+  --spacing-extra-large: 2.2rem;
+  --border-radius: 0.3rem;
+  --font-size-small: 1.4rem;
+  --font-size-medium: 1.6rem;
+  --font-size-large: 2rem;
+  --font-size-xlarge: 2.3rem;
+}
+
+#login-page {
+  width: 40vw; /* Reduce width from 60vw to 40vw for a smaller box */
+  max-width: 1000px; /* Optional: Set a max width to keep it constrained on larger screens */
+  height: auto; /* Set height to auto to fit content, removing fixed height */
+  padding: var(--spacing-medium); /* Keep the padding for spacing around content */
+  display: flex; /* Flex layout to stack elements vertically */
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center align items horizontally */
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow around the container */
+}
+
+
+#login-page h2 {
+  font-size: var(--font-size-xlarge); /* 2.3rem for the heading font size */
+  margin-bottom: var(--spacing-large); /* Space below the heading */
+}
+
+/* Input Group Styling */
+.input-group {
+  width: 100%; /* Full width of the parent container */
+  display: flex; /* Flex layout for label and input */
+  flex-direction: column; /* Stack label above input */
+  margin-bottom: var(--spacing-extra-large); /* Extra-large space after each input group */
+}
+
+.input-group label {
+  font-size: var(--font-size-medium); /* Medium font size for labels */
+  margin-bottom: var(--spacing-small); /* Small space below the label */
+  color: #333; /* Dark color for label text */
+}
+
+#login-page input[type="text"],
+#login-page input[type="password"] {
+  width: 100%; /* Full width of parent container */
+  padding: var(--spacing-large); /* Large inner padding for input */
+  font-size: var(--font-size-small); /* Small font size for text inputs */
+  border-radius: var(--border-radius); /* Rounded corners for the input box */
+  border: 2px solid #ccc; /* Light gray border around input */
+}
+
+/* Button Container for Centering the Button */
+.button-container {
+  width: 100%; /* Set width to 60% of the #login-page container */
+  display: flex;
+  justify-content: center; /* Center the button within this container */
+  margin-top: var(--spacing-large); /* Space above the button container */
+}
+
+/* Centered Button Styling */
+#login-page button {
+  width: 60%; /* Full width of the button-container */
+  padding: var(--spacing-large); /* Large padding inside button */
+  font-size: var(--font-size-large); /* Large font size for button text */
+  background-color: #0073e6; /* Primary blue color for button */
+  color: white; /* White text for contrast */
+  border-radius: var(--border-radius); /* Rounded corners to match input fields */
+  cursor: pointer; /* Pointer cursor on hover */
+  border: none; /* Remove any default border */
+}
+
+#login-page button:hover {
+  background-color: #0358ac; /* Darker blue on hover */
+}
+
+/* Error Message Styling */
+#login-error {
+  color: red; /* Red color to indicate error */
+  margin-top: var(--spacing-small); /* Space above error message */
+  font-size: var(--font-size-medium); /* Medium font size for error message */
+  display: block; /* Ensures error message displays as a block element */
+}

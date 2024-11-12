@@ -1,0 +1,6 @@
+# Request
+string waypoints_file
+---
+# Response
+bool success
+string message

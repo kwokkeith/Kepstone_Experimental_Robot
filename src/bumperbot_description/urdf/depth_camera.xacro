@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+
+<robot name="bumperbot" xmlns:xacro="http://ros.org/wiki/xacro">
+    <joint name="camera_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="dpcamera_link"/>
+        <origin xyz="0.072 0.0 0.065" rpy="0.0 0.2618 0.0"/>
+    </joint>
+
+    <link name="dpcamera_link">
+        <visual>
+            <geometry>
+                <box size="0.010 0.03 0.03"/>
+            </geometry>    
+            <material name="red"/>
+        </visual>
+    </link>
+
+    <joint name="camera_optical_joint" type="fixed">
+        <parent link="dpcamera_link"/>
+        <child link="dpcamera_link_optical"/>
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 ${-pi/2} 0.0"/>
+    </joint>
+
+    <link name="dpcamera_link_optical" />
+
+    <!-- Gazebo: dpcamera_link -->
+    <gazebo reference="dpcamera_link">
+        <material>Gazebo/Red</material>
+
+        <sensor name="camera" type="depth">
+            <pose> 0 0 0 0 0 0 </pose>
+            <visualize>true</visualize>
+            <update_rate>10</update_rate>
+            <camera>
+                <horizontal_fov>1.089</horizontal_fov>
+                <vertical_fov>1.089</vertical_fov>
+                <image>
+                    <format>B8G8R8</format>
+                    <width>640</width>
+                    <height>480</height>
+                </image>
+                <clip>
+                    <near>0.05</near>
+                    <far>8.0</far>
+                </clip>
+            </camera>
+            <plugin name="camera_plugin" filename="libgazebo_ros_openni_kinect.so">
+                <baseline>0.2</baseline>
+                <alwaysOn>true</alwaysOn>
+                <!-- Keep this zero, update_rate in the parent <sensor> tag
+                    will control the frame rate. -->
+                <updateRate>0.0</updateRate>
+                <cameraName>camera_ir</cameraName>
+                <imageTopicName>/camera/color/image_raw</imageTopicName>
+                <cameraInfoTopicName>/camera/color/camera_info</cameraInfoTopicName>
+                <depthImageTopicName>/camera/depth/image_raw</depthImageTopicName>
+                <depthImageCameraInfoTopicName>/camera/depth/camera_info</depthImageCameraInfoTopicName>
+                <pointCloudTopicName>/camera/depth/points</pointCloudTopicName>
+                <frameName>dpcamera_link</frameName>
+                <pointCloudCutoff>0.05</pointCloudCutoff>
+                <pointCloudCutoffMax>3.0</pointCloudCutoffMax>
+                <distortionK1>0</distortionK1>
+                <distortionK2>0</distortionK2>
+                <distortionK3>0</distortionK3>
+                <distortionT1>0</distortionT1>
+                <distortionT2>0</distortionT2>
+                <CxPrime>0</CxPrime>
+                <Cx>0</Cx>
+                <Cy>0</Cy>
+                <focalLength>0</focalLength>
+                <hackBaseline>0</hackBaseline>
+            </plugin>
+
+            <!-- <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+                <frame_name>camera_link_optical</frame_name>
+                <min_depth>0.1</min_depth>
+                <max_depth>100.0</max_depth>
+            </plugin> -->
+        </sensor>
+    </gazebo>
+</robot>

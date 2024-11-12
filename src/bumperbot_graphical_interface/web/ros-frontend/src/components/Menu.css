@@ -1,0 +1,79 @@
+/* src/components/Menu.css */
+
+.slide-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 15rem; /* Width of the slide-out menu */
+  height: 100vh;
+  background: #333;
+  color: #fff;
+  padding: 2rem;
+  transform: translateX(-100%); /* Hidden by default */
+  transition: transform 0.3s ease;
+  z-index: 1000;
+}
+
+.slide-menu.active {
+  transform: translateX(0); /* Slide in when active */
+}
+
+.slide-menu a {
+  color: #fff;
+  font-size: 1.3rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  text-decoration: none;
+  display: block;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.slide-menu a:hover {
+  color: #020316;
+  background: #265ce6;
+}
+
+.sub-menu {
+  padding-left: 1rem;
+  margin-top: 0.5rem;
+}
+
+.sub-menu a {
+  font-size: 1.1rem;
+  color: #aaa;
+}
+
+.sub-menu a:hover {
+  color: #fff;
+}
+
+.menu-toggle-btn {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  font-size: 1.5rem;
+  background: #0073e6;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  z-index: 1100;
+  transition: left 0.3s ease;
+}
+
+/* Align the menu toggle button to exactly match the slide-out menu width */
+.slide-menu.active ~ .menu-toggle-btn {
+  left: 20rem; /* Match the .slide-menu width */
+}
+
+.menu-toggle-btn:hover {
+  background-color: #005bb5;
+}
+
+/* Style for the "+" icon next to "Create Map" */
+.plus-icon {
+  font-size: 1.3rem;
+  color: #00e6db; /* Bright blue for contrast */
+  margin-right: 0.5rem;
+}

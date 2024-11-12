@@ -1,0 +1,51 @@
+/* src/components/CreateMapPage.css */
+
+.create-map-page {
+  text-align: center;
+  padding: 2rem;
+}
+
+.create-map-page h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.map-container {
+  position: relative;
+  display: inline-block;
+  margin: 1rem 0;
+}
+
+.create-map-image {
+  width: 100%;
+  max-width: 600px;
+  cursor: crosshair;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.map-point {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.preview-button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #0073e6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.preview-button:hover {
+  background-color: #005bb5;
+}
