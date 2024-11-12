@@ -233,7 +233,6 @@ class LitterManager:
         self.check_and_clear_boundary()
 
 
-
     def get_known_litter(self):
         """Retrieve remembered litter positions from the GetLitterList service."""
         try:

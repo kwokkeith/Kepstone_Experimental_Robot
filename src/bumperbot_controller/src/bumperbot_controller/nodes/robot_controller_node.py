@@ -276,7 +276,9 @@ class RobotController:
 
         # Log and send goal to return to global boundary center
         rospy.loginfo("Navigating back to last known location of global boundary center for coverage mode.")
-        self.navigate_to_waypoint(self.get_global_boundary_center().center)
+        response = self.get_global_boundary_center()
+        if response.valid:
+            self.navigate_to_waypoint(response.center)
         
         # Check if the robot has reached the global boundary center, then resume coverage waypoints
         if self.move_base_client.wait_for_result():
@@ -410,11 +412,11 @@ class RobotController:
             except rospy.ROSException as e:
                 rospy.logwarn(f"Timeout or issue while waiting for next coverage waypoint: {e}")
                 break  # Exit if there’s an issue in fetching the next waypoint
-
-        # if (self.is_coverage_complete):
-        #     # Switch to IDLE mode after completing all waypoints
-        #     rospy.loginfo("Coverage path completed. Switching to IDLE mode.")
-        #     self.switch_mode(RobotMode.IDLE)
+        
+        if self.is_coverage_complete:
+            # Switch to IDLE mode after completing all waypoints
+            rospy.loginfo("Coverage path completed. Switching to IDLE mode.")
+            self.switch_mode(RobotMode.IDLE)
 
 
     def is_coverage_complete(self):
