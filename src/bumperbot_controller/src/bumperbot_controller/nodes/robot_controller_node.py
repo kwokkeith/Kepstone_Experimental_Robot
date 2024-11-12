@@ -306,7 +306,7 @@ class RobotController:
             # Get the next litter waypoint
             try:
                 rospy.loginfo(f"Waiting for a litter point from '{self.litter_picking_waypoint_topic}'")
-                litter_point = rospy.wait_for_message(self.litter_picking_waypoint_topic, LitterPoint, timeout=10)
+                litter_point = rospy.wait_for_message(self.litter_picking_waypoint_topic, LitterPoint, timeout=15)
                 rospy.loginfo(f"Robot controller received litter point\n{litter_point.point}")
             except rospy.ROSException as e:
                 rospy.logwarn(f"Failed to get litter waypoint from topic: {e}")
@@ -422,7 +422,8 @@ class RobotController:
     def litter_waypoint_callback(self, waypoint):
         """Litter waypoints callback for litter picking mode."""
         if self.mode == RobotMode.LITTER_PICKING:
-            self.navigate_to_waypoint(waypoint.point)
+            # self.navigate_to_waypoint(waypoint.point)
+            pass
 
     def is_coverage_complete(self):
         """Checks if a coverage is completed ONLY after it has been initalised"""

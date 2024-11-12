@@ -23,7 +23,7 @@ DWAPlannerROS:
   min_rotational_vel: 0.4  # Minimum rotational velocity for smoother rotations
 
 # Goal Tolerance Parametes
-  xy_goal_tolerance: 0.1
+  xy_goal_tolerance: 0.2
   yaw_goal_tolerance: 3.14
   latch_xy_goal_tolerance: false
 
