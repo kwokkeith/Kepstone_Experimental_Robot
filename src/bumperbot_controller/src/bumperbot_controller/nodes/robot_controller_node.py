@@ -7,10 +7,12 @@ from enum import Enum
 from bumperbot_detection.msg import LitterPoint 
 from std_srvs.srv import SetBool
 from navigation.srv import InitiateCoveragePath, InitiateCoveragePathRequest, InitiateCoveragePathResponse
+from navigation.srv import GetNextWaypoint, GetNextWaypointResponse
 from litter_destruction.srv import GlobalBoundaryCenter
 from litter_destruction.srv import GetNextLitter
 from litter_destruction.srv import RemoveLitter, RemoveLitterRequest 
 from litter_destruction.srv import HasLitterToClear
+from litter_destruction.srv import GetNextTargetLitter, GetNextTargetLitterResponse
 from bumperbot_controller.srv import ModeSwitch, ModeSwitchResponse
 from bumperbot_controller.srv import GetCurrentMode, GetCurrentModeResponse
 
@@ -24,8 +26,8 @@ class RobotMode(Enum):
 
 class RobotController:
     def __init__(self):
-        self.litter_picking_waypoint_topic = '/litter_manager/next_waypoint'
-        self.coverage_path_waypoint_topic  = '/coverage_path/next_waypoint'
+        self.litter_picking_waypoint_service = '/litter_manager/next_waypoint'
+        self.coverage_path_waypoint_service  = '/coverage_path/next_waypoint'
 
         ## Configurations
         # ROS action client for move_base
@@ -38,12 +40,10 @@ class RobotController:
 
 
         ## Publishers
-        self.mux_select_pub = rospy.Publisher('/robot_controller/waypoint_mux/select', String, queue_size=10)         # Publisher to control mux input selection
 
         ## Subscribers
         # Subscriptions to the waypoint topics for each mode
-        rospy.Subscriber(self.litter_picking_waypoint_topic, LitterPoint, self.litter_waypoint_callback)
-        rospy.Subscriber(self.coverage_path_waypoint_topic, Point, self.coverage_waypoint_callback)
+
 
         ## Service Clients
         rospy.wait_for_service('/waypoint_manager/get_next_waypoint')
@@ -52,6 +52,8 @@ class RobotController:
         rospy.wait_for_service('/litter_manager/get_next_litter')
         rospy.wait_for_service('/litter_manager/delete_litter')
         rospy.wait_for_service('/litter_manager/has_litter_to_clear')
+        rospy.wait_for_service(self.litter_picking_waypoint_service)
+        rospy.wait_for_service(self.coverage_path_waypoint_service)
 
         self.update_waypoint_status = rospy.ServiceProxy('/waypoint_manager/get_next_waypoint', SetBool)                             # Service to update waypoint_manager (get next waypoint)
         self.initiate_coverage_path = rospy.ServiceProxy('/waypoint_manager/initiate_coverage_path', InitiateCoveragePath)           # Service to initate the coverage path   
@@ -59,6 +61,8 @@ class RobotController:
         self.get_next_litter = rospy.ServiceProxy('/litter_manager/get_next_litter', GetNextLitter)                                  # Service to update to next litter in litter manager 
         self.delete_litter   = rospy.ServiceProxy('/litter_manager/delete_litter', RemoveLitter)                                     # Service to delete litter in litter manager
         self.has_litter_to_clear = rospy.ServiceProxy('/litter_manager/has_litter_to_clear', HasLitterToClear)                       # Service to check if any more litter to clear (litter manager)
+        self.next_target_litter = rospy.ServiceProxy(self.litter_picking_waypoint_service, GetNextTargetLitter)                      # Service to get next target litter
+        self.next_target_coverage_waypoint = rospy.ServiceProxy(self.coverage_path_waypoint_service, GetNextWaypoint)                # Service to get next target waypoint for coverage
 
         ## Service Servers
         rospy.Service('/robot_controller/mode_switch', ModeSwitch, self.handle_mode_switch)                          # Service server to request mode switch
@@ -134,7 +138,6 @@ class RobotController:
         # Determining topic based on mode and start the appropriate mode function
         if mode == RobotMode.IDLE:
             rospy.loginfo("Switched to IDLE mode.")
-            topic_name = '' 
 
         elif mode == RobotMode.COVERAGE:
             # First call to set coverage to not complete
@@ -144,7 +147,6 @@ class RobotController:
             if self.has_litter_to_clear().has_litter:
                 self.switch_mode(RobotMode.LITTER_PICKING)
                 return    
-            topic_name = self.coverage_path_waypoint_topic
             rospy.loginfo("Switched to COVERAGE mode.")
             self.perform_coverage_mode() 
 
@@ -163,7 +165,6 @@ class RobotController:
                 rospy.loginfo("No litter left to collect; switching to COVERAGE mode.")
                 self.switch_mode(RobotMode.COVERAGE)
                 return
-            topic_name = self.litter_picking_waypoint_topic 
             rospy.loginfo("Switched to LITTER_PICKING mode.")
             self.perform_litter_mode()
 
@@ -191,14 +192,10 @@ class RobotController:
 
         elif mode == RobotMode.LITTER_TO_COVERAGE:
             rospy.loginfo("Switched to LITTER_TO_COVERAGE mode")
-            topic_name=''
         else:
             rospy.logwarn("In switch_mode, `mode` argument provided invalid")
             return
     
-        self.mux_select_pub.publish(String(topic_name))
-        rospy.loginfo(f"Switched to {mode.name} mode, using next waypoint topic: {topic_name}")
-
 
     def initiate_coverage_mode(self, waypoints_file_path):
         """Initialize coverage mode by calling the initiate_coverage_path service with the waypoints file path."""
@@ -305,11 +302,15 @@ class RobotController:
         while not rospy.is_shutdown() and self.mode == RobotMode.LITTER_PICKING:
             # Get the next litter waypoint
             try:
-                rospy.loginfo(f"Waiting for a litter point from '{self.litter_picking_waypoint_topic}'")
-                litter_point = rospy.wait_for_message(self.litter_picking_waypoint_topic, LitterPoint, timeout=5)
+                rospy.loginfo(f"Requesting the next litter point from '{self.litter_picking_waypoint_service}' service")
+                litter_response = self.next_target_litter()  # Call the service to get the next litter waypoint
+                if not litter_response.success:
+                    rospy.logwarn("Failed to get litter waypoint from service.")
+                    break
+                litter_point = litter_response.litter
                 rospy.loginfo(f"Robot controller received litter point\n{litter_point.point}")
-            except rospy.ROSException as e:
-                rospy.logwarn(f"Failed to get litter waypoint from topic: {e}")
+            except rospy.ServiceException as e:
+                rospy.logwarn(f"Failed to get litter waypoint from service: {e}")
                 break
 
             rospy.loginfo(f"Navigating to litter:\n{litter_point.point}")
@@ -377,9 +378,17 @@ class RobotController:
         # Wait for a new waypoint on the topic
         while not rospy.is_shutdown() and self.mode == RobotMode.COVERAGE:
             try:
-                # Get the next waypoint from /waypoint_manager/next_waypoint
-                waypoint = rospy.wait_for_message(self.coverage_path_waypoint_topic, Point, timeout=5)
-                
+                # Request the next waypoint from the coverage path service
+                rospy.loginfo(f"Requesting the next coverage waypoint from '{self.coverage_path_waypoint_service}' service")
+                coverage_response = self.next_target_coverage_waypoint()  # Call the service to get the next coverage waypoint  
+                if not coverage_response.success:
+                    rospy.loginfo("All waypoints cleared for coverage path.")
+                    self.coverage_complete = True  # Set flag to indicate coverage completed
+                    break  # Exit the loop if all waypoints are cleared
+
+                waypoint = coverage_response.point  # Retrieve the waypoint from the response
+                rospy.loginfo(f"Received coverage waypoint: {waypoint}")
+
                 # Send the robot to the waypoint
                 if self.mode != RobotMode.COVERAGE:
                     return

@@ -28,6 +28,7 @@ add_service_files(
   GetNextLitter.srv
   RemoveLitter.srv
   HasLitterToClear.srv
+  GetNextTargetLitter.srv
 )
 
 # Uncomment if you have actions defined
