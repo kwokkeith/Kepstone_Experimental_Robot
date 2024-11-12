@@ -11,10 +11,6 @@ const Menu = ({ showPage, isOpen }) => {
     setIsMapsOpen((prev) => !prev);
   };
 
-  useEffect(()=> {
-    const startNodeService = startNode();
-  },[]);
-
   const handleStartNode = (mapName) => {
     const startNodeService = startNode();
     if (startNodeService) {
@@ -22,8 +18,10 @@ const Menu = ({ showPage, isOpen }) => {
       startNodeService.callService(request, function(result) {
         console.log('Service call result:', result);
         publishmapName({ mapName });
+        startNodeService.ros.close(); // Close the ROS connection
       }, function(error) {
         console.error('Service call failed:', error);
+        startNodeService.ros.close(); // Close the ROS connection
       });
     }
   };
@@ -35,32 +33,30 @@ const Menu = ({ showPage, isOpen }) => {
       handleStartNode(mapName);
     }
   };
-
+/*
   useEffect(() => {
     if (!isOpen) {
       setIsMapsOpen(false);
     }
   }, [isOpen]);
-
+*/
  
 
   return (
     <div id="menu" className={`slide-menu ${isOpen ? 'active' : ''}`}>
-      <a href="#" onClick={() => showPage('main')}>Dashboard</a>
-      <a href="#" onClick={handleMapsClick}>
-        Maps
-      </a>
+      <a onClick={() => showPage('main')}>Dashboard</a>
+      <a onClick={handleMapsClick}>Maps</a>
       
       {isMapsOpen && (
         <div className="sub-menu">
-          <a href="#" onClick={() => showPage('my-world')}>My World</a>
-          <a href="#" onClick={handleCreateMapClick}>
+          <a onClick={() => showPage('my-world')}>My World</a>
+          <a onClick={handleCreateMapClick}>
             <span className="plus-icon">+</span> Create Map
           </a>
         </div>
       )}
       
-      <a href="#" onClick={() => showPage('settings')}>Settings</a>
+      <a onClick={() => showPage('settings')}>Settings</a>
     </div>
   );
 };

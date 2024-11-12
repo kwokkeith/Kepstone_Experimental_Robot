@@ -4,19 +4,18 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 30vw;
-  max-width: 15rem;
+  width: 15rem; /* Width of the slide-out menu */
   height: 100vh;
   background: #333;
   color: #fff;
   padding: 2rem;
-  transform: translateX(-100%);
+  transform: translateX(-100%); /* Hidden by default */
   transition: transform 0.3s ease;
   z-index: 1000;
 }
 
 .slide-menu.active {
-  transform: translateX(0);
+  transform: translateX(0); /* Slide in when active */
 }
 
 .slide-menu a {
@@ -63,8 +62,9 @@
   transition: left 0.3s ease;
 }
 
+/* Align the menu toggle button to exactly match the slide-out menu width */
 .slide-menu.active ~ .menu-toggle-btn {
-  left: 15vw;
+  left: 20rem; /* Match the .slide-menu width */
 }
 
 .menu-toggle-btn:hover {
@@ -73,7 +73,7 @@
 
 /* Style for the "+" icon next to "Create Map" */
 .plus-icon {
-  font-size: 1.3rem;  /* Adjust font size as needed */
-  color: #00e6db;     /* Set to a blue color for contrast */
-  margin-right: 0.5rem; /* Space between the icon and the text */
+  font-size: 1.3rem;
+  color: #00e6db; /* Bright blue for contrast */
+  margin-right: 0.5rem;
 }

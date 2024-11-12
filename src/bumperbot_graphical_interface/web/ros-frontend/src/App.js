@@ -10,19 +10,62 @@ import MyWorldPage from './components/MyWorldPage';
 import CreateMapPage from './components/CreateMapPage';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentPage, setCurrentPage] = useState('main');
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [mapName, setMapName] = useState(''); //State to store map name
+  // Gets the session stored value, (in case react re-renders)
+  // ==========================
+  // Persistent storage
+  // ==========================
+  const getInitialLoginState = () => {
+    const storedLoginState = sessionStorage.getItem('isLoggedIn');
+    return storedLoginState ? JSON.parse(storedLoginState) : false;
+  };
+  
+  const getCurrentPageState = () => {
+    const storedCurrentPageState = sessionStorage.getItem('currentPage');
+    return storedCurrentPageState ? JSON.parse(storedCurrentPageState) : 'main';
+  }
 
+  const getMapNameState = () => {
+    const storedMapNameState = sessionStorage.getItem('mapName');
+    return storedMapNameState ? JSON.parse(storedMapNameState) : '';
+  }
+
+  // ==========================
+  // React States
+  // ==========================
+  const [isLoggedIn, setIsLoggedIn] = useState(getInitialLoginState);
+  const [currentPage, setCurrentPage] = useState(getCurrentPageState);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [mapName, setMapName] = useState(getMapNameState); //State to store map name
+
+
+  // ==========================
+  // React useEffect Hooks called whenever a dependent state changes
+  // ==========================
+  useEffect(() => {
+    // Update sessionStorage when isLoggedIn state changes
+    sessionStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+  },[isLoggedIn])
+
+  useEffect(() => {
+    // Update sessionStorage when currentPage state changes
+    sessionStorage.setItem('currentPage', JSON.stringify(currentPage));
+  },[currentPage])
+
+  useEffect(() => {
+    // Update sessionStorage when currentPage state changes
+    sessionStorage.setItem('mapName', JSON.stringify(mapName));
+  },[mapName])
+
+  // ==========================
+  // Callback functions 
+  // ==========================
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
-    setIsMenuOpen(true); // Show menu when login is successful
   };
 
   const showPage = (page, name = '') => {
     setCurrentPage(page);
-    setMapName(name); //Store map name if provided
+    setMapName(name);     //Store map name if provided
     setIsMenuOpen(false); // Close menu after selecting a page
   };
 
@@ -30,6 +73,9 @@ function App() {
     setIsMenuOpen((prev) => !prev);
   };
 
+  // ==========================
+  // React rendered html component
+  // ==========================
   return (
     <div className="App">
       <FullScreenToggle />

@@ -7,4 +7,6 @@
     
     <!-- Start the service server for starting the coverage planner node -->
     <node name="start_coverage_planner_service" pkg="bumperbot_graphical_interface" type="start_coverage_planner_service.py" output="screen"/>
+
+    <!--<include file="$(find coverage_planner)/launch/coverage_planner.launch"></include>-->
 </launch>

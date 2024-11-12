@@ -13,7 +13,7 @@ export function startNode() {
   ros.on('error', function(error) {
     console.error('Error connecting to ROSBridge:', error);
   });
-  ros.on('connection', function() {
+  ros.on('close', function() {
     console.log('Coverage_Planner disconnected from ROSBridge');
   });
 
@@ -39,7 +39,7 @@ export function publishPoint() {
   ros.on('error', function(error) {
     console.error('Error connecting to ROSBridge for the point publisher:', error);
   });
-  ros.on('connection', function() {
+  ros.on('close', function() {
     console.log('Point Publisher is disconnected from ROSBridge');
   });
 
@@ -64,7 +64,7 @@ export function publishmapName({ mapName }) {
   ros.on('error', function(error) {
     console.error('Error connecting to ROSBridge for the map name publisher:', error);
   });
-  ros.on('connection', function() {
+  ros.on('close', function() {
     console.log('Map name publisher is disconnected from ROSBridge');
   });
 
@@ -83,8 +83,11 @@ export function publishmapName({ mapName }) {
       setTimeout(() => {
         topic.publish(message);
         console.log(`Published message ${i + 1} times`);
+        if(i=== times - 1){
+          ros.close();
+        }
       }, i * 1000); // Delay of 1 second between each publish
     }
   }
-  publishMultipleTimes(5);
+  publishMultipleTimes(3);
 }
