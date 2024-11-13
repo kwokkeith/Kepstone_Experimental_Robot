@@ -91,3 +91,28 @@ export function publishmapName({ mapName }) {
   }
   publishMultipleTimes(3);
 }
+
+export function coverage_listener() {
+  // Initialize ROS connection
+  var ros = new ROSLIB.Ros({
+    url: 'ws://localhost:9090'
+  });
+
+  ros.on('connection', function() {
+    console.log('Coverage listener is now connected to websocket server.');
+  });
+  ros.on('error', function(error) {
+    console.error('Error connecting to ROSBridge for the coverage listener:', error);
+  });
+  ros.on('close', function() {
+    console.log('Coverage listener is disconnected from ROSBridge');
+  });
+
+  const listener = new ROSLIB.Topic({
+    ros: ros,
+    name: '/canvas_messenger',
+    messageType: 'std_msgs/String'
+  });
+
+  return listener;
+}

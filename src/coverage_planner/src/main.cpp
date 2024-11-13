@@ -175,6 +175,7 @@ std::pair<cv::Mat, cv::Point> cropAndTransform(const cv::Mat& img) {
 int main(int argc, char** argv) {
   ros::init(argc, argv, "coverage_planner_node");
   ros::NodeHandle nh;
+  ros::Publisher point_pub = nh.advertise<std_msgs::String>("/canvas_messenger", 1000);
   ROS_INFO("Coverage Planner Node Started");
   // Get the parameter file path
   nh.getParam("parameter_file_path", PARAMETER_FILE_PATH);
@@ -199,7 +200,7 @@ int main(int argc, char** argv) {
     ros::Duration(0.1).sleep(); //Sleep for 100 ms
   };
   WAYPOINT_COORDINATE_FILE_PATH = GUI_package_path + "/web/ros-frontend/public/temp_zone/waypoints_"+mapName+".txt";
-  ros::shutdown();
+  
   // Read image to be processed
   cv::Mat original_img = cv::imread(image_path);
   //cv::imshow("Original Image", original_img);
@@ -352,6 +353,28 @@ int main(int argc, char** argv) {
   for (int i = 0; i < polys.size(); i++) {
     cv::drawContours(poly_canvas, std::vector<std::vector<cv::Point>>{polys[i]}, -1, cv::Scalar(255, 0, 255));
   }
+
+  int publish_count = 0;
+
+  while (ros::ok() && publish_count < 2)
+  {
+    std::ostringstream oss;
+    for (const auto& poly : polys) {
+      oss << "[";
+      for (const auto& point : poly) {
+        oss << point.x << " " << point.y << std::endl;
+      }
+      oss << "],";
+    }
+    std_msgs::String msg;
+    msg.data = oss.str();
+    point_pub.publish(msg);
+
+    publish_count++;
+    ros::spinOnce();
+    ros::Duration(1.0).sleep();
+  }
+  
 
   //cv::imshow("polygons", poly_canvas);
   //cv::waitKey();
@@ -737,12 +760,13 @@ int main(int argc, char** argv) {
   }
 
   cv::Point p1, p2;
-  cv::namedWindow("cover0", cv::WINDOW_NORMAL);
-  cv::imshow("cover0", original_img);
+  cv::namedWindow("cover", cv::WINDOW_NORMAL);
+  cv::imshow("cover", original_img);
   cv::waitKey();
 
   // Open waypoint file to write coordinates
   std::ofstream out(WAYPOINT_COORDINATE_FILE_PATH);
+  std::ostringstream out_oss;
 
 for (size_t i = 1; i < way_points.size(); ++i) {
     cv::Point p1 = cv::Point(std::round(CGAL::to_double(way_points[i - 1].x())),
@@ -792,36 +816,60 @@ for (size_t i = 1; i < way_points.size(); ++i) {
       }
     }
 
-    cv::namedWindow("cover01", cv::WINDOW_NORMAL);
-    cv::imshow("cover01", original_img);
+    cv::namedWindow("cover", cv::WINDOW_NORMAL);
+    cv::imshow("cover", original_img);
     //        cv::waitKey(50);
     cv::line(original_img, p1, p2, cv::Scalar(200, 200, 200));
+
+    //Robot Waypoints for Navigation
     cv::Size sz = original_img.size();
     int imgHeight = sz.height;
     int y_center = sz.height / 2;
     // Write waypoints to a file (to be fed as coordinates for robot)
+    out_oss << "[";
     if (i == 1) {
         out << p1.x << " " << (2* y_center - p1.y) << std::endl;
+        out_oss << p1.x << " " << p1.y << std::endl;
+
     }
     for (const auto& point : newPoints) {
         out << point.x << " " << (2*y_center - point.y) << std::endl;
+        out_oss << point.x << " " << point.y << std::endl; 
     }
 
     // For all other points we will just use p2,
     // we do not pass both p1 and p2 as it would duplicate the points
-    out << p2.x << " " << (2*y_center-p2.y) << std::endl; 
+    out << p2.x << " " << (2*y_center-p2.y) << std::endl;
+    out_oss << p2.x << " " << p2.y << std::endl;
+    out_oss << "],";
   }
   out.close();
+
+  std::string waypointData = out_oss.str();
+
+  publish_count = 0;
+
+  while(ros::ok() && publish_count < 2)
+  {
+    std_msgs::String msg;
+    msg.data = waypointData;
+    point_pub.publish(msg);
+
+    publish_count++;
+    ros::spinOnce();
+    ros::Duration(1.0).sleep();
+  }
+
   std::string result_image_path = package_path + "/result/image_result.png";
   std::string GUI_result_path = GUI_package_path + "/web/ros-frontend/public/temp_zone/image_" + mapName + ".png";
   
   cv::imwrite(GUI_result_path, original_img);
   std::cout << "Result image saved to: " << GUI_result_path << std::endl;
-
+  ros::shutdown();
   cv::waitKey();
 #else
   cv::Point p1, p2;
-k  cv::namedWindow("cover", cv::WINDOW_NORMAL);
+  cv::namedWindow("cover", cv::WINDOW_NORMAL);
   cv::imshow("cover", img);
   cv::waitKey();
 
@@ -841,8 +889,8 @@ k  cv::namedWindow("cover", cv::WINDOW_NORMAL);
             cv::Point(CGAL::to_double(cells_sweeps[idx].back().x()),
                       CGAL::to_double(cells_sweeps[idx].back().y())),
             cv::Scalar(255, 0, 0), 1);
-        cv::namedWindow("cover1", cv::WINDOW_NORMAL);
-        cv::imshow("cover1", img);
+        cv::namedWindow("cover", cv::WINDOW_NORMAL);
+        cv::imshow("cover", img);
         //                cv::waitKey(500);
         img = temp_img.clone();
 
