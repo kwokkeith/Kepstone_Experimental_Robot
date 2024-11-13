@@ -4,7 +4,6 @@ import time
 from litter_destruction.litter_manager import LitterManager
 from geometry_msgs.msg import Point
 from navigation.srv import GetAmclPose
-from litter_destruction.msg import NavigateAction, NavigateGoal
 from actionlib import SimpleActionClient
 
 

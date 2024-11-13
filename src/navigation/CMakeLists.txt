@@ -31,6 +31,7 @@ add_service_files(
   ConvertPixelWaypointsToMap.srv
   InitiateCoveragePath.srv
   GetWaypoints.srv
+  GetNextWaypoint.srv
 )
 
 # Generate messages and services with any dependencies

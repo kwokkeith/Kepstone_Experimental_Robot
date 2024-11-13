@@ -6,6 +6,7 @@
 #include <std_srvs/SetBool.h>
 #include "navigation/InitiateCoveragePath.h"
 #include "navigation/GetWaypoints.h"
+#include "navigation/GetNextWaypoint.h"
 
 class WaypointManager {
 public:
@@ -16,7 +17,7 @@ private:
     ros::NodeHandle nh_;
 
     // ROS publishers and services
-    ros::Publisher waypoint_pub_;
+    ros::ServiceServer waypoint_service_;
     ros::ServiceServer update_waypoint_service_;
     ros::ServiceServer initiate_coverage_service_;
     ros::ServiceServer get_waypoints_service_;
@@ -29,10 +30,10 @@ private:
     size_t current_index_;
 
     // Helper methods
-    bool initiateCoveragePath(navigation::InitiateCoveragePath::Request& req,
-                              navigation::InitiateCoveragePath::Response& res);
+    bool initiateCoveragePath(navigation::InitiateCoveragePath::Request& req, navigation::InitiateCoveragePath::Response& res);
     bool getNextWaypoint(std_srvs::SetBool::Request& req, std_srvs::SetBool::Response& res);
     bool getWaypoints(navigation::GetWaypoints::Request& req, navigation::GetWaypoints::Response& res);
+    bool getNextTargetWaypoint(navigation::GetNextWaypoint::Request& req, navigation::GetNextWaypoint::Response& res);
 
     void publishNextWaypoint();               // Publishes the next waypoint in sequence
     void timerCallback(const ros::TimerEvent&); // Timer callback for continuous waypoint publishing
