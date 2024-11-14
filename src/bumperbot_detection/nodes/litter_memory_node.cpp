@@ -17,7 +17,7 @@ LitterMemory::LitterMemory()
     litter_pub_ = nh_.advertise<bumperbot_detection::LitterList>("litter_memory", 10);
 
     // Initialize a publisher to publish new litter points
-    new_litter_pub_ = nh_.advertise<bumperbot_detection::LitterPoint>("litter_memory/new_litter", 10);
+    new_litter_pub_ = nh_.advertise<bumperbot_detection::DetectedLitterPoint>("litter_memory/new_litter", 10);
 
     // Initialize the service to get the remembered litter points
     get_litter_service_ = nh_.advertiseService("litter_memory/get_litter_list", &LitterMemory::getLitterListCallback, this);
@@ -36,7 +36,7 @@ double LitterMemory::calculateDistance(const geometry_msgs::Point& p1, const geo
 }
 
 // Helper function to check if the new litter point is a duplicate
-bool LitterMemory::isDuplicate(const geometry_msgs::PointStamped& new_litter)
+bumperbot_detection::LitterPoint LitterMemory::isDuplicate(const bumperbot_detection::LitterPoint& new_litter)
 {
     // Loop through the remembered litter points
     for (const auto& remembered_litter : remembered_litter_)
@@ -47,11 +47,11 @@ bool LitterMemory::isDuplicate(const geometry_msgs::PointStamped& new_litter)
         // If the distance is less than the threshold, consider it a duplicate
         if (distance < distance_threshold_)
         {
-            return true;  // Duplicate detected
+            return remembered_litter;  // Duplicate detected, return the duplicate litter in the memory
         }
     }
 
-    return false;  // No duplicates found
+    return new_litter;  // No duplicates found
 }
 
 // Helper function to assign a new ID (either recycled or new)
@@ -89,28 +89,37 @@ void LitterMemory::litterCallback(const geometry_msgs::PointStamped::ConstPtr& l
     }
 
     // Check if the new litter point is within the threshold distance from any existing points
-    if (!isDuplicate(litter_in_map_frame))
-    {
-        // Create a new LitterPoint with an available or new ID
-        bumperbot_detection::LitterPoint new_litter;
-        new_litter.id = getNewID();
-        new_litter.point = litter_in_map_frame.point;     // Copy point data
-        new_litter.header = litter_in_map_frame.header;   // Copy header data
+    bumperbot_detection::DetectedLitterPoint detected_litter;
 
+    // Create a new LitterPoint with an available or new ID
+    bumperbot_detection::LitterPoint new_litter;
+    new_litter.id = -1;                               // Temporary litter id
+    new_litter.point = litter_in_map_frame.point;     // Copy point data
+    new_litter.header = litter_in_map_frame.header;   // Copy header data
+    
+    bumperbot_detection::LitterPoint final_detected_litter = isDuplicate(new_litter);   // Gets the final litter after checking for duplicates
+    detected_litter.litter_point = final_detected_litter;
+
+    // final_detected_litter would be same as the new_litter if it is a new litter and not a duplicate
+    if (final_detected_litter == new_litter)
+    {
         // Store the new litter point in memory
-        remembered_litter_.push_back(new_litter);
+        new_litter.id = getNewID();         // Get a new id from the queue system
+        remembered_litter_.push_back(final_detected_litter);
         ROS_INFO("New litter point remembered with ID: %d", new_litter.id);
 
-        // Publish only the new litter point
-        new_litter_pub_.publish(new_litter);
+        detected_litter.duplicate = false;
 
         // Publish the entire list of remembered litter points
         publishRememberedLitter();
     }
     else
     {
+        detected_litter.duplicate = true;
         ROS_INFO("Litter point ignored (duplicate)");
     }
+    // Publish the newly detected litter with the duplicate key for whether it was a deemed a duplicate
+    new_litter_pub_.publish(detected_litter);
 }
 
 // Publish all remembered litter points
@@ -176,13 +185,15 @@ bool LitterMemory::addLitterCallback(bumperbot_detection::AddLitter::Request& re
                                      bumperbot_detection::AddLitter::Response& res)
 {
     // Check if the new litter point is within the threshold distance from any existing points
-    if (!isDuplicate(req.litter_point))
+    // Create a new LitterPoint with an available or new ID
+    bumperbot_detection::LitterPoint new_litter;
+    new_litter.id = -1;                            // Temporary litter ID
+    new_litter.point = req.litter_point.point;     // Copy point data
+    new_litter.header = req.litter_point.header;   // Copy header data
+
+    if (isDuplicate(new_litter) == new_litter)
     {
-        // Create a new LitterPoint with an available or new ID
-        bumperbot_detection::LitterPoint new_litter;
-        new_litter.id = getNewID();
-        new_litter.point = req.litter_point.point;     // Copy point data
-        new_litter.header = req.litter_point.header;   // Copy header data
+        new_litter.id = getNewID();                // Get new ID for litter from ID queue
 
         // Store the new litter point in memory
         remembered_litter_.push_back(new_litter);
@@ -200,7 +211,6 @@ bool LitterMemory::addLitterCallback(bumperbot_detection::AddLitter::Request& re
         res.success = false;
         res.message = "Litter point is too close to an existing one (duplicate)";
     }
-
     return true;
 }
 

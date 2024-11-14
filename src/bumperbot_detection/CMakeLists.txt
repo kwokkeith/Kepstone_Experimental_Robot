@@ -20,6 +20,7 @@ add_message_files(
   FILES
   LitterList.msg
   LitterPoint.msg
+  DetectedLitterPoint.msg
 )
 
 add_service_files(

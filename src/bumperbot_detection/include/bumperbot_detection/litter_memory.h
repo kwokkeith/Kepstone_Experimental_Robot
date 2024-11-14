@@ -8,6 +8,7 @@
 #include <bumperbot_detection/AddLitter.h>
 #include <bumperbot_detection/GetLitterList.h> 
 #include <bumperbot_detection/LitterPoint.h>
+#include <bumperbot_detection/DetectedLitterPoint.h>
 #include <tf2_ros/transform_listener.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <vector>
@@ -68,7 +69,7 @@ private:
     double calculateDistance(const geometry_msgs::Point& p1, const geometry_msgs::Point& p2);
 
     // Helper function to check if a litter point is a duplicate (Using Distance threshold filtering)
-    bool isDuplicate(const geometry_msgs::PointStamped& new_litter);
+    bumperbot_detection::LitterPoint isDuplicate(const bumperbot_detection::LitterPoint& new_litter);
 
     // Helper function to assign a new ID (recycled or new)
     int getNewID();

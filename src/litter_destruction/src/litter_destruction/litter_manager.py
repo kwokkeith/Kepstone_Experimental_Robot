@@ -3,7 +3,7 @@ import threading
 import heapq
 import math
 from geometry_msgs.msg import Point, PoseStamped
-from bumperbot_detection.msg import  LitterPoint
+from bumperbot_detection.msg import  LitterPoint, DetectedLitterPoint
 from std_msgs.msg import Header
 from nav_msgs.srv import GetPlan
 from navfn.srv import MakeNavPlan, MakeNavPlanRequest
@@ -38,7 +38,7 @@ class LitterManager:
         self.local_boundary_marker_pub  = rospy.Publisher("local_boundary_marker", Marker, queue_size=10)               # Define publisher for local boundary marker
 
         ## Subscribers
-        rospy.Subscriber("/litter_memory/new_litter", LitterPoint, self.detection_callback)
+        rospy.Subscriber("/litter_memory/new_litter", DetectedLitterPoint, self.detection_callback)
         
         ## Service Clients
         rospy.wait_for_service(self.planner_service)
@@ -163,8 +163,11 @@ class LitterManager:
         return (litter_point.id, litter_point.point.x, litter_point.point.y, litter_point.point.z)
 
 
-    def detection_callback(self, detected_litter):
+    def detection_callback(self, detected_detailed_litter):
         """Callback function for when litter is detected."""
+        # Extract the LitterPoint data from the DetectedLitterPoint data
+        detected_litter = detected_detailed_litter.litter_point
+
         # Convert detected litter point to a tuple (id, x, y, z)
         detected_litter_tuple = self.litter_point_to_tuple(detected_litter)
 

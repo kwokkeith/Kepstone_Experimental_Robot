@@ -1,0 +1,2 @@
+bumperbot_detection/LitterPoint litter_point
+bool duplicate
