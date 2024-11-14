@@ -5,12 +5,14 @@ import math
 from geometry_msgs.msg import Point, PoseStamped
 from bumperbot_detection.msg import  LitterPoint, DetectedLitterPoint
 from std_msgs.msg import Header
+from std_srvs.srv import Trigger
 from nav_msgs.srv import GetPlan
 from navfn.srv import MakeNavPlan, MakeNavPlanRequest
 from navigation.srv import GetAmclPose
 from bumperbot_detection.srv import DeleteLitterRequest, DeleteLitter, GetLitterList
 from visualization_msgs.msg import Marker
 from litter_destruction.srv import GlobalBoundaryCenter, GlobalBoundaryCenterResponse
+from litter_destruction.srv import LocalBoundaryCenter, LocalBoundaryCenterResponse
 from litter_destruction.srv import GetLitterSet, GetLitterSetResponse
 from litter_destruction.srv import GetNextLitter, GetNextLitterResponse
 from litter_destruction.srv import RemoveLitter, RemoveLitterRequest, RemoveLitterResponse
@@ -34,8 +36,6 @@ class LitterManager:
         self.next_litter = None                       # To store the next litter to continuously publish
 
         ## Publisher
-        self.global_boundary_marker_pub = rospy.Publisher("global_boundary_marker", Marker, queue_size=10)              # Define publisher for global boundary marker
-        self.local_boundary_marker_pub  = rospy.Publisher("local_boundary_marker", Marker, queue_size=10)               # Define publisher for local boundary marker
 
         ## Subscribers
         rospy.Subscriber("/litter_memory/new_litter", DetectedLitterPoint, self.detection_callback)
@@ -47,6 +47,8 @@ class LitterManager:
         rospy.wait_for_service('/get_amcl_pose')
         rospy.wait_for_service('/robot_controller/mode_switch')
         rospy.wait_for_service('/robot_controller/get_global_boundary_center')
+        rospy.wait_for_service('/republish_global_boundary')
+        rospy.wait_for_service('/republish_local_boundary')
 
         self.make_plan_srv              = rospy.ServiceProxy(self.planner_service, MakeNavPlan)                                     # Define service client to make plans using planner_only move_base node (not actual move_base)
         self.get_litter_list_srv        = rospy.ServiceProxy('/litter_memory/get_litter_list', GetLitterList)                       # Define the service client for getting litter list
@@ -54,9 +56,12 @@ class LitterManager:
         self.get_pose_srv               = rospy.ServiceProxy('/get_amcl_pose', GetAmclPose)                                         # Define service client for getting amcl pose
         self.req_mode                   = rospy.ServiceProxy('/robot_controller/mode_switch', ModeSwitch)                           # Define service client for changing robot controller to litter mode
         self.get_global_boundary_center = rospy.ServiceProxy('/robot_controller/get_global_boundary_center', GlobalBoundaryCenter)  # Define service client for getting global boundary centre from robot controller
+        self.republish_global_boundary  = rospy.ServiceProxy('/republish_global_boundary', Trigger)
+        self.republish_local_boundary   = rospy.ServiceProxy('/republish_local_boundary', Trigger)
 
         ## Service Servers
         rospy.Service("/litter_manager/get_global_boundary_center", GlobalBoundaryCenter, self.handle_get_global_boundary_center)   # Define service server to get global boundary center
+        rospy.Service("/litter_manager/get_local_boundary_center", LocalBoundaryCenter, self.handle_get_local_boundary_center)      # Define service server to get local boundary center
         rospy.Service("/litter_manager/get_litter_set", GetLitterSet, self.handle_get_litter_set)                                   # Define service server to get litter set
         rospy.Service("/litter_manager/get_next_litter", GetNextLitter, self.handle_get_next_litter)                                # Define service server to get next litter
         rospy.Service("/litter_manager/has_litter_to_clear", HasLitterToClear, self.handle_has_litter_to_clear)                     # Define service server to check if there is still litter in set
@@ -69,6 +74,20 @@ class LitterManager:
         response = GlobalBoundaryCenterResponse()
         if self.global_boundary_center is not None:
             response.center = self.global_boundary_center
+            response.radius = self.distance_threshold
+            response.valid = True
+        else:
+            response.center = Point()
+            response.valid = False
+        return response
+
+
+    def handle_get_local_boundary_center(self, req):
+        """Service handler to return the local boundary center."""
+        response = LocalBoundaryCenterResponse()
+        if self.local_boundary_center is not None:
+            response.center = self.local_boundary_center
+            response.radius = self.local_boundary_radius
             response.valid = True
         else:
             response.center = Point()
@@ -182,7 +201,6 @@ class LitterManager:
 
                 self.global_boundary_center = self.get_robot_position()
                 self.start_pos = self.global_boundary_center
-                self.publish_global_boundary_marker()
 
                 # Populate `self.set_litter` with known litter within the global boundary
                 known_litter = self.get_known_litter()
@@ -212,6 +230,7 @@ class LitterManager:
                     return  # Exit on service call failure
 
                 rospy.loginfo(f"Set litter initialized within global boundary: {self.set_litter}")
+
 
             else:
                 rospy.loginfo("Detected litter is outside initial threshold; no boundary set.")
@@ -277,8 +296,10 @@ class LitterManager:
                 rospy.loginfo("All litter within the global boundary cleared.")
                 self.global_boundary_center = None  # Reset the global boundary
                 self.local_boundary_center = None   # Reset the local boundary
-                self.publish_global_boundary_marker()
-                self.publish_local_boundary_marker()
+                
+                # Trigger boundary marker updates
+                self.trigger_global_boundary_marker()
+                self.trigger_local_boundary_marker()
                 
                 # Since there is no more litter then remove it from next waypoint
                 self.next_litter = None
@@ -287,7 +308,7 @@ class LitterManager:
     def compute_local_boundary_radius(self, litter_position):
         """Compute the radius of the local boundary based on distance from the global center."""
         # Calculate distance from the global boundary center
-        distance_from_global = self.calculate_euclidean_distance(litter_position, self.global_boundary_center)
+        distance_from_global = self.calculate_euclidean_distance(litter_position, self.start_pos)
         
         # Scale the radius based on distance, keeping it within [min_local_radius, max_local_radius]
         local_radius = max(self.max_local_radius - distance_from_global, self.min_local_radius)
@@ -303,7 +324,7 @@ class LitterManager:
         self.local_boundary_radius = self.compute_local_boundary_radius(target_litter.point)
         
         # Call to publish the local boundary marker for visualization
-        self.publish_local_boundary_marker()
+        self.trigger_local_boundary_marker()
         
         # Check for additional litter within this local boundary
         for litter in self.get_known_litter():
@@ -435,87 +456,29 @@ class LitterManager:
             return False
 
 
-    def publish_global_boundary_marker(self):
-        """To publish marker for global boundary visualization in RVIZ"""
-        marker = Marker()
-        marker.header.frame_id = "map"  # Use the same frame as the global boundary
-        marker.header.stamp = rospy.Time.now()
-        marker.ns = "global_boundary"
-        marker.id = 0
-        marker.type = Marker.CYLINDER  # Cylinder marker for circular representation
-
-        if self.global_boundary_center is None:
-            # Set action to DELETE to clear the marker in RViz if no boundary is set
-            marker.action = Marker.DELETE
-        else:
-            # Otherwise, configure and add the marker to RViz
-            marker.action = Marker.ADD
-
-            # Set the position of the marker to the center of the global boundary
-            # It would use the global boundary from the robot_controller
-            response = self.get_global_boundary_center()
-            if response.valid:
-                if response.center != self.start_pos:
-                    marker.pose.position = response.center
-                else:
-                    marker.pose.position = self.start_pos
+    def trigger_global_boundary_marker(self):
+        """Trigger the global boundary marker publishing."""
+        try:
+            response = self.republish_global_boundary()
+            if response.success:
+                rospy.loginfo("Global boundary marker published.")
             else:
-                marker.pose.position = self.start_pos
-
-            marker.pose.orientation.x = 0.0
-            marker.pose.orientation.y = 0.0
-            marker.pose.orientation.z = 0.0
-            marker.pose.orientation.w = 1.0
-
-            # Define the scale of the marker (diameter in x and y, height in z)
-            marker.scale.x = self.distance_threshold * 2  # Diameter for the x-axis
-            marker.scale.y = self.distance_threshold * 2  # Diameter for the y-axis
-            marker.scale.z = 0.1  # Small height for a flat circular marker
-
-            # Set the color (RGBA) of the marker
-            marker.color.r = 0.0
-            marker.color.g = 1.0
-            marker.color.b = 0.0
-            marker.color.a = 0.5  # Semi-transparent
-
-        # Publish the marker
-        self.global_boundary_marker_pub.publish(marker)
+                rospy.logwarn(f"Failed to publish global boundary marker: {response.message}")
+        except rospy.ServiceException as e:
+            rospy.logerr(f"Service call to /republish_global_boundary failed: {e}")
 
 
-    def publish_local_boundary_marker(self):
-        """Publishes a marker to visualize the local boundary in RViz."""
-        marker = Marker()
-        marker.header.frame_id = "map"  # The frame for the marker, assuming 'map' frame
-        marker.header.stamp = rospy.Time.now()
-        marker.ns = "local_boundary"
-        marker.id = 1
-        marker.type = Marker.CYLINDER  # Use cylinder for circular boundary
-        marker.action = Marker.ADD if self.local_boundary_center else Marker.DELETE
-
-        if self.local_boundary_center is None:
-            # No local boundary; clear the marker
-            marker.action = Marker.DELETE
-        else:
-            # Set position at the center of the local boundary
-            marker.pose.position = self.local_boundary_center
-            marker.pose.orientation.x = 0.0
-            marker.pose.orientation.y = 0.0
-            marker.pose.orientation.z = 0.0
-            marker.pose.orientation.w = 1.0
-
-            # Set the scale based on the local boundary radius
-            marker.scale.x = self.local_boundary_radius * 2  # Diameter for x-axis
-            marker.scale.y = self.local_boundary_radius * 2  # Diameter for y-axis
-            marker.scale.z = 0.1  # Small height for a flat circle
-
-            # Set color and transparency
-            marker.color.r = 1.0
-            marker.color.g = 0.0
-            marker.color.b = 0.0
-            marker.color.a = 0.5  # Semi-transparent
-
-        # Publish the marker
-        self.local_boundary_marker_pub.publish(marker)
+    # Replace `publish_local_boundary_marker` with a call to the `/republish_local_boundary` service
+    def trigger_local_boundary_marker(self):
+        """Trigger the local boundary marker publishing."""
+        try:
+            response = self.republish_local_boundary()
+            if response.success:
+                rospy.loginfo("Local boundary marker published.")
+            else:
+                rospy.logwarn(f"Failed to publish local boundary marker: {response.message}")
+        except rospy.ServiceException as e:
+            rospy.logerr(f"Service call to /republish_local_boundary failed: {e}")
 
 
     def handle_has_litter_to_clear(self, req):

@@ -1,4 +1,3 @@
-# srv/GlobalBoundaryCenter.srv
 ---
 geometry_msgs/Point center
 float64 radius

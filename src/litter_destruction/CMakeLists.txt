@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   bumperbot_detection
   visualization_msgs
   bumperbot_utils
+  std_srvs
 )
 
 catkin_python_setup()
@@ -24,6 +25,7 @@ catkin_python_setup()
 add_service_files(
   FILES
   GlobalBoundaryCenter.srv
+  LocalBoundaryCenter.srv
   GetLitterSet.srv
   GetNextLitter.srv
   RemoveLitter.srv
@@ -52,6 +54,7 @@ generate_messages(
 ###################################
 
 catkin_package(
+  INCLUDE_DIRS include
   CATKIN_DEPENDS 
     roscpp 
     rospy 
@@ -87,3 +90,12 @@ catkin_install_python(PROGRAMS
   src/litter_manager_node.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
+
+# Library for pixel position publisher
+add_library(boundary_visualizer src/boundary_visualizer.cpp)
+add_dependencies(boundary_visualizer ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(boundary_visualizer ${catkin_LIBRARIES})
+
+# Executable node for boundary visualizer
+add_executable(boundary_visualizer_node nodes/boundary_visualizer_node.cpp)
+target_link_libraries(boundary_visualizer_node ${catkin_LIBRARIES} boundary_visualizer)

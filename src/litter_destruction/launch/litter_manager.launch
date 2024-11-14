@@ -36,4 +36,7 @@
         <param name="min_local_radius" value="0.5" />
         <param name="max_local_radius" value="1.5" />
     </node>
+
+    <!-- Litter Boundary Visualizer Node -->
+    <node name="boundary_visualizer_node" pkg="litter_destruction" type="boundary_visualizer_node" output="screen" />
 </launch>

@@ -5,7 +5,7 @@ from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from actionlib import SimpleActionClient, GoalStatus
 from enum import Enum
 from bumperbot_detection.msg import LitterPoint 
-from std_srvs.srv import SetBool
+from std_srvs.srv import SetBool, Trigger
 from navigation.srv import InitiateCoveragePath, InitiateCoveragePathRequest, InitiateCoveragePathResponse
 from navigation.srv import GetNextWaypoint, GetNextWaypointResponse
 from litter_destruction.srv import GlobalBoundaryCenter, GlobalBoundaryCenterResponse
@@ -37,6 +37,7 @@ class RobotController:
         self.mode = RobotMode.IDLE
         self.coverage_complete = False  # Flag to track if coverage is complete
         self.global_boundary_center = Point()
+        self.global_boundary_radius = 0
 
         ## Publishers
 
@@ -56,6 +57,7 @@ class RobotController:
         rospy.wait_for_service('/litter_manager/has_litter_to_clear')
         rospy.wait_for_service(self.litter_picking_waypoint_service)
         rospy.wait_for_service(self.coverage_path_waypoint_service)
+        rospy.wait_for_service('/republish_global_boundary')
 
         self.update_waypoint_status = rospy.ServiceProxy('/waypoint_manager/get_next_waypoint', SetBool)                                     # Service to update waypoint_manager (get next waypoint)
         self.initiate_coverage_path = rospy.ServiceProxy('/waypoint_manager/initiate_coverage_path', InitiateCoveragePath)                   # Service to initate the coverage path   
@@ -65,6 +67,7 @@ class RobotController:
         self.has_litter_to_clear = rospy.ServiceProxy('/litter_manager/has_litter_to_clear', HasLitterToClear)                               # Service to check if any more litter to clear (litter manager)
         self.next_target_litter = rospy.ServiceProxy(self.litter_picking_waypoint_service, GetNextTargetLitter)                              # Service to get next target litter
         self.next_target_coverage_waypoint = rospy.ServiceProxy(self.coverage_path_waypoint_service, GetNextWaypoint)                        # Service to get next target waypoint for coverage
+        self.republish_global_boundary = rospy.ServiceProxy('/republish_global_boundary', Trigger)
 
         ## Service Servers
         rospy.Service('/robot_controller/get_current_mode', GetCurrentMode, self.handle_get_current_mode)            # Service server to request current mode
@@ -104,10 +107,11 @@ class RobotController:
     def handle_get_global_boundary_center(self, req):
         """Service handle to get global boundary center"""
         response = GlobalBoundaryCenterResponse()
-        try:
+        if self.global_boundary_center:
             response.center = self.global_boundary_center
+            response.radius = self.global_boundary_radius
             response.valid = True
-        except:
+        else:
             response.center = Point()
             response.valid = False
         return response
@@ -187,6 +191,13 @@ class RobotController:
         elif mode == RobotMode.LITTER_PICKING:
             # Interrupt all other move goal to prioritise LITTER_PICKING
             self.move_base_client.cancel_all_goals()
+
+            # Trigger the global boundary visualization
+            response = self.republish_global_boundary()
+            if response.success:
+                rospy.loginfo("Global boundary marker published.")
+            else:
+                rospy.logwarn(f"Failed to publish global boundary marker: {response.message}")        
 
             # No more litter to clear
             if not self.has_litter_to_clear().has_litter:
@@ -306,7 +317,7 @@ class RobotController:
 
             # Log and send goal to return to global boundary center
             rospy.loginfo("Navigating back to last known location of global boundary center for coverage mode.")
-            if self.navigate_to_waypoint(self.global_boundary_center):
+            if self.navigate_to_waypoint(self.global_boundary_center, 10):
                 self.switch_mode(RobotMode.COVERAGE)
             else:
                 # If failed to return to global center
@@ -450,6 +461,7 @@ class RobotController:
         response = self.get_global_boundary_center_service()
         if response.valid:
             self.global_boundary_center = response.center
+            self.global_boundary_radius = response.radius
             return True
         return False
 
