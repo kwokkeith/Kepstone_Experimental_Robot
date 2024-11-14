@@ -46,12 +46,14 @@ class LitterManager:
         rospy.wait_for_service('/litter_memory/delete_litter')
         rospy.wait_for_service('/get_amcl_pose')
         rospy.wait_for_service('/robot_controller/mode_switch')
+        rospy.wait_for_service('/robot_controller/get_global_boundary_center')
 
-        self.make_plan_srv       = rospy.ServiceProxy(self.planner_service, MakeNavPlan)                       # Define service client to make plans using planner_only move_base node (not actual move_base)
-        self.get_litter_list_srv = rospy.ServiceProxy('/litter_memory/get_litter_list', GetLitterList)         # Define the service client for getting litter list
-        self.delete_litter_srv   = rospy.ServiceProxy('/litter_memory/delete_litter', DeleteLitter)            # Define the service client for deleting litter
-        self.get_pose_srv        = rospy.ServiceProxy('/get_amcl_pose', GetAmclPose)                           # Define service client for getting amcl pose
-        self.req_mode            = rospy.ServiceProxy('/robot_controller/mode_switch', ModeSwitch)             # Define service client for changing robot controller to litter mode
+        self.make_plan_srv              = rospy.ServiceProxy(self.planner_service, MakeNavPlan)                                     # Define service client to make plans using planner_only move_base node (not actual move_base)
+        self.get_litter_list_srv        = rospy.ServiceProxy('/litter_memory/get_litter_list', GetLitterList)                       # Define the service client for getting litter list
+        self.delete_litter_srv          = rospy.ServiceProxy('/litter_memory/delete_litter', DeleteLitter)                          # Define the service client for deleting litter
+        self.get_pose_srv               = rospy.ServiceProxy('/get_amcl_pose', GetAmclPose)                                         # Define service client for getting amcl pose
+        self.req_mode                   = rospy.ServiceProxy('/robot_controller/mode_switch', ModeSwitch)                           # Define service client for changing robot controller to litter mode
+        self.get_global_boundary_center = rospy.ServiceProxy('/robot_controller/get_global_boundary_center', GlobalBoundaryCenter)  # Define service client for getting global boundary centre from robot controller
 
         ## Service Servers
         rospy.Service("/litter_manager/get_global_boundary_center", GlobalBoundaryCenter, self.handle_get_global_boundary_center)   # Define service server to get global boundary center
@@ -69,6 +71,7 @@ class LitterManager:
             response.center = self.global_boundary_center
             response.valid = True
         else:
+            response.center = Point()
             response.valid = False
         return response
 
@@ -200,6 +203,7 @@ class LitterManager:
                     # TODO: Fix the enum mode from number to the Title of the enum 
                     request = ModeSwitchRequest(mode=3) # '3' is the enum num for RobotMode 
                     response = self.req_mode(request)
+
                     if not response.success:
                         rospy.logwarn("Unable to change robot controller to LITTER_PICKING mode")
                         return  # Ignore the rest of the code
@@ -448,7 +452,16 @@ class LitterManager:
             marker.action = Marker.ADD
 
             # Set the position of the marker to the center of the global boundary
-            marker.pose.position = self.global_boundary_center
+            # It would use the global boundary from the robot_controller
+            response = self.get_global_boundary_center()
+            if response.valid:
+                if response.center != self.start_pos:
+                    marker.pose.position = response.center
+                else:
+                    marker.pose.position = self.start_pos
+            else:
+                marker.pose.position = self.start_pos
+
             marker.pose.orientation.x = 0.0
             marker.pose.orientation.y = 0.0
             marker.pose.orientation.z = 0.0

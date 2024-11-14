@@ -8,7 +8,7 @@ from bumperbot_detection.msg import LitterPoint
 from std_srvs.srv import SetBool
 from navigation.srv import InitiateCoveragePath, InitiateCoveragePathRequest, InitiateCoveragePathResponse
 from navigation.srv import GetNextWaypoint, GetNextWaypointResponse
-from litter_destruction.srv import GlobalBoundaryCenter
+from litter_destruction.srv import GlobalBoundaryCenter, GlobalBoundaryCenterResponse
 from litter_destruction.srv import GetNextLitter
 from litter_destruction.srv import RemoveLitter, RemoveLitterRequest 
 from litter_destruction.srv import HasLitterToClear
@@ -44,7 +44,8 @@ class RobotController:
         # Subscriptions to the waypoint topics for each mode
 
         # Services servers to initialise first for controllers to start (Dependencies caused by wait_for_service)
-        rospy.Service('/robot_controller/mode_switch', ModeSwitch, self.handle_mode_switch)                          # Service server to request mode switch
+        rospy.Service('/robot_controller/mode_switch', ModeSwitch, self.handle_mode_switch)                                         # Service server to request mode switch
+        rospy.Service('/robot_controller/get_global_boundary_center', GlobalBoundaryCenter, self.handle_get_global_boundary_center) # Service server to get global boundary center of robot controller
 
         ## Service Clients
         rospy.wait_for_service('/waypoint_manager/get_next_waypoint')
@@ -97,6 +98,18 @@ class RobotController:
             response.success = False
             response.message = f"Service call failed: {e}"
 
+        return response
+    
+
+    def handle_get_global_boundary_center(self, req):
+        """Service handle to get global boundary center"""
+        response = GlobalBoundaryCenterResponse()
+        try:
+            response.center = self.global_boundary_center
+            response.valid = True
+        except:
+            response.center = Point()
+            response.valid = False
         return response
 
 
