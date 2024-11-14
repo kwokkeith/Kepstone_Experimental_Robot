@@ -298,21 +298,9 @@ class RobotController:
             else:
                 # If failed to return to global center
                 rospy.logerr(f"Robot failed to return to global center, retrying {count+1} of {retry_count}.")
+                if (count == retry_count-1):
+                    rospy.logerr(f"Robot is ready for manual navigation goal due to failure in returning to global center")
                 count += 1
-        
-        # # Check if the robot has reached the global boundary center, then resume coverage waypoints
-        # if self.move_base_client.wait_for_result():
-        #     if self.move_base_client.get_state() == GoalStatus.SUCCEEDED:
-        #         rospy.loginfo("Reached global boundary center, resuming coverage mode.")
-                
-        #         # Switch mode to COVERAGE
-        #         self.switch_mode(RobotMode.COVERAGE)
-        #     else:
-        #         rospy.logwarn("Failed to reach global boundary center, retrying.")
-        #         self.resume_coverage_from_litter()  # Retry if not reached
-        # else:
-        #     rospy.logwarn("Timeout or failure while moving back to global boundary center.")
-        #     self.resume_coverage_from_litter()  # Retry if the timeout occurs
 
 
     def perform_litter_mode(self):
@@ -339,7 +327,7 @@ class RobotController:
 
             rospy.loginfo(f"Navigating to litter:\n{litter_point.point}")
             # Navigate to the litter waypoint
-            if self.navigate_to_waypoint(litter_point.point):
+            if self.navigate_to_waypoint(litter_point.point, 2):
                  # Wait until the robot reaches the waypoint before proceeding
                 rospy.loginfo(f"Reached litter waypoint at {litter_point.point}\n...preparing for litter destruction.")
                 
@@ -416,7 +404,7 @@ class RobotController:
                 # Send the robot to the waypoint
                 if self.mode != RobotMode.COVERAGE:
                     return
-                if self.navigate_to_waypoint(waypoint):
+                if self.navigate_to_waypoint(waypoint, 2):
                     # If the waypoint is reached, request the next one
                     response = self.update_waypoint_status(data=True)
                     
@@ -433,7 +421,7 @@ class RobotController:
                 rospy.logwarn(f"Timeout or issue while waiting for next coverage waypoint: {e}")
                 break  # Exit if there’s an issue in fetching the next waypoint
         
-        if self.is_coverage_complete:
+        if self.is_coverage_complete():
             # Switch to IDLE mode after completing all waypoints
             rospy.loginfo("Coverage path completed. Switching to IDLE mode.")
             self.switch_mode(RobotMode.IDLE)
