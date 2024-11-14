@@ -132,6 +132,21 @@ class RobotController:
 
     def switch_mode(self, mode):
         """Switch the robot's mode and update the mux topic selection."""
+        #######################################
+        # PRE-CONDITIONS before switching modes
+        #######################################
+        # Check if robot is in transitioning mode to the center when asked to do litter picking (LITTER_TO_COVERAGE mode)
+        if mode == RobotMode.LITTER_PICKING:
+            if not self.mode == RobotMode.LITTER_TO_COVERAGE:
+                # Still in transition, then if we detect litter then we shall clear it but dont change global center
+                # O.w then we change the global center
+                # Set global center
+                if not self.get_global_boundary_center():
+                    rospy.logerr("Failed to retrieve global boundary's center while changing to LITTER_PICKING mode")
+
+        ######################
+        # MODE switching logic
+        ######################
         # Set new mode
         self.mode = mode
         # Determining topic based on mode and start the appropriate mode function
@@ -159,10 +174,6 @@ class RobotController:
         elif mode == RobotMode.LITTER_PICKING:
             # Interrupt all other move goal to prioritise LITTER_PICKING
             self.move_base_client.cancel_all_goals()
-
-            # Set global center
-            if not self.get_global_boundary_center():
-                rospy.logerr("Failed to retrieve global boundary's center while changing to LITTER_PICKING mode")
 
             # No more litter to clear
             if not self.has_litter_to_clear().has_litter:
