@@ -66,8 +66,9 @@ bool BoundaryVisualizer::republishLocalBoundary(std_srvs::Trigger::Request &req,
             }
             else
             {
-                res.success = false;
-                res.message = "Failed to retrieve local boundary data.";
+                publishLocalBoundaryMarker(local_boundary_srv.response.center, local_boundary_srv.response.radius);
+                res.success = true;
+                res.message = "Local boundary marker published.";
             }
         }
         else {
@@ -75,8 +76,8 @@ bool BoundaryVisualizer::republishLocalBoundary(std_srvs::Trigger::Request &req,
             res.success = true;
             res.message = "Local boundary marker published.";
         }
-        return true;
     }
+    return true;
 }
 
 void BoundaryVisualizer::publishGlobalBoundaryMarker(const geometry_msgs::Point &center, double radius)

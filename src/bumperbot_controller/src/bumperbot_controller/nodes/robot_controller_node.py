@@ -15,6 +15,8 @@ from litter_destruction.srv import HasLitterToClear
 from litter_destruction.srv import GetNextTargetLitter, GetNextTargetLitterResponse
 from bumperbot_controller.srv import ModeSwitch, ModeSwitchResponse
 from bumperbot_controller.srv import GetCurrentMode, GetCurrentModeResponse
+import threading
+
 
 # Enum for robot modes
 class RobotMode(Enum):
@@ -166,6 +168,10 @@ class RobotController:
         ######################
         # Set new mode
         self.mode = mode
+
+        # Trigger the global boundary visualization
+        response = self.republish_global_boundary()
+        
         # Determining topic based on mode and start the appropriate mode function
         if mode == RobotMode.IDLE:
             rospy.loginfo("Switched to IDLE mode.")
@@ -180,6 +186,7 @@ class RobotController:
                 self.switch_mode(RobotMode.LITTER_PICKING)
                 return    
             rospy.loginfo("Switched to COVERAGE mode.")
+
             self.perform_coverage_mode() 
 
             # Monitor completion of coverage task and switch to IDLE if complete
@@ -192,8 +199,7 @@ class RobotController:
             # Interrupt all other move goal to prioritise LITTER_PICKING
             self.move_base_client.cancel_all_goals()
 
-            # Trigger the global boundary visualization
-            response = self.republish_global_boundary()
+
             if response.success:
                 rospy.loginfo("Global boundary marker published.")
             else:
@@ -226,6 +232,7 @@ class RobotController:
                 # Switch back to idle mode
                 else:                
                     rospy.loginfo("Switching to IDLE mode...")
+                    self.resume_coverage_from_litter()
                     self.switch_mode(RobotMode.IDLE)
                 return
 
@@ -312,6 +319,12 @@ class RobotController:
         retry_count = 3
 
         for count in range(retry_count):
+            # Check if robot mode has changed
+            # Check if there is any litter in litter_manager
+            if self.has_litter_to_clear().has_litter:
+                self.switch_mode(RobotMode.LITTER_PICKING)
+                break
+
             # Cancel any active goals to reset `move_base`
             self.move_base_client.cancel_all_goals()
 

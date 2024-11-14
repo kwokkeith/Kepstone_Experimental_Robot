@@ -19,6 +19,7 @@ from litter_destruction.srv import RemoveLitter, RemoveLitterRequest, RemoveLitt
 from litter_destruction.srv import HasLitterToClear, HasLitterToClearResponse
 from litter_destruction.srv import GetNextTargetLitter, GetNextTargetLitterResponse
 from bumperbot_controller.srv import ModeSwitch, ModeSwitchRequest
+import threading
 
 class LitterManager:
     def __init__(self, distance_threshold=5, min_local_radius=1, max_local_radius=3):
@@ -180,6 +181,20 @@ class LitterManager:
         return response 
 
 
+    def request_mode_switch(self, mode):
+        """Threaded function to handle mode switch requests."""
+        try:
+            request = ModeSwitchRequest(mode=mode)
+            response = self.req_mode(request)
+            if response.success:
+                rospy.loginfo(f"Successfully switched to mode {mode}.")
+            else:
+                rospy.logwarn(f"Failed to switch to mode {mode}: {response.message}")
+        except rospy.ServiceException as e:
+            rospy.logwarn(f"Service call failed for mode switch to mode {mode}: {e}")
+
+
+
     def litter_point_to_tuple(self, litter_point):
         """Helper function to convert litter to tuple for storing in set (hashable)"""
         return (litter_point.id, litter_point.point.x, litter_point.point.y, litter_point.point.z)
@@ -219,19 +234,24 @@ class LitterManager:
                 # Request mode switch to LITTER_PICKING
                 try:
                     # TODO: Fix the enum mode from number to the Title of the enum 
-                    request = ModeSwitchRequest(mode=3) # '3' is the enum num for RobotMode 
-                    response = self.req_mode(request)
+                    # TODO: Fix the ModeSwitchRequest to not be a blocking call
+                    # Perhaps change this to a topic?
 
-                    if not response.success:
-                        rospy.logwarn("Unable to change robot controller to LITTER_PICKING mode")
-                        return  # Ignore the rest of the code
+                    # Start a new thread to handle the mode switch request to LITTER_PICKING (mode=3)
+                    mode_switch_thread = threading.Thread(target=self.request_mode_switch, args=(3,))
+                    mode_switch_thread.start()  # Start the mode switch thread
+
+                    # request = ModeSwitchRequest(mode=3) # '3' is the enum num for RobotMode 
+                    # response = self.req_mode(request)
+
+                    # if not response.success:
+                    #     rospy.logwarn("Unable to change robot controller to LITTER_PICKING mode")
+                    #     return  # Ignore the rest of the code
                 except rospy.ServiceException as e:
                     rospy.logwarn(f"Service call failed for mode switch to LITTER_PICKING: {e}")
                     return  # Exit on service call failure
 
                 rospy.loginfo(f"Set litter initialized within global boundary: {self.set_litter}")
-
-
             else:
                 rospy.loginfo("Detected litter is outside initial threshold; no boundary set.")
                 return  # Ignore detection outside threshold
@@ -274,7 +294,8 @@ class LitterManager:
         """Checks if litter is within the global boundary"""
         # Set global boundary on the first detection
         if self.global_boundary_center is None:
-            self.global_boundary_center = self.get_robot_position()  # Initial center
+            self.global_boundary_center = self.start_pos               # Initial center
+    
             rospy.loginfo(f"Setting global boundary center at: {self.global_boundary_center}")
 
         # Calculate the Euclidean distance from litter to global boundary center

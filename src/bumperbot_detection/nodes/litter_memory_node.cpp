@@ -101,12 +101,12 @@ void LitterMemory::litterCallback(const geometry_msgs::PointStamped::ConstPtr& l
     detected_litter.litter_point = final_detected_litter;
 
     // final_detected_litter would be same as the new_litter if it is a new litter and not a duplicate
-    if (final_detected_litter == new_litter)
+    if (final_detected_litter.point == new_litter.point)
     {
         // Store the new litter point in memory
-        new_litter.id = getNewID();         // Get a new id from the queue system
-        remembered_litter_.push_back(final_detected_litter);
-        ROS_INFO("New litter point remembered with ID: %d", new_litter.id);
+        detected_litter.litter_point.id = getNewID();         // Get a new id from the queue system
+        remembered_litter_.push_back(detected_litter.litter_point);
+        ROS_INFO("New litter point remembered with ID: %d", detected_litter.litter_point.id);
 
         detected_litter.duplicate = false;
 
@@ -191,7 +191,7 @@ bool LitterMemory::addLitterCallback(bumperbot_detection::AddLitter::Request& re
     new_litter.point = req.litter_point.point;     // Copy point data
     new_litter.header = req.litter_point.header;   // Copy header data
 
-    if (isDuplicate(new_litter) == new_litter)
+    if (isDuplicate(new_litter).point == new_litter.point)
     {
         new_litter.id = getNewID();                // Get new ID for litter from ID queue
 
