@@ -40,14 +40,6 @@ class LitterManager:
         ## Subscribers
         rospy.Subscriber("/litter_memory/new_litter", LitterPoint, self.detection_callback)
         
-        ## Service Servers
-        rospy.Service("/litter_manager/get_global_boundary_center", GlobalBoundaryCenter, self.handle_get_global_boundary_center)   # Define service server to get global boundary center
-        rospy.Service("/litter_manager/get_litter_set", GetLitterSet, self.handle_get_litter_set)                                   # Define service server to get litter set
-        rospy.Service("/litter_manager/get_next_litter", GetNextLitter, self.handle_get_next_litter)                                # Define service server to get next litter
-        rospy.Service("/litter_manager/has_litter_to_clear", HasLitterToClear, self.handle_has_litter_to_clear)                     # Define service server to check if there is still litter in set
-        rospy.Service("/litter_manager/delete_litter", RemoveLitter, self.handle_remove_litter)                                     # Define service server to delete litter from litter manager
-        rospy.Service("/litter_manager/next_waypoint", GetNextTargetLitter, self.handle_get_next_target_litter)                     # Define service server to get the next target litter
-
         ## Service Clients
         rospy.wait_for_service(self.planner_service)
         rospy.wait_for_service('/litter_memory/get_litter_list')
@@ -60,6 +52,14 @@ class LitterManager:
         self.delete_litter_srv   = rospy.ServiceProxy('/litter_memory/delete_litter', DeleteLitter)            # Define the service client for deleting litter
         self.get_pose_srv        = rospy.ServiceProxy('/get_amcl_pose', GetAmclPose)                           # Define service client for getting amcl pose
         self.req_mode            = rospy.ServiceProxy('/robot_controller/mode_switch', ModeSwitch)             # Define service client for changing robot controller to litter mode
+
+        ## Service Servers
+        rospy.Service("/litter_manager/get_global_boundary_center", GlobalBoundaryCenter, self.handle_get_global_boundary_center)   # Define service server to get global boundary center
+        rospy.Service("/litter_manager/get_litter_set", GetLitterSet, self.handle_get_litter_set)                                   # Define service server to get litter set
+        rospy.Service("/litter_manager/get_next_litter", GetNextLitter, self.handle_get_next_litter)                                # Define service server to get next litter
+        rospy.Service("/litter_manager/has_litter_to_clear", HasLitterToClear, self.handle_has_litter_to_clear)                     # Define service server to check if there is still litter in set
+        rospy.Service("/litter_manager/delete_litter", RemoveLitter, self.handle_remove_litter)                                     # Define service server to delete litter from litter manager
+        rospy.Service("/litter_manager/next_waypoint", GetNextTargetLitter, self.handle_get_next_target_litter)                     # Define service server to get the next target litter
 
 
     def handle_get_global_boundary_center(self, req):

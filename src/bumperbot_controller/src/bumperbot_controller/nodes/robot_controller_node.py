@@ -38,12 +38,13 @@ class RobotController:
         self.coverage_complete = False  # Flag to track if coverage is complete
         self.global_boundary_center = Point()
 
-
         ## Publishers
 
         ## Subscribers
         # Subscriptions to the waypoint topics for each mode
 
+        # Services servers to initialise first for controllers to start (Dependencies caused by wait_for_service)
+        rospy.Service('/robot_controller/mode_switch', ModeSwitch, self.handle_mode_switch)                          # Service server to request mode switch
 
         ## Service Clients
         rospy.wait_for_service('/waypoint_manager/get_next_waypoint')
@@ -55,21 +56,18 @@ class RobotController:
         rospy.wait_for_service(self.litter_picking_waypoint_service)
         rospy.wait_for_service(self.coverage_path_waypoint_service)
 
-        self.update_waypoint_status = rospy.ServiceProxy('/waypoint_manager/get_next_waypoint', SetBool)                             # Service to update waypoint_manager (get next waypoint)
-        self.initiate_coverage_path = rospy.ServiceProxy('/waypoint_manager/initiate_coverage_path', InitiateCoveragePath)           # Service to initate the coverage path   
-        self.get_global_boundary_center = rospy.ServiceProxy('/litter_manager/get_global_boundary_center', GlobalBoundaryCenter)     # Service to get global boundary center
-        self.get_next_litter = rospy.ServiceProxy('/litter_manager/get_next_litter', GetNextLitter)                                  # Service to update to next litter in litter manager 
-        self.delete_litter   = rospy.ServiceProxy('/litter_manager/delete_litter', RemoveLitter)                                     # Service to delete litter in litter manager
-        self.has_litter_to_clear = rospy.ServiceProxy('/litter_manager/has_litter_to_clear', HasLitterToClear)                       # Service to check if any more litter to clear (litter manager)
-        self.next_target_litter = rospy.ServiceProxy(self.litter_picking_waypoint_service, GetNextTargetLitter)                      # Service to get next target litter
-        self.next_target_coverage_waypoint = rospy.ServiceProxy(self.coverage_path_waypoint_service, GetNextWaypoint)                # Service to get next target waypoint for coverage
+        self.update_waypoint_status = rospy.ServiceProxy('/waypoint_manager/get_next_waypoint', SetBool)                                     # Service to update waypoint_manager (get next waypoint)
+        self.initiate_coverage_path = rospy.ServiceProxy('/waypoint_manager/initiate_coverage_path', InitiateCoveragePath)                   # Service to initate the coverage path   
+        self.get_global_boundary_center_service = rospy.ServiceProxy('/litter_manager/get_global_boundary_center', GlobalBoundaryCenter)     # Service to get global boundary center
+        self.get_next_litter = rospy.ServiceProxy('/litter_manager/get_next_litter', GetNextLitter)                                          # Service to update to next litter in litter manager 
+        self.delete_litter   = rospy.ServiceProxy('/litter_manager/delete_litter', RemoveLitter)                                             # Service to delete litter in litter manager
+        self.has_litter_to_clear = rospy.ServiceProxy('/litter_manager/has_litter_to_clear', HasLitterToClear)                               # Service to check if any more litter to clear (litter manager)
+        self.next_target_litter = rospy.ServiceProxy(self.litter_picking_waypoint_service, GetNextTargetLitter)                              # Service to get next target litter
+        self.next_target_coverage_waypoint = rospy.ServiceProxy(self.coverage_path_waypoint_service, GetNextWaypoint)                        # Service to get next target waypoint for coverage
 
         ## Service Servers
-        rospy.Service('/robot_controller/mode_switch', ModeSwitch, self.handle_mode_switch)                          # Service server to request mode switch
         rospy.Service('/robot_controller/get_current_mode', GetCurrentMode, self.handle_get_current_mode)            # Service server to request current mode
         rospy.Service('/robot_controller/initiate_coverage', InitiateCoveragePath, self.handle_initiate_coverage)    # Service server to initiate coverage
-
-        rospy.loginfo("RobotController initialized and waiting for waypoints.")
 
 
     def handle_initiate_coverage(self, req):
@@ -161,7 +159,11 @@ class RobotController:
         elif mode == RobotMode.LITTER_PICKING:
             # Interrupt all other move goal to prioritise LITTER_PICKING
             self.move_base_client.cancel_all_goals()
-            
+
+            # Set global center
+            if not self.get_global_boundary_center():
+                rospy.logerr("Failed to retrieve global boundary's center while changing to LITTER_PICKING mode")
+
             # No more litter to clear
             if not self.has_litter_to_clear().has_litter:
                 rospy.loginfo("No litter left to collect; switching to COVERAGE mode.")
@@ -177,7 +179,7 @@ class RobotController:
                 
                 # If coverage mode was paused when robot entered litter mode
                 if not self.is_coverage_complete():
-                    rospy.loginfo("Switching to COVERAGE mode...")
+                    rospy.loginfo("Switching to COVERAGE mode from LITTER_PICKING mode...")
                     self.move_base_client.cancel_all_goals()
                     
                     rospy.loginfo("Navigating back to last known location of coverage mode")
@@ -271,28 +273,35 @@ class RobotController:
         # Switch to temporary state to home back to the last location when in COVERAGE mode
         self.switch_mode(RobotMode.LITTER_TO_COVERAGE) 
 
-        # Cancel any active goals to reset `move_base`
-        self.move_base_client.cancel_all_goals()
+        # Retry count in case robot cannot get back to global boundary center
+        retry_count = 3
 
-        # Log and send goal to return to global boundary center
-        rospy.loginfo("Navigating back to last known location of global boundary center for coverage mode.")
-        response = self.get_global_boundary_center()
-        if response.valid:
-            self.navigate_to_waypoint(response.center)
-        
-        # Check if the robot has reached the global boundary center, then resume coverage waypoints
-        if self.move_base_client.wait_for_result():
-            if self.move_base_client.get_state() == GoalStatus.SUCCEEDED:
-                rospy.loginfo("Reached global boundary center, resuming coverage mode.")
-                
-                # Switch mode to COVERAGE
+        for count in range(retry_count):
+            # Cancel any active goals to reset `move_base`
+            self.move_base_client.cancel_all_goals()
+
+            # Log and send goal to return to global boundary center
+            rospy.loginfo("Navigating back to last known location of global boundary center for coverage mode.")
+            if self.navigate_to_waypoint(self.global_boundary_center):
                 self.switch_mode(RobotMode.COVERAGE)
             else:
-                rospy.logwarn("Failed to reach global boundary center, retrying.")
-                self.resume_coverage_from_litter()  # Retry if not reached
-        else:
-            rospy.logwarn("Timeout or failure while moving back to global boundary center.")
-            self.resume_coverage_from_litter()  # Retry if the timeout occurs
+                # If failed to return to global center
+                rospy.logerr(f"Robot failed to return to global center, retrying {count+1} of {retry_count}.")
+                count += 1
+        
+        # # Check if the robot has reached the global boundary center, then resume coverage waypoints
+        # if self.move_base_client.wait_for_result():
+        #     if self.move_base_client.get_state() == GoalStatus.SUCCEEDED:
+        #         rospy.loginfo("Reached global boundary center, resuming coverage mode.")
+                
+        #         # Switch mode to COVERAGE
+        #         self.switch_mode(RobotMode.COVERAGE)
+        #     else:
+        #         rospy.logwarn("Failed to reach global boundary center, retrying.")
+        #         self.resume_coverage_from_litter()  # Retry if not reached
+        # else:
+        #     rospy.logwarn("Timeout or failure while moving back to global boundary center.")
+        #     self.resume_coverage_from_litter()  # Retry if the timeout occurs
 
 
     def perform_litter_mode(self):
@@ -422,6 +431,15 @@ class RobotController:
     def is_coverage_complete(self):
         """Checks if a coverage is completed ONLY after it has been initalised"""
         return self.coverage_complete
+
+
+    def get_global_boundary_center(self):
+        """To get the global boundary center using the service provided by litter_manager"""
+        response = self.get_global_boundary_center_service()
+        if response.valid:
+            self.global_boundary_center = response.center
+            return True
+        return False
 
 def main():
     rospy.init_node('robot_controller_node')
