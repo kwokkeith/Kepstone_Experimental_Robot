@@ -34,7 +34,7 @@ export function publishPoint() {
   });
 
   ros.on('connection', function() {
-    console.log('Point publiisher is now connected to websocket server.');
+    console.log('Point publisher is now connected to websocket server.');
   });
   ros.on('error', function(error) {
     console.error('Error connecting to ROSBridge for the point publisher:', error);
