@@ -37,6 +37,7 @@ uint start_x;
 uint start_y;
 uint subdivision_dist;
 std::vector<cv::Point> selected_points;
+std::vector<cv::Point> starting_point;
 cv::Mat img_copy;
 cv::Point top_left;
 std::string mapName;
@@ -54,7 +55,7 @@ bool LoadParameters() {
   // Load parameters from config file
   std::ifstream in(PARAMETER_FILE_PATH);
   if (!in.is_open()) {
-    ROS_ERROR("Failed to open parameter file: %s", PARAMETER_FILE_PATH);
+    ROS_ERROR("Failed to open parameter file: %s", PARAMETER_FILE_PATH.c_str());
     return false;
   }
 
@@ -135,6 +136,15 @@ void roiPointsCallback(const std_msgs::String::ConstPtr& msg) {
     }
 }
 */
+
+void startingPointsCallback(const std_msgs::String::ConstPtr& msg){
+  std::isstringstream iss(msg->data);
+  starting_point.clear();
+  int x,y;
+  while (iss >> x >> y) {
+    starting_point.push_back(cv::Point(x,y));
+  }
+}
 
 void mapNameCallback(const std_msgs::String::ConstPtr& msg) {
     mapName = msg->data; //Save map name
