@@ -19,6 +19,9 @@ MoveManager::MoveManager(ros::NodeHandle& nh) :
     mode_switch_request_client_     = nh_.serviceClient<bumperbot_controller::ModeSwitch>("/robot_controller/mode_switch");           // Service to change robot mode
     get_global_boundary_client_     = nh_.serviceClient<litter_destruction::GlobalBoundaryCenter>("/robot_controller/get_global_boundary"); // Service to get global boundary center from robot controller
 
+    // Initialize service servers
+    cancel_goals_service_ = nh_.advertiseService("/move_manager/cancel_all_goals", &MoveManager::cancelGoalsCallback, this);
+
     ROS_INFO("Waiting for move_base action server...");
     move_base_client_.waitForServer();
     ROS_INFO("Connected to move_base action server.");
@@ -44,6 +47,24 @@ void MoveManager::robotModeCallback(const std_msgs::Int32::ConstPtr& mode_msg)
 
     current_mode_ = static_cast<RobotMode>(mode_msg->data);
 }
+
+
+bool MoveManager::cancelGoalsCallback(std_srvs::Trigger::Request& req, std_srvs::Trigger::Response& res) {
+    try {
+        // Cancel all active goals in move_base
+        move_base_client_.cancelAllGoals();
+        ROS_INFO("MoveManager: Successfully canceled all goals in move_base.");
+        
+        res.success = true;
+        res.message = "All goals successfully canceled.";
+    } catch (const std::exception& e) {
+        ROS_ERROR("MoveManager: Exception while canceling goals: %s", e.what());
+        res.success = false;
+        res.message = "Failed to cancel goals.";
+    }
+    return true;
+}
+
 
 bool MoveManager::navigateToWaypoint(const geometry_msgs::Point& waypoint, double timeout) {
     // Ensure move_base client is available

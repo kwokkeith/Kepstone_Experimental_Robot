@@ -13,6 +13,7 @@
 #include <geometry_msgs/Point.h>
 #include <std_msgs/Int32.h>
 #include <std_srvs/SetBool.h>
+#include <std_srvs/Trigger.h>
 
 enum class RobotMode {
     IDLE            = 1,
@@ -40,6 +41,8 @@ private:
     ros::ServiceClient mode_switch_request_client_;     // Service to change robot mode
     ros::ServiceClient get_global_boundary_client_;     // Service to get global boundary center from robot controller
 
+    ros::ServiceServer cancel_goals_service_;           // Service server to cancel all move base goals
+
     actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> move_base_client_;
 
     RobotMode current_mode_;
@@ -50,6 +53,8 @@ private:
     // Callback functions for the subscribers
     void robotModeCallback(const std_msgs::Int32::ConstPtr& mode_msg);
     bool navigateToWaypoint(const geometry_msgs::Point& waypoint, double timeout = 2.0);
+
+    bool cancelGoalsCallback(std_srvs::Trigger::Request& req, std_srvs::Trigger::Response& res);
 
     void performLitterMode();
     void performCoverageMode();

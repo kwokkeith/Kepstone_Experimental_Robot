@@ -40,11 +40,13 @@ class RobotController:
         rospy.wait_for_service('/litter_manager/get_global_boundary_center')
         rospy.wait_for_service('/republish_global_boundary')
         rospy.wait_for_service('/litter_manager/clear_previous_job')
+        rospy.wait_for_service('/move_manager/cancel_all_goals')
 
         self.initiate_coverage_path = rospy.ServiceProxy('/waypoint_manager/initiate_coverage_path', InitiateCoveragePath)                   # Service to initate the coverage path   
         self.get_global_boundary_center_service = rospy.ServiceProxy('/litter_manager/get_global_boundary_center', GlobalBoundaryCenter)     # Service to get global boundary center
         self.republish_global_boundary = rospy.ServiceProxy('/republish_global_boundary', Trigger)                                           # Service to republish global boundary center marker
         self.clear_previous_litter_job = rospy.ServiceProxy('/litter_manager/clear_previous_job', Trigger)                                   # Service to stop and clear the previous litter job
+        self.cancel_all_goals          = rospy.ServiceProxy('/move_manager/cancel_all_goals', Trigger)
 
         ## Service Servers
         rospy.Service('/robot_controller/initiate_coverage', InitiateCoveragePath, self.handle_initiate_coverage)    # Service server to initiate coverage
@@ -72,6 +74,17 @@ class RobotController:
                 rospy.logwarn(f"Failed to clear the previous job: {clear_job_response.message}")
                 response.success = False
                 response.message = "Failed to clear previous job."
+                return response
+            
+            # Cancel all existing move goals
+            cancel_all_goals_response = self.cancel_all_goals()
+            # Check if successful in canceling all goals
+            if cancel_all_goals_response.success:
+                rospy.loginfo("Successfully canceled all goals.")
+            else:
+                rospy.logwarn("Failed to cancel all goals.")
+                response.success = False
+                response.message = "Failed to cancel existing move goals."
                 return response
 
             # Set the waypoints file path
