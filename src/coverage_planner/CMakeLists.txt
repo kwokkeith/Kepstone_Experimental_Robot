@@ -33,9 +33,14 @@ include_directories(
 # Collect source files
 file(GLOB_RECURSE srcs "src/*.cc" "src/*.cpp")
 file(GLOB_RECURSE hdrs "include/*.h")
+list(REMOVE_ITEM srcs "${CMAKE_CURRENT_SOURCE_DIR}/src/db_publisher_node.cpp")
+
+#Add new subscriber node source file
+set(db_publisher_srcs src/db_publisher_node.cpp)
 
 # Define the ROS node
 add_executable(coverage_planner_node ${srcs} ${hdrs})
+add_executable(db_publisher_node ${db_publisher_srcs})
 
 # Link libraries
 target_link_libraries(coverage_planner_node
@@ -44,6 +49,10 @@ target_link_libraries(coverage_planner_node
   CGAL::CGAL
   CGAL::CGAL_Core
   pthread
+)
+
+target_link_libraries(db_publisher_node
+  ${catkin_LIBRARIES}
 )
 
 # Install launch files

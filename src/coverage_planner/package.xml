@@ -3,7 +3,7 @@
   <name>coverage_planner</name>
   <version>0.0.1</version>
   <description>The Coverage Planner ROS package</description>
-  <maintainer email="junonn@example.com">Your Name</maintainer>
+  <maintainer email="junonn@example.com">Junonn</maintainer>
   <license>BSD</license>
 
   <buildtool_depend>catkin</buildtool_depend>
