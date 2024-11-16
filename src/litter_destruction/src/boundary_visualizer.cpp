@@ -10,7 +10,7 @@ BoundaryVisualizer::BoundaryVisualizer(ros::NodeHandle &nh)
     local_boundary_marker_pub_  = nh.advertise<visualization_msgs::Marker>("local_boundary_marker", 10);
 
     // Initialize service clients to retrieve boundary data
-    get_global_boundary_srv_ = nh.serviceClient<litter_destruction::GlobalBoundaryCenter>("/robot_controller/get_global_boundary_center");
+    get_global_boundary_srv_ = nh.serviceClient<litter_destruction::GlobalBoundaryCenter>("/robot_controller/get_global_boundary");
     get_local_boundary_srv_  = nh.serviceClient<litter_destruction::LocalBoundaryCenter>("/litter_manager/get_local_boundary_center");
     get_robot_mode_srv_      = nh.serviceClient<bumperbot_controller::GetCurrentMode>("/robot_controller/get_current_mode");    
 
@@ -27,6 +27,7 @@ bool BoundaryVisualizer::republishGlobalBoundary(std_srvs::Trigger::Request &req
     bumperbot_controller::GetCurrentMode current_mode_srv;
     if (get_robot_mode_srv_.call(current_mode_srv))
     {
+        // TODO: change the enum mode state to a label
         if (current_mode_srv.response.mode == 3) {
             if (get_global_boundary_srv_.call(global_boundary_srv) && global_boundary_srv.response.valid)
                 {

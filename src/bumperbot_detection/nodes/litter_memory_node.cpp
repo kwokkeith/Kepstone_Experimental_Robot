@@ -27,13 +27,18 @@ LitterMemory::LitterMemory()
 
     // Initialize the service to delete litter by ID
     delete_litter_service_ = nh_.advertiseService("litter_memory/delete_litter", &LitterMemory::deleteLitterCallback, this);
+
+    // Initialize the service to clear all litter
+    clear_memory_service_ = nh_.advertiseService("litter_memory/clear_memory", &LitterMemory::clearMemoryCallback, this);
 }
+
 
 // Helper function to calculate Euclidean distance between two points
 double LitterMemory::calculateDistance(const geometry_msgs::Point& p1, const geometry_msgs::Point& p2)
 {
     return sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2));
 }
+
 
 // Helper function to check if the new litter point is a duplicate
 bumperbot_detection::LitterPoint LitterMemory::isDuplicate(const bumperbot_detection::LitterPoint& new_litter)
@@ -54,6 +59,7 @@ bumperbot_detection::LitterPoint LitterMemory::isDuplicate(const bumperbot_detec
     return new_litter;  // No duplicates found
 }
 
+
 // Helper function to assign a new ID (either recycled or new)
 int LitterMemory::getNewID()
 {
@@ -68,6 +74,7 @@ int LitterMemory::getNewID()
         return current_id_++;  // If no recycled IDs, increment the current ID
     }
 }
+
 
 // Callback to handle detected litter points
 void LitterMemory::litterCallback(const geometry_msgs::PointStamped::ConstPtr& litter_point)
@@ -122,6 +129,7 @@ void LitterMemory::litterCallback(const geometry_msgs::PointStamped::ConstPtr& l
     new_litter_pub_.publish(detected_litter);
 }
 
+
 // Publish all remembered litter points
 void LitterMemory::publishRememberedLitter()
 {
@@ -135,6 +143,7 @@ void LitterMemory::publishRememberedLitter()
 
     litter_pub_.publish(litter_list_msg);
 }
+
 
 // Service callback to delete litter by ID (If deleted the ID gets added into available pool to reuse)
 bool LitterMemory::deleteLitterCallback(bumperbot_detection::DeleteLitter::Request& req, bumperbot_detection::DeleteLitter::Response& res)
@@ -169,6 +178,23 @@ bool LitterMemory::deleteLitterCallback(bumperbot_detection::DeleteLitter::Reque
     return true;
 }
 
+
+// Service callback to clear the litter memory of any litters (reset the memory)
+bool LitterMemory::clearMemoryCallback(std_srvs::Trigger::Request& req, std_srvs::Trigger::Response& res) {
+    remembered_litter_.clear();              // Clear the remembered litter list
+    current_id_ = 0;                         // Reset the current id to allocate
+    available_ids_ = std::queue<int>();      // Reset the available id queue
+
+    publishRememberedLitter();               // Republish the new cleared litter memory 
+
+    // Response of service
+    ROS_INFO("Cleared all remembered litter.");
+    res.success = true;
+    res.message = "Cleared all remembered litter.";
+    return true;
+}
+
+
 bool LitterMemory::getLitterListCallback(bumperbot_detection::GetLitterList::Request& req,
                                          bumperbot_detection::GetLitterList::Response& res)
 {
@@ -180,6 +206,7 @@ bool LitterMemory::getLitterListCallback(bumperbot_detection::GetLitterList::Req
 
     return true;  // Return success
 }
+
 
 bool LitterMemory::addLitterCallback(bumperbot_detection::AddLitter::Request& req,
                                      bumperbot_detection::AddLitter::Response& res)

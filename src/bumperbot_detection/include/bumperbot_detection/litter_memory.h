@@ -13,30 +13,27 @@
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <vector>
 #include <queue>    // Recycle ID
+#include <std_srvs/Trigger.h>
 
 class LitterMemory
 {
 public:
     LitterMemory();
     ~LitterMemory() {}
-
     // Callback function to handle detected litter points
     void litterCallback(const geometry_msgs::PointStamped::ConstPtr& litter_point);
-
     // Publish all remembered litter points
     void publishRememberedLitter();
-
     // Service callback to get memory of litter
     bool getLitterListCallback(bumperbot_detection::GetLitterList::Request& req,
                                 bumperbot_detection::GetLitterList::Response& res);
-
     // Service callback to add litter to memory
     bool addLitterCallback(bumperbot_detection::AddLitter::Request& req,
                                      bumperbot_detection::AddLitter::Response& res);
-
     // Service callback to delete litter by ID
     bool deleteLitterCallback(bumperbot_detection::DeleteLitter::Request& req, bumperbot_detection::DeleteLitter::Response& res);
-
+    // Service callback to clear litter memory
+    bool clearMemoryCallback(std_srvs::Trigger::Request& req, std_srvs::Trigger::Response& res);
 
 private:
     ros::NodeHandle nh_;          
@@ -47,11 +44,11 @@ private:
     ros::ServiceServer delete_litter_service_;  // Service to delete litter
     ros::ServiceServer get_litter_service_; // Service to get litter from memory
     ros::ServiceServer add_litter_service_; // Service to add litter to memory
+    ros::ServiceServer clear_memory_service_; // Service to clear the litter memory
 
     // TF2 Buffer and Listener to manage transforms
     tf2_ros::Buffer tf_buffer_;
     tf2_ros::TransformListener tf_listener_;  // Initialize with the buffer in constructor
-
 
     // Vector to store all remembered litter points
     std::vector<bumperbot_detection::LitterPoint> remembered_litter_;
