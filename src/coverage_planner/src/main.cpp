@@ -762,9 +762,9 @@ int main(int argc, char** argv) {
   }
 
   cv::Point p1, p2;
-  cv::namedWindow("cover", cv::WINDOW_NORMAL);
-  cv::imshow("cover", original_img);
-  cv::waitKey();
+  //cv::namedWindow("cover", cv::WINDOW_NORMAL);
+  //cv::imshow("cover", original_img);
+  //cv::waitKey();
 
   // Open waypoint file to write coordinates
   std::ofstream out(WAYPOINT_COORDINATE_FILE_PATH);
@@ -818,8 +818,8 @@ for (size_t i = 1; i < way_points.size(); ++i) {
       }
     }
 
-    cv::namedWindow("cover", cv::WINDOW_NORMAL);
-    cv::imshow("cover", original_img);
+    //cv::namedWindow("cover", cv::WINDOW_NORMAL);
+    //cv::imshow("cover", original_img);
     //        cv::waitKey(50);
     cv::line(original_img, p1, p2, cv::Scalar(200, 200, 200));
 
