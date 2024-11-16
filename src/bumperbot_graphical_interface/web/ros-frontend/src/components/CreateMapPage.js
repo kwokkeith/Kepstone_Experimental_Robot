@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './CreateMapPage.css';
 import ROSLIB from 'roslib';
-import { coverage_listener, publishPoint } from '../rosService';
+import { coverage_listener, publishPoint, publishStartPoint} from '../rosService';
 
 const CreateMapPage = ({ mapName }) => {
   // ==========================
@@ -11,6 +11,7 @@ const CreateMapPage = ({ mapName }) => {
   const imageRef = useRef(null);
   const canvasRef = useRef(null);
   const [points, setPoints] = useState([]);
+  const [startpoints, setStartPoints] = useState(false);
   const [coverageListener, setcoverageListener] = useState('');
   const [showButtonContainer, setShowButtonContainer] = useState(false);
 
@@ -64,6 +65,7 @@ const CreateMapPage = ({ mapName }) => {
   }, [coverageListener]);
 
   useEffect(() => {
+    // If 4 points are drawn, publish the points to the ROS topic
     if (points.length === 4){
       // Clear the canvas and redraw the image
       const canvas = canvasRef.current;
@@ -76,11 +78,29 @@ const CreateMapPage = ({ mapName }) => {
       const pointsStr = points.map(p=> `${p.x} ${p.y}`).join('\n');
       const message = new ROSLIB.Message({ data: pointsStr });
       setPoints([]); // Reset all 4 points drawn
+      setStartPoints(true);
 
       //Publish the points to the ROS topic under /roi_points
       pointPublisher.publish(message);
     } 
   }, [points]);
+
+  useEffect(() => {
+    if (startpoints && points.length === 1){
+      // Clear the canvas and redraw the image
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(imageRef.current, 0, 0, canvas.width, canvas.height);
+
+      const StartPointPublisher = publishStartPoint();
+      const startPointsStr = points.map(p=> `${p.x} ${p.y}`).join('\n');
+      const startPointsMessage = new ROSLIB.Message({ data: startPointsStr });
+      setPoints([]);
+      setStartPoints(false);
+      StartPointPublisher.publish(startPointsMessage);
+    }
+  },[points]);
 
   // ==========================
   // FUNCTIONS

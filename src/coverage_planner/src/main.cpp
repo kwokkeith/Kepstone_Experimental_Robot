@@ -37,11 +37,12 @@ uint start_x;
 uint start_y;
 uint subdivision_dist;
 std::vector<cv::Point> selected_points;
-std::vector<cv::Point> starting_point;
 cv::Mat img_copy;
 cv::Point top_left;
 std::string mapName;
 bool mapName_received = false;
+
+Point_2 starting_point (0,0);
 
 bool LoadParameters() {
   // Print the current working directory
@@ -124,11 +125,10 @@ void roiPointsCallback(const std_msgs::String::ConstPtr& msg) {
 
 void startingPointsCallback(const std_msgs::String::ConstPtr& msg){
   std::istringstream iss(msg->data);
-  starting_point.clear();
-  int x,y;
-  while (iss >> x >> y) {
-    starting_point.push_back(cv::Point(x,y));
-  }
+  int x, y;
+  iss >> x >> y;
+  starting_point = Point_2(x, y);
+  // /ROS_INFO("Received starting point: (%d, %d)", x, y);
 }
 
 void mapNameCallback(const std_msgs::String::ConstPtr& msg) {
@@ -189,7 +189,6 @@ int main(int argc, char** argv) {
   }
 
   ros::Subscriber sub = nh.subscribe("/new_map_name", 1, mapNameCallback);
-  //ros::Subscriber start_point_sub = nh.subscribe("/start_point",1000, startingPointsCallback);
   while (ros::ok() && !mapName_received) {
     ros::spinOnce();
     ros::Duration(0.1).sleep(); //Sleep for 100 ms
@@ -207,8 +206,8 @@ int main(int argc, char** argv) {
     // cv::setMouseCallback("Select 4 points", mouseCallback, nullptr);
     // cv::waitKey(0);
     // cv::destroyWindow("Select 4 points");
-    
-    ros::Subscriber roi_sub = nh.subscribe("/roi_points",1000, roiPointsCallback); //only use this if ROI is selected from webapp!!
+
+    ros::Subscriber roi_sub = nh.subscribe("/roi_points",4, roiPointsCallback); //only use this if ROI is selected from webapp!!
     while (selected_points.size() < 4 && ros::ok()) {
       ros::spinOnce();
       ros::Duration(0.1).sleep(); //Sleep for 100 ms
@@ -503,8 +502,15 @@ int main(int argc, char** argv) {
   Point_2 start;
   if (mouse_select_start) {
     std::cout << "Select starting point" << std::endl;
-    //start = getStartingPoint(original_img);
-    start = getStartingPoint(poly_canvas);
+
+    ros::Subscriber start_point_sub = nh.subscribe("/start_point",1, startingPointsCallback);
+    while (starting_point.x() == 0 && starting_point.y() == 0 && ros::ok()) {
+      ros::spinOnce();
+      ros::Duration(0.5).sleep(); //Sleep for 100 ms
+    };
+    //std::cout << "Starting point selected: (" << starting_point.x() << ", " << starting_point.y() << ")" << std::endl;
+    start = starting_point;
+    //start = getStartingPoint(poly_canvas);
   } else {
     start = Point_2(start_x, start_y);
     std::cout << "Starting point configured: (" << start.x() << ", " << start.y() << ")" << std::endl;
