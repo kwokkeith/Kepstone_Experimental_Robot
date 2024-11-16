@@ -34,7 +34,7 @@ export function publishPoint() {
   });
 
   ros.on('connection', function() {
-    console.log('Point publiisher is now connected to websocket server.');
+    console.log('Point publisher is now connected to websocket server.');
   });
   ros.on('error', function(error) {
     console.error('Error connecting to ROSBridge for the point publisher:', error);
@@ -50,6 +50,31 @@ export function publishPoint() {
   });
 
   return pointPublisher;
+}
+
+export function publishStartPoint() {
+  // Initialize ROS connection
+  var ros = new ROSLIB.Ros({
+    url: 'ws://localhost:9090'
+  });
+
+  ros.on('connection', function() {
+    console.log('Start Point publisher is now connected to websocket server.');
+  });
+  ros.on('error', function(error) {
+    console.error('Error connecting to ROSBridge for the point publisher:', error);
+  });
+  ros.on('close', function() {
+    console.log('Start Point Publisher is disconnected from ROSBridge');
+  });
+
+  const StartPointPublisher = new ROSLIB.Topic({
+    ros: ros,
+    name: '/start_point',
+    messageType: 'std_msgs/String'
+  });
+
+  return StartPointPublisher;
 }
 
 export function publishmapName({ mapName }) {
