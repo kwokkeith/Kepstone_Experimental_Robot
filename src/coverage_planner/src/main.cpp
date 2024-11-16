@@ -37,11 +37,12 @@ uint start_x;
 uint start_y;
 uint subdivision_dist;
 std::vector<cv::Point> selected_points;
-std::vector<cv::Point> starting_point;
 cv::Mat img_copy;
 cv::Point top_left;
 std::string mapName;
 bool mapName_received = false;
+
+Point_2 starting_point (0,0);
 
 bool LoadParameters() {
   // Print the current working directory
@@ -113,7 +114,6 @@ bool LoadParameters() {
   return true;
 }
 
-/* Only used if ROI is selected on webapp!!
 void roiPointsCallback(const std_msgs::String::ConstPtr& msg) {
     std::istringstream iss(msg->data);
     selected_points.clear();
@@ -121,29 +121,14 @@ void roiPointsCallback(const std_msgs::String::ConstPtr& msg) {
     while (iss >> x >> y) {
         selected_points.push_back(cv::Point(x, y));
     }
-
-    if (selected_points.size() == 4) {
-        std::ofstream outFile(REGION_OF_INTEREST_FILE_PATH);
-        if (outFile.is_open()) {
-            for (const auto& point : selected_points) {
-                outFile << point.x << " " << point.y << "\n";
-            }
-            outFile.close();
-            std::cout << "ROI points are saved to roi_points.txt" << std::endl;
-        } else {
-            std::cerr << "Unable to open file" << std::endl;
-        }
-    }
 }
-*/
 
 void startingPointsCallback(const std_msgs::String::ConstPtr& msg){
-  std::isstringstream iss(msg->data);
-  starting_point.clear();
-  int x,y;
-  while (iss >> x >> y) {
-    starting_point.push_back(cv::Point(x,y));
-  }
+  std::istringstream iss(msg->data);
+  int x, y;
+  iss >> x >> y;
+  starting_point = Point_2(x, y);
+  // /ROS_INFO("Received starting point: (%d, %d)", x, y);
 }
 
 void mapNameCallback(const std_msgs::String::ConstPtr& msg) {
@@ -152,14 +137,14 @@ void mapNameCallback(const std_msgs::String::ConstPtr& msg) {
     mapName_received = true;
 }
 
-void mouseCallback(int event, int x, int y, int flags, void* param) {
-  if (event == cv::EVENT_LBUTTONDOWN && selected_points.size() < 4) {
-    selected_points.push_back(cv::Point(x, y));
-    std::cout << "Point"<< selected_points.size() << ": " << x << y << std::endl;
-    cv::circle(img_copy, cv::Point(x, y), 2, cv::Scalar(0, 0, 255), -1);
-    cv::imshow("Select 4 points", img_copy);
-  }
-}
+// void mouseCallback(int event, int x, int y, int flags, void* param) {
+//   if (event == cv::EVENT_LBUTTONDOWN && selected_points.size() < 4) {
+//     selected_points.push_back(cv::Point(x, y));
+//     std::cout << "Point"<< selected_points.size() << ": " << x << y << std::endl;
+//     cv::circle(img_copy, cv::Point(x, y), 2, cv::Scalar(0, 0, 255), -1);
+//     cv::imshow("Select 4 points", img_copy);
+//   }
+// }
 
 // Function to crop and transform the image based on selected points
 std::pair<cv::Mat, cv::Point> cropAndTransform(const cv::Mat& img) {
@@ -203,7 +188,6 @@ int main(int argc, char** argv) {
     return EXIT_FAILURE;
   }
 
-  //ros::Subscriber sub = nh.subscribe("/roi_points",1000, roiPointsCallback); //only use this if ROI is selected from webapp!!
   ros::Subscriber sub = nh.subscribe("/new_map_name", 1, mapNameCallback);
   while (ros::ok() && !mapName_received) {
     ros::spinOnce();
@@ -218,16 +202,17 @@ int main(int argc, char** argv) {
   img_copy = img.clone();
 
   if(crop_region){
-    cv::imshow("Select 4 points", img_copy);
-    cv::setMouseCallback("Select 4 points", mouseCallback, nullptr);
-    cv::waitKey(0);
-    cv::destroyWindow("Select 4 points");
+    // cv::imshow("Select 4 points", img_copy);
+    // cv::setMouseCallback("Select 4 points", mouseCallback, nullptr);
+    // cv::waitKey(0);
+    // cv::destroyWindow("Select 4 points");
 
-    /* Only use this if ROI is selected from webapp!!
+    ros::Subscriber roi_sub = nh.subscribe("/roi_points",4, roiPointsCallback); //only use this if ROI is selected from webapp!!
     while (selected_points.size() < 4 && ros::ok()) {
       ros::spinOnce();
-    }
-    */
+      ros::Duration(0.1).sleep(); //Sleep for 100 ms
+    };
+    
     auto crop = cropAndTransform(img);
     cv::Mat result = crop.first;
     top_left=crop.second; //redundant?
@@ -517,8 +502,15 @@ int main(int argc, char** argv) {
   Point_2 start;
   if (mouse_select_start) {
     std::cout << "Select starting point" << std::endl;
-    //start = getStartingPoint(original_img);
-    start = getStartingPoint(poly_canvas);
+
+    ros::Subscriber start_point_sub = nh.subscribe("/start_point",1, startingPointsCallback);
+    while (starting_point.x() == 0 && starting_point.y() == 0 && ros::ok()) {
+      ros::spinOnce();
+      ros::Duration(0.5).sleep(); //Sleep for 100 ms
+    };
+    //std::cout << "Starting point selected: (" << starting_point.x() << ", " << starting_point.y() << ")" << std::endl;
+    start = starting_point;
+    //start = getStartingPoint(poly_canvas);
   } else {
     start = Point_2(start_x, start_y);
     std::cout << "Starting point configured: (" << start.x() << ", " << start.y() << ")" << std::endl;
@@ -770,9 +762,9 @@ int main(int argc, char** argv) {
   }
 
   cv::Point p1, p2;
-  cv::namedWindow("cover", cv::WINDOW_NORMAL);
-  cv::imshow("cover", original_img);
-  cv::waitKey();
+  //cv::namedWindow("cover", cv::WINDOW_NORMAL);
+  //cv::imshow("cover", original_img);
+  //cv::waitKey();
 
   // Open waypoint file to write coordinates
   std::ofstream out(WAYPOINT_COORDINATE_FILE_PATH);
@@ -826,8 +818,8 @@ for (size_t i = 1; i < way_points.size(); ++i) {
       }
     }
 
-    cv::namedWindow("cover", cv::WINDOW_NORMAL);
-    cv::imshow("cover", original_img);
+    //cv::namedWindow("cover", cv::WINDOW_NORMAL);
+    //cv::imshow("cover", original_img);
     //        cv::waitKey(50);
     cv::line(original_img, p1, p2, cv::Scalar(200, 200, 200));
 
