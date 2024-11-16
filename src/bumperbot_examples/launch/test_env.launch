@@ -42,8 +42,7 @@
     </include>
 
     <!-- Launch robot controller -->
-    <node name="robot_controller_node" pkg="bumperbot_controller" type="robot_controller_node.py" output="screen"/>
-
+    <include file="$(find bumperbot_controller)/launch/robot_controller.launch" />
 
     <!-- Launch navigation (amcl & move base node) -->
     <include file="$(find navigation)/launch/navigation.launch" >
