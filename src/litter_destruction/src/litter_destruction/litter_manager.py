@@ -5,21 +5,19 @@ import math
 from geometry_msgs.msg import Point, PoseStamped
 from bumperbot_detection.msg import  LitterPoint, DetectedLitterPoint
 from std_msgs.msg import Header
-from std_srvs.srv import Trigger
-from nav_msgs.srv import GetPlan
+from std_srvs.srv import Trigger, TriggerResponse
 from navfn.srv import MakeNavPlan, MakeNavPlanRequest
 from navigation.srv import GetAmclPose
 from bumperbot_detection.srv import DeleteLitterRequest, DeleteLitter, GetLitterList
-from visualization_msgs.msg import Marker
 from litter_destruction.srv import GlobalBoundaryCenter, GlobalBoundaryCenterResponse
 from litter_destruction.srv import LocalBoundaryCenter, LocalBoundaryCenterResponse
 from litter_destruction.srv import GetLitterSet, GetLitterSetResponse
 from litter_destruction.srv import GetNextLitter, GetNextLitterResponse
-from litter_destruction.srv import RemoveLitter, RemoveLitterRequest, RemoveLitterResponse
+from litter_destruction.srv import RemoveLitter, RemoveLitterResponse
 from litter_destruction.srv import HasLitterToClear, HasLitterToClearResponse
 from litter_destruction.srv import GetNextTargetLitter, GetNextTargetLitterResponse
 from bumperbot_controller.srv import ModeSwitch, ModeSwitchRequest
-from bumperbot_controller.srv import GetCurrentMode, GetCurrentModeResponse
+from bumperbot_controller.srv import GetCurrentMode
 
 class LitterManager:
     def __init__(self, distance_threshold=5, min_local_radius=1, max_local_radius=3):
@@ -51,6 +49,7 @@ class LitterManager:
         rospy.wait_for_service('/republish_global_boundary')
         rospy.wait_for_service('/republish_local_boundary')
         rospy.wait_for_service('/robot_controller/get_current_mode')
+        rospy.wait_for_service('/litter_memory/clear_memory')
 
         self.make_plan_srv              = rospy.ServiceProxy(self.planner_service, MakeNavPlan)                                     # Define service client to make plans using planner_only move_base node (not actual move_base)
         self.get_litter_list_srv        = rospy.ServiceProxy('/litter_memory/get_litter_list', GetLitterList)                       # Define the service client for getting litter list
@@ -58,9 +57,10 @@ class LitterManager:
         self.get_pose_srv               = rospy.ServiceProxy('/get_amcl_pose', GetAmclPose)                                         # Define service client for getting amcl pose
         self.req_mode                   = rospy.ServiceProxy('/robot_controller/mode_switch', ModeSwitch)                           # Define service client for changing robot controller to litter mode
         self.get_global_boundary_center = rospy.ServiceProxy('/robot_controller/get_global_boundary_center', GlobalBoundaryCenter)  # Define service client for getting global boundary centre from robot controller
-        self.republish_global_boundary  = rospy.ServiceProxy('/republish_global_boundary', Trigger)
-        self.republish_local_boundary   = rospy.ServiceProxy('/republish_local_boundary', Trigger)
-        self.get_robot_mode             = rospy.ServiceProxy('/robot_controller/get_current_mode', GetCurrentMode)
+        self.republish_global_boundary  = rospy.ServiceProxy('/republish_global_boundary', Trigger)                                 # Define service client to replot the global boundary RVIZ marker
+        self.republish_local_boundary   = rospy.ServiceProxy('/republish_local_boundary', Trigger)                                  # Define service client to replot the local boundary RVIZ marker
+        self.get_robot_mode             = rospy.ServiceProxy('/robot_controller/get_current_mode', GetCurrentMode)                  # Define service client to get robot current mode
+        self.clear_litter_memory_srv    = rospy.ServiceProxy('/litter_memory/clear_memory', Trigger)                                # Define service client to clear litter memory
 
         ## Service Servers
         rospy.Service("/litter_manager/get_global_boundary_center", GlobalBoundaryCenter, self.handle_get_global_boundary_center)   # Define service server to get global boundary center
@@ -70,6 +70,7 @@ class LitterManager:
         rospy.Service("/litter_manager/has_litter_to_clear", HasLitterToClear, self.handle_has_litter_to_clear)                     # Define service server to check if there is still litter in set
         rospy.Service("/litter_manager/delete_litter", RemoveLitter, self.handle_remove_litter)                                     # Define service server to delete litter from litter manager
         rospy.Service("/litter_manager/next_waypoint", GetNextTargetLitter, self.handle_get_next_target_litter)                     # Define service server to get the next target litter
+        rospy.Service("/litter_manager/clear_previous_job", Trigger, self.handle_clear_previous_job)                                # Define service server to clear previous job
 
 
     def handle_get_global_boundary_center(self, req):
@@ -181,6 +182,39 @@ class LitterManager:
         response = RemoveLitterResponse()
         response.success = self.delete_litter(req.litter)
         return response 
+
+
+    def handle_clear_previous_job(self, req):
+        """Service callback to stop and clear the previous litter picking job."""
+        self.global_boundary_center = None  # Reset the global boundary center
+        self.local_boundary_center = None   # Reset the local boundary center
+        self.set_litter = set()             # Reset the set litter
+        
+        # Clear litter memory by calling the service
+        try:
+            response = self.clear_litter_memory_srv()
+            if not response.success:
+                rospy.logwarn("Failed to clear litter memory.")
+                return TriggerResponse(
+                    success=False,
+                    message="Failed to clear litter memory."
+                )
+        except rospy.ServiceException as e:
+            rospy.logerr(f"Service call to clear litter memory failed: {e}")
+            return TriggerResponse(
+                success=False,
+                message="Service call to clear litter memory failed."
+            )
+        
+        # Republish the boundaries
+        self.republish_global_boundary()
+        self.republish_local_boundary()
+
+        return TriggerResponse(
+            success=True,
+            message="Previous litter picking job cleared successfully"
+        )
+
 
 
     def request_mode_switch(self, mode):

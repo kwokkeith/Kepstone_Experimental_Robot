@@ -39,10 +39,12 @@ class RobotController:
         rospy.wait_for_service('/waypoint_manager/initiate_coverage_path')
         rospy.wait_for_service('/litter_manager/get_global_boundary_center')
         rospy.wait_for_service('/republish_global_boundary')
+        rospy.wait_for_service('/litter_manager/clear_previous_job')
 
         self.initiate_coverage_path = rospy.ServiceProxy('/waypoint_manager/initiate_coverage_path', InitiateCoveragePath)                   # Service to initate the coverage path   
         self.get_global_boundary_center_service = rospy.ServiceProxy('/litter_manager/get_global_boundary_center', GlobalBoundaryCenter)     # Service to get global boundary center
-        self.republish_global_boundary = rospy.ServiceProxy('/republish_global_boundary', Trigger)
+        self.republish_global_boundary = rospy.ServiceProxy('/republish_global_boundary', Trigger)                                           # Service to republish global boundary center marker
+        self.clear_previous_litter_job = rospy.ServiceProxy('/litter_manager/clear_previous_job', Trigger)                                   # Service to stop and clear the previous litter job
 
         ## Service Servers
         rospy.Service('/robot_controller/initiate_coverage', InitiateCoveragePath, self.handle_initiate_coverage)    # Service server to initiate coverage
@@ -60,6 +62,18 @@ class RobotController:
         """Service handler to initiate coverage path"""
         response = InitiateCoveragePathResponse()
         try:
+            # Stop the previous litter picking job
+            clear_job_response = self.clear_previous_litter_job()
+
+            # Check if successful in stopping previous litter picking job
+            if clear_job_response.success:
+                rospy.loginfo(f"Successfully cleared the previous job: {clear_job_response.message}")
+            else:
+                rospy.logwarn(f"Failed to clear the previous job: {clear_job_response.message}")
+                response.success = False
+                response.message = "Failed to clear previous job."
+                return response
+
             # Set the waypoints file path
             request = InitiateCoveragePathRequest(waypoints_file=req.waypoints_file)
 

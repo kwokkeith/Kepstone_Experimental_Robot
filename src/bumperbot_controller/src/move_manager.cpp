@@ -4,7 +4,7 @@ MoveManager::MoveManager(ros::NodeHandle& nh) :
         nh_(nh),
         move_base_client_("move_base", true),
         current_mode_(RobotMode::IDLE), // Initial mode of robot (IDLE)
-        coverage_complete_(false)
+        coverage_complete_(true)
 {
     // Initialize subscribers to the robot mode
     robot_mode_sub_ = nh_.subscribe("robot_controller/robot_mode", 10, &MoveManager::robotModeCallback, this);
@@ -167,6 +167,7 @@ void MoveManager::performLitterMode() {
 void MoveManager::performCoverageMode() {
     ROS_INFO("Performing single step in coverage mode...");
 
+    coverage_complete_ = false;
     // Call the service to get the next coverage waypoint
     navigation::GetNextWaypoint next_waypoint_srv;
     if (!get_next_waypoint_client_.call(next_waypoint_srv))
@@ -225,12 +226,17 @@ void MoveManager::performTransition() {
                 ROS_INFO_STREAM("Robot failed to return to global center, retrying " << count + 1 << " of " << retry_count);
             }
 
-            // Check if robot is still in transition mode
-            // If it is not then break
+            // Check if robot is still in transition mode, if it is not then break
             if (current_mode_ != RobotMode::TRANSITION) break;
         }
         ROS_ERROR_STREAM("Robot failed to reach global center after " << retry_count << " tries!");
     }
+    // Robot was not in COVERAGE mode previously
+    else {
+        // TODO: Add other logic for when you transition not to a COVERAGE mode
+        ModeSwitchRequest(RobotMode::IDLE);
+    }
+
 }
 
 // HELPER Functions
