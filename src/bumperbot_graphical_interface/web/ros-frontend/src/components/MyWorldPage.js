@@ -7,6 +7,7 @@ const MyWorldPage = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
+    // Fetch data from the sqlite3 server API
     fetch('http://localhost:5000/api/data')
       .then((response) => response.json())
       .then((result) => setData(result.data))
