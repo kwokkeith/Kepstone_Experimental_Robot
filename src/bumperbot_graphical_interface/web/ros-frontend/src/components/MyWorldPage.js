@@ -1,11 +1,18 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './MyWorldPage.css'; // Import the CSS file
 
 const MyWorldPage = () => {
   const canvasRef = useRef(null);
   const imageRef = useRef(null);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
+    // Fetch data from the sqlite3 server API
+    fetch('http://localhost:5000/api/data')
+      .then((response) => response.json())
+      .then((result) => setData(result.data))
+      .catch((error) => console.error('Error fetching data:', error));
+
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     const image = imageRef.current;
