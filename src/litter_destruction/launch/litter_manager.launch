@@ -4,32 +4,6 @@
     <arg name="odom_topic" default="/odom" />
     <arg name="move_forward_only" default="true"/>
 
-    <!-- Navfn Node for Path Planning Only -->
-    <node name="navfn_planner" pkg="navfn" type="navfn_node" output="screen" ns="planner_only">
-        <!-- Remap the global costmap to use move_base's global costmap -->
-        <remap from="/planner_only/global_costmap/costmap" to="/move_base/global_costmap/costmap" />
-        <remap from="/planner_only/global_costmap/costmap_updates" to="/move_base/global_costmap/costmap_updates" />
-        <remap from="/planner_only/global_costmap/footprint" to="/move_base/global_costmap/footprint" />
-
-        <!-- Set Up Required Parameters for Costmaps -->
-        <rosparam file="$(find navigation)/config/common_costmap.yaml" command="load" ns="global_costmap" />
-        <rosparam file="$(find navigation)/config/common_costmap.yaml" command="load" ns="local_costmap" />
-        <rosparam file="$(find navigation)/config/local_costmap.yaml" command="load" />
-        <rosparam file="$(find navigation)/config/global_costmap.yaml" command="load" />
-
-        <rosparam file="$(find navigation)/config/move_base.yaml" command="load" />
-        <rosparam file="$(find navigation)/config/dwa_planner.yaml" command="load" />
-        
-        <param name="DWAPlannerROS/min_vel_x" value="0.0" if="$(arg move_forward_only)" />
-
-        <!-- Disable cmd_vel to prevent any actual movement -->
-        <remap from="cmd_vel" to="/planner_only/dummy_cmd_vel"/>
-
-        <!-- Define Planner Specific Parameters -->
-        <param name="allow_unknown" value="true" />
-        <param name="tolerance" value="0.5" />
-    </node>
-
     <!-- Litter Manager Node -->
     <node name="litter_manager_node" pkg="litter_destruction" type="litter_manager_node.py" output="screen">
         <param name="distance_threshold" value="2.0" />
