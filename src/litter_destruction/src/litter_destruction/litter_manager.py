@@ -6,7 +6,7 @@ from geometry_msgs.msg import Point, PoseStamped
 from bumperbot_detection.msg import  LitterPoint, DetectedLitterPoint
 from std_msgs.msg import Header
 from std_srvs.srv import Trigger, TriggerResponse
-from navfn.srv import MakeNavPlan, MakeNavPlanRequest
+from nav_msgs.srv import GetPlan, GetPlanRequest
 from navigation.srv import GetAmclPose
 from bumperbot_detection.srv import DeleteLitterRequest, DeleteLitter, GetLitterList
 from litter_destruction.srv import GlobalBoundaryCenter, GlobalBoundaryCenterResponse
@@ -31,7 +31,6 @@ class LitterManager:
         self.min_local_radius = min_local_radius      # Min radius of local boundary
         self.max_local_radius = max_local_radius      # Max radius of local boundary
         self.local_boundary_radius = 0                # Radius of local boundary
-        self.planner_service = "/planner_only/navfn_planner/make_plan"
         self.next_litter = None                       # To store the next litter to continuously publish
 
         ## Publisher
@@ -40,7 +39,6 @@ class LitterManager:
         rospy.Subscriber("/litter_memory/new_litter", DetectedLitterPoint, self.detection_callback)
         
         ## Service Clients
-        rospy.wait_for_service(self.planner_service)
         rospy.wait_for_service('/litter_memory/get_litter_list')
         rospy.wait_for_service('/litter_memory/delete_litter')
         rospy.wait_for_service('/get_amcl_pose')
@@ -50,8 +48,9 @@ class LitterManager:
         rospy.wait_for_service('/republish_local_boundary')
         rospy.wait_for_service('/robot_controller/get_current_mode')
         rospy.wait_for_service('/litter_memory/clear_memory')
+        rospy.wait_for_service('/move_base/make_plan')
 
-        self.make_plan_srv              = rospy.ServiceProxy(self.planner_service, MakeNavPlan)                                     # Define service client to make plans using planner_only move_base node (not actual move_base)
+        self.make_plan_srv              = rospy.ServiceProxy('/move_base/make_plan', GetPlan)                                       # Define service to make a plan to calculate distance to litter using NavStack goals
         self.get_litter_list_srv        = rospy.ServiceProxy('/litter_memory/get_litter_list', GetLitterList)                       # Define the service client for getting litter list
         self.delete_litter_srv          = rospy.ServiceProxy('/litter_memory/delete_litter', DeleteLitter)                          # Define the service client for deleting litter
         self.get_pose_srv               = rospy.ServiceProxy('/get_amcl_pose', GetAmclPose)                                         # Define service client for getting amcl pose
@@ -430,35 +429,40 @@ class LitterManager:
 
         # Make a plan request to nav planner
         try:
-            rospy.loginfo("Getting distance to litter using ROS Planner")
-            plan_request = MakeNavPlanRequest()
+            rospy.loginfo("Getting distance to litter using ROS Planner (move_base/make_plan)")
+            plan_request = GetPlanRequest()
             plan_request.start = start
             plan_request.goal = goal
+            plan_request.tolerance = 0.5
+
             # Call the navfn service
             plan_response = self.make_plan_srv(plan_request)
 
-            # Check if a valid path was returned
-            if not plan_response.path:
-                rospy.logwarn("No path returned by the planner; returning infinite distance.")
-                return float('inf')
+            # Extract plan
+            plan_poses = plan_response.plan.poses
 
-            plan = plan_response.path
-            distance = self.calculate_path_distance(plan)
-            rospy.loginfo(f"Distance from \n{start.pose.position} to \n{goal.pose.position}\n = {distance}")
-            #rospy.loginfo(f"\n\nset_litter: {self.set_litter}")
+            if not plan_poses:
+                rospy.logwarn("No path returned by move_base; returning infinite distance.")
+                return float('inf')
+            
+            # Calculate distance
+            distance = self.calculate_path_distance(plan_poses)
+
+            rospy.loginfo(f"Distance from {start.pose.position} to {goal.pose.position} = {distance}")
             return distance 
+        
         except rospy.ROSException as e:
-            rospy.logwarn(f"Service {self.planner_service} is unavailable or timed out.")
+            rospy.logwarn(f"Service /move_base/make_plan is unavailable or timed out: {e}")
             return float('inf')
 
 
-    def calculate_path_distance(self, plan):
+    def calculate_path_distance(self, plan_poses):
         """Calculates the path distance of a plan"""
         # Sum distances between consecutive waypoints in the plan
         total_distance = 0.0
-        for i in range(1, len(plan)):
-            prev = plan[i - 1].pose.position
-            curr = plan[i].pose.position
+        for i in range(1, len(plan_poses)):
+            prev = plan_poses[i - 1].pose.position
+            curr = plan_poses[i].pose.position
             segment_distance = self.calculate_euclidean_distance(prev, curr)
             total_distance += segment_distance
         return total_distance
