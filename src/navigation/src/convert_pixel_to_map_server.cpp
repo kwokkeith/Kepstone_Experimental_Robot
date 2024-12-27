@@ -46,8 +46,12 @@ int main(int argc, char **argv)
     // Load the YAML map file
     Utils::loadMapYaml(map_yaml_path_, map_resolution_, map_origin_x_, map_origin_y_);
 
+    // Get Global parameter for topic/services
+    std::string convert_pixel_to_map_svc_srv_;
+    nh.getParam("/navigation/services/convert_pixel_to_map", convert_pixel_to_map_svc_srv_);
+
     // Advertise the service
-    ros::ServiceServer service = nh.advertiseService("convert_pixel_to_map", convertPixelToMap);
+    ros::ServiceServer service = nh.advertiseService(convert_pixel_to_map_svc_srv_, convertPixelToMap);
 
     ROS_INFO("Service ready to convert pixel to map coordinates.");
 

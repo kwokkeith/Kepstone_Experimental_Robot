@@ -10,9 +10,15 @@ PixelPositionPublisher::PixelPositionPublisher(const ros::NodeHandle &nh, const 
     // Load the YAML map file
     Utils::loadMapYaml(map_yaml_path_, map_resolution_, map_origin_x_, map_origin_y_);
 
+    // Get Global parameter for topic/services
+    std::string amcl_pose_topic_sub_;
+    nh_.getParam("/navigation/topics/get_amcl_pose", amcl_pose_topic_sub_);
+    std::string robot_pixel_position_topic_pub_;
+    nh_.getParam("/navigation/topics/robot_pixel_pose", robot_pixel_position_topic_pub_);
+
     // Initialize publisher and subscriber
-    amcl_pos_sub_ = nh_.subscribe("amcl_pose", 10, &PixelPositionPublisher::msgCallback, this);
-    pixel_pub_ = nh_.advertise<geometry_msgs::Point>("robot_pixel_position", 10);
+    amcl_pos_sub_ = nh_.subscribe(amcl_pose_topic_sub_, 10, &PixelPositionPublisher::msgCallback, this);
+    pixel_pub_ = nh_.advertise<geometry_msgs::Point>(robot_pixel_position_topic_pub_, 10);
 }
 
 

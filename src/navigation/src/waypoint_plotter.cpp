@@ -20,12 +20,32 @@ int main(int argc, char** argv) {
         ROS_ERROR("Failed to get waypoints_file parameter");
         return 1;
     }
+  
+    std::string convert_pixel_to_map_waypoints_srv_client;
+    if (!nh.getParam("/navigation/services/convert_pixel_waypoints_to_map_waypoints", convert_pixel_to_map_waypoints_srv_client)) {
+        ROS_ERROR("Failed to get parameter for service convert_pixel_waypoints_to_map_waypoints");
+        return 1;
+    }
+    std::string map_waypoint_path_topic_pub_;
+    if (!nh.getParam("/navigation/topics/map_waypoint_path", map_waypoint_path_topic_pub_)) {
+        ROS_ERROR("Failed to get parameter for topic map_waypoint_path");
+        return 1;
+    }
+
+    // Wait for the service to become available
+    ROS_INFO("Waiting for service %s to become available...", convert_pixel_to_map_waypoints_srv_client.c_str());
+    if (!ros::service::waitForService(convert_pixel_to_map_waypoints_srv_client, ros::Duration(10.0))) {
+        ROS_ERROR("Service %s is not available after waiting", convert_pixel_to_map_waypoints_srv_client.c_str());
+        return 1;
+    }
+    ROS_INFO("Service %s is now available.", convert_pixel_to_map_waypoints_srv_client.c_str());
+
 
     // Service Call to waypoints conversion
-    ros::ServiceClient client = nh.serviceClient<navigation::ConvertPixelWaypointsToMap>("convert_pixel_waypoints_to_map_waypoints");
+    ros::ServiceClient client = nh.serviceClient<navigation::ConvertPixelWaypointsToMap>(convert_pixel_to_map_waypoints_srv_client);
 
     // Publisher for the converted waypoints as a path
-    ros::Publisher path_pub = nh.advertise<nav_msgs::Path>("map_waypoint_path", 10);
+    ros::Publisher path_pub = nh.advertise<nav_msgs::Path>(map_waypoint_path_topic_pub_, 10);
 
     nav_msgs::Path path;
     path.header.frame_id = base_frame; // Frame of RVIZ  

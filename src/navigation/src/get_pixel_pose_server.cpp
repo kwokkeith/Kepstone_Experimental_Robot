@@ -48,11 +48,22 @@ int main(int argc, char **argv)
     // Load the YAML map file
     Utils::loadMapYaml(map_yaml_path_, map_resolution_, map_origin_x_, map_origin_y_);
 
+    // Get Global parameter for topic/services
+    std::string amcl_pose_svc_client_;
+    nh.getParam("/navigation/services/get_amcl_pose", amcl_pose_svc_client_);
+    std::string get_pixel_pose_svc_srv_;
+    nh.getParam("/navigation/services/get_pixel_pose", get_pixel_pose_svc_srv_);
+
+
+    if (!ros::service::waitForService(amcl_pose_svc_client_, ros::Duration(10.0))) {
+        ROS_ERROR("Service %s is not available after waiting", amcl_pose_svc_client_.c_str());
+        return 1;
+    }
     // Initialize client for amcl pose
-    client_ = nh.serviceClient<navigation::GetAmclPose>("get_amcl_pose");
+    client_ = nh.serviceClient<navigation::GetAmclPose>(amcl_pose_svc_client_);
 
     // Initialize server for pixel pose
-    service_ = nh.advertiseService("get_pixel_pose", getPixelPoseCallback);
+    service_ = nh.advertiseService(get_pixel_pose_svc_srv_, getPixelPoseCallback);
 
     ROS_INFO("Service to provide pixel pose is ready.");
 

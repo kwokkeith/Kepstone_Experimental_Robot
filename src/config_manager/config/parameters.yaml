@@ -86,7 +86,7 @@ navigation:
     get_pixel_pose: "/get_pixel_pose"                 # Service to get the pixel position of the robot on the map
     navfn_make_plan: "/move_base/NavfnROS/make_plan"  # Service to make a Navfn Plan using move_base pkg
     convert_pixel_to_map: "/convert_pixel_to_map"     # Service to convert pixel coordinates to map coordinates
-    convert_pixel_waypoints_to_map_waypoints": "/convert_pixel_waypoints_to_map_waypoints" # Service to convert pixel waypoints to map waypoints
+    convert_pixel_waypoints_to_map_waypoints: "/convert_pixel_waypoints_to_map_waypoints" # Service to convert pixel waypoints to map waypoints
   topics:
     get_amcl_pose: "/amcl_pose"                   # Topic to publish amcl position of the robot
     robot_pixel_pose: "/robot_pixel_position"     # Topic to publish robot pixel position on the map
