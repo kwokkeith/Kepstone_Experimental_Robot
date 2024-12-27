@@ -19,12 +19,34 @@ from litter_destruction.srv import GetNextTargetLitter, GetNextTargetLitterRespo
 from bumperbot_controller.srv import ModeSwitch, ModeSwitchRequest
 from bumperbot_controller.srv import GetCurrentMode
 
-import actionlib
-from actionlib_msgs.msg import GoalStatus
-from move_base_msgs.msg import MoveBaseAction
-
 class LitterManager:
     def __init__(self, distance_threshold=5, min_local_radius=1, max_local_radius=3):
+        ## Get global configurations
+        # Service Clients
+        get_litter_list_client = rospy.get_param('/litter_memory/services/get_litter_list')
+        delete_litter_client = rospy.get_param('/litter_memory/services/delete_litter')
+        clear_memory_client = rospy.get_param('/litter_memory/services/clear_memory')
+        get_amcl_pose_client = rospy.get_param('/navigation/services/get_amcl_pose')
+        mode_switch_client = rospy.get_param('/robot_controller/services/mode_switch')
+        get_global_boundary_client = rospy.get_param('/robot_controller/services/get_global_boundary')
+        get_current_mode_client = rospy.get_param('/robot_controller/services/get_current_mode')
+        republish_global_boundary_client = rospy.get_param('/boundary_visualizer/services/republish_global_boundary')
+        republish_local_boundary_client = rospy.get_param('/boundary_visualizer/services/republish_local_boundary')
+        make_plan_client = rospy.get_param('/navigation/services/navfn_make_plan')
+        # Service Servers
+        get_global_boundary_center_srv = rospy.get_param('/litter_manager/services/get_global_boundary_center')
+        get_local_boundary_center_srv = rospy.get_param('/litter_manager/services/get_local_boundary_center')
+        get_litter_set_srv = rospy.get_param('/litter_manager/services/get_litter_set')
+        get_next_litter_srv = rospy.get_param('/litter_manager/services/get_next_litter')
+        has_litter_to_clear_srv = rospy.get_param('/litter_manager/services/has_litter_to_clear')
+        delete_litter_srv = rospy.get_param('/litter_manager/services/delete_litter')
+        next_waypoint_srv = rospy.get_param('/litter_manager/services/next_waypoint')
+        clear_previous_job_srv = rospy.get_param('/litter_manager/services/clear_previous_job')
+        # Topics Subscribers
+        new_litter_sub = rospy.get_param('/litter_memory/topics/new_litter')
+
+
+        ## Node Variables
         self.litter_mutex = threading.Lock()
         self.set_litter = set()
         self.min_heap_litter = []
@@ -40,40 +62,40 @@ class LitterManager:
         ## Publisher
 
         ## Subscribers
-        rospy.Subscriber("/litter_memory/new_litter", DetectedLitterPoint, self.detection_callback)
+        rospy.Subscriber(new_litter_sub, DetectedLitterPoint, self.detection_callback)
         
         ## Service Clients
-        rospy.wait_for_service('/litter_memory/get_litter_list')
-        rospy.wait_for_service('/litter_memory/delete_litter')
-        rospy.wait_for_service('/get_amcl_pose')
-        rospy.wait_for_service('/robot_controller/mode_switch')
-        rospy.wait_for_service('/robot_controller/get_global_boundary')
-        rospy.wait_for_service('/republish_global_boundary')
-        rospy.wait_for_service('/republish_local_boundary')
-        rospy.wait_for_service('/robot_controller/get_current_mode')
-        rospy.wait_for_service('/litter_memory/clear_memory')
-        rospy.wait_for_service('/move_base/NavfnROS/make_plan')         # Usage of Navfn topic of move_base allows for planning even with active plan
+        rospy.wait_for_service(get_litter_list_client)
+        rospy.wait_for_service(delete_litter_client)
+        rospy.wait_for_service(get_amcl_pose_client)
+        rospy.wait_for_service(mode_switch_client)
+        rospy.wait_for_service(get_global_boundary_client)
+        rospy.wait_for_service(republish_global_boundary_client)
+        rospy.wait_for_service(republish_local_boundary_client)
+        rospy.wait_for_service(get_current_mode_client)
+        rospy.wait_for_service(clear_memory_client)
+        rospy.wait_for_service(make_plan_client)         # Usage of Navfn topic of move_base allows for planning even with active plan
 
-        self.make_plan_srv              = rospy.ServiceProxy('/move_base/NavfnROS/make_plan', GetPlan)                              # Define service to make a plan to calculate distance to litter using NavStack goals
-        self.get_litter_list_srv        = rospy.ServiceProxy('/litter_memory/get_litter_list', GetLitterList)                       # Define the service client for getting litter list
-        self.delete_litter_srv          = rospy.ServiceProxy('/litter_memory/delete_litter', DeleteLitter)                          # Define the service client for deleting litter
-        self.get_pose_srv               = rospy.ServiceProxy('/get_amcl_pose', GetAmclPose)                                         # Define service client for getting amcl pose
-        self.req_mode                   = rospy.ServiceProxy('/robot_controller/mode_switch', ModeSwitch)                           # Define service client for changing robot controller to litter mode
-        self.get_global_boundary_center = rospy.ServiceProxy('/robot_controller/get_global_boundary_center', GlobalBoundaryCenter)  # Define service client for getting global boundary centre from robot controller
-        self.republish_global_boundary  = rospy.ServiceProxy('/republish_global_boundary', Trigger)                                 # Define service client to replot the global boundary RVIZ marker
-        self.republish_local_boundary   = rospy.ServiceProxy('/republish_local_boundary', Trigger)                                  # Define service client to replot the local boundary RVIZ marker
-        self.get_robot_mode             = rospy.ServiceProxy('/robot_controller/get_current_mode', GetCurrentMode)                  # Define service client to get robot current mode
-        self.clear_litter_memory_srv    = rospy.ServiceProxy('/litter_memory/clear_memory', Trigger)                                # Define service client to clear litter memory
+        self.get_litter_list_srv        = rospy.ServiceProxy(get_litter_list_client, GetLitterList)                       # Define the service client for getting litter list
+        self.delete_litter_srv          = rospy.ServiceProxy(delete_litter_client, DeleteLitter)                          # Define the service client for deleting litter
+        self.get_pose_srv               = rospy.ServiceProxy(get_amcl_pose_client, GetAmclPose)                           # Define service client for getting amcl pose
+        self.req_mode                   = rospy.ServiceProxy(mode_switch_client, ModeSwitch)                              # Define service client for changing robot controller to litter mode
+        self.get_global_boundary_center = rospy.ServiceProxy(get_global_boundary_client, GlobalBoundaryCenter)            # Define service client for getting global boundary centre from robot controller
+        self.republish_global_boundary  = rospy.ServiceProxy(republish_global_boundary_client, Trigger)                   # Define service client to replot the global boundary RVIZ marker
+        self.republish_local_boundary   = rospy.ServiceProxy(republish_local_boundary_client, Trigger)                    # Define service client to replot the local boundary RVIZ marker
+        self.get_robot_mode             = rospy.ServiceProxy(get_current_mode_client, GetCurrentMode)                     # Define service client to get robot current mode
+        self.clear_litter_memory_srv    = rospy.ServiceProxy(clear_memory_client, Trigger)                                # Define service client to clear litter memory
+        self.make_plan_srv              = rospy.ServiceProxy(make_plan_client, GetPlan)                                   # Define service to make a plan to calculate distance to litter using NavStack goals
 
         ## Service Servers
-        rospy.Service("/litter_manager/get_global_boundary_center", GlobalBoundaryCenter, self.handle_get_global_boundary_center)   # Define service server to get global boundary center
-        rospy.Service("/litter_manager/get_local_boundary_center", LocalBoundaryCenter, self.handle_get_local_boundary_center)      # Define service server to get local boundary center
-        rospy.Service("/litter_manager/get_litter_set", GetLitterSet, self.handle_get_litter_set)                                   # Define service server to get litter set
-        rospy.Service("/litter_manager/get_next_litter", GetNextLitter, self.handle_get_next_litter)                                # Define service server to get next litter
-        rospy.Service("/litter_manager/has_litter_to_clear", HasLitterToClear, self.handle_has_litter_to_clear)                     # Define service server to check if there is still litter in set
-        rospy.Service("/litter_manager/delete_litter", RemoveLitter, self.handle_remove_litter)                                     # Define service server to delete litter from litter manager
-        rospy.Service("/litter_manager/next_waypoint", GetNextTargetLitter, self.handle_get_next_target_litter)                     # Define service server to get the next target litter
-        rospy.Service("/litter_manager/clear_previous_job", Trigger, self.handle_clear_previous_job)                                # Define service server to clear previous job
+        rospy.Service(get_global_boundary_center_srv, GlobalBoundaryCenter, self.handle_get_global_boundary_center)   # Define service server to get global boundary center
+        rospy.Service(get_local_boundary_center_srv, LocalBoundaryCenter, self.handle_get_local_boundary_center)      # Define service server to get local boundary center
+        rospy.Service(get_litter_set_srv, GetLitterSet, self.handle_get_litter_set)                                   # Define service server to get litter set
+        rospy.Service(get_next_litter_srv, GetNextLitter, self.handle_get_next_litter)                                # Define service server to get next litter
+        rospy.Service(has_litter_to_clear_srv, HasLitterToClear, self.handle_has_litter_to_clear)                     # Define service server to check if there is still litter in set
+        rospy.Service(delete_litter_srv, RemoveLitter, self.handle_remove_litter)                                     # Define service server to delete litter from litter manager
+        rospy.Service(next_waypoint_srv, GetNextTargetLitter, self.handle_get_next_target_litter)                     # Define service server to get the next target litter
+        rospy.Service(clear_previous_job_srv, Trigger, self.handle_clear_previous_job)                                # Define service server to clear previous job
 
 
     def handle_get_global_boundary_center(self, req):
@@ -459,6 +481,7 @@ class LitterManager:
             rospy.logwarn(f"Service /move_base/make_plan is unavailable or timed out: {e}")
             return float('inf')
 
+
     def calculate_path_distance(self, plan_poses):
         """Calculates the path distance of a plan"""
         # Sum distances between consecutive waypoints in the plan
@@ -469,40 +492,6 @@ class LitterManager:
             segment_distance = self.calculate_euclidean_distance(prev, curr)
             total_distance += segment_distance
         return total_distance
-
-
-    def cancel_active_move_base_goals(self):
-        """Cancel any active move_base goals."""
-        # Initialize the action client
-        if not hasattr(self, 'move_base_client'):
-            self.move_base_client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
-            rospy.loginfo("Waiting for move_base action server...")
-            self.move_base_client.wait_for_server()
-            rospy.loginfo("Connected to move_base action server.")
-
-        # Check the current state and cancel if active
-        state = self.move_base_client.get_state()
-        if state == GoalStatus.ACTIVE or state == GoalStatus.PENDING:
-            rospy.loginfo("Cancelling active move_base goal...")
-            self.move_base_client.cancel_all_goals()
-            self.wait_for_move_base_inactive()
-        else:
-            rospy.loginfo("No active move_base goal to cancel.")
-
-
-    def wait_for_move_base_inactive(self, timeout=5.0):
-        """Wait for move_base to become inactive."""
-        start_time = rospy.Time.now().to_sec()
-        while not rospy.is_shutdown():
-            state = self.move_base_client.get_state()
-            if state not in [GoalStatus.ACTIVE, GoalStatus.PENDING]:
-                rospy.loginfo("move_base is now inactive.")
-                return True
-            if rospy.Time.now().to_sec() - start_time > timeout:
-                rospy.logwarn("Timed out waiting for move_base to become inactive.")
-                return False
-            rospy.sleep(0.1)
-
 
 
     def pop_min_heap(self):

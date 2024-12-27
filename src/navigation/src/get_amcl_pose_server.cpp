@@ -28,12 +28,17 @@ int main(int argc, char **argv)
 {
     ros::init(argc, argv, "get_amcl_pose_server");
     ros::NodeHandle nh;
+    // Load global parameters
+    std::string get_amcl_pose_srv_;
+    nh.getParam("/navigation/services/get_amcl_pose", get_amcl_pose_srv_);
+    std::string get_amcl_pose_sub_;
+    nh.getParam("/navigation/topics/get_amcl_pose", get_amcl_pose_sub_);
 
     // Subscribe to the AMCL pose topic
-    ros::Subscriber amcl_sub = nh.subscribe("/amcl_pose", 10, amclPoseCallback);
+    ros::Subscriber amcl_sub = nh.subscribe(get_amcl_pose_sub_, 10, amclPoseCallback);
 
     // Advertise the service
-    ros::ServiceServer service = nh.advertiseService("get_amcl_pose", getAmclPoseCallback);
+    ros::ServiceServer service = nh.advertiseService(get_amcl_pose_srv_, getAmclPoseCallback);
 
     ROS_INFO("Service to provide AMCL pose is ready.");
 

@@ -1,0 +1,72 @@
+# For all services here define the servers of the 
+# nodes and not the clients
+litter_manager: 
+  services:
+    get_global_boundary_center: "/litter_manager/get_global_boundary_center" # Service to get global boundary center
+    get_local_boundary_center: "/litter_manager/get_local_boundary_center"   # Service to get local boundary center
+    get_litter_set: "/litter_manager/get_litter_set"                         # Service to get litter set
+    get_next_litter: "/litter_manager/get_next_litter"                       # Service to get next litter
+    has_litter_to_clear: "/litter_manager/has_litter_to_clear"               # Service to check if there is litter to clear
+    delete_litter: "/litter_manager/delete_litter"                           # Service to delete litter
+    next_waypoint: "/litter_manager/next_waypoint"                           # Service to get the next target litter
+    clear_previous_job: "/litter_manager/clear_previous_job"                 # Service to clear the previous job
+
+litter_memory:
+  services:
+    get_litter_list: "/litter_memory/get_litter_list"   # Service to retrieve all remembered litter points
+    add_litter: "/litter_memory/add_litter"             # Service to add a new litter point
+    delete_litter: "/litter_memory/delete_litter"       # Service to delete a specific litter point by ID
+    clear_memory: "/litter_memory/clear_memory"         # Service to clear all remembered litter points
+  topics:
+    litter_memory: "/litter_memory"                     # Topic to publish all remembered litter points
+    new_litter: "/litter_memory/new_litter"             # Topic to publish new detected litter points
+
+robot_controller: 
+  services:
+    mode_switch: "/robot_controller/mode_switch"                  # Service to request a mode switch for the robot (e.g., IDLE, LITTER_PICKING)
+    get_global_boundary: "/robot_controller/get_global_boundary"  # Service to retrieve the robot's global boundary center and radius
+    get_current_mode: "/robot_controller/get_current_mode"        # Service to query the robot's current mode
+    initiate_coverage: "/robot_controller/initiate_coverage"      # Service to initiate a coverage path for the robot
+  topics:
+      robot_mode: "/robot_controller/robot_mode"                  # Topic to publish the robot's current mode (e.g., IDLE, ACTIVE)
+
+litter_detection:
+  topics:
+    detected_object_coordinates_base: "/base_frame/detected_object_coordinates"           # Topic to publish detected object's coordinates from base frame
+    detected_object_coordinates_camera: "/camera_frame/detected_object_coordinates"       # Topic to publish detected object's coordinates from camera frame
+
+move_manager:
+  services:
+    cancel_all_goals: "/move_manager/cancel_all_goals"        # Service to cancel all active goals of the move base
+
+waypoint_manager:
+  services:
+    get_next_waypoint: "/waypoint_manager/get_next_waypoint"              # Service to update waypoint_manager (get next waypoint)
+    initiate_coverage_path: "/waypoint_manager/initiate_coverage_path"    # Service to initiate coverage path for coverage cleaning 
+    get_waypoints: "/waypoint_manager/get_waypoints"                      # Service to get waypoints of the current coverage path
+
+coverage_path:
+  services:
+    next_waypoint: "/coverage_path/next_waypoint"           # Service to get next target litter
+
+boundary_visualizer:
+  services:
+    republish_global_boundary: "/republish_global_boundary" # Service to handle republishing request of global boundary marker
+    republish_local_boundary: "/republish_local_boundary"   # Service to handle republishing request of local boundary marker
+  topics:
+    global_boundary_marker: "/global_boundary_marker"       # Topic to publish global boundary marker point
+    local_boundary_marker: "/local_boundary_marker"         # Topic to publish local boundary marker point
+
+camera:
+  topics: 
+    color_image_raw: "/camera/color/image_raw"        # Raw RGB image of camera
+    depth_image_raw: "/camera/depth/image_raw"        # Raw depth image of camera
+
+
+navigation:
+  services:
+    get_amcl_pose: "/get_amcl_pose"                   # Service to get the AMCL position of the robot
+    navfn_make_plan: "/move_base/NavfnROS/make_plan"  # Service to make a Navfn Plan using move_base pkg
+  topics:
+    get_amcl_pose: "/amcl_pose"      # Topic to publish amcl position of the robot
+

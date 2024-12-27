@@ -6,30 +6,51 @@ LitterMemory::LitterMemory()
      pnh_("~"),
      tf_listener_(tf_buffer_)
 {
+    // Get global configurations
+    // Service Servers
+    std::string get_litter_list_srv_;
+    std::string add_litter_list_srv_;
+    std::string delete_litter_srv_;
+    std::string clear_memory_srv_;
+    nh_.getParam("/litter_memory/services/get_litter_list", get_litter_list_srv_);
+    nh_.getParam("/litter_memory/services/add_litter", add_litter_list_srv_);
+    nh_.getParam("/litter_memory/services/delete_litter", delete_litter_srv_);
+    nh_.getParam("/litter_memory/services/clear_memory", clear_memory_srv_);
+    // Service Clients
+
+    // Topic Publishers
+    std::string litter_memory_topic_pub_;
+    std::string new_litter_topic_pub_;
+    nh_.getParam("/litter_memory/topics/litter_memory", litter_memory_topic_pub_);
+    nh_.getParam("/litter_memory/topics/new_litter", new_litter_topic_pub_);
+    // Topic Subscribers
+    std::string detected_object_coordinates_topic_sub_;
+    nh_.getParam("/litter_detection/topics/detected_object_coordinates_base", detected_object_coordinates_topic_sub_);
     
+
     // Set distance threshold for filtering duplicates
     pnh_.param<double>("distance_threshold", distance_threshold_, 5.0);  // Load the distance threshold parameter
 
     // Initialize the subscriber to get litter coordinates in base frame
-    litter_sub_ = nh_.subscribe("base_frame/detected_object_coordinates", 10, &LitterMemory::litterCallback, this);
+    litter_sub_ = nh_.subscribe(detected_object_coordinates_topic_sub_, 10, &LitterMemory::litterCallback, this);
 
     // Initialize a publisher to publish all remembered litter points
-    litter_pub_ = nh_.advertise<bumperbot_detection::LitterList>("litter_memory", 10);
+    litter_pub_ = nh_.advertise<bumperbot_detection::LitterList>(litter_memory_topic_pub_, 10);
 
     // Initialize a publisher to publish new litter points
-    new_litter_pub_ = nh_.advertise<bumperbot_detection::DetectedLitterPoint>("litter_memory/new_litter", 10);
+    new_litter_pub_ = nh_.advertise<bumperbot_detection::DetectedLitterPoint>(new_litter_topic_pub_, 10);
 
     // Initialize the service to get the remembered litter points
-    get_litter_service_ = nh_.advertiseService("litter_memory/get_litter_list", &LitterMemory::getLitterListCallback, this);
+    get_litter_service_ = nh_.advertiseService(get_litter_list_srv_, &LitterMemory::getLitterListCallback, this);
 
     // Initialize the service to add a new litter point
-    add_litter_service_ = nh_.advertiseService("litter_memory/add_litter", &LitterMemory::addLitterCallback, this);
+    add_litter_service_ = nh_.advertiseService(add_litter_list_srv_, &LitterMemory::addLitterCallback, this);
 
     // Initialize the service to delete litter by ID
-    delete_litter_service_ = nh_.advertiseService("litter_memory/delete_litter", &LitterMemory::deleteLitterCallback, this);
+    delete_litter_service_ = nh_.advertiseService(delete_litter_srv_, &LitterMemory::deleteLitterCallback, this);
 
     // Initialize the service to clear all litter
-    clear_memory_service_ = nh_.advertiseService("litter_memory/clear_memory", &LitterMemory::clearMemoryCallback, this);
+    clear_memory_service_ = nh_.advertiseService(clear_memory_srv_, &LitterMemory::clearMemoryCallback, this);
 }
 
 

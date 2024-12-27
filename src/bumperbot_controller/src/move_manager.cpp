@@ -6,21 +6,46 @@ MoveManager::MoveManager(ros::NodeHandle& nh) :
         current_mode_(RobotMode::IDLE), // Initial mode of robot (IDLE)
         coverage_complete_(true)
 {
+    // GET global parameters for services/topics
+    // Topic Subscribers
+    std::string robot_mode_topic_sub_;
+    nh_.getParam("/robot_controller/topics/robot_mode", robot_mode_topic_sub_);
+    // Service Clients 
+    std::string get_next_litter_srv_client_;
+    std::string get_next_target_litter_srv_client_;
+    std::string delete_litter_srv_client_;
+    std::string get_next_waypoint_srv_client_;
+    std::string update_waypoint_srv_client_;
+    std::string has_litter_to_clear_srv_client_;
+    std::string mode_switch_request_srv_client_;
+    std::string get_global_boundary_srv_client_;
+    nh_.getParam("/litter_manager/services/get_next_litter", get_next_litter_srv_client_);
+    nh_.getParam("/litter_manager/services/next_waypoint", get_next_target_litter_srv_client_);
+    nh_.getParam("/litter_manager/services/delete_litter", delete_litter_srv_client_);
+    nh_.getParam("/coverage_path/services/next_waypoint", get_next_waypoint_srv_client_);
+    nh_.getParam("/waypoint_manager/services/get_next_waypoint", get_next_waypoint_srv_client_);
+    nh_.getParam("/litter_manager/services/has_litter_to_clear", has_litter_to_clear_srv_client_);
+    nh_.getParam("/robot_controller/services/mode_switch", mode_switch_request_srv_client_);
+    nh_.getParam("/robot_controller/services/get_global_boundary", get_global_boundary_srv_client_);
+    // Service Servers
+    std::string cancel_goals_svc_svr_;
+    nh_.getParam("/move_manager/services/cancel_all_goals", cancel_goals_svc_svr_); 
+
     // Initialize subscribers to the robot mode
-    robot_mode_sub_ = nh_.subscribe("robot_controller/robot_mode", 10, &MoveManager::robotModeCallback, this);
+    robot_mode_sub_ = nh_.subscribe(robot_mode_topic_sub_, 10, &MoveManager::robotModeCallback, this);
 
     // Initialize service clients
-    get_next_litter_client_         = nh_.serviceClient<litter_destruction::GetNextLitter>("/litter_manager/get_next_litter");        // Service to update to next litter in litter manager
-    get_next_target_litter_client   = nh_.serviceClient<litter_destruction::GetNextTargetLitter>("/litter_manager/next_waypoint");
-    delete_litter_client_           = nh_.serviceClient<litter_destruction::RemoveLitter>("/litter_manager/delete_litter");           // Service to delete litter in litter manager
-    get_next_waypoint_client_       = nh_.serviceClient<navigation::GetNextWaypoint>("/coverage_path/next_waypoint");                 // Service to get next target litter
-    update_waypoint_client_         = nh_.serviceClient<std_srvs::SetBool>("waypoint_manager/get_next_waypoint");                     // Service to update waypoint_manager (get next waypoint)
-    has_litter_to_clear_client_     = nh_.serviceClient<litter_destruction::HasLitterToClear>("/litter_manager/has_litter_to_clear"); // Service to check if any more litter to clear (litter manager)
-    mode_switch_request_client_     = nh_.serviceClient<bumperbot_controller::ModeSwitch>("/robot_controller/mode_switch");           // Service to change robot mode
-    get_global_boundary_client_     = nh_.serviceClient<litter_destruction::GlobalBoundaryCenter>("/robot_controller/get_global_boundary"); // Service to get global boundary center from robot controller
+    get_next_litter_client_         = nh_.serviceClient<litter_destruction::GetNextLitter>(get_next_litter_srv_client_);              // Service to update to next litter in litter manager
+    get_next_target_litter_client_  = nh_.serviceClient<litter_destruction::GetNextTargetLitter>(get_next_target_litter_srv_client_);
+    delete_litter_client_           = nh_.serviceClient<litter_destruction::RemoveLitter>(delete_litter_srv_client_);                 // Service to delete litter in litter manager
+    get_next_waypoint_client_       = nh_.serviceClient<navigation::GetNextWaypoint>(get_next_waypoint_srv_client_);                  // Service to get next target litter
+    update_waypoint_client_         = nh_.serviceClient<std_srvs::SetBool>(update_waypoint_srv_client_);                              // Service to update waypoint_manager (get next waypoint)
+    has_litter_to_clear_client_     = nh_.serviceClient<litter_destruction::HasLitterToClear>(has_litter_to_clear_srv_client_);       // Service to check if any more litter to clear (litter manager)
+    mode_switch_request_client_     = nh_.serviceClient<bumperbot_controller::ModeSwitch>(mode_switch_request_srv_client_);           // Service to change robot mode
+    get_global_boundary_client_     = nh_.serviceClient<litter_destruction::GlobalBoundaryCenter>(get_global_boundary_srv_client_);   // Service to get global boundary center from robot controller
 
     // Initialize service servers
-    cancel_goals_service_ = nh_.advertiseService("/move_manager/cancel_all_goals", &MoveManager::cancelGoalsCallback, this);
+    cancel_goals_service_ = nh_.advertiseService(cancel_goals_svc_svr_, &MoveManager::cancelGoalsCallback, this);
 
     ROS_INFO("Waiting for move_base action server...");
     move_base_client_.waitForServer();
@@ -137,7 +162,7 @@ void MoveManager::performLitterMode() {
     // Call the GetNextTargetLitter service
     // To get the next TARGET litter
     litter_destruction::GetNextTargetLitter get_next_target_litter_srv;
-    if (!get_next_target_litter_client.call(get_next_target_litter_srv))
+    if (!get_next_target_litter_client_.call(get_next_target_litter_srv))
     {
         ROS_WARN("Failed to call service /litter_manager/get_next_litter in litter");
         return; // Exit if the service call fails

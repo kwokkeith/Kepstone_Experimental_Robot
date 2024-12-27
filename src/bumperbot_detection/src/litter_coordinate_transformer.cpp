@@ -8,12 +8,17 @@ LitterCoordinateTransformer::LitterCoordinateTransformer(const ros::NodeHandle &
                     base_frame_(base_frame),
                     camera_frame_(camera_frame)
 {
+    // Get Global Parameter for services/topics
+    std::string detected_object_coordinates_base_topic_pub_;
+    std::string detected_object_coordinates_cam_topic_pub_;
+    nh_.getParam("/litter_detection/topics/detected_object_coordinates_base", detected_object_coordinates_base_topic_pub_);
+    nh_.getParam("/litter_detection/topics/detected_object_coordinates_camera", detected_object_coordinates_cam_topic_pub_);
 
     // Initialize subscriber to get litter coordinates from the camera frame
-    litter_coord_camera_frame_sub_ = nh_.subscribe("camera_frame/detected_object_coordinates", 10, &LitterCoordinateTransformer::litterCoordinatesCallback, this);
+    litter_coord_camera_frame_sub_ = nh_.subscribe(detected_object_coordinates_cam_topic_pub_, 10, &LitterCoordinateTransformer::litterCoordinatesCallback, this);
 
     // Initialize publisher to advertise litter coordinates in base frame
-    litter_coord_base_frame_pub_ = nh_.advertise<geometry_msgs::PointStamped>("base_frame/detected_object_coordinates", 10);
+    litter_coord_base_frame_pub_ = nh_.advertise<geometry_msgs::PointStamped>(detected_object_coordinates_base_topic_pub_, 10);
 
     // Initialize the TF2 listener to listen for transform between camera_frame and base_footprint
     tf_listener_ = new tf2_ros::TransformListener(tf_buffer_);

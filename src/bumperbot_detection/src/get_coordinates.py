@@ -20,17 +20,22 @@ from geometry_msgs.msg import PointStamped
 
 class BallDetector:
     def __init__(self):
+        ## Get global paramaters for topics/services
+        detected_object_coordinates_topic_pub_ = rospy.get_param('/litter_detection/topics/detected_object_coordinates_camera')
+        camera_color_image_raw_client = rospy.get_param('/camera/topics/color_image_raw')
+        camera_depth_image_raw_client = rospy.get_param('/camera/topics/depth_image_raw')
+        
         self.bridge_object = CvBridge()
         self.theta = 0.2618  # 30 degrees in radians
 
         # Get the camera frame from the ROS parameter server (default to 'dpcamera_link')
         self.camera_frame = rospy.get_param('~camera_frame', 'dpcamera_link')
 
-        self.coord_publisher = rospy.Publisher('camera_frame/detected_object_coordinates', PointStamped, queue_size=10)
+        self.coord_publisher = rospy.Publisher(detected_object_coordinates_topic_pub_, PointStamped, queue_size=10)
 
         # Subscribe to color and depth topics
-        self.color_sub = message_filters.Subscriber("/camera/color/image_raw", Image)
-        self.depth_sub = message_filters.Subscriber("/camera/depth/image_raw", Image)
+        self.color_sub = message_filters.Subscriber(camera_color_image_raw_client, Image)
+        self.depth_sub = message_filters.Subscriber(camera_depth_image_raw_client, Image)
 
         # Synchronize the color and depth messages
         self.ts = message_filters.ApproximateTimeSynchronizer([self.color_sub, self.depth_sub], 10, 0.1)
