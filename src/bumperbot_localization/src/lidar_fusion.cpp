@@ -4,16 +4,22 @@
 
 LiDARFusion::LiDARFusion() 
     : sync_(MySyncPolicy(10), sub_3d_, sub_left_, sub_right_) {
-    // Subscribe to each LiDAR topic
-    sub_3d_.subscribe(nh_, "/bumperbot/laser/3d_front/laser_scan", 10);  // 3D Lidar LaserScan topic
-    sub_left_.subscribe(nh_, "/bumperbot/laser/2d_left/scan", 10);
-    sub_right_.subscribe(nh_, "/bumperbot/laser/2d_right/scan", 10);
 
-    // Publisher for fused scan data
-    fused_pub_ = nh_.advertise<sensor_msgs::LaserScan>("/bumperbot/laser/fused_scan", 10);
+        // Get Global Parameters for topic/services
+        std::string fused_scan_topic_pub_;
+        nh_.getParam("/localization/topics/fused_scan", fused_scan_topic_pub_);
 
-    // Register the callback for synchronized scans
-    sync_.registerCallback(boost::bind(&LiDARFusion::combineScans, this, _1, _2, _3));
+        
+        // Subscribe to each LiDAR topic
+        sub_3d_.subscribe(nh_, "/bumperbot/laser/3d_front/laser_scan", 10);  // 3D Lidar LaserScan topic
+        sub_left_.subscribe(nh_, "/bumperbot/laser/2d_left/scan", 10);
+        sub_right_.subscribe(nh_, "/bumperbot/laser/2d_right/scan", 10);
+
+        // Publisher for fused scan data
+        fused_pub_ = nh_.advertise<sensor_msgs::LaserScan>(fused_scan_topic_pub_, 10);
+
+        // Register the callback for synchronized scans
+        sync_.registerCallback(boost::bind(&LiDARFusion::combineScans, this, _1, _2, _3));
 }
 
 void LiDARFusion::combineScans(const sensor_msgs::LaserScan::ConstPtr& scan_3d,

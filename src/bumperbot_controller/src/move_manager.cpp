@@ -23,7 +23,7 @@ MoveManager::MoveManager(ros::NodeHandle& nh) :
     nh_.getParam("/litter_manager/services/next_waypoint", get_next_target_litter_srv_client_);
     nh_.getParam("/litter_manager/services/delete_litter", delete_litter_srv_client_);
     nh_.getParam("/coverage_path/services/next_waypoint", get_next_waypoint_srv_client_);
-    nh_.getParam("/waypoint_manager/services/get_next_waypoint", get_next_waypoint_srv_client_);
+    nh_.getParam("/waypoint_manager/services/get_next_waypoint", update_waypoint_srv_client_);
     nh_.getParam("/litter_manager/services/has_litter_to_clear", has_litter_to_clear_srv_client_);
     nh_.getParam("/robot_controller/services/mode_switch", mode_switch_request_srv_client_);
     nh_.getParam("/robot_controller/services/get_global_boundary", get_global_boundary_srv_client_);

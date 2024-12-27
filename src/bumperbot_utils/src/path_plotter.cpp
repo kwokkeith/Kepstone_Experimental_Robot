@@ -6,9 +6,16 @@
 PathPlotter::PathPlotter(const ros::NodeHandle &nh) :
                         nh_(nh)
 {
+    // Get Global Parameters for topic/services
+    std::string amcl_pose_topic_sub_;
+    nh_.getParam("/navigation/topics/get_amcl_pose", amcl_pose_topic_sub_);
+    std::string robot_trajectory_topic_pub_;
+    nh_.getParam("/bumperbot_controller/topics/trajectory", robot_trajectory_topic_pub_);
+
+
     ROS_INFO("Listening to odometry and plotting");
-    odom_sub_ = nh_.subscribe("/amcl_pose", 10, &PathPlotter::amclCallback, this);
-    trajectory_pub_ = nh_.advertise<nav_msgs::Path>("bumperbot_controller/trajectory", 10);
+    odom_sub_ = nh_.subscribe(amcl_pose_topic_sub_, 10, &PathPlotter::amclCallback, this);
+    trajectory_pub_ = nh_.advertise<nav_msgs::Path>(robot_trajectory_topic_pub_, 10);
 }
 
 // Use ConstPtr (boost shared pointer) so that msg is not copied but a pointer is

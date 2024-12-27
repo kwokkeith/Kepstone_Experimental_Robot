@@ -1,5 +1,19 @@
 # For all services here define the servers of the 
 # nodes and not the clients
+bumperbot_controller:
+  topics:
+    initial_pose: "/initialpose"                            # Topic to publish initial odom position of the robot
+    odom_noisy: "/bumperbot_controller/odom_noisy"          # Topic to publish noisy odometry data (to simulate realistic environment)
+    odom_kalman: "/bumperbot_controller/odom_kalman"        # Topic to publish odometry after performing kalman filtering
+    joint_states: "/joint_states"                           # Topic to publish joint state of bumperbot
+    trajectory: "/bumperbot_controller/trajectory"          # The trajectory of the robot to plot its past path
+
+localization:
+  topics:
+    imu: "/imu"                               # Topic to publish imu data
+    imu_ekf: "/imu_ekf"                       # Topic to publish extended kalman filter imu data
+    fused_scan: "/bumperbot/laser/fused_scan" # Topic to publish fused scanning for Lidar laser 
+
 litter_manager: 
   services:
     get_global_boundary_center: "/litter_manager/get_global_boundary_center" # Service to get global boundary center
@@ -20,6 +34,10 @@ litter_memory:
   topics:
     litter_memory: "/litter_memory"                     # Topic to publish all remembered litter points
     new_litter: "/litter_memory/new_litter"             # Topic to publish new detected litter points
+
+litter_plotter:
+  topics:
+    litter_markers: "/litter_plotter/litter_markers"    # Topic to publish litter markers to visualise
 
 robot_controller: 
   services:
@@ -62,11 +80,14 @@ camera:
     color_image_raw: "/camera/color/image_raw"        # Raw RGB image of camera
     depth_image_raw: "/camera/depth/image_raw"        # Raw depth image of camera
 
-
 navigation:
   services:
     get_amcl_pose: "/get_amcl_pose"                   # Service to get the AMCL position of the robot
+    get_pixel_pose: "/get_pixel_pose"                 # Service to get the pixel position of the robot on the map
     navfn_make_plan: "/move_base/NavfnROS/make_plan"  # Service to make a Navfn Plan using move_base pkg
+    convert_pixel_to_map: "/convert_pixel_to_map"     # Service to convert pixel coordinates to map coordinates
+    convert_pixel_waypoints_to_map_waypoints": "/convert_pixel_waypoints_to_map_waypoints" # Service to convert pixel waypoints to map waypoints
   topics:
-    get_amcl_pose: "/amcl_pose"      # Topic to publish amcl position of the robot
-
+    get_amcl_pose: "/amcl_pose"                   # Topic to publish amcl position of the robot
+    robot_pixel_pose: "/robot_pixel_position"     # Topic to publish robot pixel position on the map
+    map_waypoint_path: "/map_waypoint_path"       # Topic to publish the converted map waypoints as a nav_msgs::Path type msg

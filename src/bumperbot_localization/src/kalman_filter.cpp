@@ -17,11 +17,23 @@ KalmanFilter::KalmanFilter(const ros::NodeHandle &nh)
       odometry_enabled_(true)
       
 {
-    odom_sub_ = nh_.subscribe("bumperbot_controller/odom_noisy", 1000, &KalmanFilter::odomCallback, this);
-    imu_sub_ = nh_.subscribe("imu", 1000, &KalmanFilter::imuCallback, this);
-    lidar_sub_ = nh_.subscribe("/bumperbot/laser/fused_scan", 1000, &KalmanFilter::lidarCallback, this);
-    odom_pub_ = nh_.advertise<nav_msgs::Odometry>("/bumperbot_controller/odom_kalman", 10);
-    amcl_initial_pose_pub_ = nh_.advertise<geometry_msgs::PoseWithCovarianceStamped>("/initialpose", 1);
+    // Get Global Parameters for topic/services
+    std::string odom_noisy_topic_sub_;
+    std::string imu_topic_sub_;
+    std::string fused_scan_topic_sub_;
+    nh_.getParam("/bumperbot_contoller/topics/odom_noisy", odom_noisy_topic_sub_);
+    nh_.getParam("/localization/topics/imu", imu_topic_sub_);
+    nh_.getParam("/localization/topics/fused_scan", fused_scan_topic_sub_);
+    std::string odom_kalman_topic_pub_;
+    std::string initialPose_topic_pub_;
+    nh_.getParam("/bumperbot_controller/topics/odom_kalman", odom_kalman_topic_pub_);
+    nh_.getParam("/bumperbot_controller/topics/initial_pose", initialPose_topic_pub_);
+
+    odom_sub_ = nh_.subscribe(odom_noisy_topic_sub_, 1000, &KalmanFilter::odomCallback, this);
+    imu_sub_ = nh_.subscribe(imu_topic_sub_, 1000, &KalmanFilter::imuCallback, this);
+    lidar_sub_ = nh_.subscribe(fused_scan_topic_sub_, 1000, &KalmanFilter::lidarCallback, this);
+    odom_pub_ = nh_.advertise<nav_msgs::Odometry>(odom_kalman_topic_pub_, 10);
+    amcl_initial_pose_pub_ = nh_.advertise<geometry_msgs::PoseWithCovarianceStamped>(initialPose_topic_pub_, 1);
 
     // Store the last known pose
     last_known_pose_.position.x = 0;

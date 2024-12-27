@@ -16,8 +16,13 @@ void msgCallback(const geometry_msgs::PointStamped::ConstPtr& msg)
 int main(int argc, char **argv) 
 {
     ros::init(argc, argv, "coordinate_subscriber");
-    ros::NodeHandle n;
-    ros::Subscriber sub = n.subscribe("/camera_frame/detected_object_coordinates", 10, msgCallback);
+    ros::NodeHandle nh_;
+
+    // Load global parameters for services/topics
+    std::string detected_object_coordinates_topic_sub_;
+    nh_.getParam("/litter_detection/topics/detected_object_coordinates_camera", detected_object_coordinates_topic_sub_);
+
+    ros::Subscriber sub = nh_.subscribe(detected_object_coordinates_topic_sub_, 10, msgCallback);
     ros::spin();
 
     return 0;
