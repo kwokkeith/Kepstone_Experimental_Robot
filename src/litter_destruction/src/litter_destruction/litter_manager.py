@@ -19,6 +19,10 @@ from litter_destruction.srv import GetNextTargetLitter, GetNextTargetLitterRespo
 from bumperbot_controller.srv import ModeSwitch, ModeSwitchRequest
 from bumperbot_controller.srv import GetCurrentMode
 
+import actionlib
+from actionlib_msgs.msg import GoalStatus
+from move_base_msgs.msg import MoveBaseAction
+
 class LitterManager:
     def __init__(self, distance_threshold=5, min_local_radius=1, max_local_radius=3):
         self.litter_mutex = threading.Lock()
@@ -48,9 +52,9 @@ class LitterManager:
         rospy.wait_for_service('/republish_local_boundary')
         rospy.wait_for_service('/robot_controller/get_current_mode')
         rospy.wait_for_service('/litter_memory/clear_memory')
-        rospy.wait_for_service('/move_base/make_plan')
+        rospy.wait_for_service('/move_base/NavfnROS/make_plan')         # Usage of Navfn topic of move_base allows for planning even with active plan
 
-        self.make_plan_srv              = rospy.ServiceProxy('/move_base/make_plan', GetPlan)                                       # Define service to make a plan to calculate distance to litter using NavStack goals
+        self.make_plan_srv              = rospy.ServiceProxy('/move_base/NavfnROS/make_plan', GetPlan)                              # Define service to make a plan to calculate distance to litter using NavStack goals
         self.get_litter_list_srv        = rospy.ServiceProxy('/litter_memory/get_litter_list', GetLitterList)                       # Define the service client for getting litter list
         self.delete_litter_srv          = rospy.ServiceProxy('/litter_memory/delete_litter', DeleteLitter)                          # Define the service client for deleting litter
         self.get_pose_srv               = rospy.ServiceProxy('/get_amcl_pose', GetAmclPose)                                         # Define service client for getting amcl pose
@@ -236,7 +240,7 @@ class LitterManager:
 
 
     def detection_callback(self, detected_detailed_litter):
-        """Callback function for when litter is detected."""
+        """Callback function for when litter is detected (took into account the distance from existing litters)."""
         # Extract the LitterPoint data from the DetectedLitterPoint data
         detected_litter = detected_detailed_litter.litter_point
 
@@ -429,7 +433,7 @@ class LitterManager:
 
         # Make a plan request to nav planner
         try:
-            rospy.loginfo("Getting distance to litter using ROS Planner (move_base/make_plan)")
+            rospy.loginfo("Getting distance to litter using ROS Planner")
             plan_request = GetPlanRequest()
             plan_request.start = start
             plan_request.goal = goal
@@ -455,7 +459,6 @@ class LitterManager:
             rospy.logwarn(f"Service /move_base/make_plan is unavailable or timed out: {e}")
             return float('inf')
 
-
     def calculate_path_distance(self, plan_poses):
         """Calculates the path distance of a plan"""
         # Sum distances between consecutive waypoints in the plan
@@ -466,6 +469,40 @@ class LitterManager:
             segment_distance = self.calculate_euclidean_distance(prev, curr)
             total_distance += segment_distance
         return total_distance
+
+
+    def cancel_active_move_base_goals(self):
+        """Cancel any active move_base goals."""
+        # Initialize the action client
+        if not hasattr(self, 'move_base_client'):
+            self.move_base_client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
+            rospy.loginfo("Waiting for move_base action server...")
+            self.move_base_client.wait_for_server()
+            rospy.loginfo("Connected to move_base action server.")
+
+        # Check the current state and cancel if active
+        state = self.move_base_client.get_state()
+        if state == GoalStatus.ACTIVE or state == GoalStatus.PENDING:
+            rospy.loginfo("Cancelling active move_base goal...")
+            self.move_base_client.cancel_all_goals()
+            self.wait_for_move_base_inactive()
+        else:
+            rospy.loginfo("No active move_base goal to cancel.")
+
+
+    def wait_for_move_base_inactive(self, timeout=5.0):
+        """Wait for move_base to become inactive."""
+        start_time = rospy.Time.now().to_sec()
+        while not rospy.is_shutdown():
+            state = self.move_base_client.get_state()
+            if state not in [GoalStatus.ACTIVE, GoalStatus.PENDING]:
+                rospy.loginfo("move_base is now inactive.")
+                return True
+            if rospy.Time.now().to_sec() - start_time > timeout:
+                rospy.logwarn("Timed out waiting for move_base to become inactive.")
+                return False
+            rospy.sleep(0.1)
+
 
 
     def pop_min_heap(self):

@@ -14,6 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   visualization_msgs
   bumperbot_utils
   std_srvs
+  move_base_msgs
 )
 
 catkin_python_setup()
