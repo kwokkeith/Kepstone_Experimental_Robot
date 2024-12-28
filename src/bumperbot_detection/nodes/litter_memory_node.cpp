@@ -21,8 +21,10 @@ LitterMemory::LitterMemory()
     // Topic Publishers
     std::string litter_memory_topic_pub_;
     std::string new_litter_topic_pub_;
+    std::string detected_litter_raw_topic_pub_;
     nh_.getParam("/litter_memory/topics/litter_memory", litter_memory_topic_pub_);
     nh_.getParam("/litter_memory/topics/new_litter", new_litter_topic_pub_);
+    nh_.getParam("/litter_memory/topics/detected_litter_raw", detected_litter_raw_topic_pub_);
     // Topic Subscribers
     std::string detected_object_coordinates_topic_sub_;
     nh_.getParam("/litter_detection/topics/detected_object_coordinates_base", detected_object_coordinates_topic_sub_);
@@ -39,6 +41,9 @@ LitterMemory::LitterMemory()
 
     // Initialize a publisher to publish new litter points
     new_litter_pub_ = nh_.advertise<bumperbot_detection::DetectedLitterPoint>(new_litter_topic_pub_, 10);
+
+    // Initialize the publisher to publish detected litter points (without removing duplicates) according to map coordinates
+    detected_litter_raw_pub_ = nh_.advertise<geometry_msgs::Point>(detected_litter_raw_topic_pub_, 10);
 
     // Initialize the service to get the remembered litter points
     get_litter_service_ = nh_.advertiseService(get_litter_list_srv_, &LitterMemory::getLitterListCallback, this);
@@ -109,6 +114,9 @@ void LitterMemory::litterCallback(const geometry_msgs::PointStamped::ConstPtr& l
         // Perform the transformation to the map frame
         tf2::doTransform(*litter_point, litter_in_map_frame, transform_stamped);
         ROS_DEBUG("Transformed litter point to map frame: x=%f, y=%f, z=%f", litter_in_map_frame.point.x, litter_in_map_frame.point.y, litter_in_map_frame.point.z);
+
+        // Extract geometry_msgs::Point and publish it as raw detection 
+        detected_litter_raw_pub_.publish(litter_in_map_frame.point);
     }
     catch (tf2::TransformException& ex)
     {

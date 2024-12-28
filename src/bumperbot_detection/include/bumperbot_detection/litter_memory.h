@@ -41,6 +41,7 @@ private:
     ros::Subscriber litter_sub_;    // Subscriber to litter points
     ros::Publisher litter_pub_;     // Publisher for remembered litter points
     ros::Publisher new_litter_pub_; // Publisher for new litter
+    ros::Publisher detected_litter_raw_pub_; // Publisher for detected litter on map coordinates without removing duplicates
     ros::ServiceServer delete_litter_service_;  // Service to delete litter
     ros::ServiceServer get_litter_service_; // Service to get litter from memory
     ros::ServiceServer add_litter_service_; // Service to add litter to memory

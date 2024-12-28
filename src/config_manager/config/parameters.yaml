@@ -32,8 +32,9 @@ litter_memory:
     delete_litter: "/litter_memory/delete_litter"       # Service to delete a specific litter point by ID
     clear_memory: "/litter_memory/clear_memory"         # Service to clear all remembered litter points
   topics:
-    litter_memory: "/litter_memory"                     # Topic to publish all remembered litter points
-    new_litter: "/litter_memory/new_litter"             # Topic to publish new detected litter points
+    litter_memory: "/litter_memory"                           # Topic to publish all remembered litter points
+    new_litter: "/litter_memory/new_litter"                   # Topic to publish new detected litter points
+    detected_litter_raw: "/litter_memory/detected_litter_raw" # Topic to publish detected litter with map coordinates without finding duplicate
 
 litter_plotter:
   topics:

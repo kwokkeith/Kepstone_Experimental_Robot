@@ -4,12 +4,14 @@ MoveManager::MoveManager(ros::NodeHandle& nh) :
         nh_(nh),
         move_base_client_("move_base", true),
         current_mode_(RobotMode::IDLE), // Initial mode of robot (IDLE)
-        coverage_complete_(true)
+        coverage_complete_(true),
+        nearest_litter_calculated_(false)
 {
     // GET global parameters for services/topics
     // Topic Subscribers
     std::string robot_mode_topic_sub_;
     nh_.getParam("/robot_controller/topics/robot_mode", robot_mode_topic_sub_);
+    nh_.getParam("/litter_memory/topics/detected_litter_raw", detected_litter_topic_sub_);
     // Service Clients 
     std::string get_next_litter_srv_client_;
     std::string get_next_target_litter_srv_client_;
@@ -19,6 +21,7 @@ MoveManager::MoveManager(ros::NodeHandle& nh) :
     std::string has_litter_to_clear_srv_client_;
     std::string mode_switch_request_srv_client_;
     std::string get_global_boundary_srv_client_;
+    std::string get_amcl_pose_srv_client_;
     nh_.getParam("/litter_manager/services/get_next_litter", get_next_litter_srv_client_);
     nh_.getParam("/litter_manager/services/next_waypoint", get_next_target_litter_srv_client_);
     nh_.getParam("/litter_manager/services/delete_litter", delete_litter_srv_client_);
@@ -27,6 +30,7 @@ MoveManager::MoveManager(ros::NodeHandle& nh) :
     nh_.getParam("/litter_manager/services/has_litter_to_clear", has_litter_to_clear_srv_client_);
     nh_.getParam("/robot_controller/services/mode_switch", mode_switch_request_srv_client_);
     nh_.getParam("/robot_controller/services/get_global_boundary", get_global_boundary_srv_client_);
+    nh_.getParam("/navigation/services/get_amcl_pose", get_amcl_pose_srv_client_);
     // Service Servers
     std::string cancel_goals_svc_svr_;
     nh_.getParam("/move_manager/services/cancel_all_goals", cancel_goals_svc_svr_); 
@@ -43,6 +47,7 @@ MoveManager::MoveManager(ros::NodeHandle& nh) :
     has_litter_to_clear_client_     = nh_.serviceClient<litter_destruction::HasLitterToClear>(has_litter_to_clear_srv_client_);       // Service to check if any more litter to clear (litter manager)
     mode_switch_request_client_     = nh_.serviceClient<bumperbot_controller::ModeSwitch>(mode_switch_request_srv_client_);           // Service to change robot mode
     get_global_boundary_client_     = nh_.serviceClient<litter_destruction::GlobalBoundaryCenter>(get_global_boundary_srv_client_);   // Service to get global boundary center from robot controller
+    get_amcl_pose_client_           = nh_.serviceClient<navigation::GetAmclPose>(get_amcl_pose_srv_client_);                          // Service to get amcl position of robot
 
     // Initialize service servers
     cancel_goals_service_ = nh_.advertiseService(cancel_goals_svc_svr_, &MoveManager::cancelGoalsCallback, this);
@@ -57,8 +62,10 @@ void MoveManager::robotModeCallback(const std_msgs::Int32::ConstPtr& mode_msg)
 {   
     // If current mode of the robot is litter mode and it isnt 
     // in this mode yet, then disrupt the current move command
-    if (static_cast<RobotMode>(mode_msg->data) == RobotMode::LITTER_PICKING) {
-        if (current_mode_ != RobotMode::LITTER_PICKING) {
+    if (static_cast<RobotMode>(mode_msg->data) == RobotMode::LITTER_PICKING || 
+        static_cast<RobotMode>(mode_msg->data) == RobotMode::LITTER_TRACKING) {
+        if (current_mode_ != RobotMode::LITTER_PICKING ||
+            current_mode_ != RobotMode::LITTER_TRACKING) {
             move_base_client_.cancelAllGoals(); // Prioritise litter picking
             
             // Set global boundary center to remember it when transitioning back
@@ -71,6 +78,7 @@ void MoveManager::robotModeCallback(const std_msgs::Int32::ConstPtr& mode_msg)
     }
 
     current_mode_ = static_cast<RobotMode>(mode_msg->data);
+    ROS_INFO("move_manager: current_mode_ = %d", int(current_mode_));
 }
 
 
@@ -151,6 +159,7 @@ void MoveManager::performLitterMode() {
 
     // If no more litter to clear then change mode o.w. handle the litter
     if (!has_litter_to_clear_srv.response.has_litter){
+        target_litter_ = bumperbot_detection::LitterPoint();
         ROS_INFO("Returning from LITTER_MODE");
         ModeSwitchRequest(RobotMode::TRANSITION);
         return;
@@ -167,7 +176,7 @@ void MoveManager::performLitterMode() {
         ROS_WARN("Failed to call service /litter_manager/get_next_litter in litter");
         return; // Exit if the service call fails
     }
-
+    
     // Check if a valid next litter point was returned
     if (!get_next_target_litter_srv.response.success)
     {
@@ -176,37 +185,30 @@ void MoveManager::performLitterMode() {
     }
 
     // Extract the next litter waypoint
-    geometry_msgs::Point litter_point = get_next_target_litter_srv.response.litter.point;
+    target_litter_ = get_next_target_litter_srv.response.litter;
+    geometry_msgs::Point litter_point_ = target_litter_.point;
 
     // Log the received waypoint
-    ROS_INFO_STREAM("Received litter waypoint: [" << litter_point.x << ", " << litter_point.y << ", " << litter_point.z << "]");
+    ROS_INFO_STREAM("Received litter waypoint: [" << litter_point_.x << ", " << litter_point_.y << ", " << litter_point_.z << "]");
 
     // Navigate to the litter waypoint
-    if (navigateToWaypoint(litter_point))
+    if (current_mode_ == RobotMode::LITTER_PICKING && navigateToWaypoint(litter_point_))
     {
-        ROS_INFO_STREAM("Successfully reached litter waypoint: [" << litter_point.x << ", " << litter_point.y << ", " << litter_point.z << "]");
+        ROS_INFO_STREAM("Successfully reached litter waypoint: [" << litter_point_.x << ", " << litter_point_.y << ", " << litter_point_.z << "]");
 
-        // Simulate litter destruction
-        ROS_INFO("Destroying litter...");
-        ros::Duration(5.0).sleep(); // Simulate the time taken to destroy the litter
+        // // Simulate litter destruction
+        // ROS_INFO("Destroying litter...");
+        // ros::Duration(5.0).sleep(); // Simulate the time taken to destroy the litter
 
-        // Call the service to remove the litter from memory
-        litter_destruction::RemoveLitter remove_litter_srv;
-        remove_litter_srv.request.litter = get_next_target_litter_srv.response.litter;
-
-        if (!delete_litter_client_.call(remove_litter_srv))
-        {
-            ROS_ERROR("Failed to call service /litter_manager/delete_litter");
-            return;
-        }
-
-        if (remove_litter_srv.response.success)
-        { ROS_INFO_STREAM("Successfully removed litter with ID: " << get_next_target_litter_srv.response.litter.id); }
-        else
-        { ROS_WARN_STREAM("Failed to remove litter with ID: " << get_next_target_litter_srv.response.litter.id); }
+        // // Call the service to remove the litter from memory
+        // if (!removeLitter(target_litter_)) {
+        //     ROS_WARN("Failed to remove the current target litter.");
+        // } else {
+        //     ROS_INFO("Litter successfully removed.");
+        // }
     }
     else
-    { ROS_WARN_STREAM("Failed to reach litter waypoint: [" << litter_point.x << ", " << litter_point.y << ", " << litter_point.z << "]"); }
+    { ROS_WARN_STREAM("Failed to reach litter waypoint: [" << litter_point_.x << ", " << litter_point_.y << ", " << litter_point_.z << "]"); }
 }
 
 
@@ -285,7 +287,124 @@ void MoveManager::performTransition() {
 
 }
 
+void MoveManager::performLitterTracking() {
+    ROS_INFO("Performing Litter Tracking Mode");
+    move_base_client_.cancelAllGoals(); // Prioritise calculation of nearest litter position using camera detection
+    if (nearest_litter_calculated_){
+        if(navigateToWaypoint(nearest_litter_)){
+            ROS_INFO("Successfully tracked and reached the nearest litter.");
+            ros::Duration(5.0).sleep(); // Simulate litter destruction
+            ROS_INFO("Simulating removing of litter using another PROCEDURE");
+
+            // Call the service to remove the litter from memory
+            if (!removeLitter(target_litter_)) {
+                ROS_WARN("Failed to remove the current target litter.");
+            } else {
+                ROS_INFO("Litter successfully removed.");
+                ModeSwitchRequest(RobotMode::LITTER_PICKING); // Switch back to LITTER_PICKING mode
+            }
+            nearest_litter_calculated_ = false;
+        } else {
+            ROS_WARN("Failed to navigate to the nearest detected litter.");
+        }
+    }
+
+    // Get the nearest detected litter
+    try{
+        nearest_litter_ = getNearestDetectedLitter();
+        nearest_litter_calculated_ = true;
+        ROS_INFO_STREAM("Nearest litter: [" << nearest_litter_.x << ", " << nearest_litter_.y << "]");
+    } catch (const std::exception& e) {
+        ROS_WARN_STREAM("Error in getNearestDetectedLitter: " << e.what());
+        // Handle the error
+        ModeSwitchRequest(RobotMode::LITTER_PICKING);
+        return;
+    }
+}
+
 // HELPER Functions
+geometry_msgs::Point MoveManager::getNearestDetectedLitter() {
+    // Define a temporary variable to store detected litter positions
+    std::vector<geometry_msgs::Point> detected_litters;
+
+    // Create a subscriber to the detected litter topic
+    ros::Subscriber sub = nh_.subscribe<geometry_msgs::Point>(
+        detected_litter_topic_sub_, 
+        10,
+        [&detected_litters](const geometry_msgs::Point::ConstPtr& msg) {
+            detected_litters.push_back(*msg);
+        });
+
+    // Allow the node to process callbacks for a fixed duration
+    float processing_duration = 0.2;
+    ros::Time start_time = ros::Time::now();
+    while (ros::ok() && (ros::Time::now() - start_time).toSec() < processing_duration) {
+        ros::spinOnce(); // Process incoming messages
+    }
+
+    // Check if any litters were detected
+    if (detected_litters.empty()) {
+        ROS_WARN("No detected litters received within the timeout.");
+        // Call the service to remove the litter from memory
+        if (!removeLitter(target_litter_)) {
+            ROS_WARN("Failed to remove the current target litter.");
+        } else {
+            ROS_INFO("Litter successfully removed.");
+        }
+        throw std::runtime_error("No detected litters received within the timeout.");
+    }
+
+    // Get current robot position
+    navigation::GetAmclPose amcl_pose_srv;
+    if (!get_amcl_pose_client_.call(amcl_pose_srv))
+    {
+        ROS_WARN("Failed to get robot's current position.");
+        throw std::runtime_error("Failed to get robot's current position.");
+    }
+    geometry_msgs::Point current_position = amcl_pose_srv.response.pose.pose.pose.position;
+
+    // Find the nearest litter
+    geometry_msgs::Point nearest_litter;
+    double min_distance = std::numeric_limits<double>::max();
+    for (const auto& litter : detected_litters) {
+        // Euclidean distance of robot position to litter
+        double distance = std::sqrt(std::pow(current_position.x - litter.x, 2) +
+                            std::pow(current_position.y - litter.y, 2));
+        if (distance < min_distance) {
+            min_distance = distance;
+            nearest_litter = litter;
+        }
+    }
+
+    ROS_INFO_STREAM("Nearest litter found at: [" << nearest_litter.x << ", " << nearest_litter.y << "] with distance: " << min_distance);
+
+    return nearest_litter;
+}
+
+bool MoveManager::removeLitter(const bumperbot_detection::LitterPoint& litter) {
+    // Call the service to remove the litter from memory
+    litter_destruction::RemoveLitter remove_litter_srv;
+    remove_litter_srv.request.litter = litter;
+
+    if (!delete_litter_client_.call(remove_litter_srv))
+    {
+        ROS_ERROR("Failed to call service /litter_manager/delete_litter");
+        return false;
+    }
+
+    if (remove_litter_srv.response.success)
+    { 
+        ROS_INFO_STREAM("Successfully removed litter with ID: " << litter.id); 
+        return true;
+    }
+    else
+    { 
+        ROS_WARN_STREAM("Failed to remove litter with ID: " << litter.id); 
+        return false;    
+    }
+}
+
+
 bool MoveManager::isCoverageComplete() {
     return coverage_complete_;
 }
@@ -311,12 +430,15 @@ bool MoveManager::ModeSwitchRequest(RobotMode req_mode) {
 
 void MoveManager::spin() {
     // Frequency of publishing waypoint (if still performing waypoint then ignored)
-    ros::Rate rate(1.0); 
+    ros::Rate rate(1.5); 
 
     while (ros::ok()) {
         switch (current_mode_) {
             case RobotMode::TRANSITION: 
                 performTransition();
+                break;
+            case RobotMode::LITTER_TRACKING:
+                performLitterTracking();
                 break;
             case RobotMode::LITTER_PICKING: 
                 performLitterMode();

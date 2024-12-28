@@ -275,9 +275,9 @@ class LitterManager:
             if self.is_within_threshold(detected_litter.point, self.get_robot_position()):
                 rospy.loginfo(f"Detected Litter is within threshold of {self.distance_threshold}")
 
-                # Wait for robot to be in a mode not in LITTER_PICKING mode, to prevent race conditions
-                if self.get_robot_mode().mode == 3: # TODO: Change the number to an enum label
-                    rospy.loginfo("Did not register new litter because robot is in LITTER PICKING mode")
+                # Wait for robot to be in a mode not in LITTER_PICKING or LITTER_TRACKING mode, to prevent race conditions
+                if self.get_robot_mode().mode == 3 or self.get_robot_mode().mode == 5: # TODO: Change the number to an enum label
+                    rospy.loginfo("Did not register new litter because robot is in LITTER PICKING or LITTER_TRACKING mode")
                     return
                     
                 # Proceed to initialise LITTER_PICKING mode
