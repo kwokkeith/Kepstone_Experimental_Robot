@@ -19,7 +19,8 @@ enum class RobotMode {
     IDLE            = 1,
     COVERAGE        = 2,
     LITTER_PICKING  = 3,
-    TRANSITION      = 4
+    TRANSITION      = 4,
+    LITTER_TRACKING = 5
 };
 
 class MoveManager

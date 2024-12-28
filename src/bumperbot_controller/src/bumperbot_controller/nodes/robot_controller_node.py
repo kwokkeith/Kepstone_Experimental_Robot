@@ -15,6 +15,7 @@ class RobotMode(Enum):
     COVERAGE           = 2
     LITTER_PICKING     = 3
     TRANSITION         = 4
+    LITTER_TRACKING    = 5
 
 
 class RobotController:
@@ -211,6 +212,9 @@ class RobotController:
 
         elif mode == RobotMode.TRANSITION:
             rospy.loginfo("Switched to TRANSITION mode")
+
+        elif mode == RobotMode.LITTER_TRACKING:
+            rospy.loginfo("Switched to LITTER_TRACKING mode")
 
         else:
             rospy.logwarn("In switch_mode, `mode` argument provided invalid")
