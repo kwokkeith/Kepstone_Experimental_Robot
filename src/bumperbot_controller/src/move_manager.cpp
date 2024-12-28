@@ -336,7 +336,7 @@ geometry_msgs::Point MoveManager::getNearestDetectedLitter() {
         });
 
     // Allow the node to process callbacks for a fixed duration
-    float processing_duration = 0.2;
+    float processing_duration = 1.5;
     ros::Time start_time = ros::Time::now();
     while (ros::ok() && (ros::Time::now() - start_time).toSec() < processing_duration) {
         ros::spinOnce(); // Process incoming messages

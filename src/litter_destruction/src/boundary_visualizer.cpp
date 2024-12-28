@@ -45,7 +45,7 @@ bool BoundaryVisualizer::republishGlobalBoundary(std_srvs::Trigger::Request &req
     if (get_robot_mode_srv_.call(current_mode_srv))
     {
         // TODO: change the enum mode state to a label
-        if (current_mode_srv.response.mode == 3) {
+        if (current_mode_srv.response.mode == 3 || current_mode_srv.response.mode == 5) {
             if (get_global_boundary_srv_.call(global_boundary_srv) && global_boundary_srv.response.valid)
                 {
                     publishGlobalBoundaryMarker(global_boundary_srv.response.center, global_boundary_srv.response.radius);
@@ -75,7 +75,7 @@ bool BoundaryVisualizer::republishLocalBoundary(std_srvs::Trigger::Request &req,
     bumperbot_controller::GetCurrentMode current_mode_srv;
     if (get_robot_mode_srv_.call(current_mode_srv))
     {
-        if (current_mode_srv.response.mode == 3) {
+        if (current_mode_srv.response.mode == 3 || current_mode_srv.response.mode == 5) {
             if (get_local_boundary_srv_.call(local_boundary_srv) && local_boundary_srv.response.valid)
             {
                 publishLocalBoundaryMarker(local_boundary_srv.response.center, local_boundary_srv.response.radius);
