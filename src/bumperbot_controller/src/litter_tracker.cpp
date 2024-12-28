@@ -21,7 +21,7 @@ LitterTracker::LitterTracker(ros::NodeHandle& nh) : nh_(nh)
     if (!nh_.getParam("/litter_tracker/distance_threshold", distance_threshold_))
     {
         ROS_WARN("Parameter '/litter_tracker/distance_threshold' not found. Using default value 0.5.");
-        distance_threshold_ = 0.5; // Default value
+        distance_threshold_ = 0.8; // Default value
     }
 }
 

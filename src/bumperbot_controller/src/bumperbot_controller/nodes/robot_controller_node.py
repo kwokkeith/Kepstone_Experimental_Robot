@@ -195,7 +195,8 @@ class RobotController:
 
         # Trigger the global boundary visualization
         response = self.republish_global_boundary()
-        
+
+        self.publish_mode()      # Publish new mode to the topic   
         # Determining topic based on mode and start the appropriate mode function
         if mode == RobotMode.IDLE:
             rospy.loginfo("Switched to IDLE mode.")
@@ -214,12 +215,21 @@ class RobotController:
             rospy.loginfo("Switched to TRANSITION mode")
 
         elif mode == RobotMode.LITTER_TRACKING:
+            # Cancel all existing move goals
+            cancel_all_goals_response = self.cancel_all_goals()
+            # Check if successful in canceling all goals
+            if cancel_all_goals_response.success:
+                rospy.loginfo("Successfully canceled all goals.")
+            else:
+                rospy.logwarn("Failed to cancel all goals.")
+                response.success = False
+                response.message = "Failed to cancel existing move goals."
+                return response
+            
             rospy.loginfo("Switched to LITTER_TRACKING mode")
 
         else:
             rospy.logwarn("In switch_mode, `mode` argument provided invalid")
-        
-        self.publish_mode()
     
 
     def initiate_coverage_mode(self, waypoints_file_path):
