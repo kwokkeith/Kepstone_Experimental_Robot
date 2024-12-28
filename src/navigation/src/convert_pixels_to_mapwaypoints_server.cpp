@@ -64,11 +64,21 @@ int main(int argc, char **argv) {
     ros::NodeHandle nh;
     ros::NodeHandle nh_;
 
-    // Advertise the service
-    ros::ServiceServer service = nh.advertiseService("convert_pixel_waypoints_to_map_waypoints", convertWaypointsCallback);
+    // Get Global parameter for topic/services
+    std::string convert_pixel_to_map_waypoints_svc_srv_;
+    nh_.getParam("/navigation/services/convert_pixel_waypoints_to_map_waypoints", convert_pixel_to_map_waypoints_svc_srv_);
+    std::string convert_pixel_to_map_svc_client_;
+    nh_.getParam("/navigation/services/convert_pixel_to_map", convert_pixel_to_map_svc_client_);
 
+    // Advertise the service
+    ros::ServiceServer service = nh.advertiseService(convert_pixel_to_map_waypoints_svc_srv_, convertWaypointsCallback);
+
+    if (!ros::service::waitForService(convert_pixel_to_map_svc_client_, ros::Duration(10.0))) {
+        ROS_ERROR("Service %s is not available after waiting", convert_pixel_to_map_svc_client_.c_str());
+        return 1;
+    }
     // Initialize the service client to call the ConvertPixelToMap service
-    client = nh_.serviceClient<navigation::ConvertPixelToMap>("convert_pixel_to_map");
+    client = nh_.serviceClient<navigation::ConvertPixelToMap>(convert_pixel_to_map_svc_client_);
 
     ROS_INFO("Service to convert pixel waypoints to map waypoints is ready.");
     ros::spin();

@@ -22,11 +22,17 @@ LitterPlotter::LitterPlotter()
     if (!pnh_.getParam("marker_color/a", marker_color_.a))
         ROS_WARN("Failed to load marker_color/a, using default.");
 
+    // Load Global parameters for service/topics
+    std::string litter_memory_topic_sub_;
+    nh_.getParam("/litter_memory/topics/litter_memory", litter_memory_topic_sub_);
+    std::string litter_markers_topic_pub_;
+    nh_.getParam("/litter_plotter/topics/litter_markers", litter_markers_topic_pub_);
+
     // Subscribe to the litter memory topic
-    litter_sub_ = nh_.subscribe("litter_memory", 10, &LitterPlotter::litterCallback, this);
+    litter_sub_ = nh_.subscribe(litter_memory_topic_sub_, 10, &LitterPlotter::litterCallback, this);
     
     // Publisher for marker visualization
-    marker_pub_ = nh_.advertise<visualization_msgs::MarkerArray>("/litter_plotter/litter_markers", 10);
+    marker_pub_ = nh_.advertise<visualization_msgs::MarkerArray>(litter_markers_topic_pub_, 10);
 }
 
 void LitterPlotter::litterCallback(const bumperbot_detection::LitterList::ConstPtr& msg)

@@ -5,18 +5,35 @@
 
 BoundaryVisualizer::BoundaryVisualizer(ros::NodeHandle &nh)
 {
+    // Get Global Parameter for service/topics
+    std::string global_boundary_marker_topic_pub_;
+    std::string local_boundary_marker_topic_pub_;
+    std::string republish_global_boundary_svc_srv_;
+    std::string republish_local_boundary_svc_srv_;
+    nh.getParam("/boundary_visualizer/topics/global_boundary_marker", global_boundary_marker_topic_pub_);
+    nh.getParam("/boundary_visualizer/topics/local_boundary_marker", local_boundary_marker_topic_pub_);
+    nh.getParam("/boundary_visualizer/services/republish_global_boundary", republish_global_boundary_svc_srv_);
+    nh.getParam("/boundary_visualizer/services/republish_local_boundary", republish_local_boundary_svc_srv_);
+    std::string get_global_boundary_client_;
+    std::string get_local_boundary_client_;
+    std::string get_current_mode_client_;
+    nh.getParam("/robot_controller/services/get_global_boundary", get_global_boundary_client_);
+    nh.getParam("/robot_controller/services/get_current_mode", get_current_mode_client_);
+    nh.getParam("/litter_manager/services/get_local_boundary_center", get_local_boundary_client_);
+
+
     // Initialize publishers for the boundary markers
-    global_boundary_marker_pub_ = nh.advertise<visualization_msgs::Marker>("global_boundary_marker", 10);
-    local_boundary_marker_pub_  = nh.advertise<visualization_msgs::Marker>("local_boundary_marker", 10);
+    global_boundary_marker_pub_ = nh.advertise<visualization_msgs::Marker>(global_boundary_marker_topic_pub_, 10);
+    local_boundary_marker_pub_  = nh.advertise<visualization_msgs::Marker>(local_boundary_marker_topic_pub_, 10);
 
     // Initialize service clients to retrieve boundary data
-    get_global_boundary_srv_ = nh.serviceClient<litter_destruction::GlobalBoundaryCenter>("/robot_controller/get_global_boundary");
-    get_local_boundary_srv_  = nh.serviceClient<litter_destruction::LocalBoundaryCenter>("/litter_manager/get_local_boundary_center");
-    get_robot_mode_srv_      = nh.serviceClient<bumperbot_controller::GetCurrentMode>("/robot_controller/get_current_mode");    
+    get_global_boundary_srv_ = nh.serviceClient<litter_destruction::GlobalBoundaryCenter>(get_global_boundary_client_);
+    get_local_boundary_srv_  = nh.serviceClient<litter_destruction::LocalBoundaryCenter>(get_local_boundary_client_);
+    get_robot_mode_srv_      = nh.serviceClient<bumperbot_controller::GetCurrentMode>(get_current_mode_client_);    
 
     // Initialize service servers to handle republishing requests
-    republish_global_boundary_srv_ = nh.advertiseService("republish_global_boundary", &BoundaryVisualizer::republishGlobalBoundary, this);
-    republish_local_boundary_srv_  = nh.advertiseService("republish_local_boundary", &BoundaryVisualizer::republishLocalBoundary, this);
+    republish_global_boundary_srv_ = nh.advertiseService(republish_global_boundary_svc_srv_, &BoundaryVisualizer::republishGlobalBoundary, this);
+    republish_local_boundary_srv_  = nh.advertiseService(republish_local_boundary_svc_srv_, &BoundaryVisualizer::republishLocalBoundary, this);
 }
 
 bool BoundaryVisualizer::republishGlobalBoundary(std_srvs::Trigger::Request &req, std_srvs::Trigger::Response &res)

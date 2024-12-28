@@ -1,9 +1,9 @@
 global_costmap:
   global_frame: map
-  robot_base_frame: base_footprint
+  robot_base_frame: base_link
 
-  width: 100.0
-  height: 100.0 
+  # width: 300.0
+  # height: 300.0 
 
   update_frequency: 15.0
   publish_frequency: 15.0
@@ -16,3 +16,6 @@ global_costmap:
   - {name: obstacle_layer, type: 'costmap_2d::ObstacleLayer'}
   - {name: inflation_layer, type: 'costmap_2d::InflationLayer'}
   
+static_layer:
+  map_topic: "/map"           # Ensures it subscribes to the map_server's topic
+  subscribe_to_updates: true  # Allows dynamic updates to the map

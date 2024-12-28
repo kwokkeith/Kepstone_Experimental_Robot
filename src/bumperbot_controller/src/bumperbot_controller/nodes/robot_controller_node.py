@@ -15,6 +15,7 @@ class RobotMode(Enum):
     COVERAGE           = 2
     LITTER_PICKING     = 3
     TRANSITION         = 4
+    LITTER_TRACKING    = 5
 
 
 class RobotController:
@@ -24,32 +25,48 @@ class RobotController:
         self.global_boundary_center = Point()
         self.global_boundary_radius = 0
 
+        ## Get global parameters for topics/services
+        # Service Servers
+        mode_switch_srv = rospy.get_param('/robot_controller/services/mode_switch')
+        get_global_boundary_srv = rospy.get_param('/robot_controller/services/get_global_boundary')
+        get_current_mode_srv = rospy.get_param('/robot_controller/services/get_current_mode')
+        initiate_coverage_srv = rospy.get_param('/robot_controller/services/initiate_coverage')
+        # Service Clients
+        clear_previous_job_client = rospy.get_param('/litter_manager/services/clear_previous_job')
+        get_global_boundary_client = rospy.get_param('/litter_manager/services/get_global_boundary_center')
+        initiate_coverage_path_client = rospy.get_param('/waypoint_manager/services/initiate_coverage_path')
+        republish_global_boundary_client = rospy.get_param('/boundary_visualizer/services/republish_global_boundary')
+        move_manager_client = rospy.get_param('/move_manager/services/cancel_all_goals')
+        
+        # Topic Publishers
+        robot_mode_topic_pub = rospy.get_param('/robot_controller/topics/robot_mode')
+
         ## Publishers
-        self.mode_pub = rospy.Publisher("/robot_controller/robot_mode", Int32, queue_size=10)
+        self.mode_pub = rospy.Publisher(robot_mode_topic_pub, Int32, queue_size=10)
 
         ## Subscribers
         # Subscriptions to the waypoint topics for each mode
 
         # Services servers to initialise first for controllers to start (Dependencies caused by wait_for_service)
-        rospy.Service('/robot_controller/mode_switch', ModeSwitch, self.handle_mode_switch)                                         # Service server to request mode switch
-        rospy.Service('/robot_controller/get_global_boundary', GlobalBoundaryCenter, self.handle_get_global_boundary_center) # Service server to get global boundary center of robot controller
-        rospy.Service('/robot_controller/get_current_mode', GetCurrentMode, self.handle_get_current_mode)            # Service server to request current mode
+        rospy.Service(mode_switch_srv, ModeSwitch, self.handle_mode_switch)                                         # Service server to request mode switch
+        rospy.Service(get_global_boundary_srv, GlobalBoundaryCenter, self.handle_get_global_boundary_center)        # Service server to get global boundary center of robot controller
+        rospy.Service(get_current_mode_srv, GetCurrentMode, self.handle_get_current_mode)                           # Service server to request current mode
 
         ## Service Clients
-        rospy.wait_for_service('/waypoint_manager/initiate_coverage_path')
-        rospy.wait_for_service('/litter_manager/get_global_boundary_center')
-        rospy.wait_for_service('/republish_global_boundary')
-        rospy.wait_for_service('/litter_manager/clear_previous_job')
-        rospy.wait_for_service('/move_manager/cancel_all_goals')
+        rospy.wait_for_service(initiate_coverage_path_client)
+        rospy.wait_for_service(get_global_boundary_client)
+        rospy.wait_for_service(republish_global_boundary_client)
+        rospy.wait_for_service(clear_previous_job_client)
+        rospy.wait_for_service(move_manager_client)
 
-        self.initiate_coverage_path = rospy.ServiceProxy('/waypoint_manager/initiate_coverage_path', InitiateCoveragePath)                   # Service to initate the coverage path   
-        self.get_global_boundary_center_service = rospy.ServiceProxy('/litter_manager/get_global_boundary_center', GlobalBoundaryCenter)     # Service to get global boundary center
-        self.republish_global_boundary = rospy.ServiceProxy('/republish_global_boundary', Trigger)                                           # Service to republish global boundary center marker
-        self.clear_previous_litter_job = rospy.ServiceProxy('/litter_manager/clear_previous_job', Trigger)                                   # Service to stop and clear the previous litter job
-        self.cancel_all_goals          = rospy.ServiceProxy('/move_manager/cancel_all_goals', Trigger)
+        self.initiate_coverage_path = rospy.ServiceProxy(initiate_coverage_path_client, InitiateCoveragePath)                     # Service to initate the coverage path   
+        self.get_global_boundary_center_service = rospy.ServiceProxy(get_global_boundary_client, GlobalBoundaryCenter)            # Service to get global boundary center
+        self.republish_global_boundary = rospy.ServiceProxy(republish_global_boundary_client, Trigger)                            # Service to republish global boundary center marker
+        self.clear_previous_litter_job = rospy.ServiceProxy(clear_previous_job_client, Trigger)                                   # Service to stop and clear the previous litter job
+        self.cancel_all_goals          = rospy.ServiceProxy(move_manager_client, Trigger)
 
         ## Service Servers
-        rospy.Service('/robot_controller/initiate_coverage', InitiateCoveragePath, self.handle_initiate_coverage)    # Service server to initiate coverage
+        rospy.Service(initiate_coverage_srv, InitiateCoveragePath, self.handle_initiate_coverage)       # Service server to initiate coverage
 
 
     def publish_mode(self):
@@ -195,6 +212,9 @@ class RobotController:
 
         elif mode == RobotMode.TRANSITION:
             rospy.loginfo("Switched to TRANSITION mode")
+
+        elif mode == RobotMode.LITTER_TRACKING:
+            rospy.loginfo("Switched to LITTER_TRACKING mode")
 
         else:
             rospy.logwarn("In switch_mode, `mode` argument provided invalid")

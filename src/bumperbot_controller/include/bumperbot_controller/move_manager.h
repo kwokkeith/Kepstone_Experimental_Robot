@@ -19,7 +19,8 @@ enum class RobotMode {
     IDLE            = 1,
     COVERAGE        = 2,
     LITTER_PICKING  = 3,
-    TRANSITION      = 4
+    TRANSITION      = 4,
+    LITTER_TRACKING = 5
 };
 
 class MoveManager
@@ -33,7 +34,7 @@ private:
     ros::NodeHandle nh_;     
     ros::Subscriber robot_mode_sub_;                    // Subscriber to the Robot Mode Topic
     ros::ServiceClient get_next_litter_client_;         // Service to get next litter from litter manager
-    ros::ServiceClient get_next_target_litter_client;   // Service to get next target litter from litter manager
+    ros::ServiceClient get_next_target_litter_client_;  // Service to get next target litter from litter manager
     ros::ServiceClient delete_litter_client_;           // Service to remove litter from litter manager
     ros::ServiceClient get_next_waypoint_client_;       // Service to get next waypoint from coverage manager
     ros::ServiceClient update_waypoint_client_;         // Service to update the waypoint manager that previous waypoint reached

@@ -33,13 +33,6 @@ def main():
              # Set the local boundary and process additional litter within it
             manager.process_target_litter(target_litter)
 
-            ### Move robot to the target litter
-            # robot.move_to(target_litter.point)
-            # robot.navigate_client.wait_for_result()  # Wait until reached
-
-            ### Start executing cleaning procedure
-            # robot.destroy_litter()
-
             time.sleep(10) # Simulate robot moving to litter
 
             if manager.delete_litter(target_litter):

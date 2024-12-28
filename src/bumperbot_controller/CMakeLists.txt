@@ -93,7 +93,7 @@ target_link_libraries(simple_controller_node ${catkin_LIBRARIES} simple_controll
 
 add_executable(noisy_controller_node nodes/noisy_controller_node.cpp)
 add_dependencies(noisy_controller_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(noisy_controller_node ${catkin_LIRARIES} noisy_controller)
+target_link_libraries(noisy_controller_node ${catkin_LIBRARIES} noisy_controller)
 
 add_library(move_manager src/move_manager.cpp)
 add_dependencies(move_manager ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
@@ -101,7 +101,15 @@ target_link_libraries(move_manager ${catkin_LIBRARIES} ${Eigen_LIBRARIES})
 
 add_executable(move_manager_node nodes/move_manager_node.cpp)
 add_dependencies(move_manager_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(move_manager_node ${catkin_LIRARIES} move_manager)
+target_link_libraries(move_manager_node ${catkin_LIBRARIES} move_manager)
+
+add_library(litter_tracker src/litter_tracker.cpp)
+add_dependencies(litter_tracker ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(litter_tracker ${catkin_LIBRARIES} ${Eigen_LIBRARIES})
+
+add_executable(litter_tracker_node nodes/litter_tracker_node.cpp)
+add_dependencies(litter_tracker_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(litter_tracker_node ${catkin_LIBRARIES} litter_tracker)
 
 #############
 ## Testing ##

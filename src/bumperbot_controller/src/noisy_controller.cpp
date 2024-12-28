@@ -17,10 +17,16 @@ NoisyController::NoisyController(const ros::NodeHandle &nh, double radius, doubl
     ROS_INFO_STREAM("Using wheel radius " << radius);
     ROS_INFO_STREAM("Using wheel separation " << separation);
 
+    // GET global parameter for topic and services
+    std::string odom_noisy_topic_pub_;
+    nh_.getParam("/bumperbot_controller/topics/odom_noisy", odom_noisy_topic_pub_);
+    std::string joint_states_topic_sub_;
+    nh_.getParam("/bumperbot_controller/topics/joint_states", joint_states_topic_sub_);
+
     prev_time_ = ros::Time::now();
 
-    odom_pub_ = nh_.advertise<nav_msgs::Odometry>("bumperbot_controller/odom_noisy", 10);
-    joint_sub_ = nh_.subscribe("joint_states", 1000, &NoisyController::jointCallback, this);
+    odom_pub_ = nh_.advertise<nav_msgs::Odometry>(odom_noisy_topic_pub_, 10);
+    joint_sub_ = nh_.subscribe(joint_states_topic_sub_, 1000, &NoisyController::jointCallback, this);
 
     odom_msg_.header.frame_id = "odom";
     odom_msg_.child_frame_id = "base_footprint_ekf";

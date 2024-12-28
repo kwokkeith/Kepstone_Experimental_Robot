@@ -5,11 +5,22 @@
 // Constructor
 WaypointManager::WaypointManager(ros::NodeHandle& nh)
     : nh_(nh), current_index_(0) {
-    waypoint_service_ = nh_.advertiseService("/coverage_path/next_waypoint", &WaypointManager::getNextTargetWaypoint, this);
-    update_waypoint_service_ = nh_.advertiseService("/waypoint_manager/get_next_waypoint", &WaypointManager::getNextWaypoint, this);
-    initiate_coverage_service_ = nh_.advertiseService("/waypoint_manager/initiate_coverage_path", &WaypointManager::initiateCoveragePath, this);
-    get_waypoints_service_ = nh_.advertiseService("/waypoint_manager/get_waypoints", &WaypointManager::getWaypoints, this);
-}
+        // GET global parameters for services/topics
+        std::string next_waypoint_svc_srv_;
+        std::string get_next_waypoint_svc_srv_;
+        std::string initiate_coverage_path_svc_srv_;
+        std::string get_waypoints_svc_srv_;
+        nh_.getParam("/coverage_path/services/next_waypoint", next_waypoint_svc_srv_);
+        nh_.getParam("/waypoint_manager/services/get_next_waypoint", get_next_waypoint_svc_srv_);
+        nh_.getParam("/waypoint_manager/services/initiate_coverage_path", initiate_coverage_path_svc_srv_);
+        nh_.getParam("/waypoint_manager/services/get_waypoints", get_waypoints_svc_srv_);
+
+
+        waypoint_service_ = nh_.advertiseService(next_waypoint_svc_srv_, &WaypointManager::getNextTargetWaypoint, this);
+        update_waypoint_service_ = nh_.advertiseService(get_next_waypoint_svc_srv_, &WaypointManager::getNextWaypoint, this);
+        initiate_coverage_service_ = nh_.advertiseService(initiate_coverage_path_svc_srv_, &WaypointManager::initiateCoveragePath, this);
+        get_waypoints_service_ = nh_.advertiseService(get_waypoints_svc_srv_, &WaypointManager::getWaypoints, this);
+    }
 
 // Service to initiate coverage path by loading waypoints from file
 bool WaypointManager::initiateCoveragePath(navigation::InitiateCoveragePath::Request& req,

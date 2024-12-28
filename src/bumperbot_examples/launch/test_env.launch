@@ -2,6 +2,11 @@
  test environment for our test robot -->
 
 <launch>
+    <!-- @@@@@@@@@@@@@ -->
+    <!-- Global Config -->
+    <!-- @@@@@@@@@@@@@ -->
+    <rosparam file="$(find config_manager)/config/parameters.yaml" command="load" />
+
     <!-- @@@@@@@@@@@@ -->
     <!-- ARGUMENTS -->
     <!-- @@@@@@@@@@@@ -->
