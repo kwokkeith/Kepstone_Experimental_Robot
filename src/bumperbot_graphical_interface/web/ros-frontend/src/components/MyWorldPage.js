@@ -157,7 +157,7 @@ const MyWorldPage = () => {
 
   return (
     <div className="my-world-page">
-      <h2>{data.length > 0 ? data[0].map_name : 'Map Name'}</h2>
+      <h2>{mapName}</h2>
       {isLoading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
       <img
