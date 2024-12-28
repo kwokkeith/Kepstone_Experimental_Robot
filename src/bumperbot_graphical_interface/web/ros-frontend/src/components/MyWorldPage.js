@@ -39,6 +39,7 @@ const MyWorldPage = () => {
   // useEffect Hooks for mapName
   // ==================================
 
+  // const dbmapNames = data.map(entry => entry.map_name); //Newer version of the code to replace bottom
   const mapName = data.length > 0 ? data[0].map_name : 'map_name';
   useEffect(() => {
     // Update sessionStorage when currentPage state changes

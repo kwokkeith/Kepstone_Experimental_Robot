@@ -4,8 +4,7 @@ import './CreateMapPage.css';
 import ROSLIB from 'roslib';
 import { coverage_listener, publishPoint, publishStartPoint} from '../rosService';
 
-
-const CreateMapPage = ({ mapName }) => {
+const CreateMapPage = ({ mapName, showPage }) => {
   // ==========================
   // React States
   // ==========================
@@ -211,7 +210,7 @@ const CreateMapPage = ({ mapName }) => {
     console.log('Edit button clicked');
   };
   const handleSave = () => {
-    
+    showPage('main')
   };
 
   // ==========================

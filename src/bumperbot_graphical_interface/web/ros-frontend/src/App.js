@@ -88,7 +88,7 @@ function App() {
           {currentPage === 'main' && <MainPage />}
           {currentPage === 'settings' && <SettingsPage />}
           {currentPage === 'my-world' && <MyWorldPage />}
-          {currentPage === 'create-map' && <CreateMapPage mapName={mapName}/>} {/* Pass mapName to CreateMapPage */}
+          {currentPage === 'create-map' && <CreateMapPage mapName={mapName} showPage={showPage}/>} {/* Pass mapName to CreateMapPage */}
         </>
       )}
     </div>
