@@ -6,6 +6,9 @@ import { startNode, publishmapName } from '../rosService';
 
 const Menu = ({ showPage, isOpen }) => {
   const [isMapsOpen, setIsMapsOpen] = useState(false);
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const handleMapsClick = () => {
     setIsMapsOpen((prev) => !prev);
@@ -26,9 +29,35 @@ const Menu = ({ showPage, isOpen }) => {
     }
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/data');
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const result = await response.json();
+        setData(result.data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchData();
+    
+  }, []);
+  
   const handleCreateMapClick = () => {
+    const dbmapNames = data.map(entry => entry.map_name);
+    // console.log(dbmapNames); // Debugging
     const mapName = prompt("What is the name of the Map?");
-    if (mapName) {
+    if (dbmapNames.includes(mapName)) {
+      alert("Map name already exists. Please enter a new map name.");
+    } else if (!mapName) {
+      alert("Please enter a valid map name");
+    } else if (mapName) {
       showPage('create-map', mapName); // Pass map name to showPage
       handleStartNode(mapName);
     }

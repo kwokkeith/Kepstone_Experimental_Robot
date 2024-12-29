@@ -4,16 +4,23 @@ import './CreateMapPage.css';
 import ROSLIB from 'roslib';
 import { coverage_listener, publishPoint, publishStartPoint} from '../rosService';
 
-const CreateMapPage = ({ mapName }) => {
+const CreateMapPage = ({ mapName, showPage }) => {
   // ==========================
   // React States
   // ==========================
+
+  // React States for creating map using ROS
   const imageRef = useRef(null);
   const canvasRef = useRef(null);
   const [points, setPoints] = useState([]);
   const [startpoints, setStartPoints] = useState(false);
   const [coverageListener, setcoverageListener] = useState('');
   const [showButtonContainer, setShowButtonContainer] = useState(false);
+
+  // React States for database fetching
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   // ==========================
   // React useEffect Hooks called whenever a dependent state changes
@@ -23,8 +30,25 @@ const CreateMapPage = ({ mapName }) => {
   useEffect(() => {
     if (mapName) {
       console.log(`Creating new map: ${mapName}`);
+      fetchData();
     }
   },[mapName] );
+
+  // Function to fetch data from backend
+  const fetchData = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/data');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const result = await response.json();
+      setData(result.data);
+      setIsLoading(false);
+    } catch (err) {
+      setError(err.message);
+      setIsLoading(false);
+    }
+  };
 
   // Draw the image in the canvas
   useEffect(() => {
@@ -157,20 +181,36 @@ const CreateMapPage = ({ mapName }) => {
     });
   };
 
-  const handleClearData = () => {
-    // Nothing here worked
-    // sessionStorage.removeItem("coverageListener");
-    // setcoverageListener('');
-    // setShowClearButton(false);
-    // const canvas = canvasRef.current;
-    // const ctx = canvas.getContext('2d');
-    // ctx.clearRect(0, 0, canvas.width, canvas.height);
-  };
-  const handleEdit = () => {
+  const handleClearDataWrapper = async () => {
+    if (!mapName) {
+      console.error('Map name is not defined.');
+      return;
+    }
 
+    try {
+      const response = await fetch(`http://localhost:5000/api/maps/${encodeURIComponent(mapName)}`, {
+        method: 'DELETE',
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        console.log(result.message);
+        // Optionally, refresh data after deletion
+        fetchData();
+      } else {
+        console.error('Error deleting data:', result.error || result.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+  
+  const handleEdit = () => {
+    console.log('Edit button clicked');
   };
   const handleSave = () => {
-    
+    showPage('main')
   };
 
   // ==========================
@@ -190,7 +230,7 @@ const CreateMapPage = ({ mapName }) => {
       <canvas ref={canvasRef} className="my-world-canvas" onClick={handleCanvasClick}></canvas>
       {showButtonContainer && (
       <div className="button-container">
-        <button onClick={handleClearData} className="cancel-btn">Cancel</button>
+        <button onClick={handleClearDataWrapper} className="cancel-btn">Cancel</button>
         <button onClick={handleEdit} className="edit-btn">Edit</button>
         <button onClick={handleSave} className="save-btn">Save</button>
       </div>

@@ -37,8 +37,26 @@ app.get('/api/data', (req, res) => {
     });
 });
 
+// DELETE map by mapName in map_name column
+app.delete('/api/maps/:mapName', (req, res) => {
+    const { mapName } = req.params;
+    const sqlDelete = `DELETE FROM messages WHERE map_name = ?`;
+
+    db.run(sqlDelete, [mapName], function(err) {
+        if (err) {
+            console.error('Error running SQL:', err.message);
+            res.status(500).json({ error: 'Database error' });
+            return;
+        }
+        if (this.changes === 0) {
+            res.status(404).json({ message: 'No record found to delete.' });
+            return;
+        }
+        res.json({ message: `Row(s) deleted: ${this.changes}` });
+    });
+});
+
 // START SERVER
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 } );
-
