@@ -139,9 +139,9 @@ const CreateMapPage = ({ mapName, showPage }) => {
     return map ? map.polygonBounding_coordinates : null;
   };
 
-  const getCleaningPathCoordinates = (mapName) => {
+  const getBcdPolygonContourCoordinates = (mapName) => {
     const map = data.find((item => item.map_name === mapName));
-    return map ? map.cleaning_path_coordinates : null;
+    return map ? map.bcdPolygonContour_coordinates : null;
   };
 
   const isPointInPolygon = (point, polygon) => {
@@ -179,7 +179,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
       });
     } else if(editMapState && !createMapState){
       const polygonCoordinates = getPolygonBoundingCoordinates(mapName);
-      const cleaningPathCoordinates = getCleaningPathCoordinates(mapName);
+      const bcdCleaningPathCoordinates = getBcdPolygonContourCoordinates(mapName);
       // console.log('Polygon coordinates:', polygonCoordinates); //Debugging
       if (polygonCoordinates) {
         const polygonPoints = polygonCoordinates.trim().split('\n').map(line => {
@@ -194,31 +194,44 @@ const CreateMapPage = ({ mapName, showPage }) => {
         // }
       }
       // CLEANING PATH COORDINATES ARE NOT THE SAME AS THE POLYGON BCD COORDINATES, redo this part
-      if (cleaningPathCoordinates) {
-        const cleaningPathLists = cleaningPathCoordinates.split('],[').map(sublist => {
+      if (bcdCleaningPathCoordinates) {
+        const bcdCleaningPathLists = bcdCleaningPathCoordinates.split('],[').map(sublist => {
           return sublist.replace(/[\[\]]/g, '').trim().split('\n').map(line => {
             const [px, py] = line.split(' ').map(Number);
             return { x: px, y: py };
           });
         });
   
-        let foundInList = null;
-        cleaningPathLists.forEach((polygon, index) => {
+        let foundInBCDList = null;
+        bcdCleaningPathLists.forEach((polygon, index) => {
           if (isPointInPolygon({ x, y }, polygon)) {
-            foundInList = index;
+            foundInBCDList = index;
           }
         });
   
-        if (foundInList !== null) {
-          console.log(`Point is inside the cleaning path list at index: ${foundInList}`);
+        if (foundInBCDList !== null) {
+          // console.log(`Point is inside the cleaning path list at index: ${foundInBCDList}`);
           // Draw the points found in the list
-          const listPoints = cleaningPathLists[foundInList];
-          listPoints.forEach(point => {
-            ctx.fillStyle = 'green';
+          const listPoints = bcdCleaningPathLists[foundInBCDList];
+          if (listPoints.length > 0) {
             ctx.beginPath();
-            ctx.arc(point.x, point.y, 2, 0, 2 * Math.PI);
-            ctx.fill();
-          });
+            ctx.moveTo(listPoints[0].x, listPoints[0].y);
+            listPoints.forEach(point => {
+              ctx.lineTo(point.x, point.y);
+            });
+            ctx.closePath();
+            ctx.strokeStyle = 'lime';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+          }
+        
+          // // Draw the points
+          // listPoints.forEach(point => {
+          //   ctx.fillStyle = 'green';
+          //   ctx.beginPath();
+          //   ctx.arc(point.x, point.y, 2, 0, 2 * Math.PI);
+          //   ctx.fill();
+          // });
         } else {
           console.log('Point is not inside any cleaning path list.');
         }
@@ -271,7 +284,10 @@ const CreateMapPage = ({ mapName, showPage }) => {
       const result = await response.json();
 
       if (response.ok) {
-        console.log(result.message);
+        //alert(result.message);
+        alert("Cancelled map creation successfully");
+        sessionStorage.removeItem('coverageListener');
+        showPage('main')
         // Optionally, refresh data after deletion
         fetchData();
       } else {
@@ -287,6 +303,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
     setEditMapState(true);
   };
   const handleSave = () => {
+    sessionStorage.removeItem('coverageListener');
     showPage('main')
   };
 
