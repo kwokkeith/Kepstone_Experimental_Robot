@@ -92,3 +92,8 @@ navigation:
     get_amcl_pose: "/amcl_pose"                   # Topic to publish amcl position of the robot
     robot_pixel_pose: "/robot_pixel_position"     # Topic to publish robot pixel position on the map
     map_waypoint_path: "/map_waypoint_path"       # Topic to publish the converted map waypoints as a nav_msgs::Path type msg
+
+move_base:
+  topics:
+    global_costmap: "/move_base/global_costmap/costmap"  # Topic to publish global costmap
+    local_costmap: "/move_base/local_costmap/costmap"    # Topic to publish local costmap
