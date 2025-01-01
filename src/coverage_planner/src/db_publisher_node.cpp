@@ -10,17 +10,20 @@ sqlite3 *db;
 bool polygonBoundingCoordinatesStored = false;
 bool cleaningPathCoordinatesStored = false;
 bool mapNameStored = false;
+bool bcdPolygonContourCoordinatesStored = false;
 
 std::string map_name;
 std::string polygonBounding_coordinates;
 std::string cleaning_path_coordinates;
+std::string bcdPolygonContour_coordinates;
+
 //TODO: Confirm with keith and Gizelle if the name cleaning_path_coordinates should be changed to waypoints?
 //TODO: Add images into db
 void insertData(){
-    if (mapNameStored && polygonBoundingCoordinatesStored && cleaningPathCoordinatesStored){
+    if (mapNameStored && polygonBoundingCoordinatesStored && bcdPolygonContourCoordinatesStored && cleaningPathCoordinatesStored){
         std::stringstream ss;
-        ss << "INSERT INTO messages (map_name, polygonBounding_coordinates, cleaning_path_coordinates) VALUES ('"
-              << map_name << "', '" << polygonBounding_coordinates << "', '" << cleaning_path_coordinates << "');";
+        ss << "INSERT INTO messages (map_name, polygonBounding_coordinates, bcdPolygonContour_coordinates, cleaning_path_coordinates) VALUES ('"
+              << map_name << "', '" << polygonBounding_coordinates << "', '" << bcdPolygonContour_coordinates << "', '" << cleaning_path_coordinates << "');";
         char* errMsg = nullptr;
         int rc = sqlite3_exec(db, ss.str().c_str(), 0, 0, &errMsg);
         if (rc != SQLITE_OK) { ROS_ERROR("SQL error: %s", errMsg); sqlite3_free(errMsg); }
@@ -29,18 +32,24 @@ void insertData(){
         mapNameStored = false;
         polygonBoundingCoordinatesStored = false;
         cleaningPathCoordinatesStored = false;
+        bcdPolygonContourCoordinatesStored = false;
         map_name.clear();
         polygonBounding_coordinates.clear();
+        bcdPolygonContour_coordinates.clear();
         cleaning_path_coordinates.clear();
     }
 }
 
+// Add polycontours
 void canvasMessengerCallback(const std_msgs::String::ConstPtr& msg) {
     ROS_INFO("I heard: [%s]", msg->data.c_str());
     if (!polygonBoundingCoordinatesStored){
         polygonBounding_coordinates = msg->data;
         polygonBoundingCoordinatesStored = true;
-    } else if (!cleaningPathCoordinatesStored && msg->data != polygonBounding_coordinates) {
+    } else if (!bcdPolygonContourCoordinatesStored && polygonBoundingCoordinatesStored && msg->data != polygonBounding_coordinates) {
+        bcdPolygonContour_coordinates = msg->data;
+        bcdPolygonContourCoordinatesStored = true;
+    }else if (!cleaningPathCoordinatesStored && bcdPolygonContourCoordinatesStored && msg->data != bcdPolygonContour_coordinates) {
         cleaning_path_coordinates = msg->data;
         cleaningPathCoordinatesStored = true;
     }
@@ -75,6 +84,7 @@ int main(int argc, char **argv) {
                                    "id INTEGER PRIMARY KEY AUTOINCREMENT," \
                                    "map_name TEXT NOT NULL," \
                                    "polygonBounding_coordinates TEXT NOT NULL," \
+                                   "bcdPolygonContour_coordinates TEXT NOT NULL," \
                                    "cleaning_path_coordinates TEXT NOT NULL);";
     char *errMsg = 0;
     if (sqlite3_exec(db, sql_create_table, 0, 0, &errMsg) != SQLITE_OK) {

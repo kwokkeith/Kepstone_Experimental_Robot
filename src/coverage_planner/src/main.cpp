@@ -626,6 +626,7 @@ int main(int argc, char** argv) {
       }
     }
   } else {
+    std::vector<std::vector<cv::Point>> all_bcd_poly_contours;
     for (size_t i = 0; i < bcd_cells.size(); ++i) {
       // Compute all cluster sweeps.
       std::vector<Point_2> cell_sweep;
@@ -639,6 +640,36 @@ int main(int argc, char** argv) {
                                               best_dir, counter_clockwise,
                                               &cell_sweep);
       cells_sweeps.emplace_back(cell_sweep);
+
+      //  Extract the points of the current polygon
+      std::vector<cv::Point> current_polygon;
+      for (const auto & point: bcd_cells [i]){
+        current_polygon.emplace_back(
+          cv::Point(CGAL::to_double(point.x()), CGAL::to_double(point.y())));
+      }
+      all_bcd_poly_contours.push_back(current_polygon);
+    }
+
+    // Publishing the contours
+    int publish_count = 0;
+
+    while (ros::ok() && publish_count < 2)
+    {
+      std::ostringstream oss;
+      for (const auto& poly : all_bcd_poly_contours) {
+        oss << "[";
+        for (const auto& point : poly) {
+          oss << point.x << " " << point.y << "\n";
+        }
+        oss << "],";
+      }
+      std_msgs::String msg;
+      msg.data = oss.str();
+      point_pub.publish(msg);
+
+      publish_count++;
+      ros::spinOnce();
+      ros::Duration(1.0).sleep();
     }
   }
 
