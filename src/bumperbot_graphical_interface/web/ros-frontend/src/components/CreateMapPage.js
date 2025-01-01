@@ -16,6 +16,9 @@ const CreateMapPage = ({ mapName, showPage }) => {
   const [startpoints, setStartPoints] = useState(false);
   const [coverageListener, setcoverageListener] = useState('');
   const [showButtonContainer, setShowButtonContainer] = useState(false);
+  const [createMapState, setCreateMapState] = useState(true);
+  const [editMapState, setEditMapState] = useState(false);
+  
 
   // React States for database fetching
   const [data, setData] = useState([]);
@@ -34,7 +37,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
     }
   },[mapName] );
 
-  // Function to fetch data from backend
+  // Function to fetch data from backend sqlite NOT ROS
   const fetchData = async () => {
     try {
       const response = await fetch('http://localhost:5000/api/data');
@@ -65,6 +68,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
       if (storedCoverageListener) {
         handleCoverageListenerChange(JSON.parse(storedCoverageListener));
         setShowButtonContainer(true); // Show button container here
+        setCreateMapState(false); // Disable map creation FOR post map creation
       }
     };
   }, []);
@@ -130,6 +134,29 @@ const CreateMapPage = ({ mapName, showPage }) => {
   // FUNCTIONS
   // ==========================
 
+  const getPolygonBoundingCoordinates = (mapName) => {
+    const map = data.find((item => item.map_name === mapName));
+    return map ? map.polygonBounding_coordinates : null;
+  };
+
+  const getBcdPolygonContourCoordinates = (mapName) => {
+    const map = data.find((item => item.map_name === mapName));
+    return map ? map.bcdPolygonContour_coordinates : null;
+  };
+
+  const isPointInPolygon = (point, polygon) => {
+    let isInside = false;
+    for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+        const xi = polygon[i].x, yi = polygon[i].y;
+        const xj = polygon[j].x, yj = polygon[j].y;
+
+        const intersect = ((yi > point.y) !== (yj > point.y)) &&
+            (point.x < (xj - xi) * (point.y - yi) / (yj - yi) + xi);
+        if (intersect) isInside = !isInside;
+    }
+    return isInside;
+  };
+
   const handleCanvasClick = (event) => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
@@ -140,15 +167,77 @@ const CreateMapPage = ({ mapName, showPage }) => {
     // Add the new point to the array
     const newPoints = [...points, { x, y }];
     setPoints(newPoints);
-    // Redraw the image and all points
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(imageRef.current, 0, 0, canvas.width, canvas.height);
-    newPoints.forEach(point => {
-      ctx.fillStyle = 'red';
-      ctx.beginPath();
-      ctx.arc(point.x, point.y, 2, 0, 2 * Math.PI); // Draws a small circle of radius 5
-      ctx.fill();
-    });
+    if(createMapState){
+      // Redraw the image and all points
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(imageRef.current, 0, 0, canvas.width, canvas.height);
+      newPoints.forEach(point => {
+        ctx.fillStyle = 'red';
+        ctx.beginPath();
+        ctx.arc(point.x, point.y, 2, 0, 2 * Math.PI); // Draws a small circle of radius 5
+        ctx.fill();
+      });
+    } else if(editMapState && !createMapState){
+      const polygonCoordinates = getPolygonBoundingCoordinates(mapName);
+      const bcdCleaningPathCoordinates = getBcdPolygonContourCoordinates(mapName);
+      // console.log('Polygon coordinates:', polygonCoordinates); //Debugging
+      if (polygonCoordinates) {
+        const polygonPoints = polygonCoordinates.trim().split('\n').map(line => {
+          const [px, py] = line.split(' ').map(Number);
+          return { x: px, y: py };
+        });
+
+        // if (isPointInPolygon({ x, y }, polygonPoints)) {
+        //   console.log('Point is inside polygonContour:', polygonCoordinates);
+        // } else {
+        //   console.log('Point is outside polygonContour.');
+        // }
+      }
+      // CLEANING PATH COORDINATES ARE NOT THE SAME AS THE POLYGON BCD COORDINATES, redo this part
+      if (bcdCleaningPathCoordinates) {
+        const bcdCleaningPathLists = bcdCleaningPathCoordinates.split('],[').map(sublist => {
+          return sublist.replace(/[\[\]]/g, '').trim().split('\n').map(line => {
+            const [px, py] = line.split(' ').map(Number);
+            return { x: px, y: py };
+          });
+        });
+  
+        let foundInBCDList = null;
+        bcdCleaningPathLists.forEach((polygon, index) => {
+          if (isPointInPolygon({ x, y }, polygon)) {
+            foundInBCDList = index;
+          }
+        });
+  
+        if (foundInBCDList !== null) {
+          // console.log(`Point is inside the cleaning path list at index: ${foundInBCDList}`);
+          // Draw the points found in the list
+          const listPoints = bcdCleaningPathLists[foundInBCDList];
+          if (listPoints.length > 0) {
+            ctx.beginPath();
+            ctx.moveTo(listPoints[0].x, listPoints[0].y);
+            listPoints.forEach(point => {
+              ctx.lineTo(point.x, point.y);
+            });
+            ctx.closePath();
+            ctx.strokeStyle = 'lime';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+          }
+        
+          // // Draw the points
+          // listPoints.forEach(point => {
+          //   ctx.fillStyle = 'green';
+          //   ctx.beginPath();
+          //   ctx.arc(point.x, point.y, 2, 0, 2 * Math.PI);
+          //   ctx.fill();
+          // });
+        } else {
+          console.log('Point is not inside any cleaning path list.');
+        }
+      }
+
+    }
     
   };
 
@@ -195,7 +284,10 @@ const CreateMapPage = ({ mapName, showPage }) => {
       const result = await response.json();
 
       if (response.ok) {
-        console.log(result.message);
+        //alert(result.message);
+        alert("Cancelled map creation successfully");
+        sessionStorage.removeItem('coverageListener');
+        showPage('main')
         // Optionally, refresh data after deletion
         fetchData();
       } else {
@@ -207,9 +299,11 @@ const CreateMapPage = ({ mapName, showPage }) => {
   };
   
   const handleEdit = () => {
-    console.log('Edit button clicked');
+    // console.log('Edit button clicked');
+    setEditMapState(true);
   };
   const handleSave = () => {
+    sessionStorage.removeItem('coverageListener');
     showPage('main')
   };
 
