@@ -20,8 +20,8 @@ export function startNode() {
   //Define a ROS service client to start the node
   const startNodeService = new ROSLIB.Service({
     ros: ros,
-    name: '/start_coverage_planner', // Replace with your actual service name
-    serviceType: 'std_srvs/Trigger' // Replace with the appropriate service type
+    name: '/start_coverage_planner', 
+    serviceType: 'std_srvs/Trigger' 
   });
 
   return startNodeService;

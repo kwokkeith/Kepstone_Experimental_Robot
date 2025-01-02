@@ -35,7 +35,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
       console.log(`Creating new map: ${mapName}`);
       fetchData();
     }
-  },[mapName] );
+  },[mapName]);
 
   // Function to fetch data from backend sqlite NOT ROS
   const fetchData = async () => {
@@ -93,24 +93,29 @@ const CreateMapPage = ({ mapName, showPage }) => {
   }, [coverageListener]);
 
   useEffect(() => {
-    // If 4 points are drawn, publish the points to the ROS topic
-    if (points.length === 4){
-      // Clear the canvas and redraw the image
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(imageRef.current, 0, 0, canvas.width, canvas.height);
+    const storedFourPointsSet = sessionStorage.getItem('fourPointsSet');
+    if (!storedFourPointsSet) {    
+      // If 4 points are drawn, publish the points to the ROS topic
+      if (!startpoints && points.length === 4){
+        // Clear the canvas and redraw the image
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(imageRef.current, 0, 0, canvas.width, canvas.height);
 
-      // Prepare points as a string for easier handling in ROS
-      const pointPublisher = publishPoint();
-      const pointsStr = points.map(p=> `${p.x} ${p.y}`).join('\n');
-      const message = new ROSLIB.Message({ data: pointsStr });
-      setPoints([]); // Reset all 4 points drawn
-      setStartPoints(true);
+        // Prepare points as a string for easier handling in ROS
+        const pointPublisher = publishPoint();
+        const pointsStr = points.map(p=> `${p.x} ${p.y}`).join('\n');
+        const message = new ROSLIB.Message({ data: pointsStr });
+        setPoints([]); // Reset all 4 points drawn
+        setStartPoints(true);
 
-      //Publish the points to the ROS topic under /roi_points
-      pointPublisher.publish(message);
-    } 
+        //Publish the points to the ROS topic under /roi_points
+        pointPublisher.publish(message);
+        sessionStorage.setItem('fourPointsSet', JSON.stringify(true));
+      } 
+    }  
+    
   }, [points]);
 
   useEffect(() => {
@@ -181,19 +186,19 @@ const CreateMapPage = ({ mapName, showPage }) => {
       const polygonCoordinates = getPolygonBoundingCoordinates(mapName);
       const bcdCleaningPathCoordinates = getBcdPolygonContourCoordinates(mapName);
       // console.log('Polygon coordinates:', polygonCoordinates); //Debugging
-      if (polygonCoordinates) {
-        const polygonPoints = polygonCoordinates.trim().split('\n').map(line => {
-          const [px, py] = line.split(' ').map(Number);
-          return { x: px, y: py };
-        });
+      // if (polygonCoordinates) {
+      //   const polygonPoints = polygonCoordinates.trim().split('\n').map(line => {
+      //     const [px, py] = line.split(' ').map(Number);
+      //     return { x: px, y: py };
+      //   });
 
-        // if (isPointInPolygon({ x, y }, polygonPoints)) {
-        //   console.log('Point is inside polygonContour:', polygonCoordinates);
-        // } else {
-        //   console.log('Point is outside polygonContour.');
-        // }
-      }
-      // CLEANING PATH COORDINATES ARE NOT THE SAME AS THE POLYGON BCD COORDINATES, redo this part
+      //   // if (isPointInPolygon({ x, y }, polygonPoints)) {
+      //   //   console.log('Point is inside polygonContour:', polygonCoordinates);
+      //   // } else {
+      //   //   console.log('Point is outside polygonContour.'); // debugging for clicking outside polygon
+      //   // }
+      // }
+
       if (bcdCleaningPathCoordinates) {
         const bcdCleaningPathLists = bcdCleaningPathCoordinates.split('],[').map(sublist => {
           return sublist.replace(/[\[\]]/g, '').trim().split('\n').map(line => {
@@ -211,7 +216,8 @@ const CreateMapPage = ({ mapName, showPage }) => {
   
         if (foundInBCDList !== null) {
           // console.log(`Point is inside the cleaning path list at index: ${foundInBCDList}`);
-          // Draw the points found in the list
+
+          // Draw the contour found in the list
           const listPoints = bcdCleaningPathLists[foundInBCDList];
           if (listPoints.length > 0) {
             ctx.beginPath();
@@ -225,13 +231,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
             ctx.stroke();
           }
         
-          // // Draw the points
-          // listPoints.forEach(point => {
-          //   ctx.fillStyle = 'green';
-          //   ctx.beginPath();
-          //   ctx.arc(point.x, point.y, 2, 0, 2 * Math.PI);
-          //   ctx.fill();
-          // });
+
         } else {
           console.log('Point is not inside any cleaning path list.');
         }
@@ -244,13 +244,13 @@ const CreateMapPage = ({ mapName, showPage }) => {
   const handleCoverageListenerChange = (newData) => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-  
-    // Split the newData into separate contours
-    const contoursData = newData.trim().split('],').map(contour => contour.replace('[', '').replace(']', '').trim());
-  
+
     // Draw each contour separately
     ctx.strokeStyle = 'magenta';
     ctx.lineWidth = 1;
+  
+    // Split the newData into separate contours
+    const contoursData = newData.trim().split('],').map(contour => contour.replace('[', '').replace(']', '').trim());
   
     contoursData.forEach(contourData => {
       const contours = contourData.split('\n').map(line => {
