@@ -230,7 +230,11 @@ const CreateMapPage = ({ mapName, showPage }) => {
             ctx.lineWidth = 2;
             ctx.stroke();
           }
-        
+
+          setTimeout(() => {
+            const angle = prompt('Set new cleaning angle in degrees:');
+          }, 0);
+          
 
         } else {
           console.log('Point is not inside any cleaning path list.');
@@ -307,6 +311,11 @@ const CreateMapPage = ({ mapName, showPage }) => {
     showPage('main')
   };
 
+  const handleSaveEdit = () => {
+    
+    setEditMapState(false);
+  };
+
   // ==========================
   // React rendered html component
   // ==========================
@@ -327,6 +336,9 @@ const CreateMapPage = ({ mapName, showPage }) => {
         <button onClick={handleClearDataWrapper} className="cancel-btn">Cancel</button>
         <button onClick={handleEdit} className="edit-btn">Edit</button>
         <button onClick={handleSave} className="save-btn">Save</button>
+        {editMapState && (
+          <button onClick={handleSaveEdit} className = "save-edit-btn">Save Edit</button>
+        )}
       </div>
     )}
       <span className="loader"></span>
