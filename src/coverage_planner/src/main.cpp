@@ -133,7 +133,7 @@ void startingPointsCallback(const std_msgs::String::ConstPtr& msg){
 
 void mapNameCallback(const std_msgs::String::ConstPtr& msg) {
     mapName = msg->data; //Save map name
-    ROS_INFO("Received map name: %s", msg->data.c_str());
+    // ROS_INFO("Received map name: %s", msg->data.c_str());
     mapName_received = true;
 }
 

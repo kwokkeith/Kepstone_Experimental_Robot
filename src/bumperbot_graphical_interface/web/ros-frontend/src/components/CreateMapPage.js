@@ -18,6 +18,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
   const [showButtonContainer, setShowButtonContainer] = useState(false);
   const [createMapState, setCreateMapState] = useState(true);
   const [editMapState, setEditMapState] = useState(false);
+  const [contourAngles, setContourAngles] = useState({});
   
 
   // React States for database fetching
@@ -198,7 +199,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
       //   //   console.log('Point is outside polygonContour.'); // debugging for clicking outside polygon
       //   // }
       // }
-
+      
       if (bcdCleaningPathCoordinates) {
         const bcdCleaningPathLists = bcdCleaningPathCoordinates.split('],[').map(sublist => {
           return sublist.replace(/[\[\]]/g, '').trim().split('\n').map(line => {
@@ -213,9 +214,11 @@ const CreateMapPage = ({ mapName, showPage }) => {
             foundInBCDList = index;
           }
         });
-  
+        
+        
+        
         if (foundInBCDList !== null) {
-          // console.log(`Point is inside the cleaning path list at index: ${foundInBCDList}`);
+          console.log(`Point is inside the cleaning path list at index: ${foundInBCDList}`);
 
           // Draw the contour found in the list
           const listPoints = bcdCleaningPathLists[foundInBCDList];
@@ -232,7 +235,15 @@ const CreateMapPage = ({ mapName, showPage }) => {
           }
 
           setTimeout(() => {
-            const angle = prompt('Set new cleaning angle in degrees:');
+            const angle = Number(prompt('Set new cleaning angle in degrees:'));
+
+            setContourAngles(prev => {
+              const updated = { ...prev };
+              if(!updated[foundInBCDList]) updated[foundInBCDList] = [];
+              updated[foundInBCDList].push(angle);
+              console.log(updated)
+              return updated;
+            });
           }, 0);
           
 
@@ -312,7 +323,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
   };
 
   const handleSaveEdit = () => {
-    
+
     setEditMapState(false);
   };
 

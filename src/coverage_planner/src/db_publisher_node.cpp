@@ -42,7 +42,7 @@ void insertData(){
 
 // Add polycontours
 void canvasMessengerCallback(const std_msgs::String::ConstPtr& msg) {
-    ROS_INFO("I heard: [%s]", msg->data.c_str());
+    //ROS_INFO("I heard: [%s]", msg->data.c_str());
     if (!polygonBoundingCoordinatesStored){
         polygonBounding_coordinates = msg->data;
         polygonBoundingCoordinatesStored = true;
