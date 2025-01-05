@@ -302,6 +302,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
         //alert(result.message);
         alert("Cancelled map creation successfully");
         sessionStorage.removeItem('coverageListener');
+        sessionStorage.removeItem('fourPointsSet');
         showPage('main')
         // Optionally, refresh data after deletion
         fetchData();
@@ -323,8 +324,15 @@ const CreateMapPage = ({ mapName, showPage }) => {
   };
 
   const handleSaveEdit = () => {
-
     setEditMapState(false);
+    sessionStorage.removeItem('coverageListener');
+    sessionStorage.removeItem('fourPointsSet');
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(imageRef.current, 0, 0, canvas.width, canvas.height);
+    
+
   };
 
   // ==========================
