@@ -141,3 +141,43 @@ export function coverage_listener() {
 
   return listener;
 }
+
+export function publishEditState({editState}) {
+  // Initialize ROS connection
+  var ros = new ROSLIB.Ros({
+    url: 'ws://localhost:9090'
+  });
+
+  ros.on('connection', function() {
+    console.log('Edit State publisher is now connected to websocket server.');
+  });
+  ros.on('error', function(error) {
+    console.error('Error connecting to ROSBridge for the edit state publisher:', error);
+  });
+  ros.on('close', function() {
+    console.log('Edit State Publisher is disconnected from ROSBridge');
+  });
+
+  const EditStatePublisher = new ROSLIB.Topic({
+    ros: ros,
+    name: '/edit_state',
+    messageType: 'std_msgs/Bool'
+  });
+
+  // Create a ROS message
+  const editStateMsg = new ROSLIB.Message({ data: editState });
+
+  // Publish the message multiple times
+  function publishMultipleTimes(times) {
+    for (let i = 0; i < times; i++) {
+      setTimeout(() => {
+        EditStatePublisher.publish(editStateMsg);
+        console.log(`Published editstate ${i + 1} times`);
+        if(i=== times - 1){
+          ros.close();
+        }
+      }, i * 1500); // Delay of 1 second between each publish
+    }
+  }
+  publishMultipleTimes(3);
+}

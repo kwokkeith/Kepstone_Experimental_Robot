@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import './Menu.css';
 import ROSLIB from 'roslib';
-import { startNode, publishmapName } from '../rosService';
+import { startNode, publishmapName, publishEditState } from '../rosService';
 
 const Menu = ({ showPage, isOpen }) => {
   const [isMapsOpen, setIsMapsOpen] = useState(false);
@@ -22,6 +22,13 @@ const Menu = ({ showPage, isOpen }) => {
         console.log('Service call result:', result);
         publishmapName({ mapName });
         startNodeService.ros.close(); // Close the ROS connection
+
+        //Publish Edit State === FALSE only after the service call is successful
+        setTimeout(() => {
+          publishEditState({ editState: false });
+        }, 1000);
+
+
       }, function(error) {
         console.error('Service call failed:', error);
         startNodeService.ros.close(); // Close the ROS connection

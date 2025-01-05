@@ -241,7 +241,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
               const updated = { ...prev };
               if(!updated[foundInBCDList]) updated[foundInBCDList] = [];
               updated[foundInBCDList].push(angle);
-              console.log(updated)
+
               return updated;
             });
           }, 0);
