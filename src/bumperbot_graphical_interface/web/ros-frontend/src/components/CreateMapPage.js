@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './CreateMapPage.css';
 import ROSLIB from 'roslib';
-import { coverage_listener, publishPoint, publishStartPoint} from '../rosService';
+import { coverage_listener, publishPoint, publishStartPoint, startNode, publishEditState, publishmapName} from '../rosService';
 
 const CreateMapPage = ({ mapName, showPage }) => {
   // ==========================
@@ -119,6 +119,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
     
   }, [points]);
 
+  //if starting 4 points alr set, then get and publish the start points
   useEffect(() => {
     if (startpoints && points.length === 1){
       // Clear the canvas and redraw the image
@@ -139,6 +140,16 @@ const CreateMapPage = ({ mapName, showPage }) => {
   // ==========================
   // FUNCTIONS
   // ==========================
+
+  const getStartPoint = (mapName) => {
+    const map = data.find((item => item.map_name === mapName));
+    return map ? map.start_point : null;
+  };
+
+  const getRoiPoints = (mapName) => {
+    const map = data.find((item => item.map_name === mapName));
+    return map ? map.roi_points : null;
+  };
 
   const getPolygonBoundingCoordinates = (mapName) => {
     const map = data.find((item => item.map_name === mapName));
@@ -285,6 +296,28 @@ const CreateMapPage = ({ mapName, showPage }) => {
     });
   };
 
+  const handleEditStartNode = (mapName) => {
+    const startNodeService = startNode();
+    if (startNodeService) {
+      const request = new ROSLIB.ServiceRequest({});
+      startNodeService.callService(request, function(result) {
+        console.log('Service call result:', result);
+        publishmapName({ mapName });
+        startNodeService.ros.close(); // Close the ROS connection
+
+        //Publish Edit State === FALSE only after the service call is successful
+        setTimeout(() => {
+          publishEditState({ editState: true });
+        }, 1000);
+
+
+      }, function(error) {
+        console.error('Service call failed:', error);
+        startNodeService.ros.close(); // Close the ROS connection
+      });
+    }
+  };
+
   const handleClearDataWrapper = async () => {
     if (!mapName) {
       console.error('Map name is not defined.');
@@ -324,6 +357,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
   };
 
   const handleSaveEdit = () => {
+    // Reset State back to initial state for handleCanvasClick
     setEditMapState(false);
     sessionStorage.removeItem('coverageListener');
     sessionStorage.removeItem('fourPointsSet');
@@ -331,7 +365,25 @@ const CreateMapPage = ({ mapName, showPage }) => {
     const ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(imageRef.current, 0, 0, canvas.width, canvas.height);
+
+    handleEditStartNode(mapName); //TODO: Fix This so it does not launch db_publisher.cpp again 
+
+    // Get ROI_Points and StartPoints from the database that was set initially.
+    const roi_points = getRoiPoints(mapName);
+    const roiPointsArray = roi_points.trim().split('\n').map(line => {
+      const [x, y] = line.split(' ').map(Number);
+      return { x, y };
+    });
+    const newRoiPoints = [...points, ...roiPointsArray];
+    setPoints(newRoiPoints);
+
+    console.log('ROI Points:', roiPointsArray);
+
+    const startpoints = getStartPoint(mapName);
     
+    
+    
+
 
   };
 
