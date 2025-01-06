@@ -6,6 +6,11 @@
         <param name="launch_prefix" value="python3"/>
     </node>
 
+    <!-- Litter detector using yolov8 -->
+    <!-- <node pkg="bumperbot_detection" type="yolov8_get_coordinates.py" name="coordinate_detector_yolov8" >
+        <param name="launch_prefix" value="python3"/>
+    </node> -->
+
     <!-- Litter detection subscriber -->
     <node pkg="bumperbot_detection" type="litter_coordinate_subscriber" name="coordinate_subscriber" output="screen" />
   
