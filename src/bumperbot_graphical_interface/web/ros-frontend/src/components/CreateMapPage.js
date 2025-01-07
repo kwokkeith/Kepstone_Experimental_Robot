@@ -97,6 +97,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
     const storedFourPointsSet = sessionStorage.getItem('fourPointsSet');
     if (!storedFourPointsSet) {    
       // If 4 points are drawn, publish the points to the ROS topic
+      console.log(startpoints);
       if (!startpoints && points.length === 4){
         // Clear the canvas and redraw the image
         const canvas = canvasRef.current;
@@ -262,7 +263,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
           console.log('Point is not inside any cleaning path list.');
         }
       }
-
+      setPoints([]);
     }
     
   };
@@ -359,6 +360,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
   const handleSaveEdit = () => {
     // Reset State back to initial state for handleCanvasClick
     setEditMapState(false);
+    setStartPoints(false);
     sessionStorage.removeItem('coverageListener');
     sessionStorage.removeItem('fourPointsSet');
     const canvas = canvasRef.current;
@@ -367,23 +369,26 @@ const CreateMapPage = ({ mapName, showPage }) => {
     ctx.drawImage(imageRef.current, 0, 0, canvas.width, canvas.height);
 
     handleEditStartNode(mapName); //TODO: Fix This so it does not launch db_publisher.cpp again 
-
-    // Get ROI_Points and StartPoints from the database that was set initially.
-    const roi_points = getRoiPoints(mapName);
-    const roiPointsArray = roi_points.trim().split('\n').map(line => {
-      const [x, y] = line.split(' ').map(Number);
-      return { x, y };
-    });
-    const newRoiPoints = [...points, ...roiPointsArray];
-    setPoints(newRoiPoints);
-
-    console.log('ROI Points:', roiPointsArray);
-
-    const startpoints = getStartPoint(mapName);
     
-    
-    
+    setTimeout(() => {
+      console.log("old roi points in the points array",points)
+      // Get ROI_Points and StartPoints from the database that was set initially.
+      const roi_points = getRoiPoints(mapName);
+      const roiPointsArray = roi_points.trim().split('\n').map(line => {
+        const [x, y] = line.split(' ').map(Number);
+        return { x, y };
+      });
+      const newRoiPoints = [...points, ...roiPointsArray];
+      
+      setPoints(newRoiPoints);
+      console.log("new roi points in the points array",points)
+      console.log('ROI Points:', roiPointsArray);
+      
+      setTimeout(() => {
+        const startpoints = getStartPoint(mapName);
+      },0);
 
+    }, 5000);
 
   };
 

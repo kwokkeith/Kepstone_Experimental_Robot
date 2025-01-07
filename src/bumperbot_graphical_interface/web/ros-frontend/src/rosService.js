@@ -176,8 +176,8 @@ export function publishEditState({editState}) {
         if(i=== times - 1){
           ros.close();
         }
-      }, i * 1500); // Delay of 1 second between each publish
+      }, i * 500); // Delay of 1 second between each publish
     }
   }
-  publishMultipleTimes(3);
+  publishMultipleTimes(2);
 }
