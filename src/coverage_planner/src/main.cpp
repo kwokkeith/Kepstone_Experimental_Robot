@@ -662,11 +662,18 @@ int main(int argc, char** argv) {
 
       //  Extract the points of the current polygon
       std::vector<cv::Point> current_polygon;
-      for (const auto & point: bcd_cells [i]){
-        current_polygon.emplace_back(
-          cv::Point(CGAL::to_double(point.x()), CGAL::to_double(point.y())));
+      // for (const auto & point: bcd_cells [i]){
+      //   current_polygon.emplace_back(
+      //     cv::Point(CGAL::to_double(point.x()), CGAL::to_double(point.y())));
+      // }
+      // all_bcd_poly_contours.push_back(current_polygon);
+
+      for (int j = 0; j<bcd_cells[i].size(); j++){
+        current_polygon.push_back(cv::Point(CGAL::to_double(bcd_cells[i][j].x()), 
+                                            CGAL::to_double(bcd_cells[i][j].y())));
       }
       all_bcd_poly_contours.push_back(current_polygon);
+
     }
 
     // Publishing the contours

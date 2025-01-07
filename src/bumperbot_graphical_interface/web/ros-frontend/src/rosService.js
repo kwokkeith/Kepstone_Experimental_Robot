@@ -172,12 +172,12 @@ export function publishEditState({editState}) {
     for (let i = 0; i < times; i++) {
       setTimeout(() => {
         EditStatePublisher.publish(editStateMsg);
-        console.log(`Published editstate ${i + 1} times`);
+        // console.log(`Published editstate ${i + 1} times`);
         if(i=== times - 1){
           ros.close();
         }
-      }, i * 1000); // Delay of 1 second between each publish
+      }, i * 800); // Delay of 1 second between each publish
     }
   }
-  publishMultipleTimes(2);
+  publishMultipleTimes(4);
 }

@@ -392,7 +392,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
         });
         const newStartPoint = [...points, ...startPointArray];
         setPoints(newStartPoint);
-      },8000);
+      },6000);
 
     }, 5000);
 
