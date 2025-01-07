@@ -381,12 +381,18 @@ const CreateMapPage = ({ mapName, showPage }) => {
       const newRoiPoints = [...points, ...roiPointsArray];
       
       setPoints(newRoiPoints);
-      console.log("new roi points in the points array",points)
-      console.log('ROI Points:', roiPointsArray);
-      
+      // console.log("new roi points in the points array",points)
+      // console.log('ROI Points:', roiPointsArray);
+
       setTimeout(() => {
-        const startpoints = getStartPoint(mapName);
-      },0);
+        const startpoint = getStartPoint(mapName);
+        const startPointArray = startpoint.trim().split('\n').map(line => {
+          const [x, y] = line.split(' ').map(Number);
+          return { x, y };
+        });
+        const newStartPoint = [...points, ...startPointArray];
+        setPoints(newStartPoint);
+      },8000);
 
     }, 5000);
 
