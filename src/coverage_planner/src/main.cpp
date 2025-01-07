@@ -211,6 +211,7 @@ int main(int argc, char** argv) {
   while (ros::ok() && !editState_received) {
     ros::spinOnce();
     ros::Duration(0.1).sleep(); //Sleep for 100 ms
+    ROS_INFO(editState_received ? "Edit state received" : "Edit state not received");
   };
 
   // Read image to be processed
