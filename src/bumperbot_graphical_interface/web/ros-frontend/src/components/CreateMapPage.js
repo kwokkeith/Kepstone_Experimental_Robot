@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './CreateMapPage.css';
 import ROSLIB from 'roslib';
-import { coverage_listener, publishPoint, publishStartPoint, startNode, publishEditState, publishmapName} from '../rosService';
+import { coverage_listener, publishPoint, publishStartPoint, startNode, publishEditState, publishmapName, publishAllBCDPolyContours} from '../rosService';
 
 const CreateMapPage = ({ mapName, showPage }) => {
   // ==========================
@@ -197,7 +197,8 @@ const CreateMapPage = ({ mapName, showPage }) => {
       });
     } else if(editMapState && !createMapState){
       const polygonCoordinates = getPolygonBoundingCoordinates(mapName);
-      const bcdCleaningPathCoordinates = getBcdPolygonContourCoordinates(mapName);
+      const bcdCleaningPathCoordinates = getBcdPolygonContourCoordinates(mapName); // TODO: Rename variable from bcdCLeaning... to bcdPolyContour...
+      sessionStorage.setItem('allBCDPolyContours', JSON.stringify(bcdCleaningPathCoordinates));
       // console.log('Polygon coordinates:', polygonCoordinates); //Debugging
       // if (polygonCoordinates) {
       //   const polygonPoints = polygonCoordinates.trim().split('\n').map(line => {
@@ -302,7 +303,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
     if (startNodeService) {
       const request = new ROSLIB.ServiceRequest({});
       startNodeService.callService(request, function(result) {
-        console.log('Service call result:', result);
+        // console.log('Service call result:', result);
         publishmapName({ mapName });
         startNodeService.ros.close(); // Close the ROS connection
 
@@ -393,6 +394,9 @@ const CreateMapPage = ({ mapName, showPage }) => {
         const newStartPoint = [...points, ...startPointArray];
         setPoints(newStartPoint);
       },6000);
+
+      const bcdPolyContoursString = sessionStorage.getItem('allBCDPolyContours');
+      publishAllBCDPolyContours({data: bcdPolyContoursString});
 
     }, 5000);
 
