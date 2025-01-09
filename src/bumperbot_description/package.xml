@@ -23,6 +23,8 @@
   <build_depend>xacro</build_depend>
   <build_depend>gazebo_ros</build_depend>
   <build_depend>tf</build_depend>
+  <build_depend>velodyne_description</build_depend>
+  <build_depend>velodyne_simulator</build_depend>
 
   <!-- Required for runtime -->
   <exec_depend>roscpp</exec_depend>
@@ -33,6 +35,8 @@
   <exec_depend>xacro</exec_depend>
   <exec_depend>gazebo_ros</exec_depend>
   <exec_depend>tf</exec_depend>
+  <exec_depend>velodyne_description</exec_depend>
+  <exec_depend>velodyne_simulator</exec_depend>
 
   <!-- Export plugins for Gazebo -->
   <export>

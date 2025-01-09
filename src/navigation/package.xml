@@ -22,11 +22,17 @@
   <build_depend>litter_destruction</build_depend>
   <build_depend>nav_msgs</build_depend>
   <build_depend>tf</build_depend>
+  <build_depend>map_server</build_depend>
+  <build_depend>amcl</build_depend>
+  <build_depend>pointcloud_to_laserscan</build_depend>
 
   <build_export_depend>roscpp</build_export_depend>
   <build_export_depend>rospy</build_export_depend>
   <build_export_depend>nav_msgs</build_export_depend>
   <build_export_depend>tf</build_export_depend>
+  <build_export_depend>map_server</build_export_depend>
+  <build_export_depend>amcl</build_export_depend>
+  <build_export_depend>pointcloud_to_laserscan</build_export_depend>
 
   <exec_depend>roscpp</exec_depend>
   <exec_depend>rospy</exec_depend>
@@ -40,5 +46,8 @@
   <exec_depend>litter_destruction</exec_depend>
   <exec_depend>nav_msgs</exec_depend>
   <exec_depend>tf</exec_depend>
+  <exec_depend>map_server</exec_depend>
+  <exec_depend>amcl</exec_depend>
+  <exec_depend>pointcloud_to_laserscan</exec_depend>
 
 </package>
