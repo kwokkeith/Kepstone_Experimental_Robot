@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './CreateMapPage.css';
 import ROSLIB from 'roslib';
-import { coverage_listener, publishPoint, publishStartPoint} from '../rosService';
+import { coverage_listener, publishPoint, publishStartPoint, startNode, publishEditState, publishmapName, publishAllBCDPolyContours} from '../rosService';
 
 const CreateMapPage = ({ mapName, showPage }) => {
   // ==========================
@@ -18,6 +18,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
   const [showButtonContainer, setShowButtonContainer] = useState(false);
   const [createMapState, setCreateMapState] = useState(true);
   const [editMapState, setEditMapState] = useState(false);
+  const [contourAngles, setContourAngles] = useState({});
   
 
   // React States for database fetching
@@ -35,7 +36,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
       console.log(`Creating new map: ${mapName}`);
       fetchData();
     }
-  },[mapName] );
+  },[mapName]);
 
   // Function to fetch data from backend sqlite NOT ROS
   const fetchData = async () => {
@@ -93,26 +94,33 @@ const CreateMapPage = ({ mapName, showPage }) => {
   }, [coverageListener]);
 
   useEffect(() => {
-    // If 4 points are drawn, publish the points to the ROS topic
-    if (points.length === 4){
-      // Clear the canvas and redraw the image
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext('2d');
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(imageRef.current, 0, 0, canvas.width, canvas.height);
+    const storedFourPointsSet = sessionStorage.getItem('fourPointsSet');
+    if (!storedFourPointsSet) {    
+      // If 4 points are drawn, publish the points to the ROS topic
+      console.log(startpoints);
+      if (!startpoints && points.length === 4){
+        // Clear the canvas and redraw the image
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(imageRef.current, 0, 0, canvas.width, canvas.height);
 
-      // Prepare points as a string for easier handling in ROS
-      const pointPublisher = publishPoint();
-      const pointsStr = points.map(p=> `${p.x} ${p.y}`).join('\n');
-      const message = new ROSLIB.Message({ data: pointsStr });
-      setPoints([]); // Reset all 4 points drawn
-      setStartPoints(true);
+        // Prepare points as a string for easier handling in ROS
+        const pointPublisher = publishPoint();
+        const pointsStr = points.map(p=> `${p.x} ${p.y}`).join('\n');
+        const message = new ROSLIB.Message({ data: pointsStr });
+        setPoints([]); // Reset all 4 points drawn
+        setStartPoints(true);
 
-      //Publish the points to the ROS topic under /roi_points
-      pointPublisher.publish(message);
-    } 
+        //Publish the points to the ROS topic under /roi_points
+        pointPublisher.publish(message);
+        sessionStorage.setItem('fourPointsSet', JSON.stringify(true));
+      } 
+    }  
+    
   }, [points]);
 
+  //if starting 4 points alr set, then get and publish the start points
   useEffect(() => {
     if (startpoints && points.length === 1){
       // Clear the canvas and redraw the image
@@ -133,6 +141,16 @@ const CreateMapPage = ({ mapName, showPage }) => {
   // ==========================
   // FUNCTIONS
   // ==========================
+
+  const getStartPoint = (mapName) => {
+    const map = data.find((item => item.map_name === mapName));
+    return map ? map.start_point : null;
+  };
+
+  const getRoiPoints = (mapName) => {
+    const map = data.find((item => item.map_name === mapName));
+    return map ? map.roi_points : null;
+  };
 
   const getPolygonBoundingCoordinates = (mapName) => {
     const map = data.find((item => item.map_name === mapName));
@@ -179,21 +197,22 @@ const CreateMapPage = ({ mapName, showPage }) => {
       });
     } else if(editMapState && !createMapState){
       const polygonCoordinates = getPolygonBoundingCoordinates(mapName);
-      const bcdCleaningPathCoordinates = getBcdPolygonContourCoordinates(mapName);
+      const bcdCleaningPathCoordinates = getBcdPolygonContourCoordinates(mapName); // TODO: Rename variable from bcdCLeaning... to bcdPolyContour...
+      sessionStorage.setItem('allBCDPolyContours', JSON.stringify(bcdCleaningPathCoordinates));
       // console.log('Polygon coordinates:', polygonCoordinates); //Debugging
-      if (polygonCoordinates) {
-        const polygonPoints = polygonCoordinates.trim().split('\n').map(line => {
-          const [px, py] = line.split(' ').map(Number);
-          return { x: px, y: py };
-        });
+      // if (polygonCoordinates) {
+      //   const polygonPoints = polygonCoordinates.trim().split('\n').map(line => {
+      //     const [px, py] = line.split(' ').map(Number);
+      //     return { x: px, y: py };
+      //   });
 
-        // if (isPointInPolygon({ x, y }, polygonPoints)) {
-        //   console.log('Point is inside polygonContour:', polygonCoordinates);
-        // } else {
-        //   console.log('Point is outside polygonContour.');
-        // }
-      }
-      // CLEANING PATH COORDINATES ARE NOT THE SAME AS THE POLYGON BCD COORDINATES, redo this part
+      //   // if (isPointInPolygon({ x, y }, polygonPoints)) {
+      //   //   console.log('Point is inside polygonContour:', polygonCoordinates);
+      //   // } else {
+      //   //   console.log('Point is outside polygonContour.'); // debugging for clicking outside polygon
+      //   // }
+      // }
+      
       if (bcdCleaningPathCoordinates) {
         const bcdCleaningPathLists = bcdCleaningPathCoordinates.split('],[').map(sublist => {
           return sublist.replace(/[\[\]]/g, '').trim().split('\n').map(line => {
@@ -208,10 +227,13 @@ const CreateMapPage = ({ mapName, showPage }) => {
             foundInBCDList = index;
           }
         });
-  
+        
+        
+        
         if (foundInBCDList !== null) {
-          // console.log(`Point is inside the cleaning path list at index: ${foundInBCDList}`);
-          // Draw the points found in the list
+          console.log(`Point is inside the cleaning path list at index: ${foundInBCDList}`);
+
+          // Draw the contour found in the list
           const listPoints = bcdCleaningPathLists[foundInBCDList];
           if (listPoints.length > 0) {
             ctx.beginPath();
@@ -224,19 +246,25 @@ const CreateMapPage = ({ mapName, showPage }) => {
             ctx.lineWidth = 2;
             ctx.stroke();
           }
-        
-          // // Draw the points
-          // listPoints.forEach(point => {
-          //   ctx.fillStyle = 'green';
-          //   ctx.beginPath();
-          //   ctx.arc(point.x, point.y, 2, 0, 2 * Math.PI);
-          //   ctx.fill();
-          // });
+
+          setTimeout(() => {
+            const angle = Number(prompt('Set new cleaning angle in degrees:'));
+
+            setContourAngles(prev => {
+              const updated = { ...prev };
+              if(!updated[foundInBCDList]) updated[foundInBCDList] = [];
+              updated[foundInBCDList].push(angle);
+
+              return updated;
+            });
+          }, 0);
+          
+
         } else {
           console.log('Point is not inside any cleaning path list.');
         }
       }
-
+      setPoints([]);
     }
     
   };
@@ -244,13 +272,13 @@ const CreateMapPage = ({ mapName, showPage }) => {
   const handleCoverageListenerChange = (newData) => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-  
-    // Split the newData into separate contours
-    const contoursData = newData.trim().split('],').map(contour => contour.replace('[', '').replace(']', '').trim());
-  
+
     // Draw each contour separately
     ctx.strokeStyle = 'magenta';
     ctx.lineWidth = 1;
+  
+    // Split the newData into separate contours
+    const contoursData = newData.trim().split('],').map(contour => contour.replace('[', '').replace(']', '').trim());
   
     contoursData.forEach(contourData => {
       const contours = contourData.split('\n').map(line => {
@@ -270,6 +298,28 @@ const CreateMapPage = ({ mapName, showPage }) => {
     });
   };
 
+  const handleEditStartNode = (mapName) => {
+    const startNodeService = startNode();
+    if (startNodeService) {
+      const request = new ROSLIB.ServiceRequest({});
+      startNodeService.callService(request, function(result) {
+        // console.log('Service call result:', result);
+        publishmapName({ mapName });
+        startNodeService.ros.close(); // Close the ROS connection
+
+        //Publish Edit State === FALSE only after the service call is successful
+        setTimeout(() => {
+          publishEditState({ editState: true });
+        }, 1000);
+
+
+      }, function(error) {
+        console.error('Service call failed:', error);
+        startNodeService.ros.close(); // Close the ROS connection
+      });
+    }
+  };
+
   const handleClearDataWrapper = async () => {
     if (!mapName) {
       console.error('Map name is not defined.');
@@ -287,6 +337,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
         //alert(result.message);
         alert("Cancelled map creation successfully");
         sessionStorage.removeItem('coverageListener');
+        sessionStorage.removeItem('fourPointsSet');
         showPage('main')
         // Optionally, refresh data after deletion
         fetchData();
@@ -305,6 +356,50 @@ const CreateMapPage = ({ mapName, showPage }) => {
   const handleSave = () => {
     sessionStorage.removeItem('coverageListener');
     showPage('main')
+  };
+
+  const handleSaveEdit = () => {
+    // Reset State back to initial state for handleCanvasClick
+    setEditMapState(false);
+    setStartPoints(false);
+    sessionStorage.removeItem('coverageListener');
+    sessionStorage.removeItem('fourPointsSet');
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(imageRef.current, 0, 0, canvas.width, canvas.height);
+
+    handleEditStartNode(mapName); //TODO: Fix This so it does not launch db_publisher.cpp again 
+    
+    setTimeout(() => {
+      console.log("old roi points in the points array",points)
+      // Get ROI_Points and StartPoints from the database that was set initially.
+      const roi_points = getRoiPoints(mapName);
+      const roiPointsArray = roi_points.trim().split('\n').map(line => {
+        const [x, y] = line.split(' ').map(Number);
+        return { x, y };
+      });
+      const newRoiPoints = [...points, ...roiPointsArray];
+      
+      setPoints(newRoiPoints);
+      // console.log("new roi points in the points array",points)
+      // console.log('ROI Points:', roiPointsArray);
+
+      setTimeout(() => {
+        const startpoint = getStartPoint(mapName);
+        const startPointArray = startpoint.trim().split('\n').map(line => {
+          const [x, y] = line.split(' ').map(Number);
+          return { x, y };
+        });
+        const newStartPoint = [...points, ...startPointArray];
+        setPoints(newStartPoint);
+      },6000);
+
+      const bcdPolyContoursString = sessionStorage.getItem('allBCDPolyContours');
+      publishAllBCDPolyContours({data: bcdPolyContoursString});
+
+    }, 5000);
+
   };
 
   // ==========================
@@ -327,6 +422,9 @@ const CreateMapPage = ({ mapName, showPage }) => {
         <button onClick={handleClearDataWrapper} className="cancel-btn">Cancel</button>
         <button onClick={handleEdit} className="edit-btn">Edit</button>
         <button onClick={handleSave} className="save-btn">Save</button>
+        {editMapState && (
+          <button onClick={handleSaveEdit} className = "save-edit-btn">Save Edit</button>
+        )}
       </div>
     )}
       <span className="loader"></span>
