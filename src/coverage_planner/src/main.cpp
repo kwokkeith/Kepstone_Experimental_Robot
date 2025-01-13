@@ -15,6 +15,7 @@
 #include <unistd.h>
 #include <limits.h>
 #include "std_msgs/String.h"
+#include "std_msgs/Bool.h"
 
 std::string PARAMETER_FILE_PATH;
 std::string WAYPOINT_COORDINATE_FILE_PATH;
@@ -41,6 +42,7 @@ cv::Mat img_copy;
 cv::Point top_left;
 std::string mapName;
 bool mapName_received = false;
+bool editState_received = false;
 
 Point_2 starting_point (0,0);
 
@@ -98,9 +100,9 @@ bool LoadParameters() {
     } else if (param == "SUBDIVISION_DIST") {
       in >> subdivision_dist;
       ROS_INFO("Loaded SUBDIVISION_DIST: %u", subdivision_dist);
-    } else if (param == "MANUAL_ORIENTATION") {
-      in >> manual_orientation;
-      ROS_INFO("Loaded MANUAL_ORIENTATION: %d", manual_orientation);
+    // } else if (param == "MANUAL_ORIENTATION") {
+    //   in >> manual_orientation;
+    //   ROS_INFO("Loaded MANUAL_ORIENTATION: %d", manual_orientation);
     } else if (param == "CROP_REGION") {
       in >> crop_region;
       ROS_INFO("Loaded CROP_REGION: %d", crop_region);
@@ -135,6 +137,16 @@ void mapNameCallback(const std_msgs::String::ConstPtr& msg) {
     mapName = msg->data; //Save map name
     ROS_INFO("Received map name: %s", msg->data.c_str());
     mapName_received = true;
+}
+
+void editStateCallback (const std_msgs::Bool::ConstPtr& msg){
+  ROS_INFO("Received edit state: %d", msg->data);
+  if (msg->data == true) {
+    manual_orientation = true;
+  } else {
+    manual_orientation = false;
+  }
+  editState_received = true;
 }
 
 // void mouseCallback(int event, int x, int y, int flags, void* param) {
@@ -195,6 +207,13 @@ int main(int argc, char** argv) {
   };
   WAYPOINT_COORDINATE_FILE_PATH = GUI_package_path + "/web/ros-frontend/public/temp_zone/waypoints_"+mapName+".txt";
   
+  ros:: Subscriber editStatesub = nh.subscribe("/edit_state", 1, editStateCallback);
+  while (ros::ok() && !editState_received) {
+    ros::spinOnce();
+    ros::Duration(0.1).sleep(); //Sleep for 100 ms
+    ROS_INFO(editState_received ? "Edit state received" : "Edit state not received");
+  };
+
   // Read image to be processed
   cv::Mat original_img = cv::imread(image_path);
   //cv::imshow("Original Image", original_img);
@@ -643,11 +662,18 @@ int main(int argc, char** argv) {
 
       //  Extract the points of the current polygon
       std::vector<cv::Point> current_polygon;
-      for (const auto & point: bcd_cells [i]){
-        current_polygon.emplace_back(
-          cv::Point(CGAL::to_double(point.x()), CGAL::to_double(point.y())));
+      // for (const auto & point: bcd_cells [i]){
+      //   current_polygon.emplace_back(
+      //     cv::Point(CGAL::to_double(point.x()), CGAL::to_double(point.y())));
+      // }
+      // all_bcd_poly_contours.push_back(current_polygon);
+
+      for (int j = 0; j<bcd_cells[i].size(); j++){
+        current_polygon.push_back(cv::Point(CGAL::to_double(bcd_cells[i][j].x()), 
+                                            CGAL::to_double(bcd_cells[i][j].y())));
       }
       all_bcd_poly_contours.push_back(current_polygon);
+
     }
 
     // Publishing the contours
