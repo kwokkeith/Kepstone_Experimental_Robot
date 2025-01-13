@@ -17,8 +17,11 @@ const FullScreenToggle = () => {
     }
   };
 
+  // Toggle this variable to `true` to hide the button
+  const hideToggle = true; // Change to `false` to show the button
+
   return (
-    <div className="fullscreen-toggle">
+    <div className={`fullscreen-toggle ${hideToggle ? 'hidden' : ''}`}>
       <button onClick={toggleFullScreen} className="fullscreen-button">
         <i className={`fas ${isFullScreen ? 'fa-compress' : 'fa-expand'}`} />
       </button>
