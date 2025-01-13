@@ -7,6 +7,6 @@
 
     <!-- Launch litter tracker node -->
     <node name="litter_tracker_node" pkg="bumperbot_controller" type="litter_tracker_node" output="screen">
-        <param name="/litter_tracker/distance_threshold" value="0.4" />
+        <!-- <param name="/litter_tracker/distance_threshold" value="0.4" /> -->
     </node>
 </launch>

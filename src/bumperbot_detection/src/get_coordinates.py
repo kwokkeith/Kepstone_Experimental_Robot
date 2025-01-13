@@ -26,7 +26,7 @@ class BallDetector:
         camera_depth_image_raw_client = rospy.get_param('/camera/topics/depth_image_raw')
         
         self.bridge_object = CvBridge()
-        self.theta = 0.2618  # 30 degrees in radians
+        self.theta = rospy.get_param('/litter_detection/camera_theta')
 
         # Get the camera frame from the ROS parameter server (default to 'dpcamera_link')
         self.camera_frame = rospy.get_param('~camera_frame', 'dpcamera_link')
@@ -42,12 +42,7 @@ class BallDetector:
         self.ts.registerCallback(self.image_callback)
 
         # Manually added based on gazebo depth camera intrinsics
-        self.intrinsics = {
-            "fx": 528.43,
-            "fy": 528.43,
-            "cx": 320,
-            "cy": 240
-        }  
+        self.intrinsics = rospy.get_param('/litter_detection/camera_intrinsics')
 
         # Frame rate variables
         self.new_frame_time = 0

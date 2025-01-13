@@ -32,7 +32,7 @@ LitterMemory::LitterMemory()
     nh_.getParam("/move_base/topics/global_costmap", global_costmap_topic_sub_);
 
     // Set distance threshold for filtering duplicates
-    pnh_.param<double>("distance_threshold", distance_threshold_, 5.0);  // Load the distance threshold parameter
+    pnh_.getParam("/litter_memory/distance_threshold", distance_threshold_);  // Load the distance threshold parameter
 
     // Initialize the subscriber to get litter coordinates in base frame
     litter_sub_ = nh_.subscribe(detected_object_coordinates_topic_sub_, 10, &LitterMemory::litterCallback, this);

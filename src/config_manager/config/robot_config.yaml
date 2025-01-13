@@ -1,0 +1,31 @@
+# Algorithm Parameter Configurations
+litter_tracker:
+  distance_threshold: 0.4     # Distance away from litter to switch to litter tracking mode
+
+litter_memory:
+  distance_threshold: 0.3     # Distance threshold for filtering duplicates
+
+litter_manager:
+  distance_threshold: 2.0     
+  min_local_radius: 0.5       
+  max_local_radius: 1.5
+
+litter_detection:
+  camera_theta: 0.2618               # 30 degrees in radians
+  camera_intrinsics:                 # Camera intrinsics
+    fx: 528.43
+    fy: 528.43
+    cx: 320
+    cy: 240
+
+
+# Robot Configurations
+wheel:
+  radius: 0.033
+  separation: 0.14
+  radius_error: 0.005
+  separation_error: 0.02
+
+caster_wheel:
+  radius: 0.005
+
