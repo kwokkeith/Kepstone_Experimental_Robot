@@ -29,3 +29,53 @@ wheel:
 caster_wheel:
   radius: 0.005
 
+lidar_2d:
+  left:
+    update_rate: 20
+    horizontal_scan:
+      sample: 720
+      resolution: 1.0
+      min_angle: -1.5708
+      max_angle: 1.5708
+    range:
+      min: 0.3
+      max: 20.0
+      resolution: 0.01
+    noise:
+      mean: 0.0
+      stddev: 0.01
+
+  right:
+    update_rate: 20
+    horizontal_scan:
+      sample: 720
+      resolution: 1.0
+      min_angle: -1.5708
+      max_angle: 1.5708
+    range:
+      min: 0.3
+      max: 20.0
+      resolution: 0.01
+    noise:
+      mean: 0.0
+      stddev: 0.01
+
+lidar_3d:
+  update_rate: 20
+  horizontal_scan:
+    sample: 1440
+    resolution: 1.0
+    min_angle: -1.5708
+    max_angle: 1.5708
+  vertical_scan:
+    sample: 16
+    resolution: 1.0
+    min_angle: 0.0
+    max_angle: 0.2618
+  range:
+    min: 0.1
+    max: 70.0
+    resolution: 0.001
+  noise:
+    mean: 0.0
+    stddev: 0.01

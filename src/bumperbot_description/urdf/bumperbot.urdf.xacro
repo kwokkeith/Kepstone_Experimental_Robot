@@ -5,6 +5,13 @@
     <!-- Include other xacro models into this file -->
     <xacro:include filename="$(find bumperbot_description)/urdf/bumperbot_gazebo.xacro"/>
 
+    <!-- Load robot params file -->
+    <xacro:property name="robot_params_file" value="$(find config_manager)/config/robot_config.yaml"/>
+    <xacro:property name="robot_params" value="${xacro.load_yaml(robot_params_file)}"/>
+    <xacro:property name="wheel_params" value="${robot_params['wheel']}"/>
+    <xacro:property name="caster_wheel_params" value="${robot_params['caster_wheel']}"/>
+    <xacro:property name="base_link_params" value="${robot_params['base_link']}"/>
+
     <!-- Parent link for all other links -->
     <!-- Also acts as interface between robot and surrounding env -->
     <link name="base_footprint"/>
@@ -54,13 +61,13 @@
         <collision>
             <origin xyz="0.0 -0.015 0.0" rpy="1.57 0.0 0.0"/>
             <geometry>
-                <sphere radius="0.033"/>
+                <sphere radius="${wheel_params['radius']}"/>
             </geometry>
         </collision>
     </link>
 
     <joint name="wheel_right_joint" type="continuous">
-        <origin rpy="0 0 0" xyz="0 -0.07 0" />
+        <origin rpy="0 0 0" xyz="0 -${wheel_params['separation']/2} 0" />
         <parent link="base_link"/>
         <child link="wheel_right_link"/>
         <axis xyz="0 1 0" />
@@ -83,13 +90,13 @@
         <collision>
             <origin xyz="0.0 0.015 0.0" rpy="1.57 0.0 0.0"/>
             <geometry>
-                <sphere radius="0.033"/>
+                <sphere radius="${wheel_params['radius']}"/>
             </geometry>
         </collision>
     </link>
 
     <joint name="wheel_left_joint" type="continuous">
-        <origin rpy="0 0 0" xyz="0 0.07 0" />
+        <origin rpy="0 0 0" xyz="0 ${wheel_params['separation']/2} 0" />
         <parent link="base_link"/>
         <child link="wheel_left_link"/>
         <axis xyz="0 1 0" />
@@ -112,7 +119,7 @@
         <collision>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
             <geometry>
-                <sphere radius="0.005"/>
+                <sphere radius="${caster_wheel_params['radius']}"/>
             </geometry>
         </collision>
     </link>
@@ -140,7 +147,7 @@
         <collision>
             <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
             <geometry>
-                <sphere radius="0.005"/>
+                <sphere radius="${caster_wheel_params['radius']}"/>
             </geometry>
         </collision>
     </link>
