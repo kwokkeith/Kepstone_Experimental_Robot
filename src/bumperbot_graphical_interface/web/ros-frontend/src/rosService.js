@@ -20,8 +20,8 @@ export function startNode() {
   //Define a ROS service client to start the node
   const startNodeService = new ROSLIB.Service({
     ros: ros,
-    name: '/start_coverage_planner', // Replace with your actual service name
-    serviceType: 'std_srvs/Trigger' // Replace with the appropriate service type
+    name: '/start_coverage_planner', 
+    serviceType: 'std_srvs/Trigger' 
   });
 
   return startNodeService;
@@ -140,4 +140,81 @@ export function coverage_listener() {
   });
 
   return listener;
+}
+
+export function publishEditState({editState}) {
+  // Initialize ROS connection
+  var ros = new ROSLIB.Ros({
+    url: 'ws://localhost:9090'
+  });
+
+  ros.on('connection', function() {
+    console.log('Edit State publisher is now connected to websocket server.');
+  });
+  ros.on('error', function(error) {
+    console.error('Error connecting to ROSBridge for the edit state publisher:', error);
+  });
+  ros.on('close', function() {
+    console.log('Edit State Publisher is disconnected from ROSBridge');
+  });
+
+  const EditStatePublisher = new ROSLIB.Topic({
+    ros: ros,
+    name: '/edit_state',
+    messageType: 'std_msgs/Bool'
+  });
+
+  // Create a ROS message
+  const editStateMsg = new ROSLIB.Message({ data: editState });
+
+  // Publish the message multiple times
+  function publishMultipleTimes(times) {
+    for (let i = 0; i < times; i++) {
+      setTimeout(() => {
+        EditStatePublisher.publish(editStateMsg);
+        // console.log(`Published editstate ${i + 1} times`);
+        if(i=== times - 1){
+          ros.close();
+        }
+      }, i * 800); // Delay of 1 second between each publish
+    }
+  }
+  publishMultipleTimes(4);
+}
+
+export function publishAllBCDPolyContours({data: allBCDPolyContoursList}) {
+  // Initialize ROS connection
+  var ros = new ROSLIB.Ros({
+    url: 'ws://localhost:9090'
+  });
+
+  ros.on('connection', function() {
+    console.log('all BCD PolyContours publisher is now connected to websocket server.');
+  });
+  ros.on('error', function(error) {
+    console.error('Error connecting to ROSBridge for the all BCD PolyContours publisher:', error);
+  });
+  ros.on('close', function() {
+    console.log('all BCD PolyContours Publisher is disconnected from ROSBridge');
+  });
+
+  const AllBCDPolyContoursPublisher = new ROSLIB.Topic({
+    ros: ros,
+    name: '/all_bcd_poly_contours',
+    messageType: 'std_msgs/String'
+  });
+  const allBCDPolyContoursMsg = new ROSLIB.Message({ data: allBCDPolyContoursList });
+
+  function publishMultipleTimes(times) {
+    for (let i = 0; i < times; i++) {
+      setTimeout(() => {
+        AllBCDPolyContoursPublisher.publish(allBCDPolyContoursMsg);
+        // console.log(`Published editstate ${i + 1} times`);
+        if(i=== times - 1){
+          ros.close();
+        }
+      }, i * 800); // Delay of 1 second between each publish
+    }
+  }
+  publishMultipleTimes(2);
 }
