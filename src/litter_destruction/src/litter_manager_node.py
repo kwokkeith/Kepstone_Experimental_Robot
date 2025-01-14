@@ -5,10 +5,10 @@ def main():
     # Initialize the ROS node
     rospy.init_node('litter_manager_node')
 
-    # Instantiate LitterManager
-    distance_threshold = rospy.get_param("~distance_threshold", 5.0)
-    min_local_radius = rospy.get_param("~min_local_radius", 1.0)
-    max_local_radius = rospy.get_param("~max_local_radius", 3.0)
+    # Instantiate LitterManager 
+    distance_threshold = rospy.get_param("/litter_manager/distance_threshold")
+    min_local_radius = rospy.get_param("/litter_manager/min_local_radius")
+    max_local_radius = rospy.get_param("/litter_manager/max_local_radius")
     
     # Pass parameters to the LitterManager instance
     manager = LitterManager(distance_threshold=distance_threshold, 

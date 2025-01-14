@@ -7,6 +7,11 @@
     <!-- @@@@@@@@@@@@@ -->
     <rosparam file="$(find config_manager)/config/parameters.yaml" command="load" />
 
+    <!-- @@@@@@@@@@@@@ -->
+    <!-- Robot Config  -->
+    <!-- @@@@@@@@@@@@@ -->
+    <rosparam file="$(find config_manager)/config/robot_config.yaml" command="load" />
+
     <!-- @@@@@@@@@@@@ -->
     <!-- ARGUMENTS -->
     <!-- @@@@@@@@@@@@ -->
@@ -15,12 +20,8 @@
     <arg name="model" default="$(find bumperbot_description)/urdf/bumperbot.urdf.xacro"/>
     <arg name="world" default="$(find bumperbot_description)/worlds/test_world2.sdf"/>
     <!-- args: controller.launch -->
-    <arg name="wheel_radius" default="0.033"/>
-    <arg name="wheel_separation" default="0.17"/>
     <arg name="use_python" default="false"/>
     <arg name="is_simple" default="false"/> 
-    <arg name="wheel_radius_error" default="0.005" />
-    <arg name="wheel_separation_error" default="0.02" />
     <!-- args: navigation.launch -->
     <arg name="map_file" default="$(find navigation)/maps/my_world_map2.yaml"/>  
     <arg name="move_forward_only" default="false"/>
@@ -38,12 +39,8 @@
 
     <!-- Launch Controller for Test Robot -->
     <include file="$(find bumperbot_controller)/launch/controller.launch" >
-        <arg name="wheel_radius"            value="$(arg wheel_radius)" />
-        <arg name="wheel_separation"        value="$(arg wheel_separation)" />
         <arg name="use_python"              value="$(arg use_python)" />
         <arg name="is_simple"               value="$(arg is_simple)" /> 
-        <arg name="wheel_radius_error"      value="$(arg wheel_radius_error)" />
-        <arg name="wheel_separation_error"  value="$(arg wheel_separation_error)" />
     </include>
 
     <!-- Launch robot controller -->
