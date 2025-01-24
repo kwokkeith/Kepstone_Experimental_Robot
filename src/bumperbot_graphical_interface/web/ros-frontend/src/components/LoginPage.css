@@ -23,6 +23,8 @@ body {
 #login-page {
   width: 50vw; /* Adjust the container width */
   max-width: 1000px; /* Constrain the container width on larger screens */
+  height: 50vh;
+  max-height: 650px; /* Constrain the container width on larger screens */
   padding: var(--spacing-medium); /* Padding for inner spacing */
   display: flex; /* Flexbox layout to stack elements vertically */
   flex-direction: column; /* Stack child elements */

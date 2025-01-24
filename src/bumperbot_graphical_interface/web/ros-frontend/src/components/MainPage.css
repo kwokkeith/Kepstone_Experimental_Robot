@@ -1,91 +1,130 @@
 /* Main container styling for the page */
 .page {
-  width: 100vw; /* Full width of the viewport */
-  height: 100vh; /* Full height of the viewport */
-  background: rgba(23, 23, 23, 0.50); /* Semi-transparent dark background */
-  color: #FAFAFA; /* Light text color for contrast */
-  font-family: Inter, sans-serif; /* Set default font style */
+  width: 100vw;
+  height: 100vh;
+  background: rgba(23, 23, 23, 0.50);
+  color: #FAFAFA;
+  font-family: Inter, sans-serif;
   display: flex;
-  flex-direction: column; /* Stack child elements vertically */
+  flex-direction: column;
+  position: relative; /* To allow absolute positioning of child elements */
 }
 
 /* Top section (header bar) */
 .top-section {
-  height: 8vh; /* Adjust header height to 8% of viewport */
-  width: 100%; /* Full width of the viewport */
-  background: rgba(23, 23, 23, 0.50); /* Semi-transparent dark background */
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); /* Subtle shadow for elevation */
-  border-radius: 0px 0px 10px 10px; /* Rounded bottom corners */
-  display: flex; /* Flexbox for layout */
-  justify-content: space-between; /* Space out time/date and icons */
-  align-items: center; /* Center content vertically */
+  height: 8vh;
+  width: 100%;
+  background: rgba(23, 23, 23, 0.50);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 0px 0px 10px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 /* Container for time and date display */
 .time-date-container {
-  display: flex; /* Align time and date side by side */
-  align-items: center; /* Center align vertically */
-  margin-left: 2.5vw; /* Add margin on the left for spacing */
+  display: flex;
+  align-items: center;
+  margin-left: 3.5vw;
 }
 
 /* Vertical separator between time and date */
 .separator {
-  width: 2px; /* Thin vertical line */
-  height: 60px; /* Fixed height for the line */
-  background-color: #FAFAFA; /* White color for the line */
-  display: block; /* Ensure it renders as a block element */
-  margin: 0 1vw; /* Add horizontal spacing around the separator */
+  width: 2px;
+  height: 60px;
+  background-color: #FAFAFA;
+  display: block;
+  margin: 0 1vw;
 }
 
 /* Time display styling */
 .time-display {
-  font-size: 5rem; /* Large font size for time */
-  font-weight: bold; /* Make the time bold */
-  white-space: nowrap; /* Prevent time from wrapping */
-  overflow-wrap: break-word; /* Break long words if necessary */
-  word-wrap: break-word; /* Compatibility for older browsers */
+  font-size: 5rem;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 /* Date display styling */
 .date-display {
-  font-size: 2.2rem; /* Medium font size for date */
-  width: 20vw; /* Set width to allow wrapping */
-  text-align: left; /* Align text to the left */
-  line-height: 1.5; /* Increase space between lines */
-  white-space: normal; /* Allow text to wrap */
-  overflow-wrap: break-word; /* Ensure text wraps properly */
-  word-wrap: break-word; /* Compatibility for older browsers */
+  font-size: 2.2rem;
+  width: 20vw;
+  text-align: left;
+  line-height: 1.5;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 /* Container for top-right icons */
 .top-icons {
-  display: flex; /* Align icons horizontally */
-  gap: 1rem; /* Space between each icon */
-  margin-right: 2.5vw; /* Add margin on the right for spacing */
+  display: flex;
+  gap: 1rem;
+  margin-right: 2.5vw;
 }
 
 /* Styling for each icon */
 .icon {
-  width: 80px; /* Icon box width */
-  height: 80px; /* Icon box height */
-  display: flex; /* Center the SVG within the box */
-  justify-content: center; /* Horizontally center the SVG */
-  align-items: center; /* Vertically center the SVG */
-  background: rgba(23, 23, 23, 1); /* Solid dark background for the icon box */
-  border-radius: 25px; /* Rounded corners for the icon box */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
-  padding: 5px; /* Inner padding for spacing around the SVG */
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(23, 23, 23, 1);
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 5px;
 }
 
 /* Styling for SVG icons inside the box */
-.icon svg {
-  fill: #FAFAFA; /* Set the color of the SVG to white */
-  width: 60%; /* Scale the SVG to fit inside the box */
-  height: 60%; /* Maintain aspect ratio */
+.icon img {
+  width: 60%;
+  height: 60%;
 }
 
 /* Hover effect for icons */
 .icon:hover {
-  background: #2BE1A9; /* Change background to light green on hover */
+  background: #2BE1A9;
+}
+
+/* Function Selector Container */
+.function-selector-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto; /* Adjust width dynamically based on content */
+  max-width: 90%; /* Prevent it from exceeding 90% of viewport width */
+  padding: 15px 20px;
+  background: rgba(23, 23, 23, 0.75);
+  border-radius: 25px; /* Fully rounded corners */
+  box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.3);
+  overflow: hidden; /* Prevent content overflow */
+}
+
+/* Main icons inside function selector */
+.main-icons {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping of items if container is too small */
+  justify-content: space-around; /* Space icons evenly */
+  gap: 6.8rem; /* Add spacing between icon-with-label groups */
+}
+
+/* Icon with label styling */
+.icon-with-label {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem; /* Space between icon and label */
+}
+
+.icon-label {
+  font-size: 2.2rem;
+  color: #FAFAFA;
+  white-space: nowrap; /* Prevent labels from wrapping */
 }
