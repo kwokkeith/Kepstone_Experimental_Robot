@@ -26,8 +26,22 @@ const db = new sqlite3.Database(dbPath, (err) => {
 );
 
 // API ENDPOINTS
-app.get('/api/data', (req, res) => {
-    const query = `SELECT * FROM messages`;
+
+// get data from config_table
+app.get('/api/config', (req, res) => {
+    const query = `SELECT * FROM Config_Table`;
+    db.all(query, [], (err, rows) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+      }
+      res.json({ data: rows });
+    });
+});
+
+// get data from polygon table
+app.get('/api/polygon', (req, res) => {
+    const query = `SELECT * FROM Polygon_Table`;
     db.all(query, [], (err, rows) => {
       if (err) {
         res.status(500).json({ error: err.message });
@@ -40,19 +54,44 @@ app.get('/api/data', (req, res) => {
 // DELETE map by mapName in map_name column
 app.delete('/api/maps/:mapName', (req, res) => {
     const { mapName } = req.params;
-    const sqlDelete = `DELETE FROM messages WHERE map_name = ?`;
+    
+    // Start a transaction 
+    db.serialize(()=>{
+        db.run('BEGIN TRANSACTION');
 
-    db.run(sqlDelete, [mapName], function(err) {
-        if (err) {
-            console.error('Error running SQL:', err.message);
-            res.status(500).json({ error: 'Database error' });
-            return;
-        }
-        if (this.changes === 0) {
-            res.status(404).json({ message: 'No record found to delete.' });
-            return;
-        }
-        res.json({ message: `Row(s) deleted: ${this.changes}` });
+        // Delete from Polygon table based on config_id
+        const sqlDeletePolygon = `DELETE FROM Polygon_Table
+        WHERE config_id IN (SELECT config_id FROM Config_Table WHERE map_name = ?)`;
+
+        db.run(sqlDeletePolygon, [mapName], function(err) {
+            if (err) {
+                db.run('ROLLBACK');
+                // console.error('Error running SQL:', err.message);
+                res.status(500).json({ error: 'Database error' });
+                return;
+            }
+
+            const sqlDeleteConfig = `DELETE FROM Config_Table WHERE map_name = ?`;
+
+            db.run(sqlDeleteConfig, [mapName], function(err) {
+                if (err) {
+                    db.run('ROLLBACK');
+                    res.status(500).json({ error: 'Database error' });
+                    return;
+                }
+                db.run('COMMIT', (err) => {
+                    if (err) {
+                        res.status(500).json({ error: 'Database error' });
+                        return;
+                    }
+                    if (this.changes === 0) {
+                        res.status(404).json({ message: 'No record found to delete.' });
+                        return;
+                    }
+                    res.json({ message: `Map with name ${mapName} deleted`, changes: this.changes });
+                });
+            });
+        });
     });
 });
 
