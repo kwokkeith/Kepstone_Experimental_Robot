@@ -14,13 +14,14 @@ find_package(catkin REQUIRED COMPONENTS
   xacro
   gazebo_ros
   tf
+  velodyne_description
 )
 
 # Define the package dependencies for exporting
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES bumperbot_description
-  CATKIN_DEPENDS roscpp rospy std_msgs sensor_msgs urdf xacro gazebo_ros tf
+  CATKIN_DEPENDS roscpp rospy std_msgs sensor_msgs urdf xacro gazebo_ros tf velodyne_description 
 #  DEPENDS system_lib
 )
 

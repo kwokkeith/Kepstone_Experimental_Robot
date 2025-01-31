@@ -1,10 +1,16 @@
 <?xml version="1.0"?>
 
 <robot name="bumperbot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!-- Load robot params file -->
+    <xacro:property name="robot_params_file" value="$(find config_manager)/config/robot_config.yaml"/>
+    <xacro:property name="robot_params" value="${xacro.load_yaml(robot_params_file)}"/>
+    <xacro:property name="camera_params" value="${robot_params['litter_detection']}"/>
+
     <joint name="camera_joint" type="fixed">
         <parent link="base_link"/>
         <child link="dpcamera_link"/>
-        <origin xyz="0.072 0.0 0.065" rpy="0.0 0.2618 0.0"/>
+        <origin xyz="0.072 0.0 0.065" rpy="0.0 ${camera_params['camera_theta']} 0.0"/>
     </joint>
 
     <link name="dpcamera_link">

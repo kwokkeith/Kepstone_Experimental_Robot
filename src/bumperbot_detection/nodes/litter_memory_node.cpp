@@ -27,14 +27,18 @@ LitterMemory::LitterMemory()
     nh_.getParam("/litter_memory/topics/detected_litter_raw", detected_litter_raw_topic_pub_);
     // Topic Subscribers
     std::string detected_object_coordinates_topic_sub_;
+    std::string global_costmap_topic_sub_;
     nh_.getParam("/litter_detection/topics/detected_object_coordinates_base", detected_object_coordinates_topic_sub_);
-    
+    nh_.getParam("/move_base/topics/global_costmap", global_costmap_topic_sub_);
 
     // Set distance threshold for filtering duplicates
-    pnh_.param<double>("distance_threshold", distance_threshold_, 5.0);  // Load the distance threshold parameter
+    pnh_.getParam("/litter_memory/distance_threshold", distance_threshold_);  // Load the distance threshold parameter
 
     // Initialize the subscriber to get litter coordinates in base frame
     litter_sub_ = nh_.subscribe(detected_object_coordinates_topic_sub_, 10, &LitterMemory::litterCallback, this);
+
+    // Initialize the subscriber to get the global costmap
+    global_costmap_sub_ = nh_.subscribe(global_costmap_topic_sub_, 10, &LitterMemory::costmapCallback, this);
 
     // Initialize a publisher to publish all remembered litter points
     litter_pub_ = nh_.advertise<bumperbot_detection::LitterList>(litter_memory_topic_pub_, 10);
@@ -101,6 +105,42 @@ int LitterMemory::getNewID()
     }
 }
 
+void LitterMemory::costmapCallback(const nav_msgs::OccupancyGrid::ConstPtr& costmap)
+{
+    costmap_ = *costmap;
+}
+
+bool LitterMemory::isTooNearObstacle(const geometry_msgs::Point& point)
+{
+    if (costmap_.data.empty()) {
+        ROS_WARN("Error receiving costmap data.");
+        return false;
+    }
+
+    double resolution = costmap_.info.resolution;
+    double origin_x = costmap_.info.origin.position.x;
+    double origin_y = costmap_.info.origin.position.y; 
+    int width = costmap_.info.width;
+    int height = costmap_.info.height;
+
+    // Convert the point coordinates to costmap grid coordinates
+    int grid_x = (point.x - origin_x) / resolution;
+    int grid_y = (point.y - origin_y) / resolution;
+
+    // Check if the coordinates are within the bounds of the costmap
+    if (grid_x < 0 || grid_y < 0 || grid_x >= width || grid_y >= height) {
+        ROS_WARN("Point is out of costmap bounds.");
+        return false;
+    }
+
+    // Get the index of the costmap data array 
+    int index = grid_y * width + grid_x;
+    int cost = costmap_.data[index];
+    ROS_INFO("Cost at point (%f, %f): %d", point.x, point.y, cost);
+
+    // Check if the cost is greater than 0 (near an obstacle)
+    return cost > 0;
+}
 
 // Callback to handle detected litter points
 void LitterMemory::litterCallback(const geometry_msgs::PointStamped::ConstPtr& litter_point)
@@ -122,6 +162,13 @@ void LitterMemory::litterCallback(const geometry_msgs::PointStamped::ConstPtr& l
     {
         ROS_WARN("Could not transform litter coordinates from camera_frame to map: %s", ex.what());
         return;  // Skip further processing if transform fails
+    }
+
+    // Check if the litter point is too near obstacles, skip if too near
+    if (isTooNearObstacle(litter_in_map_frame.point))
+    {
+        ROS_WARN("Litter point too near obstacles, ignoring.");
+        return;  
     }
 
     // Check if the new litter point is within the threshold distance from any existing points

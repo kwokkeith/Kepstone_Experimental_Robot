@@ -10,8 +10,8 @@ int main(int argc, char **argv)
     ros::NodeHandle pnh("~"); 
     
     double wheel_radius, wheel_separation;
-    pnh.getParam("wheel_radius", wheel_radius);
-    pnh.getParam("wheel_separation", wheel_separation);
+    pnh.getParam("/wheel/radius", wheel_radius);
+    pnh.getParam("/wheel/separation", wheel_separation);
     
     SimpleController controller(nh, wheel_radius, wheel_separation);
 

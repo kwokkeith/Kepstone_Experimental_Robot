@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 
 <robot name="bumperbot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!-- Load robot params file -->
+    <xacro:property name="robot_params_file" value="$(find config_manager)/config/robot_config.yaml"/>
+    <xacro:property name="robot_params" value="${xacro.load_yaml(robot_params_file)}"/>
+    <xacro:property name="lidar_params_3d" value="${robot_params['lidar_3d']}"/>
+
     <!-- Velodyne 3D Lidar -->
     <link name="velodyne_link">
         <visual>
@@ -35,31 +41,31 @@
         <sensor type="gpu_ray" name="velodyne_sensor">
             <pose>0 0 0 0 0 0</pose>
             <visualize>false</visualize>
-            <update_rate>20</update_rate>
+            <update_rate>${lidar_params_3d['update_rate']}</update_rate>
             <ray>
                 <scan>
                     <horizontal>
-                        <samples>1440</samples>
-                        <resolution>1</resolution>
-                        <min_angle>${-pi}</min_angle>  <!-- -180 degrees -->
-                        <max_angle>${pi}</max_angle>   <!-- 180 degrees -->
+                        <samples>${lidar_params_3d['horizontal_scan']['sample']}</samples>
+                        <resolution>${lidar_params_3d['horizontal_scan']['resolution']}</resolution>
+                        <min_angle>${lidar_params_3d['horizontal_scan']['min_angle']}</min_angle>  <!-- -180 degrees -->
+                        <max_angle>${lidar_params_3d['horizontal_scan']['max_angle']}</max_angle>   <!-- 180 degrees -->
                     </horizontal>
                     <vertical>
-                        <samples>16</samples>
-                        <resolution>1</resolution>
-                        <min_angle>0</min_angle>   <!-- Vertical min angle -->
-                        <max_angle>0.2618</max_angle>   <!-- Vertical max angle -->
+                        <samples>${lidar_params_3d['vertical_scan']['sample']}</samples>
+                        <resolution>${lidar_params_3d['vertical_scan']['resolution']}</resolution>
+                        <min_angle>${lidar_params_3d['vertical_scan']['min_angle']}</min_angle>   <!-- Vertical min angle -->
+                        <max_angle>${lidar_params_3d['vertical_scan']['max_angle']}</max_angle>   <!-- Vertical max angle -->
                     </vertical>
                 </scan>
                 <range>
-                    <min>0.1</min>
-                    <max>70.0</max>
-                    <resolution>0.001</resolution>
+                    <min>${lidar_params_3d['range']['min']}</min>
+                    <max>${lidar_params_3d['range']['max']}</max>
+                    <resolution>${lidar_params_3d['range']['resolution']}</resolution>
                 </range>
                 <noise>
                     <type>gaussian</type>
-                    <mean>0.0</mean>
-                    <stddev>0.01</stddev>
+                    <mean>${lidar_params_3d['noise']['mean']}</mean>
+                    <stddev>${lidar_params_3d['noise']['stddev']}</stddev>
                 </noise>
             </ray>
             <plugin name="velodyne_control" filename="libgazebo_ros_velodyne_gpu_laser.so">

@@ -5,11 +5,7 @@
     <arg name="move_forward_only" default="true"/>
 
     <!-- Litter Manager Node -->
-    <node name="litter_manager_node" pkg="litter_destruction" type="litter_manager_node.py" output="screen">
-        <param name="distance_threshold" value="2.0" />
-        <param name="min_local_radius" value="0.5" />
-        <param name="max_local_radius" value="1.5" />
-    </node>
+    <node name="litter_manager_node" pkg="litter_destruction" type="litter_manager_node.py" output="screen" />
 
     <!-- Litter Boundary Visualizer Node -->
     <node name="boundary_visualizer_node" pkg="litter_destruction" type="boundary_visualizer_node" output="screen" />

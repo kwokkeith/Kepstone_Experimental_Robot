@@ -1,8 +1,130 @@
-/* src/components/MainPage.css */
-.status {
-    text-align: left;
-    font-size: 1.25rem;
-    margin-top: 2rem;
-    line-height: 1.6;
-  }
-  
+/* Main container styling for the page */
+.page {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(23, 23, 23, 0.50);
+  color: #FAFAFA;
+  font-family: Inter, sans-serif;
+  display: flex;
+  flex-direction: column;
+  position: relative; /* To allow absolute positioning of child elements */
+}
+
+/* Top section (header bar) */
+.top-section {
+  height: 8vh;
+  width: 100%;
+  background: rgba(23, 23, 23, 0.50);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 0px 0px 10px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Container for time and date display */
+.time-date-container {
+  display: flex;
+  align-items: center;
+  margin-left: 3.5vw;
+}
+
+/* Vertical separator between time and date */
+.separator {
+  width: 2px;
+  height: 60px;
+  background-color: #FAFAFA;
+  display: block;
+  margin: 0 1vw;
+}
+
+/* Time display styling */
+.time-display {
+  font-size: 5rem;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+/* Date display styling */
+.date-display {
+  font-size: 2.2rem;
+  width: 20vw;
+  text-align: left;
+  line-height: 1.5;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+/* Container for top-right icons */
+.top-icons {
+  display: flex;
+  gap: 1rem;
+  margin-right: 2.5vw;
+}
+
+/* Styling for each icon */
+.icon {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(23, 23, 23, 1);
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 5px;
+}
+
+/* Styling for SVG icons inside the box */
+.icon img {
+  width: 60%;
+  height: 60%;
+}
+
+/* Hover effect for icons */
+.icon:hover {
+  background: #2BE1A9;
+}
+
+/* Function Selector Container */
+.function-selector-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto; /* Adjust width dynamically based on content */
+  max-width: 90%; /* Prevent it from exceeding 90% of viewport width */
+  padding: 15px 20px;
+  background: rgba(23, 23, 23, 0.75);
+  border-radius: 25px; /* Fully rounded corners */
+  box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.3);
+  overflow: hidden; /* Prevent content overflow */
+}
+
+/* Main icons inside function selector */
+.main-icons {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping of items if container is too small */
+  justify-content: space-around; /* Space icons evenly */
+  gap: 6.8rem; /* Add spacing between icon-with-label groups */
+}
+
+/* Icon with label styling */
+.icon-with-label {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem; /* Space between icon and label */
+}
+
+.icon-label {
+  font-size: 2.2rem;
+  color: #FAFAFA;
+  white-space: nowrap; /* Prevent labels from wrapping */
+}

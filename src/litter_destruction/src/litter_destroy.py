@@ -14,11 +14,12 @@ def main():
     rospy.loginfo("Node started: Initializing robot and manager...")
     
     
-     # Set the minimum and maximum local boundary radius
-    min_local_radius = 0.5  # Minimum size of the local boundary
-    max_local_radius = 1.5  # Maximum size based on distance
+    # Set the distance threshold, minimum and maximum local boundary radius
+    distance_threshold = rospy.get_param("/litter_manager/distance_threshold")  # Distance threshold for litter
+    min_local_radius = rospy.get_param("/litter_manager/min_local_radius")  # Minimum size of the local boundary
+    max_local_radius = rospy.get_param("/litter_manager/max_local_radius")  # Maximum size based on distance
 
-    manager = LitterManager(distance_threshold=2.0,  
+    manager = LitterManager(distance_threshold=distance_threshold,  
                             min_local_radius=min_local_radius, 
                             max_local_radius=max_local_radius)
     

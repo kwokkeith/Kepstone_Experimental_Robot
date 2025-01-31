@@ -6,6 +6,11 @@
         <param name="launch_prefix" value="python3"/>
     </node>
 
+    <!-- Litter detector using yolov8 -->
+    <!-- <node pkg="bumperbot_detection" type="yolov8_get_coordinates.py" name="coordinate_detector_yolov8" >
+        <param name="launch_prefix" value="python3"/>
+    </node> -->
+
     <!-- Litter detection subscriber -->
     <node pkg="bumperbot_detection" type="litter_coordinate_subscriber" name="coordinate_subscriber" output="screen" />
   
@@ -16,9 +21,7 @@
     </node>
   
     <!-- Litter memory node (publishes memory and service for deleting litter) -->
-    <node pkg="bumperbot_detection" type="litter_memory_node" name="litter_memory_node">
-        <param name="distance_threshold" value="0.3" />
-    </node>
+    <node pkg="bumperbot_detection" type="litter_memory_node" name="litter_memory_node" />
 
     <!-- Litter Marker publisher node (For RVIZ visualization) -->
     <node pkg="bumperbot_detection" type="litter_plotter_publisher_node" name="litter_plotter_publisher_node" output="screen">

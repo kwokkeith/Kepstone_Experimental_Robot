@@ -13,6 +13,9 @@ find_package(catkin REQUIRED COMPONENTS
   litter_destruction
   tf
   nav_msgs
+  map_server
+  amcl
+  pointcloud_to_laserscan
 )
 
 # Find the yaml-cpp library
@@ -51,6 +54,9 @@ catkin_package(
     bumperbot_utils 
     litter_destruction
     tf
+    map_server
+    amcl
+    pointcloud_to_laserscan
 )
 
 ###########

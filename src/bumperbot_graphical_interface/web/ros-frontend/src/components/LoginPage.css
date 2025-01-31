@@ -1,4 +1,4 @@
-/* Define spacing variables */
+/* Define spacing variables for consistent spacing and typography throughout */
 :root {
   --spacing-small: 0.5rem;
   --spacing-medium: 1rem;
@@ -11,74 +11,95 @@
   --font-size-xlarge: 2.3rem;
 }
 
-#login-page {
-  width: 40vw; /* Reduce width from 60vw to 40vw for a smaller box */
-  max-width: 1000px; /* Optional: Set a max width to keep it constrained on larger screens */
-  height: auto; /* Set height to auto to fit content, removing fixed height */
-  padding: var(--spacing-medium); /* Keep the padding for spacing around content */
-  display: flex; /* Flex layout to stack elements vertically */
-  flex-direction: column; /* Stack items vertically */
-  align-items: center; /* Center align items horizontally */
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow around the container */
+/* Apply page-wide styling */
+body {
+  background: rgba(23, 23, 23, 0.90); /* Dark semi-transparent background */
+  margin: 0; /* Remove default body margin for full-width styling */
+  font-family: Inter; /* Add a consistent font across the page */
+  color: #FAFAFA; /* Default text color for contrast on dark background */
 }
 
+/* Style the login container */
+#login-page {
+  width: 50vw; /* Adjust the container width */
+  max-width: 1000px; /* Constrain the container width on larger screens */
+  height: 50vh;
+  max-height: 650px; /* Constrain the container width on larger screens */
+  padding: var(--spacing-medium); /* Padding for inner spacing */
+  display: flex; /* Flexbox layout to stack elements vertically */
+  flex-direction: column; /* Stack child elements */
+  align-items: center; /* Center-align elements horizontally */
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for a floating effect */
+  background: #17171780; /* Semi-transparent dark background for the container */
+}
 
+/* Heading styles for the login page */
 #login-page h2 {
-  font-size: var(--font-size-xlarge); /* 2.3rem for the heading font size */
+  font-size: var(--font-size-xlarge); /* Large font size for headings */
   margin-bottom: var(--spacing-large); /* Space below the heading */
 }
 
-/* Input Group Styling */
+/* Input Group Styling for labels and inputs */
 .input-group {
-  width: 100%; /* Full width of the parent container */
+  width: 100%; /* Full width of the container */
   display: flex; /* Flex layout for label and input */
   flex-direction: column; /* Stack label above input */
-  margin-bottom: var(--spacing-extra-large); /* Extra-large space after each input group */
+  margin-bottom: var(--spacing-extra-large); /* Space below each input group */
 }
 
 .input-group label {
   font-size: var(--font-size-medium); /* Medium font size for labels */
-  margin-bottom: var(--spacing-small); /* Small space below the label */
-  color: #333; /* Dark color for label text */
+  margin-bottom: var(--spacing-small); /* Space between label and input */
+  color: #FFFFFF; /* White label text for visibility on dark background */
 }
 
+/* Input field styling */
 #login-page input[type="text"],
 #login-page input[type="password"] {
-  width: 100%; /* Full width of parent container */
-  padding: var(--spacing-large); /* Large inner padding for input */
-  font-size: var(--font-size-small); /* Small font size for text inputs */
-  border-radius: var(--border-radius); /* Rounded corners for the input box */
-  border: 2px solid #ccc; /* Light gray border around input */
+  width: 100%; /* Full width for responsiveness */
+  padding: var(--spacing-large); /* Padding inside input fields */
+  font-size: var(--font-size-small); /* Font size for text inputs */
+  border-radius: var(--border-radius); /* Rounded corners for inputs */
+  border: 2px solid #ccc; /* Light gray border for input fields */
+  background-color: #17171780; /* White background for input fields */
+  color: #FFFFFF; /* Black text color for readability */
+}
+
+/* Adjust focus styles for input fields */
+#login-page input[type="text"]:focus,
+#login-page input[type="password"]:focus {
+  outline: none; /* Remove default outline */
+  border: 2px solid rgba(43, 225, 169, 1.0); /* Highlight border on focus */
 }
 
 /* Button Container for Centering the Button */
 .button-container {
-  width: 100%; /* Set width to 60% of the #login-page container */
+  width: 100%; /* Full width of the container */
   display: flex;
-  justify-content: center; /* Center the button within this container */
+  justify-content: center; /* Center the button horizontally */
   margin-top: var(--spacing-large); /* Space above the button container */
 }
 
-/* Centered Button Styling */
+/* Button styling */
 #login-page button {
-  width: 60%; /* Full width of the button-container */
-  padding: var(--spacing-large); /* Large padding inside button */
-  font-size: var(--font-size-large); /* Large font size for button text */
-  background-color: #0073e6; /* Primary blue color for button */
-  color: white; /* White text for contrast */
-  border-radius: var(--border-radius); /* Rounded corners to match input fields */
-  cursor: pointer; /* Pointer cursor on hover */
-  border: none; /* Remove any default border */
+  width: 60%; /* Adjust button width */
+  padding: var(--spacing-large); /* Inner padding */
+  font-size: var(--font-size-large); /* Larger font size for button text */
+  background-color: #171717; /* Default button color */
+  color: #FFFFFF; /* White text color for contrast */
+  border-radius: var(--border-radius); /* Rounded corners to match inputs */
+  cursor: pointer; /* Pointer cursor for interactivity */
+  border: none; /* Remove default button border */
 }
 
 #login-page button:hover {
-  background-color: #0358ac; /* Darker blue on hover */
+  background-color: rgba(43, 225, 169, 0.8); /* Slightly lighter shade on hover */
 }
 
 /* Error Message Styling */
 #login-error {
-  color: red; /* Red color to indicate error */
-  margin-top: var(--spacing-small); /* Space above error message */
-  font-size: var(--font-size-medium); /* Medium font size for error message */
-  display: block; /* Ensures error message displays as a block element */
+  color: red; /* Red text for error messages */
+  margin-top: var(--spacing-small); /* Space above the error message */
+  font-size: var(--font-size-medium); /* Font size for error text */
+  display: block; /* Ensure error message takes its own line */
 }

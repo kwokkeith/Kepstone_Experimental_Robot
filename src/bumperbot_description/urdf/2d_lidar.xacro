@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 
 <robot name="bumperbot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+     <!-- Load robot params file -->
+    <xacro:property name="robot_params_file" value="$(find config_manager)/config/robot_config.yaml"/>
+    <xacro:property name="robot_params" value="${xacro.load_yaml(robot_params_file)}"/>
+    <xacro:property name="lidar_params_2d" value="${robot_params['lidar_2d']}"/>
+
     <!-- Left LIDAR -->
     <link name="lidar_left_link">
         <collision>
@@ -66,29 +72,29 @@
         <sensor type="ray" name="head_hokuyo_sensor_left">
         <pose>0 0 0 0 0 0</pose>
         <visualize>true</visualize>
-        <update_rate>20</update_rate>
+        <update_rate>${lidar_params_2d['left']['update_rate']}</update_rate>
         <ray>
             <scan>
             <horizontal>
-                <samples>720</samples>
-                <resolution>1</resolution>
-                <min_angle>${-pi/2}</min_angle>
-                <max_angle>${pi/2}</max_angle>
+                <samples>${lidar_params_2d['left']['horizontal_scan']['sample']}</samples>
+                <resolution>${lidar_params_2d['left']['horizontal_scan']['resolution']}</resolution>
+                <min_angle>${lidar_params_2d['left']['horizontal_scan']['min_angle']}</min_angle>
+                <max_angle>${lidar_params_2d['left']['horizontal_scan']['max_angle']}</max_angle>
             </horizontal>
             </scan>
             <range>
-            <min>0.3</min>
-            <max>20.0</max>
-            <resolution>0.01</resolution>
+                <min>${lidar_params_2d['left']['range']['min']}</min>
+                <max>${lidar_params_2d['left']['range']['max']}</max>
+                <resolution>${lidar_params_2d['left']['range']['resolution']}</resolution>
             </range>
             <noise>
-            <type>gaussian</type>
-            <!-- Noise parameters based on published spec for Hokuyo laser
-                achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
-                stddev of 0.01m will put 99.7% of samples within 0.03m of the true
-                reading. -->
-            <mean>0.0</mean>
-            <stddev>0.01</stddev>
+                <type>gaussian</type>
+                <!-- Noise parameters based on published spec for Hokuyo laser
+                    achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
+                    stddev of 0.01m will put 99.7% of samples within 0.03m of the true
+                    reading. -->
+                <mean>${lidar_params_2d['left']['noise']['mean']}</mean>
+                <stddev>${lidar_params_2d['left']['noise']['stddev']}</stddev>
             </noise>
         </ray>
         <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
@@ -103,29 +109,29 @@
         <sensor type="ray" name="head_hokuyo_sensor_right">
         <pose>0 0 0 0 0 0</pose>
         <visualize>true</visualize>
-        <update_rate>20</update_rate>
+        <update_rate>${lidar_params_2d['right']['update_rate']}</update_rate>
         <ray>
             <scan>
             <horizontal>
-                <samples>720</samples>
-                <resolution>1</resolution>
-                <min_angle>${-pi/2}</min_angle>
-                <max_angle>${pi/2}</max_angle>
+                <samples>${lidar_params_2d['right']['horizontal_scan']['sample']}</samples>
+                <resolution>${lidar_params_2d['right']['horizontal_scan']['resolution']}</resolution>
+                <min_angle>${lidar_params_2d['right']['horizontal_scan']['min_angle']}</min_angle>
+                <max_angle>${lidar_params_2d['right']['horizontal_scan']['max_angle']}</max_angle>
             </horizontal>
             </scan>
             <range>
-            <min>0.3</min>
-            <max>20.0</max>
-            <resolution>0.01</resolution>
+                <min>${lidar_params_2d['right']['range']['min']}</min>
+                <max>${lidar_params_2d['right']['range']['max']}</max>
+                <resolution>${lidar_params_2d['right']['range']['resolution']}</resolution>
             </range>
             <noise>
-            <type>gaussian</type>
-            <!-- Noise parameters based on published spec for Hokuyo laser
-                achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
-                stddev of 0.01m will put 99.7% of samples within 0.03m of the true
-                reading. -->
-            <mean>0.0</mean>
-            <stddev>0.01</stddev>
+                <type>gaussian</type>
+                <!-- Noise parameters based on published spec for Hokuyo laser
+                    achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
+                    stddev of 0.01m will put 99.7% of samples within 0.03m of the true
+                    reading. -->
+                <mean>${lidar_params_2d['right']['noise']['mean']}</mean>
+                <stddev>${lidar_params_2d['right']['noise']['stddev']}</stddev>
             </noise>
         </ray>
         <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">

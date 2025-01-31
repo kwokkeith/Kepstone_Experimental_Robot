@@ -14,6 +14,7 @@
 #include <vector>
 #include <queue>    // Recycle ID
 #include <std_srvs/Trigger.h>
+#include <nav_msgs/OccupancyGrid.h>
 
 class LitterMemory
 {
@@ -35,17 +36,21 @@ public:
     // Service callback to clear litter memory
     bool clearMemoryCallback(std_srvs::Trigger::Request& req, std_srvs::Trigger::Response& res);
 
+    // Callback function to handle costmap data
+    void costmapCallback(const nav_msgs::OccupancyGrid::ConstPtr& costmap);
+
 private:
     ros::NodeHandle nh_;          
     ros::NodeHandle pnh_;
-    ros::Subscriber litter_sub_;    // Subscriber to litter points
-    ros::Publisher litter_pub_;     // Publisher for remembered litter points
-    ros::Publisher new_litter_pub_; // Publisher for new litter
+    ros::Subscriber litter_sub_;                // Subscriber to litter points
+    ros::Subscriber global_costmap_sub_;        // Subscriber to the Global Costmap Topic
+    ros::Publisher litter_pub_;                 // Publisher for remembered litter points
+    ros::Publisher new_litter_pub_;             // Publisher for new litter
     ros::Publisher detected_litter_raw_pub_; // Publisher for detected litter on map coordinates without removing duplicates
     ros::ServiceServer delete_litter_service_;  // Service to delete litter
-    ros::ServiceServer get_litter_service_; // Service to get litter from memory
-    ros::ServiceServer add_litter_service_; // Service to add litter to memory
-    ros::ServiceServer clear_memory_service_; // Service to clear the litter memory
+    ros::ServiceServer get_litter_service_;     // Service to get litter from memory
+    ros::ServiceServer add_litter_service_;     // Service to add litter to memory
+    ros::ServiceServer clear_memory_service_;   // Service to clear the litter memory
 
     // TF2 Buffer and Listener to manage transforms
     tf2_ros::Buffer tf_buffer_;
@@ -53,6 +58,9 @@ private:
 
     // Vector to store all remembered litter points
     std::vector<bumperbot_detection::LitterPoint> remembered_litter_;
+
+    // To store costmap data
+    nav_msgs::OccupancyGrid costmap_;
 
     // Distance threshold to filter out duplicate or close litter points (Distance Filtering)
     double distance_threshold_;
@@ -71,6 +79,9 @@ private:
 
     // Helper function to assign a new ID (recycled or new)
     int getNewID();
+
+    // Helper function to check if a point is too near to an obstacle
+    bool isTooNearObstacle(const geometry_msgs::Point& point);
 };
 
 #endif

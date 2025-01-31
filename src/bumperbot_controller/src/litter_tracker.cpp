@@ -18,11 +18,8 @@ LitterTracker::LitterTracker(ros::NodeHandle& nh) : nh_(nh)
     has_litter_to_clear_client_ = nh_.serviceClient<litter_destruction::HasLitterToClear>(has_litter_to_clear_srv_client_);
 
     // Initialize distance threshold
-    if (!nh_.getParam("/litter_tracker/distance_threshold", distance_threshold_))
-    {
-        ROS_WARN("Parameter '/litter_tracker/distance_threshold' not found. Using default value 0.5.");
-        distance_threshold_ = 0.8; // Default value
-    }
+    nh_.getParam("/litter_tracker/distance_threshold", distance_threshold_);
+    ROS_INFO("Using distance threshold: %f meters.", distance_threshold_);
 }
 
 void LitterTracker::spin()
