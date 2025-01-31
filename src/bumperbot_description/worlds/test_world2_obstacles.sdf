@@ -31,6 +31,84 @@
       <background>0.7 0.7 0.7 1</background>
       <shadows>1</shadows>
     </scene>
+    <model name="static_box_1">
+      <static>true</static>
+      <link name="box_link">
+        <pose>2.8472 -0.59398 0.1 0 0 0</pose>
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>.2 .2 .2</size>
+            </box>
+          </geometry>
+        </visual>
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>0.2 0.2 0.2</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+    <actor name="animated_box_1">
+        <link name="box_link">
+          <visual name="visual">
+            <geometry>
+              <box>
+                <size>.2 .2 .2</size>
+              </box>
+            </geometry>
+          </visual>
+        </link>
+        <script>
+          <loop>true</loop>
+          <auto_start>true</auto_start>
+          <trajectory id="0" type="square">
+             <waypoint>
+                <time>0.0</time>
+                <pose>1.006 -1.088 0.1 0 0 0</pose>
+             </waypoint>
+             <waypoint>
+                <time>5.0</time>
+                <pose>1.018 0.466 0.1 0 0 0</pose>
+             </waypoint>
+             <waypoint>
+                <time>10.0</time>
+                <pose>1.006 -1.088 0.1 0 0 0</pose>
+             </waypoint>
+          </trajectory>
+        </script>
+    </actor>
+    <actor name="animated_box_2">
+      <link name="box_link">
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>.2 .2 .2</size>
+            </box>
+          </geometry>
+        </visual>
+      </link>
+      <script>
+        <loop>true</loop>
+        <auto_start>true</auto_start>
+        <trajectory id="0" type="square">
+            <waypoint>
+              <time>0.0</time>
+              <pose>-0.925 1.874 0.1 0 0 0</pose>
+            </waypoint>
+            <waypoint>
+              <time>6.0</time>
+              <pose>0.736 1.824 0.1 0 0 0</pose>
+            </waypoint>
+            <waypoint>
+              <time>12.0</time>
+              <pose>-0.925 1.874 0.1 0 0</pose>
+            </waypoint>
+        </trajectory>
+      </script>
+    </actor>
     <wind />
     <spherical_coordinates>
       <surface_model>EARTH_WGS84</surface_model>
