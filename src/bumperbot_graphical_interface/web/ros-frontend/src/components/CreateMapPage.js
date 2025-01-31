@@ -338,6 +338,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
         alert("Cancelled map creation successfully");
         sessionStorage.removeItem('coverageListener');
         sessionStorage.removeItem('fourPointsSet');
+        sessionStorage.removeItem('allBCDPolyContours');
         showPage('main')
         // Optionally, refresh data after deletion
         fetchData();
@@ -396,8 +397,11 @@ const CreateMapPage = ({ mapName, showPage }) => {
       },6000);
 
       const bcdPolyContoursString = sessionStorage.getItem('allBCDPolyContours');
-      publishAllBCDPolyContours({data: bcdPolyContoursString});
 
+      setTimeout(() => {
+        publishAllBCDPolyContours({data: bcdPolyContoursString});
+      },2000)
+    
     }, 5000);
 
   };

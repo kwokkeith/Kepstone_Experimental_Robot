@@ -41,6 +41,9 @@ std::vector<cv::Point> selected_points;
 cv::Mat img_copy;
 cv::Point top_left;
 std::string mapName;
+std::string allbcdpolycontours;
+std::vector<std::string> allbcdpolycontours_array;
+bool allbcdpolycontours_received = false;
 bool mapName_received = false;
 bool editState_received = false;
 
@@ -131,6 +134,14 @@ void startingPointsCallback(const std_msgs::String::ConstPtr& msg){
   iss >> x >> y;
   starting_point = Point_2(x, y);
   // /ROS_INFO("Received starting point: (%d, %d)", x, y);
+}
+
+void allBCDPolyContoursCallback(const std_msgs::String::ConstPtr& msg) {
+    allbcdpolycontours = msg->data; //Save map name
+    ROS_INFO("Received allbcdpolycontours: %s", msg->data.c_str());
+    allbcdpolycontours_received = true;
+
+    allbcdpolycontours_array.push_back(msg->data);
 }
 
 void mapNameCallback(const std_msgs::String::ConstPtr& msg) {
@@ -549,6 +560,15 @@ int main(int argc, char** argv) {
   std::vector<std::vector<Point_2>> cells_sweeps;
   
   if (manual_orientation) {
+
+    ros::Subscriber old_all_bcd_poly_contours= nh.subscribe("/all_bcd_poly_contours",1, allBCDPolyContoursCallback);
+    while (!allbcdpolycontours_received && ros::ok()) {
+      ros::spinOnce();
+      ros::Duration(0.5).sleep(); //Sleep for 100 ms
+    };
+
+    // TODO: Parse the received polygon contours into an array and arrange it
+
     // Store user-defined angles for sweep direction
     std::vector<double> polygon_sweep_directions;
 
