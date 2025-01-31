@@ -15,7 +15,6 @@ find_package(catkin REQUIRED COMPONENTS
   nav_msgs
   map_server
   amcl
-  pointcloud_to_laserscan
 )
 
 # Find the yaml-cpp library
@@ -56,7 +55,6 @@ catkin_package(
     tf
     map_server
     amcl
-    pointcloud_to_laserscan
 )
 
 ###########
