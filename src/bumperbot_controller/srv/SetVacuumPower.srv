@@ -1,0 +1,4 @@
+float32 power  # Desired vacuum power (0.0 - 1.0)
+---
+bool success   # Response if power is successfully set
+string message # Response message
