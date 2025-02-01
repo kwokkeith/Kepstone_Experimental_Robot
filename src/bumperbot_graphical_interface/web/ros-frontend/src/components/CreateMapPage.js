@@ -184,8 +184,22 @@ const CreateMapPage = ({ mapName, showPage }) => {
 
   //TODO: CREATE A NEW FUNCTION FOR THIS 
   const getBcdPolygonContourCoordinates = (mapName) => {
-    const map = polyData.find((item => item.map_name === mapName));
-    return map ? map.bcdPolygonContour_coordinates : null;
+    // Filter for matching mapName
+    const items = polyData.filter(item => item.map_name === mapName);
+    // Sort items based on polygon_index (or derive from polygon_id if not available)
+    const sortedItems = items.sort((a, b) => {
+      // Use polygon_index if available; otherwise use polygon_id-1
+      const indexA = a.polygon_index !== undefined ? a.polygon_index : (a.polygon_id - 1);
+      const indexB = b.polygon_index !== undefined ? b.polygon_index : (b.polygon_id - 1);
+      return indexA - indexB;
+    });
+    // Map each sorted item to an array of coordinate strings
+    return sortedItems.map(item =>
+      item.bcdPolygonContour_coordinates
+        .split('\n')
+        .map(line => line.trim())
+        .filter(line => line !== '')
+    );
   };
 
   const isPointInPolygon = (point, polygon) => {
@@ -225,27 +239,14 @@ const CreateMapPage = ({ mapName, showPage }) => {
       const polygonCoordinates = getPolygonBoundingCoordinates(mapName);
       const bcdCleaningPathCoordinates = getBcdPolygonContourCoordinates(mapName); // TODO: Rename variable from bcdCLeaning... to bcdPolyContour...
       sessionStorage.setItem('allBCDPolyContours', JSON.stringify(bcdCleaningPathCoordinates));
-      // console.log('Polygon coordinates:', polygonCoordinates); //Debugging
-      // if (polygonCoordinates) {
-      //   const polygonPoints = polygonCoordinates.trim().split('\n').map(line => {
-      //     const [px, py] = line.split(' ').map(Number);
-      //     return { x: px, y: py };
-      //   });
-
-      //   // if (isPointInPolygon({ x, y }, polygonPoints)) {
-      //   //   console.log('Point is inside polygonContour:', polygonCoordinates);
-      //   // } else {
-      //   //   console.log('Point is outside polygonContour.'); // debugging for clicking outside polygon
-      //   // }
-      // }
       
       if (bcdCleaningPathCoordinates) {
-        const bcdCleaningPathLists = bcdCleaningPathCoordinates.split('],[').map(sublist => {
-          return sublist.replace(/[\[\]]/g, '').trim().split('\n').map(line => {
+        const bcdCleaningPathLists = bcdCleaningPathCoordinates.map(sublist =>
+          sublist.map(line => {
             const [px, py] = line.split(' ').map(Number);
             return { x: px, y: py };
-          });
-        });
+          })
+        );
   
         let foundInBCDList = null;
         bcdCleaningPathLists.forEach((polygon, index) => {
@@ -253,8 +254,6 @@ const CreateMapPage = ({ mapName, showPage }) => {
             foundInBCDList = index;
           }
         });
-        
-        
         
         if (foundInBCDList !== null) {
           console.log(`Point is inside the cleaning path list at index: ${foundInBCDList}`);
@@ -280,7 +279,6 @@ const CreateMapPage = ({ mapName, showPage }) => {
               const updated = { ...prev };
               if(!updated[foundInBCDList]) updated[foundInBCDList] = [];
               updated[foundInBCDList].push(angle);
-
               return updated;
             });
           }, 0);
@@ -384,6 +382,8 @@ const CreateMapPage = ({ mapName, showPage }) => {
   const handleSave = () => {
     sessionStorage.removeItem('coverageListener');
     showPage('main')
+    fetchConfigData();
+    fetchPolyData();
   };
 
   const handleSaveEdit = () => {
