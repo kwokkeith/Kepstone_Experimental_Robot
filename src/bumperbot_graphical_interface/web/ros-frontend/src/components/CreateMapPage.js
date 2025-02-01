@@ -23,6 +23,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
 
   // React States for database fetching
   const [configData, setConfigData] = useState([]);
+  const [polyData, setPolyData] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -35,6 +36,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
     if (mapName) {
       console.log(`Creating new map: ${mapName}`);
       fetchConfigData();
+      fetchPolyData();
     }
   },[mapName]);
 
@@ -51,6 +53,25 @@ const CreateMapPage = ({ mapName, showPage }) => {
         const result = await response.json();
 
         setConfigData(result.data);
+        setIsLoading(false);
+    } catch (err) {
+        setError(err.message);
+        setIsLoading(false);
+    }
+  };
+
+  const fetchPolyData = async () => {
+    try {
+        const response = await fetch('http://localhost:5000/api/bcdpolycontourdata');
+      
+        if (!response.ok) {
+          throw new Error('Network response error');
+        }
+
+        // Parse the response as JSON
+        const result = await response.json();
+
+        setPolyData(result.data);
         setIsLoading(false);
     } catch (err) {
         setError(err.message);
@@ -163,7 +184,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
 
   //TODO: CREATE A NEW FUNCTION FOR THIS 
   const getBcdPolygonContourCoordinates = (mapName) => {
-    const map = configData.find((item => item.map_name === mapName));
+    const map = polyData.find((item => item.map_name === mapName));
     return map ? map.bcdPolygonContour_coordinates : null;
   };
 
@@ -347,6 +368,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
         showPage('main')
         // Optionally, refresh data after deletion
         fetchConfigData();
+        fetchPolyData();
       } else {
         console.error('Error deleting data:', result.error || result.message);
       }
