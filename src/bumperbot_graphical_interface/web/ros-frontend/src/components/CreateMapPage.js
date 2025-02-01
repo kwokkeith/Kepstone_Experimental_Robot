@@ -22,7 +22,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
   
 
   // React States for database fetching
-  const [data, setData] = useState([]);
+  const [configData, setConfigData] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -34,23 +34,27 @@ const CreateMapPage = ({ mapName, showPage }) => {
   useEffect(() => {
     if (mapName) {
       console.log(`Creating new map: ${mapName}`);
-      fetchData();
+      fetchConfigData();
     }
   },[mapName]);
 
-  // Function to fetch data from backend sqlite NOT ROS
-  const fetchData = async () => {
+  // Function to fetch config data from sqlite db
+  const fetchConfigData = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/data');
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const result = await response.json();
-      setData(result.data);
-      setIsLoading(false);
+        const response = await fetch('http://localhost:5000/api/config');
+      
+        if (!response.ok) {
+          throw new Error('Network response error');
+        }
+
+        // Parse the response as JSON
+        const result = await response.json();
+
+        setConfigData(result.data);
+        setIsLoading(false);
     } catch (err) {
-      setError(err.message);
-      setIsLoading(false);
+        setError(err.message);
+        setIsLoading(false);
     }
   };
 
@@ -143,22 +147,23 @@ const CreateMapPage = ({ mapName, showPage }) => {
   // ==========================
 
   const getStartPoint = (mapName) => {
-    const map = data.find((item => item.map_name === mapName));
+    const map = configData.find((item => item.map_name === mapName));
     return map ? map.start_point : null;
   };
 
   const getRoiPoints = (mapName) => {
-    const map = data.find((item => item.map_name === mapName));
+    const map = configData.find((item => item.map_name === mapName));
     return map ? map.roi_points : null;
   };
 
   const getPolygonBoundingCoordinates = (mapName) => {
-    const map = data.find((item => item.map_name === mapName));
+    const map = configData.find((item => item.map_name === mapName));
     return map ? map.polygonBounding_coordinates : null;
   };
 
+  //TODO: CREATE A NEW FUNCTION FOR THIS 
   const getBcdPolygonContourCoordinates = (mapName) => {
-    const map = data.find((item => item.map_name === mapName));
+    const map = configData.find((item => item.map_name === mapName));
     return map ? map.bcdPolygonContour_coordinates : null;
   };
 
@@ -341,7 +346,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
         sessionStorage.removeItem('allBCDPolyContours');
         showPage('main')
         // Optionally, refresh data after deletion
-        fetchData();
+        fetchConfigData();
       } else {
         console.error('Error deleting data:', result.error || result.message);
       }

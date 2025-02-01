@@ -39,7 +39,7 @@ const Menu = ({ showPage, isOpen }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/data');
+        const response = await fetch('http://localhost:5000/api/config');
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
