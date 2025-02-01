@@ -8,6 +8,13 @@ bumperbot_controller:
     joint_states: "/joint_states"                           # Topic to publish joint state of bumperbot
     trajectory: "/bumperbot_controller/trajectory"          # The trajectory of the robot to plot its past path
 
+vacuum_controller:
+  services:
+    get_vacuum_power: "/get_vacuum_power"                   # Service to get the target vacuum power for the vacuum module
+    set_vacuum_power: "/set_vacuum_power"                   # Service to set the target vacuum power for the vacuum module
+  topics:
+    vacuum_power: "/vacuum_controller/vacuum_power"         # Topic to publish the target vacuum power for the vacuum module
+    
 localization:
   topics:
     imu: "/imu"                               # Topic to publish imu data

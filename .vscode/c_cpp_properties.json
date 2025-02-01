@@ -17,7 +17,8 @@
                 "${workspaceFolder}/devel/include",
                 "${workspaceFolder}/devel/include",
                 "${workspaceFolder}/src/litter_destruction/include",
-                "${workspaceFolder}/src/litter_destruction/include"
+                "${workspaceFolder}/src/litter_destruction/include",
+                "${workspaceFolder}/devel/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
