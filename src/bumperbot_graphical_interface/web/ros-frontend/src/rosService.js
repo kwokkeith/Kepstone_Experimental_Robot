@@ -182,7 +182,7 @@ export function publishEditState({editState}) {
   publishMultipleTimes(4);
 }
 
-export function publishAllBCDPolyContours({data: allBCDPolyContoursList}) {
+export function publishContourAngles({data: contourAnglesList}) {
   // Initialize ROS connection
   var ros = new ROSLIB.Ros({
     url: 'ws://localhost:9090'
@@ -198,17 +198,17 @@ export function publishAllBCDPolyContours({data: allBCDPolyContoursList}) {
     console.log('all BCD PolyContours Publisher is disconnected from ROSBridge');
   });
 
-  const AllBCDPolyContoursPublisher = new ROSLIB.Topic({
+  const contourAnglesPublisher = new ROSLIB.Topic({
     ros: ros,
-    name: '/all_bcd_poly_contours',
+    name: '/new_angles_array',
     messageType: 'std_msgs/String'
   });
-  const allBCDPolyContoursMsg = new ROSLIB.Message({ data: allBCDPolyContoursList });
+  const contourAnglesMsg = new ROSLIB.Message({ data: contourAnglesList });
 
   function publishMultipleTimes(times) {
     for (let i = 0; i < times; i++) {
       setTimeout(() => {
-        AllBCDPolyContoursPublisher.publish(allBCDPolyContoursMsg);
+        contourAnglesPublisher.publish(contourAnglesMsg);
         // console.log(`Published editstate ${i + 1} times`);
         if(i=== times - 1){
           ros.close();

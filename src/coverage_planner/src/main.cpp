@@ -41,9 +41,9 @@ std::vector<cv::Point> selected_points;
 cv::Mat img_copy;
 cv::Point top_left;
 std::string mapName;
-std::string allbcdpolycontours;
-std::vector<std::string> allbcdpolycontours_array;
-bool allbcdpolycontours_received = false;
+std::string anglesArray_msg;
+std::vector<std::string> angles_array;
+bool angles_array_received = false;
 bool mapName_received = false;
 bool editState_received = false;
 
@@ -136,12 +136,12 @@ void startingPointsCallback(const std_msgs::String::ConstPtr& msg){
   // /ROS_INFO("Received starting point: (%d, %d)", x, y);
 }
 
-void allBCDPolyContoursCallback(const std_msgs::String::ConstPtr& msg) {
-    allbcdpolycontours = msg->data; //Save map name
-    ROS_INFO("Received allbcdpolycontours: %s", msg->data.c_str());
-    allbcdpolycontours_received = true;
+void anglesArrayCallback(const std_msgs::String::ConstPtr& msg) {
+    anglesArray_msg = msg->data; //Save map name
+    ROS_INFO("Received anglesArray_msg: %s", msg->data.c_str());
+    angles_array_received = true;
 
-    allbcdpolycontours_array.push_back(msg->data);
+    angles_array.push_back(msg->data);
 }
 
 void mapNameCallback(const std_msgs::String::ConstPtr& msg) {
@@ -561,13 +561,11 @@ int main(int argc, char** argv) {
   
   if (manual_orientation) {
 
-    ros::Subscriber old_all_bcd_poly_contours= nh.subscribe("/all_bcd_poly_contours",1, allBCDPolyContoursCallback);
-    while (!allbcdpolycontours_received && ros::ok()) {
+    ros::Subscriber new_angle_array= nh.subscribe("/new_angles_array",1, anglesArrayCallback);
+    while (!angles_array_received && ros::ok()) {
       ros::spinOnce();
       ros::Duration(0.5).sleep(); //Sleep for 100 ms
     };
-
-    // TODO: Parse the received polygon contours into an array and arrange it
 
     // Store user-defined angles for sweep direction
     std::vector<double> polygon_sweep_directions;
@@ -904,7 +902,7 @@ for (size_t i = 1; i < way_points.size(); ++i) {
     cv::Size sz = original_img.size();
     int imgHeight = sz.height;
     int y_center = sz.height / 2;
-    // Write waypoints to a file (to be fed as coordinates for robot)
+    // Write waypoints to a file (to be fed as coordinates for robot) (not used as of 2/2/202)
     out_oss << "[";
     if (i == 1) {
         out << p1.x << " " << (2* y_center - p1.y) << std::endl;
@@ -939,13 +937,13 @@ for (size_t i = 1; i < way_points.size(); ++i) {
     ros::Duration(1.0).sleep();
   }
 
-  std::string result_image_path = package_path + "/result/image_result.png";
-  std::string GUI_result_path = GUI_package_path + "/web/ros-frontend/public/temp_zone/image_" + mapName + ".png";
+  // std::string result_image_path = package_path + "/result/image_result.png";
+  // std::string GUI_result_path = GUI_package_path + "/web/ros-frontend/public/temp_zone/image_" + mapName + ".png";
   
-  cv::imwrite(GUI_result_path, original_img);
-  std::cout << "Result image saved to: " << GUI_result_path << std::endl;
+  // cv::imwrite(GUI_result_path, original_img);
+  // std::cout << "Result image saved to: " << GUI_result_path << std::endl;
   ros::shutdown();
-  cv::waitKey();
+  // cv::waitKey();
 #else
   cv::Point p1, p2;
   cv::namedWindow("cover", cv::WINDOW_NORMAL);

@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './CreateMapPage.css';
 import ROSLIB from 'roslib';
-import { coverage_listener, publishPoint, publishStartPoint, startNode, publishEditState, publishmapName, publishAllBCDPolyContours} from '../rosService';
+import { coverage_listener, publishPoint, publishStartPoint, startNode, publishEditState, publishmapName, publishContourAngles} from '../rosService';
 
 const CreateMapPage = ({ mapName, showPage }) => {
   // ==========================
@@ -103,7 +103,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
     const listener = coverage_listener();
 
     listener.subscribe(function(message) {
-      console.log('Received message on coverage topic:', message.data);
+      // console.log('Received message on coverage topic:', message.data);
       setcoverageListener(message.data);
       sessionStorage.setItem('coverageListener', JSON.stringify(message.data));
     });
@@ -162,6 +162,12 @@ const CreateMapPage = ({ mapName, showPage }) => {
       StartPointPublisher.publish(startPointsMessage);
     }
   },[points]);
+
+  // After your state hooks are defined:
+  useEffect(() => {
+    console.log('Contour Angles updated:', contourAngles);
+    sessionStorage.setItem('contourAngles', JSON.stringify(contourAngles));
+  }, [contourAngles]);
 
   // ==========================
   // FUNCTIONS
@@ -277,12 +283,23 @@ const CreateMapPage = ({ mapName, showPage }) => {
 
             setContourAngles(prev => {
               const updated = { ...prev };
-              if(!updated[foundInBCDList]) updated[foundInBCDList] = [];
-              updated[foundInBCDList].push(angle);
+              if (!updated[foundInBCDList]) {
+                // If no entry exists for this polygon, create one with the new object
+                updated[foundInBCDList] = [{ polygon_index: foundInBCDList, angle: angle }];
+              } else {
+                // Look for an existing object with the same polygon_index
+                const index = updated[foundInBCDList].findIndex(item => item.polygon_index === foundInBCDList);
+                if (index !== -1) {
+                  // Replace the existing object with the new input
+                  updated[foundInBCDList][index] = { polygon_index: foundInBCDList, angle: angle };
+                } else {
+                  // If it doesn't exist (unlikely, since the key corresponds to the index), push the new object
+                  updated[foundInBCDList].push({ polygon_index: foundInBCDList, angle: angle });
+                }
+              }
               return updated;
             });
           }, 0);
-          
 
         } else {
           console.log('Point is not inside any cleaning path list.');
@@ -400,7 +417,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
     handleEditStartNode(mapName); //TODO: Fix This so it does not launch db_publisher.cpp again 
     
     setTimeout(() => {
-      console.log("old roi points in the points array",points)
+      //console.log("old roi points in the points array",points)
       // Get ROI_Points and StartPoints from the database that was set initially.
       const roi_points = getRoiPoints(mapName);
       const roiPointsArray = roi_points.trim().split('\n').map(line => {
@@ -421,13 +438,14 @@ const CreateMapPage = ({ mapName, showPage }) => {
         });
         const newStartPoint = [...points, ...startPointArray];
         setPoints(newStartPoint);
-      },6000);
+      },3000);
 
-      const bcdPolyContoursString = sessionStorage.getItem('allBCDPolyContours');
+      // const bcdPolyContoursString = sessionStorage.getItem('allBCDPolyContours');
+      const contourAngles = sessionStorage.getItem('contourAngles');
 
       setTimeout(() => {
-        publishAllBCDPolyContours({data: bcdPolyContoursString});
-      },2000)
+        publishContourAngles({data: contourAngles});
+      },4000)
     
     }, 5000);
 
