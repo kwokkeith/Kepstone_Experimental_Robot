@@ -93,14 +93,52 @@ void insertData(){
     }
 }
 
-void insertPolygonData(const std::string& config_id){
-    if (bcdPolygonContourCoordinatesStored){
-        std::stringstream ss;
-        ss << "INSERT INTO Polygon_Table (bcdPolygonContour_coordinates, config_id) VALUES ('" << bcdPolygonContour_coordinates << "', '" << config_id << "');";
-        char* errMsg = nullptr;
-        int rc = sqlite3_exec(db, ss.str().c_str(), 0, 0, &errMsg);
-        if (rc != SQLITE_OK) { ROS_ERROR("SQL error: %s", errMsg); sqlite3_free(errMsg); }
-        else { ROS_INFO("Data inserted successfully into Polygon_Table"); }
+// void insertPolygonData(const std::string& config_id){
+//     if (bcdPolygonContourCoordinatesStored){
+//         std::stringstream ss;
+//         ss << "INSERT INTO Polygon_Table (bcdPolygonContour_coordinates, config_id) VALUES ('" << bcdPolygonContour_coordinates << "', '" << config_id << "');";
+//         char* errMsg = nullptr;
+//         int rc = sqlite3_exec(db, ss.str().c_str(), 0, 0, &errMsg);
+//         if (rc != SQLITE_OK) { ROS_ERROR("SQL error: %s", errMsg); sqlite3_free(errMsg); }
+//         else { ROS_INFO("Data inserted successfully into Polygon_Table"); }
+//     }
+// }
+
+void insertPolygonData(const std::string& config_id) {
+    if (bcdPolygonContourCoordinatesStored) {
+        std::stringstream ss(bcdPolygonContour_coordinates);
+        std::string item;
+        int polygon_index = 0;
+        while (std::getline(ss, item, ']')) {
+            size_t start = item.find('[');
+            if (start != std::string::npos) {
+                std::string coordinates = item.substr(start + 1);
+
+                // Escape single quotes in coordinates
+                size_t pos = 0;
+                while ((pos = coordinates.find("'", pos)) != std::string::npos) {
+                    coordinates.insert(pos, "'");
+                    pos += 2;
+                }
+
+                std::stringstream insert_ss;
+                insert_ss << "INSERT INTO Polygon_Table (bcdPolygonContour_coordinates, config_id, polygon_index) VALUES ('" << coordinates << "', '" << config_id << "', " << polygon_index << ");";
+
+                // Print the SQL statement for debugging
+                ROS_INFO("Executing SQL: %s", insert_ss.str().c_str());
+
+                char* errMsg = nullptr;
+                int rc = sqlite3_exec(db, insert_ss.str().c_str(), 0, 0, &errMsg);
+                if (rc != SQLITE_OK) {
+                    ROS_ERROR("SQL error: %s", errMsg);
+                    sqlite3_free(errMsg);
+                } else {
+                    ROS_INFO("Data inserted successfully into Polygon_Table");
+                }
+
+                polygon_index++;
+            }
+        }
     }
 }
 
@@ -182,6 +220,7 @@ int main(int argc, char **argv) {
                                            "polygon_id INTEGER PRIMARY KEY AUTOINCREMENT," \
                                            "bcdPolygonContour_coordinates TEXT NOT NULL," \
                                            "config_id TEXT," \
+                                           "polygon_index INTEGER," \
                                            "FOREIGN KEY(config_id) REFERENCES Config_Table(config_id));";
     if (sqlite3_exec(db, sql_create_polygon_table, 0, 0, &errMsg) != SQLITE_OK) {
         ROS_ERROR("SQL error: %s", errMsg);

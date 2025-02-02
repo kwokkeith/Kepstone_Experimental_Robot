@@ -27,6 +27,24 @@ const db = new sqlite3.Database(dbPath, (err) => {
 
 // API ENDPOINTS
 
+//get bcdpolycontourdata from merged table
+app.get('/api/bcdpolycontourdata', (req, res) => {
+    const query = `
+        SELECT c1.map_name, c2.bcdPolygonContour_coordinates, c2.polygon_index
+        FROM Config_Table c1 
+        INNER JOIN Polygon_Table c2 
+        ON c1.config_id = c2.config_id
+        ORDER BY c2.polygon_id ASC
+    `;
+    db.all(query, [], (err, rows) => {
+        if (err) {
+            res.status(500).json({ error: err.message });
+            return;
+        }
+        res.json({ data: rows });
+    });
+});
+
 // get data from config_table
 app.get('/api/config', (req, res) => {
     const query = `SELECT * FROM Config_Table`;
