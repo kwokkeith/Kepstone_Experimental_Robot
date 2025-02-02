@@ -200,7 +200,7 @@ export function publishContourAngles({data: contourAnglesList}) {
 
   const contourAnglesPublisher = new ROSLIB.Topic({
     ros: ros,
-    name: '/new_angles_array',
+    name: '/new_angle_array',
     messageType: 'std_msgs/String'
   });
   const contourAnglesMsg = new ROSLIB.Message({ data: contourAnglesList });

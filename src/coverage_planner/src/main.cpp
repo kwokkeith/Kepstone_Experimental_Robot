@@ -561,7 +561,7 @@ int main(int argc, char** argv) {
   
   if (manual_orientation) {
 
-    ros::Subscriber new_angle_array= nh.subscribe("/new_angles_array",1, anglesArrayCallback);
+    ros::Subscriber new_angle_array= nh.subscribe("/new_angle_array",1, anglesArrayCallback);
     while (!angles_array_received && ros::ok()) {
       ros::spinOnce();
       ros::Duration(0.5).sleep(); //Sleep for 100 ms
@@ -571,7 +571,7 @@ int main(int argc, char** argv) {
     std::vector<double> polygon_sweep_directions;
 
     // Create a named window to show the polygon
-    cv::namedWindow("Selected Polygon", cv::WINDOW_NORMAL);
+    // cv::namedWindow("Selected Polygon", cv::WINDOW_NORMAL);
 
     for (size_t i = 0; i < bcd_cells.size(); ++i) {
       // Display the polygon to the user using OpenCV as before.
@@ -587,9 +587,9 @@ int main(int argc, char** argv) {
       poly_contours.push_back(current_polygon);
       
       // Draw the current polygon on the copied image
-      cv::drawContours(img_copy, poly_contours, -1, cv::Scalar(0, 255, 0), 2);
-      cv::imshow("Polygon Selection", img_copy);
-      cv::waitKey(500);  // Allow the user to see the polygon
+      // cv::drawContours(img_copy, poly_contours, -1, cv::Scalar(0, 255, 0), 2);
+      // cv::imshow("Polygon Selection", img_copy);
+      // cv::waitKey(500);  // Allow the user to see the polygon
 
       // Compute best sweep direction
       Direction_2 best_sweep_dir;
@@ -602,30 +602,49 @@ int main(int argc, char** argv) {
       }
 
       // Convert best sweep direction to degrees
-      double best_sweep_angle = std::atan2(CGAL::to_double(best_sweep_dir.dy()), CGAL::to_double(best_sweep_dir.dx())) * 180.0 / M_PI;
-      std::cout << "Best sweep direction for polygon " << i + 1 << " is: " << best_sweep_angle << " degrees" << std::endl;
+            double best_sweep_angle = std::atan2(CGAL::to_double(best_sweep_dir.dy()), CGAL::to_double(best_sweep_dir.dx())) * 180.0 / M_PI;
+            std::cout << "Best sweep direction for polygon " << i + 1 << " is: " << best_sweep_angle << " degrees" << std::endl;
 
-      // Prompt user to enter custom angle or use the best one
-      std::cout << "Enter sweep direction (degrees) for polygon " << i + 1
-                << " (or press Enter to use best sweep direction): ";
+            // Instead of prompting the user, try to get the angle from new_angle_array
+            double user_angle = best_sweep_angle;  // default to best sweep angle
 
-      // Capture the user input, expecting a newline after entry
-      std::string input;
-      std::getline(std::cin, input);  // Get the user input for the sweep direction
+            if (!angles_array.empty()) {
+              std::string json_str = angles_array[0];  // assuming one message with the JSON structure
+              std::string key = "\"" + std::to_string(i) + "\"";
+              std::size_t keyPos = json_str.find(key);
+              if (keyPos != std::string::npos) {
+                std::size_t angleKeyPos = json_str.find("\"angle\"", keyPos);
+                if (angleKeyPos != std::string::npos) {
+                  std::size_t colonPos = json_str.find(":", angleKeyPos);
+                  if (colonPos != std::string::npos) {
+                    std::size_t commaPos = json_str.find(",", colonPos);
+                    std::size_t endPos = (commaPos != std::string::npos) ? commaPos : json_str.find("}", colonPos);
+                    if (endPos != std::string::npos) {
+                      std::string angleStr = json_str.substr(colonPos + 1, endPos - colonPos - 1);
+                      try {
+                        double parsed_angle = std::stod(angleStr);
+                        user_angle = parsed_angle;
+                        std::cout << "Using angle from new_angle_array for polygon " << i + 1 
+                                  << ": " << user_angle << " degrees" << std::endl;
+                      } catch (const std::exception& e) {
+                        std::cerr << "Invalid angle format in new_angle_array for polygon " << i + 1 
+                                  << ". Using best sweep angle." << std::endl;
+                      }
+                    }
+                  }
+                } else {
+                  std::cout << "No angle entry found in new_angle_array for polygon " << i + 1 
+                            << ". Using best sweep angle." << std::endl;
+                }
+              } else {
+                std::cout << "No entry found for polygon " << i + 1 
+                          << " in new_angle_array. Using best sweep angle." << std::endl;
+              }
+            } else {
+              std::cout << "new_angle_array is empty. Using best sweep angle for polygon " << i + 1 << "." << std::endl;
+            }
 
-      double user_angle;
-      try {
-        if (input.empty()) {
-            user_angle = best_sweep_angle;  // Use best sweep direction if no input
-        } else {
-            user_angle = std::stod(input);  // Use user input
-        }
-      } catch (const std::invalid_argument& e) {
-        std::cerr << "Invalid input for angle. Using best sweep angle for polygon " << i << std::endl;
-        user_angle = best_sweep_angle;  // Fallback to best sweep angle
-      }
-
-      polygon_sweep_directions.push_back(user_angle);
+            polygon_sweep_directions.push_back(user_angle);
     }
 
     // Execute sweep for each polygon using the user-defined or best direction
