@@ -56,17 +56,27 @@ const Menu = ({ showPage, isOpen }) => {
     
   }, []);
   
-  const handleCreateMapClick = () => {
-    const dbmapNames = data.map(entry => entry.map_name);
-    // console.log(dbmapNames); // Debugging
-    const mapName = prompt("What is the name of the Map?");
-    if (dbmapNames.includes(mapName)) {
-      alert("Map name already exists. Please enter a new map name.");
-    } else if (!mapName) {
-      alert("Please enter a valid map name");
-    } else if (mapName) {
-      showPage('create-map', mapName); // Pass map name to showPage
-      handleStartNode(mapName);
+  const handleCreateMapClick = async () => {
+    try {
+      // Force re-fetching config data to avoid stale cache issues
+      const response = await fetch(`http://localhost:5000/api/config?timestamp=${new Date().getTime()}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const result = await response.json();
+      const dbmapNames = result.data.map(entry => entry.map_name);
+  
+      const mapName = prompt("What is the name of the Map?");
+      if (dbmapNames.includes(mapName)) {
+        alert("Map name already exists. Please enter a new map name.");
+      } else if (!mapName) {
+        alert("Please enter a valid map name");
+      } else {
+        showPage('create-map', mapName); // Pass map name to showPage
+        handleStartNode(mapName);
+      }
+    } catch (err) {
+      alert(`Error fetching config: ${err.message}`);
     }
   };
 /*

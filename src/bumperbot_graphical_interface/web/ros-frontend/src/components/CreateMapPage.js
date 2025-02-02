@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './CreateMapPage.css';
 import ROSLIB from 'roslib';
-import { coverage_listener, publishPoint, publishStartPoint, startNode, publishEditState, publishmapName, publishContourAngles} from '../rosService';
+import { coverage_listener, publishPoint, publishStartPoint, startNode, publishEditState, publishmapName, publishContourAngles, publishDbShutdownState} from '../rosService';
 
 const CreateMapPage = ({ mapName, showPage }) => {
   // ==========================
@@ -392,9 +392,26 @@ const CreateMapPage = ({ mapName, showPage }) => {
     }
   };
   
-  const handleEdit = () => {
+  const handleEdit = async () => {
     // console.log('Edit button clicked');
-    setEditMapState(true);
+    try {
+      const response = await fetch(`http://localhost:5000/api/maps/${encodeURIComponent(mapName)}`, {
+        method: 'DELETE',
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setEditMapState(true);
+        publishDbShutdownState({ dbState: true });
+
+      } else {
+        console.error('Error deleting data:', result.error || result.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+
   };
   const handleSave = () => {
     sessionStorage.removeItem('coverageListener');
