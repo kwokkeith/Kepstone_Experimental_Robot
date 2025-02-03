@@ -6,6 +6,16 @@
         <param name="launch_prefix" value="python3"/>
     </node>
 
+    <!-- Litter detector using realsense -->
+    <!-- <include file="$(find realsense2_camera)/launch/rs_camera.launch">
+        <arg name="enable_depth" value="true"/>
+        <arg name="enable_color" value="true"/>
+    </include>
+
+    <node pkg="bumperbot_detection" type="cv_api_get_coordinates.py" name="coordinate_detector" >
+        <param name="launch_prefix" value="python3"/>
+    </node> -->
+
     <!-- Litter detector using yolov8 -->
     <!-- <node pkg="bumperbot_detection" type="yolov8_get_coordinates.py" name="coordinate_detector_yolov8" >
         <param name="launch_prefix" value="python3"/>
