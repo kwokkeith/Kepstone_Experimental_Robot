@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './CreateMapPage.css';
 import ROSLIB from 'roslib';
-import { coverage_listener, publishPoint, publishStartPoint, startNode, publishEditState, publishmapName, publishAllBCDPolyContours} from '../rosService';
+import { coverage_listener, publishPoint, publishStartPoint, startNode, publishEditState, publishmapName, publishContourAngles, publishDbShutdownState} from '../rosService';
 
 const CreateMapPage = ({ mapName, showPage }) => {
   // ==========================
@@ -22,7 +22,8 @@ const CreateMapPage = ({ mapName, showPage }) => {
   
 
   // React States for database fetching
-  const [data, setData] = useState([]);
+  const [configData, setConfigData] = useState([]);
+  const [polyData, setPolyData] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -34,23 +35,47 @@ const CreateMapPage = ({ mapName, showPage }) => {
   useEffect(() => {
     if (mapName) {
       console.log(`Creating new map: ${mapName}`);
-      fetchData();
+      fetchConfigData();
+      fetchPolyData();
     }
   },[mapName]);
 
-  // Function to fetch data from backend sqlite NOT ROS
-  const fetchData = async () => {
+  // Function to fetch config data from sqlite db
+  const fetchConfigData = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/data');
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const result = await response.json();
-      setData(result.data);
-      setIsLoading(false);
+        const response = await fetch('http://localhost:5000/api/config');
+      
+        if (!response.ok) {
+          throw new Error('Network response error');
+        }
+
+        // Parse the response as JSON
+        const result = await response.json();
+
+        setConfigData(result.data);
+        setIsLoading(false);
     } catch (err) {
-      setError(err.message);
-      setIsLoading(false);
+        setError(err.message);
+        setIsLoading(false);
+    }
+  };
+
+  const fetchPolyData = async () => {
+    try {
+        const response = await fetch('http://localhost:5000/api/bcdpolycontourdata');
+      
+        if (!response.ok) {
+          throw new Error('Network response error');
+        }
+
+        // Parse the response as JSON
+        const result = await response.json();
+
+        setPolyData(result.data);
+        setIsLoading(false);
+    } catch (err) {
+        setError(err.message);
+        setIsLoading(false);
     }
   };
 
@@ -78,7 +103,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
     const listener = coverage_listener();
 
     listener.subscribe(function(message) {
-      console.log('Received message on coverage topic:', message.data);
+      // console.log('Received message on coverage topic:', message.data);
       setcoverageListener(message.data);
       sessionStorage.setItem('coverageListener', JSON.stringify(message.data));
     });
@@ -138,28 +163,49 @@ const CreateMapPage = ({ mapName, showPage }) => {
     }
   },[points]);
 
+  // After your state hooks are defined:
+  useEffect(() => {
+    console.log('Contour Angles updated:', contourAngles);
+    sessionStorage.setItem('contourAngles', JSON.stringify(contourAngles));
+  }, [contourAngles]);
+
   // ==========================
   // FUNCTIONS
   // ==========================
 
   const getStartPoint = (mapName) => {
-    const map = data.find((item => item.map_name === mapName));
+    const map = configData.find((item => item.map_name === mapName));
     return map ? map.start_point : null;
   };
 
   const getRoiPoints = (mapName) => {
-    const map = data.find((item => item.map_name === mapName));
+    const map = configData.find((item => item.map_name === mapName));
     return map ? map.roi_points : null;
   };
 
   const getPolygonBoundingCoordinates = (mapName) => {
-    const map = data.find((item => item.map_name === mapName));
+    const map = configData.find((item => item.map_name === mapName));
     return map ? map.polygonBounding_coordinates : null;
   };
 
+  //TODO: CREATE A NEW FUNCTION FOR THIS 
   const getBcdPolygonContourCoordinates = (mapName) => {
-    const map = data.find((item => item.map_name === mapName));
-    return map ? map.bcdPolygonContour_coordinates : null;
+    // Filter for matching mapName
+    const items = polyData.filter(item => item.map_name === mapName);
+    // Sort items based on polygon_index (or derive from polygon_id if not available)
+    const sortedItems = items.sort((a, b) => {
+      // Use polygon_index if available; otherwise use polygon_id-1
+      const indexA = a.polygon_index !== undefined ? a.polygon_index : (a.polygon_id - 1);
+      const indexB = b.polygon_index !== undefined ? b.polygon_index : (b.polygon_id - 1);
+      return indexA - indexB;
+    });
+    // Map each sorted item to an array of coordinate strings
+    return sortedItems.map(item =>
+      item.bcdPolygonContour_coordinates
+        .split('\n')
+        .map(line => line.trim())
+        .filter(line => line !== '')
+    );
   };
 
   const isPointInPolygon = (point, polygon) => {
@@ -199,27 +245,14 @@ const CreateMapPage = ({ mapName, showPage }) => {
       const polygonCoordinates = getPolygonBoundingCoordinates(mapName);
       const bcdCleaningPathCoordinates = getBcdPolygonContourCoordinates(mapName); // TODO: Rename variable from bcdCLeaning... to bcdPolyContour...
       sessionStorage.setItem('allBCDPolyContours', JSON.stringify(bcdCleaningPathCoordinates));
-      // console.log('Polygon coordinates:', polygonCoordinates); //Debugging
-      // if (polygonCoordinates) {
-      //   const polygonPoints = polygonCoordinates.trim().split('\n').map(line => {
-      //     const [px, py] = line.split(' ').map(Number);
-      //     return { x: px, y: py };
-      //   });
-
-      //   // if (isPointInPolygon({ x, y }, polygonPoints)) {
-      //   //   console.log('Point is inside polygonContour:', polygonCoordinates);
-      //   // } else {
-      //   //   console.log('Point is outside polygonContour.'); // debugging for clicking outside polygon
-      //   // }
-      // }
       
       if (bcdCleaningPathCoordinates) {
-        const bcdCleaningPathLists = bcdCleaningPathCoordinates.split('],[').map(sublist => {
-          return sublist.replace(/[\[\]]/g, '').trim().split('\n').map(line => {
+        const bcdCleaningPathLists = bcdCleaningPathCoordinates.map(sublist =>
+          sublist.map(line => {
             const [px, py] = line.split(' ').map(Number);
             return { x: px, y: py };
-          });
-        });
+          })
+        );
   
         let foundInBCDList = null;
         bcdCleaningPathLists.forEach((polygon, index) => {
@@ -227,8 +260,6 @@ const CreateMapPage = ({ mapName, showPage }) => {
             foundInBCDList = index;
           }
         });
-        
-        
         
         if (foundInBCDList !== null) {
           console.log(`Point is inside the cleaning path list at index: ${foundInBCDList}`);
@@ -252,13 +283,23 @@ const CreateMapPage = ({ mapName, showPage }) => {
 
             setContourAngles(prev => {
               const updated = { ...prev };
-              if(!updated[foundInBCDList]) updated[foundInBCDList] = [];
-              updated[foundInBCDList].push(angle);
-
+              if (!updated[foundInBCDList]) {
+                // If no entry exists for this polygon, create one with the new object
+                updated[foundInBCDList] = [{ polygon_index: foundInBCDList, angle: angle }];
+              } else {
+                // Look for an existing object with the same polygon_index
+                const index = updated[foundInBCDList].findIndex(item => item.polygon_index === foundInBCDList);
+                if (index !== -1) {
+                  // Replace the existing object with the new input
+                  updated[foundInBCDList][index] = { polygon_index: foundInBCDList, angle: angle };
+                } else {
+                  // If it doesn't exist (unlikely, since the key corresponds to the index), push the new object
+                  updated[foundInBCDList].push({ polygon_index: foundInBCDList, angle: angle });
+                }
+              }
               return updated;
             });
           }, 0);
-          
 
         } else {
           console.log('Point is not inside any cleaning path list.');
@@ -338,9 +379,11 @@ const CreateMapPage = ({ mapName, showPage }) => {
         alert("Cancelled map creation successfully");
         sessionStorage.removeItem('coverageListener');
         sessionStorage.removeItem('fourPointsSet');
+        sessionStorage.removeItem('allBCDPolyContours');
         showPage('main')
         // Optionally, refresh data after deletion
-        fetchData();
+        fetchConfigData();
+        fetchPolyData();
       } else {
         console.error('Error deleting data:', result.error || result.message);
       }
@@ -349,13 +392,32 @@ const CreateMapPage = ({ mapName, showPage }) => {
     }
   };
   
-  const handleEdit = () => {
+  const handleEdit = async () => {
     // console.log('Edit button clicked');
-    setEditMapState(true);
+    try {
+      const response = await fetch(`http://localhost:5000/api/maps/${encodeURIComponent(mapName)}`, {
+        method: 'DELETE',
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setEditMapState(true);
+        publishDbShutdownState({ dbState: true });
+
+      } else {
+        console.error('Error deleting data:', result.error || result.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+
   };
   const handleSave = () => {
     sessionStorage.removeItem('coverageListener');
     showPage('main')
+    fetchConfigData();
+    fetchPolyData();
   };
 
   const handleSaveEdit = () => {
@@ -372,7 +434,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
     handleEditStartNode(mapName); //TODO: Fix This so it does not launch db_publisher.cpp again 
     
     setTimeout(() => {
-      console.log("old roi points in the points array",points)
+      //console.log("old roi points in the points array",points)
       // Get ROI_Points and StartPoints from the database that was set initially.
       const roi_points = getRoiPoints(mapName);
       const roiPointsArray = roi_points.trim().split('\n').map(line => {
@@ -393,11 +455,15 @@ const CreateMapPage = ({ mapName, showPage }) => {
         });
         const newStartPoint = [...points, ...startPointArray];
         setPoints(newStartPoint);
-      },6000);
+      },3000);
 
-      const bcdPolyContoursString = sessionStorage.getItem('allBCDPolyContours');
-      publishAllBCDPolyContours({data: bcdPolyContoursString});
+      // const bcdPolyContoursString = sessionStorage.getItem('allBCDPolyContours');
+      const contourAngles = sessionStorage.getItem('contourAngles');
 
+      setTimeout(() => {
+        publishContourAngles({data: contourAngles});
+      },4000)
+    
     }, 5000);
 
   };

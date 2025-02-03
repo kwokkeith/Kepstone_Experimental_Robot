@@ -30,6 +30,8 @@ add_service_files(
   FILES
   ModeSwitch.srv
   GetCurrentMode.srv
+  SetVacuumPower.srv
+  GetVacuumPower.srv
 )
 
 # Declare messages
@@ -110,6 +112,14 @@ target_link_libraries(litter_tracker ${catkin_LIBRARIES} ${Eigen_LIBRARIES})
 add_executable(litter_tracker_node nodes/litter_tracker_node.cpp)
 add_dependencies(litter_tracker_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(litter_tracker_node ${catkin_LIBRARIES} litter_tracker)
+
+add_library(vacuum_controller src/vacuum_controller.cpp)
+add_dependencies(vacuum_controller ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(vacuum_controller ${catkin_LIBRARIES} ${Eigen_LIBRARIES})
+
+add_executable(vacuum_controller_node nodes/vacuum_controller_node.cpp)
+add_dependencies(vacuum_controller_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(vacuum_controller_node ${catkin_LIBRARIES} vacuum_controller)
 
 #############
 ## Testing ##

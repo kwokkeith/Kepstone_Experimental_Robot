@@ -182,7 +182,7 @@ export function publishEditState({editState}) {
   publishMultipleTimes(4);
 }
 
-export function publishAllBCDPolyContours({data: allBCDPolyContoursList}) {
+export function publishContourAngles({data: contourAnglesList}) {
   // Initialize ROS connection
   var ros = new ROSLIB.Ros({
     url: 'ws://localhost:9090'
@@ -198,17 +198,57 @@ export function publishAllBCDPolyContours({data: allBCDPolyContoursList}) {
     console.log('all BCD PolyContours Publisher is disconnected from ROSBridge');
   });
 
-  const AllBCDPolyContoursPublisher = new ROSLIB.Topic({
+  const contourAnglesPublisher = new ROSLIB.Topic({
     ros: ros,
-    name: '/all_bcd_poly_contours',
+    name: '/new_angle_array',
     messageType: 'std_msgs/String'
   });
-  const allBCDPolyContoursMsg = new ROSLIB.Message({ data: allBCDPolyContoursList });
+  const contourAnglesMsg = new ROSLIB.Message({ data: contourAnglesList });
 
   function publishMultipleTimes(times) {
     for (let i = 0; i < times; i++) {
       setTimeout(() => {
-        AllBCDPolyContoursPublisher.publish(allBCDPolyContoursMsg);
+        contourAnglesPublisher.publish(contourAnglesMsg);
+        // console.log(`Published editstate ${i + 1} times`);
+        if(i=== times - 1){
+          ros.close();
+        }
+      }, i * 800); // Delay of 1 second between each publish
+    }
+  }
+  publishMultipleTimes(2);
+}
+
+export function publishDbShutdownState({dbState}) {
+  // Initialize ROS connection
+  var ros = new ROSLIB.Ros({
+    url: 'ws://localhost:9090'
+  });
+
+  ros.on('connection', function() {
+    console.log('db State publisher is now connected to websocket server.');
+  });
+  ros.on('error', function(error) {
+    console.error('Error connecting to ROSBridge for the db state publisher:', error);
+  });
+  ros.on('close', function() {
+    console.log('db State Publisher is disconnected from ROSBridge');
+  });
+
+  const dbStatePublisher = new ROSLIB.Topic({
+    ros: ros,
+    name: '/shutdown_bool',
+    messageType: 'std_msgs/Bool'
+  });
+
+  // Create a ROS message
+  const dbStateMsg = new ROSLIB.Message({ data: dbState });
+
+  // Publish the message multiple times
+  function publishMultipleTimes(times) {
+    for (let i = 0; i < times; i++) {
+      setTimeout(() => {
+        dbStatePublisher.publish(dbStateMsg);
         // console.log(`Published editstate ${i + 1} times`);
         if(i=== times - 1){
           ros.close();
