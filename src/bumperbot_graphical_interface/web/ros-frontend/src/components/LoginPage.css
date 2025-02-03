@@ -1,14 +1,14 @@
 /* Define spacing variables for consistent spacing and typography throughout */
 :root {
-  --spacing-small: 0.5rem;
-  --spacing-medium: 1rem;
-  --spacing-large: 1.5rem;
-  --spacing-extra-large: 2.2rem;
-  --border-radius: 0.3rem;
-  --font-size-small: 1.4rem;
-  --font-size-medium: 1.6rem;
-  --font-size-large: 2rem;
-  --font-size-xlarge: 2.3rem;
+  --spacing-small: 1rem;
+  --spacing-medium: 1.8rem;
+  --spacing-large: 2rem;
+  --spacing-extra-large: 3.5rem;
+  --border-radius: 1.7rem;
+  --font-size-small: 2.5rem;
+  --font-size-medium: 3.5rem;
+  --font-size-large: 4rem;
+  --font-size-xlarge: 6rem;
 }
 
 /* Apply page-wide styling */
@@ -21,11 +21,9 @@ body {
 
 /* Style the login container */
 #login-page {
-  width: 50vw; /* Adjust the container width */
-  max-width: 1000px; /* Constrain the container width on larger screens */
-  height: 50vh;
-  max-height: 650px; /* Constrain the container width on larger screens */
-  padding: var(--spacing-medium); /* Padding for inner spacing */
+  width: 70vw; /* Adjust the container width */
+  height: 70vh;
+  padding: var(--spacing-large); /* Padding for inner spacing */
   display: flex; /* Flexbox layout to stack elements vertically */
   flex-direction: column; /* Stack child elements */
   align-items: center; /* Center-align elements horizontally */
@@ -36,7 +34,7 @@ body {
 /* Heading styles for the login page */
 #login-page h2 {
   font-size: var(--font-size-xlarge); /* Large font size for headings */
-  margin-bottom: var(--spacing-large); /* Space below the heading */
+  margin-bottom: var(--spacing-extra-large); /* Space below the heading */
 }
 
 /* Input Group Styling for labels and inputs */
@@ -49,7 +47,7 @@ body {
 
 .input-group label {
   font-size: var(--font-size-medium); /* Medium font size for labels */
-  margin-bottom: var(--spacing-small); /* Space between label and input */
+  margin-bottom: var(--spacing-medium); /* Space between label and input */
   color: #FFFFFF; /* White label text for visibility on dark background */
 }
 
@@ -57,12 +55,12 @@ body {
 #login-page input[type="text"],
 #login-page input[type="password"] {
   width: 100%; /* Full width for responsiveness */
-  padding: var(--spacing-large); /* Padding inside input fields */
+  padding: var(--spacing-medium); /* Padding inside input fields */
   font-size: var(--font-size-small); /* Font size for text inputs */
   border-radius: var(--border-radius); /* Rounded corners for inputs */
   border: 2px solid #ccc; /* Light gray border for input fields */
   background-color: #17171780; /* White background for input fields */
-  color: #FFFFFF; /* Black text color for readability */
+  color: rgba(43, 225, 169, 1.0); /* Black text color for readability */
 }
 
 /* Adjust focus styles for input fields */
@@ -82,8 +80,8 @@ body {
 
 /* Button styling */
 #login-page button {
-  width: 60%; /* Adjust button width */
-  padding: var(--spacing-large); /* Inner padding */
+  width: 55%; /* Adjust button width */
+  padding: var(--spacing-medium); /* Inner padding */
   font-size: var(--font-size-large); /* Larger font size for button text */
   background-color: #171717; /* Default button color */
   color: #FFFFFF; /* White text color for contrast */

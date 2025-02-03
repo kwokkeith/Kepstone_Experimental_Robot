@@ -12,11 +12,11 @@
 
 /* Top section (header bar) */
 .top-section {
-  height: 8vh;
+  height: 12vh;
   width: 100%;
   background: rgba(23, 23, 23, 0.50);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 0px 0px 10px 10px;
+  border-radius: 0px 0px 0px 0px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -26,7 +26,7 @@
 .time-date-container {
   display: flex;
   align-items: center;
-  margin-left: 3.5vw;
+  margin-left: 4vw;
 }
 
 /* Vertical separator between time and date */
@@ -40,7 +40,7 @@
 
 /* Time display styling */
 .time-display {
-  font-size: 5rem;
+  font-size: 7rem;
   font-weight: bold;
   white-space: nowrap;
   overflow-wrap: break-word;
@@ -49,8 +49,8 @@
 
 /* Date display styling */
 .date-display {
-  font-size: 2.2rem;
-  width: 20vw;
+  font-size: 4rem;
+  width: 25vw;
   text-align: left;
   line-height: 1.5;
   white-space: normal;
@@ -61,28 +61,28 @@
 /* Container for top-right icons */
 .top-icons {
   display: flex;
-  gap: 1rem;
+  gap: 2.5rem;
   margin-right: 2.5vw;
 }
 
 /* Styling for each icon */
 .icon {
-  width: 80px;
-  height: 80px;
+  width: 120px;
+  height: 120px;
   display: flex;
   justify-content: center;
   align-items: center;
   background: rgba(23, 23, 23, 1);
-  border-radius: 25px;
+  border-radius: 30px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.5s ease;
   padding: 5px;
 }
 
 /* Styling for SVG icons inside the box */
 .icon img {
-  width: 60%;
-  height: 60%;
+  width: 65%;
+  height: 65%;
 }
 
 /* Hover effect for icons */
@@ -99,11 +99,10 @@
   bottom: 5vh;
   left: 50%;
   transform: translateX(-50%);
-  width: auto; /* Adjust width dynamically based on content */
-  max-width: 90%; /* Prevent it from exceeding 90% of viewport width */
-  padding: 15px 20px;
-  background: rgba(23, 23, 23, 0.75);
-  border-radius: 25px; /* Fully rounded corners */
+  width: 90vw;
+  padding: 25px 25px;
+  background: rgba(23, 23, 23, 1);
+  border-radius: 30px; /* Fully rounded corners */
   box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.3);
   overflow: hidden; /* Prevent content overflow */
 }
@@ -113,18 +112,18 @@
   display: flex;
   flex-wrap: wrap; /* Allow wrapping of items if container is too small */
   justify-content: space-around; /* Space icons evenly */
-  gap: 6.8rem; /* Add spacing between icon-with-label groups */
+  gap: 10rem; /* Add spacing between icon-with-label groups */
 }
 
 /* Icon with label styling */
 .icon-with-label {
   display: flex;
   align-items: center;
-  gap: 0.3rem; /* Space between icon and label */
+  gap: 1.5rem; /* Space between icon and label */
 }
 
 .icon-label {
-  font-size: 2.2rem;
+  font-size: 3.5rem;
   color: #FAFAFA;
   white-space: nowrap; /* Prevent labels from wrapping */
 }

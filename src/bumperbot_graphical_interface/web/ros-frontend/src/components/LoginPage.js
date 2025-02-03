@@ -9,10 +9,12 @@ const LoginPage = ({ onLoginSuccess }) => {
 
   const handleLogin = (event) => {
     event.preventDefault();
-    if (username === 'admin' && password === 'password') {
-      onLoginSuccess();
+    if (!username || !password) {
+      setError('Please fill in all fields.');
+    } else if (username !== 'admin' || password !== 'password') {
+      setError('Incorrect username or password.');
     } else {
-      setError(true);
+      onLoginSuccess();
     }
   };
 
@@ -25,6 +27,7 @@ const LoginPage = ({ onLoginSuccess }) => {
           <input
             type="text"
             id="username"
+            aria-label="Username"
             placeholder="Enter your username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}

@@ -8,6 +8,7 @@ import SettingsPage from './components/SettingsPage';
 import FullScreenToggle from './components/FullScreenToggle';
 import MyWorldPage from './components/MyWorldPage';
 import CreateMapPage from './components/CreateMapPage';
+import CreateMapPage2 from './components/CreateMapPage2';
 
 function App() {
   // Gets the session stored value, (in case react re-renders)
@@ -85,10 +86,11 @@ function App() {
         <>
           <Menu showPage={showPage} isOpen={isMenuOpen} />
           <button onClick={toggleMenu} className="menu-toggle-btn">☰</button>
-          {currentPage === 'main' && <MainPage />}
+          {currentPage === 'main' && <MainPage showPage={showPage} />}
           {currentPage === 'settings' && <SettingsPage />}
           {currentPage === 'my-world' && <MyWorldPage />}
           {currentPage === 'create-map' && <CreateMapPage mapName={mapName} showPage={showPage}/>} {/* Pass mapName to CreateMapPage */}
+          {currentPage === 'create-map2' && <CreateMapPage2 />}
         </>
       )}
     </div>
