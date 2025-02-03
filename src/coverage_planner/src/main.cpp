@@ -16,6 +16,7 @@
 #include <limits.h>
 #include "std_msgs/String.h"
 #include "std_msgs/Bool.h"
+#include <algorithm>
 
 std::string PARAMETER_FILE_PATH;
 std::string WAYPOINT_COORDINATE_FILE_PATH;
@@ -496,6 +497,29 @@ int main(int argc, char** argv) {
   polygon_coverage_planning::computeBestBCDFromPolygonWithHoles(pwh,
                                                                 &bcd_cells);
 
+  // Helper: Compute centroid of polygon
+  auto computeCentroid = [](const Polygon_2 &poly) -> Point_2 {
+    double sum_x = 0, sum_y = 0;
+    int count = 0;
+    for (const auto &pt : poly) {
+      sum_x += CGAL::to_double(pt.x());
+      sum_y += CGAL::to_double(pt.y());
+      ++count;
+    }
+    return Point_2(sum_x / count, sum_y / count);
+  };
+
+  // Helper: Compute Euclidean distance from (0,0)
+  auto distanceFromOrigin = [](const Point_2 &pt) -> double {
+    return std::sqrt(CGAL::to_double(pt.x()*pt.x() + pt.y()*pt.y()));
+  };
+
+  // After computing bcd_cells, sort them based on centroid distance from (0,0)
+  std::sort(bcd_cells.begin(), bcd_cells.end(),
+            [&](const Polygon_2 &a, const Polygon_2 &b) {
+              return distanceFromOrigin(computeCentroid(a)) < distanceFromOrigin(computeCentroid(b));
+            });                                                           
+
   auto end_time = std::chrono::high_resolution_clock::now();
   auto execution_time = std::chrono::duration_cast<std::chrono::microseconds>(
       end_time - start_time);
@@ -560,8 +584,8 @@ int main(int argc, char** argv) {
   std::vector<std::vector<Point_2>> cells_sweeps;
   std::vector<std::vector<cv::Point>> all_bcd_poly_contours;
 
-if (manual_orientation) {
-
+  if (manual_orientation) {
+    //TODO This part still needs to be "sorted" 
     ros::Subscriber new_angle_array = nh.subscribe("/new_angle_array", 1, anglesArrayCallback);
     while (!angles_array_received && ros::ok()) {
       ros::spinOnce();
