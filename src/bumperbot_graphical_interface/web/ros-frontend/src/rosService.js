@@ -218,3 +218,43 @@ export function publishContourAngles({data: contourAnglesList}) {
   }
   publishMultipleTimes(2);
 }
+
+export function publishDbShutdownState({dbState}) {
+  // Initialize ROS connection
+  var ros = new ROSLIB.Ros({
+    url: 'ws://localhost:9090'
+  });
+
+  ros.on('connection', function() {
+    console.log('db State publisher is now connected to websocket server.');
+  });
+  ros.on('error', function(error) {
+    console.error('Error connecting to ROSBridge for the db state publisher:', error);
+  });
+  ros.on('close', function() {
+    console.log('db State Publisher is disconnected from ROSBridge');
+  });
+
+  const dbStatePublisher = new ROSLIB.Topic({
+    ros: ros,
+    name: '/shutdown_bool',
+    messageType: 'std_msgs/Bool'
+  });
+
+  // Create a ROS message
+  const dbStateMsg = new ROSLIB.Message({ data: dbState });
+
+  // Publish the message multiple times
+  function publishMultipleTimes(times) {
+    for (let i = 0; i < times; i++) {
+      setTimeout(() => {
+        dbStatePublisher.publish(dbStateMsg);
+        // console.log(`Published editstate ${i + 1} times`);
+        if(i=== times - 1){
+          ros.close();
+        }
+      }, i * 800); // Delay of 1 second between each publish
+    }
+  }
+  publishMultipleTimes(2);
+}

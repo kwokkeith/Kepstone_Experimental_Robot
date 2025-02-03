@@ -5,6 +5,7 @@
 #include <ros/package.h>
 #include <random>
 #include <string>
+#include <std_msgs/Bool.h>
 
 std::string db_path;
 
@@ -162,7 +163,7 @@ void roiPointsCallback(const std_msgs::String::ConstPtr& msg) {
 
 
 void canvasMessengerCallback(const std_msgs::String::ConstPtr& msg) {
-    //ROS_INFO("I heard: [%s]", msg->data.c_str());
+    // ROS_INFO("I heard: [%s]", msg->data.c_str());
     if (!polygonBoundingCoordinatesStored){
         polygonBounding_coordinates = msg->data;
         polygonBoundingCoordinatesStored = true;
@@ -173,6 +174,10 @@ void canvasMessengerCallback(const std_msgs::String::ConstPtr& msg) {
         cleaning_path_coordinates = msg->data;
         cleaningPathCoordinatesStored = true;
     }
+    ROS_INFO("Boolean States => polygonBoundingCoordinatesStored: %s, bcdPolygonContourCoordinatesStored: %s, cleaningPathCoordinatesStored: %s",
+              polygonBoundingCoordinatesStored ? "true" : "false",
+              bcdPolygonContourCoordinatesStored ? "true" : "false",
+              cleaningPathCoordinatesStored ? "true" : "false");
     insertData();
 }
 
@@ -185,12 +190,19 @@ void mapNameCallback(const std_msgs::String::ConstPtr& msg) {
     insertData();
 }
 
+void shutdownCallback(const std_msgs::Bool::ConstPtr& msg) {
+    if (msg->data) {
+        ros::shutdown();
+    }
+}
+
 int main(int argc, char **argv) {
     ros::init(argc, argv, "subscriber_node");
     ros::NodeHandle nh;
 
     std::string GUI_package_path = ros::package::getPath("bumperbot_graphical_interface");
     db_path= GUI_package_path + "/db/coverage_zones.db";
+
     // Open the SQLite database
     if (sqlite3_open(db_path.c_str(), &db)) {
         ROS_ERROR("Can't open database: %s", sqlite3_errmsg(db));
@@ -229,11 +241,20 @@ int main(int argc, char **argv) {
     } else {
         ROS_INFO("Polygon table created successfully");
     }
+    
     ros::Subscriber start_points_sub = nh.subscribe("/start_point", 1, startPointsCallback);
     ros::Subscriber roi_points_sub = nh.subscribe("/roi_points", 4, roiPointsCallback);
     ros::Subscriber point_sub = nh.subscribe("/canvas_messenger", 1000, canvasMessengerCallback);
     ros::Subscriber map_name_sub = nh.subscribe("/new_map_name", 1000, mapNameCallback);
-    ros::spin();
+    
+    ros::Subscriber shutdown_sub = nh.subscribe("/shutdown_bool", 1, shutdownCallback);
+
+    // Start an asynchronous spinner to process callbacks concurrently
+    ros::AsyncSpinner spinner(0); // Use threads equal to the number of CPU cores
+    spinner.start();
+
+    // Wait until ros::shutdown() is called (e.g., via shutdownCallback)
+    ros::waitForShutdown();
     
 
     // Close the SQLite database

@@ -254,7 +254,7 @@ int main(int argc, char** argv) {
     }
     start_x = top_left.x;
     start_y = top_left.y;
-    ROS_INFO("Using top-left corner as starting point: (%d, %d)", start_x, start_y);
+    // ROS_INFO("Using top-left corner as starting point: (%d, %d)", start_x, start_y);
   }
 
   std::cout << "Read map" << std::endl;
@@ -558,182 +558,143 @@ int main(int argc, char** argv) {
   // sweep_step (distance per step in sweep),
   // int sweep_step = 5;
   std::vector<std::vector<Point_2>> cells_sweeps;
-  
-  if (manual_orientation) {
+  std::vector<std::vector<cv::Point>> all_bcd_poly_contours;
 
-    ros::Subscriber new_angle_array= nh.subscribe("/new_angle_array",1, anglesArrayCallback);
+if (manual_orientation) {
+
+    ros::Subscriber new_angle_array = nh.subscribe("/new_angle_array", 1, anglesArrayCallback);
     while (!angles_array_received && ros::ok()) {
       ros::spinOnce();
-      ros::Duration(0.5).sleep(); //Sleep for 100 ms
+      ros::Duration(0.5).sleep();
     };
 
     // Store user-defined angles for sweep direction
     std::vector<double> polygon_sweep_directions;
 
-    // Create a named window to show the polygon
-    // cv::namedWindow("Selected Polygon", cv::WINDOW_NORMAL);
-
     for (size_t i = 0; i < bcd_cells.size(); ++i) {
-      // Display the polygon to the user using OpenCV as before.
-      cv::Mat img_copy = original_img.clone();  // Create a copy of the image
-      std::vector<std::vector<cv::Point>> poly_contours;
-
-      // Extract the points of the current polygon
+      // Instead of showing the polygon on screen, we build the contour for later publishing.
       std::vector<cv::Point> current_polygon;
       for (int j = 0; j < bcd_cells[i].size(); ++j) {
           current_polygon.push_back(cv::Point(CGAL::to_double(bcd_cells[i][j].x()), 
                                               CGAL::to_double(bcd_cells[i][j].y())));
       }
-      poly_contours.push_back(current_polygon);
+      // Save the contour for publishing
+      all_bcd_poly_contours.push_back(current_polygon);
       
-      // Draw the current polygon on the copied image
-      // cv::drawContours(img_copy, poly_contours, -1, cv::Scalar(0, 255, 0), 2);
-      // cv::imshow("Polygon Selection", img_copy);
-      // cv::waitKey(500);  // Allow the user to see the polygon
-
       // Compute best sweep direction
       Direction_2 best_sweep_dir;
       double min_altitude = polygon_coverage_planning::findBestSweepDir(bcd_cells[i], &best_sweep_dir);
 
-      // Ensure valid sweep direction
       if (std::isnan(CGAL::to_double(best_sweep_dir.dx())) || std::isnan(CGAL::to_double(best_sweep_dir.dy()))) {
         std::cerr << "Invalid best sweep direction detected for polygon " << i << std::endl;
-        continue;  // Skip this polygon if sweep direction is invalid
+        continue;
       }
 
-      // Convert best sweep direction to degrees
-            double best_sweep_angle = std::atan2(CGAL::to_double(best_sweep_dir.dy()), CGAL::to_double(best_sweep_dir.dx())) * 180.0 / M_PI;
-            std::cout << "Best sweep direction for polygon " << i + 1 << " is: " << best_sweep_angle << " degrees" << std::endl;
+      double best_sweep_angle = std::atan2(CGAL::to_double(best_sweep_dir.dy()), CGAL::to_double(best_sweep_dir.dx())) * 180.0 / M_PI;
+      std::cout << "Best sweep direction for polygon " << i+1 << " is: " << best_sweep_angle << " degrees" << std::endl;
 
-            // Instead of prompting the user, try to get the angle from new_angle_array
-            double user_angle = best_sweep_angle;  // default to best sweep angle
+      double user_angle = best_sweep_angle;  // default to best sweep angle
 
-            if (!angles_array.empty()) {
-              std::string json_str = angles_array[0];  // assuming one message with the JSON structure
-              std::string key = "\"" + std::to_string(i) + "\"";
-              std::size_t keyPos = json_str.find(key);
-              if (keyPos != std::string::npos) {
-                std::size_t angleKeyPos = json_str.find("\"angle\"", keyPos);
-                if (angleKeyPos != std::string::npos) {
-                  std::size_t colonPos = json_str.find(":", angleKeyPos);
-                  if (colonPos != std::string::npos) {
-                    std::size_t commaPos = json_str.find(",", colonPos);
-                    std::size_t endPos = (commaPos != std::string::npos) ? commaPos : json_str.find("}", colonPos);
-                    if (endPos != std::string::npos) {
-                      std::string angleStr = json_str.substr(colonPos + 1, endPos - colonPos - 1);
-                      try {
-                        double parsed_angle = std::stod(angleStr);
-                        user_angle = parsed_angle;
-                        std::cout << "Using angle from new_angle_array for polygon " << i + 1 
-                                  << ": " << user_angle << " degrees" << std::endl;
-                      } catch (const std::exception& e) {
-                        std::cerr << "Invalid angle format in new_angle_array for polygon " << i + 1 
-                                  << ". Using best sweep angle." << std::endl;
-                      }
-                    }
-                  }
-                } else {
-                  std::cout << "No angle entry found in new_angle_array for polygon " << i + 1 
+      if (!angles_array.empty()) {
+        std::string json_str = angles_array[0];  // assuming single message JSON structure
+        std::string key = "\"" + std::to_string(i) + "\"";
+        std::size_t keyPos = json_str.find(key);
+        if (keyPos != std::string::npos) {
+          std::size_t angleKeyPos = json_str.find("\"angle\"", keyPos);
+          if (angleKeyPos != std::string::npos) {
+            std::size_t colonPos = json_str.find(":", angleKeyPos);
+            if (colonPos != std::string::npos) {
+              std::size_t commaPos = json_str.find(",", colonPos);
+              std::size_t endPos = (commaPos != std::string::npos) ? commaPos : json_str.find("}", colonPos);
+              if (endPos != std::string::npos) {
+                std::string angleStr = json_str.substr(colonPos + 1, endPos - colonPos - 1);
+                try {
+                  double parsed_angle = std::stod(angleStr);
+                  user_angle = parsed_angle;
+                  std::cout << "Using angle from new_angle_array for polygon " << i + 1 
+                            << ": " << user_angle << " degrees" << std::endl;
+                } catch (const std::exception& e) {
+                  std::cerr << "Invalid angle format in new_angle_array for polygon " << i + 1 
                             << ". Using best sweep angle." << std::endl;
                 }
-              } else {
-                std::cout << "No entry found for polygon " << i + 1 
-                          << " in new_angle_array. Using best sweep angle." << std::endl;
               }
-            } else {
-              std::cout << "new_angle_array is empty. Using best sweep angle for polygon " << i + 1 << "." << std::endl;
             }
-
-            polygon_sweep_directions.push_back(user_angle);
-    }
-
-    // Execute sweep for each polygon using the user-defined or best direction
-    for (size_t i = 0; i < bcd_cells.size(); ++i) {
+          } else {
+            std::cout << "No angle entry found in new_angle_array for polygon " << i + 1 
+                      << ". Using best sweep angle." << std::endl;
+          }
+        } else {
+          std::cout << "No entry found for polygon " << i + 1 
+                    << " in new_angle_array. Using best sweep angle." << std::endl;
+        }
+      } else {
+        std::cout << "new_angle_array is empty. Using best sweep angle for polygon " << i + 1 << "." << std::endl;
+      }
+      polygon_sweep_directions.push_back(user_angle);
+      
+      // Continue processing the sweep for manual orientation as before...
       std::vector<Point_2> cell_sweep;
-
-      // Convert the user-defined angle to radians
-      double angle_in_radians = polygon_sweep_directions[i] * (M_PI / 180.0);
-
-      // Ensure valid direction vectors
+      double angle_in_radians = user_angle * (M_PI / 180.0);
       if (std::isnan(std::cos(angle_in_radians)) || std::isnan(std::sin(angle_in_radians))) {
         std::cerr << "Invalid sweep direction for polygon " << i << ". Using default direction." << std::endl;
-        continue;  // Skip this polygon if the direction is invalid
+        continue;
       }
-
-      // Create direction from the angle
       Direction_2 user_defined_dir(std::cos(angle_in_radians), std::sin(angle_in_radians));
-
-      // Perform sweep using the user-defined direction
       polygon_coverage_planning::visibility_graph::VisibilityGraph vis_graph(bcd_cells[i]);
 
       try {
         polygon_coverage_planning::computeSweep(bcd_cells[i], vis_graph, sweep_step, user_defined_dir, true, &cell_sweep);
-
         if (cell_sweep.empty()) {
-            std::cerr << "Warning: Sweep for polygon " << i + 1 << " returned no points." << std::endl;
+          std::cerr << "Warning: Sweep for polygon " << i + 1 << " returned no points." << std::endl;
         } else {
-            std::cout << "Successfully constructed sweep for polygon " << i + 1 << std::endl;
+          std::cout << "Successfully constructed sweep for polygon " << i + 1 << std::endl;
         }
-
         cells_sweeps.emplace_back(cell_sweep);
-
       } catch (const std::exception& e) {
         std::cerr << "Error constructing sweep for polygon " << i + 1 << ": " << e.what() << std::endl;
       }
     }
-  } else {
-    std::vector<std::vector<cv::Point>> all_bcd_poly_contours;
+  }
+  else {  // automatic orientation
     for (size_t i = 0; i < bcd_cells.size(); ++i) {
-      // Compute all cluster sweeps.
       std::vector<Point_2> cell_sweep;
       Direction_2 best_dir;
       polygon_coverage_planning::findBestSweepDir(bcd_cells[i], &best_dir);
-      polygon_coverage_planning::visibility_graph::VisibilityGraph vis_graph(
-          bcd_cells[i]);
+      polygon_coverage_planning::visibility_graph::VisibilityGraph vis_graph(bcd_cells[i]);
 
       bool counter_clockwise = true;
-      polygon_coverage_planning::computeSweep(bcd_cells[i], vis_graph, sweep_step,
-                                              best_dir, counter_clockwise,
-                                              &cell_sweep);
+      polygon_coverage_planning::computeSweep(bcd_cells[i], vis_graph, sweep_step, best_dir, counter_clockwise, &cell_sweep);
       cells_sweeps.emplace_back(cell_sweep);
 
-      //  Extract the points of the current polygon
+      // Extract the contour for publishing
       std::vector<cv::Point> current_polygon;
-      // for (const auto & point: bcd_cells [i]){
-      //   current_polygon.emplace_back(
-      //     cv::Point(CGAL::to_double(point.x()), CGAL::to_double(point.y())));
-      // }
-      // all_bcd_poly_contours.push_back(current_polygon);
-
-      for (int j = 0; j<bcd_cells[i].size(); j++){
+      for (int j = 0; j < bcd_cells[i].size(); j++){
         current_polygon.push_back(cv::Point(CGAL::to_double(bcd_cells[i][j].x()), 
                                             CGAL::to_double(bcd_cells[i][j].y())));
       }
       all_bcd_poly_contours.push_back(current_polygon);
-
     }
+  }
 
-    // Publishing the contours
-    int publish_count = 0;
-
-    while (ros::ok() && publish_count < 2)
-    {
-      std::ostringstream oss;
-      for (const auto& poly : all_bcd_poly_contours) {
-        oss << "[";
-        for (const auto& point : poly) {
-          oss << point.x << " " << point.y << "\n";
-        }
-        oss << "],";
+  // Publishing the contours (common to both manual and automatic orientation)
+  int bcd_contour_publishCount = 0;
+  while (ros::ok() && bcd_contour_publishCount < 2)
+  {
+    std::ostringstream oss;
+    for (const auto& poly : all_bcd_poly_contours) {
+      oss << "[";
+      for (const auto& point : poly) {
+        oss << point.x << " " << point.y << "\n";
       }
-      std_msgs::String msg;
-      msg.data = oss.str();
-      point_pub.publish(msg);
-
-      publish_count++;
-      ros::spinOnce();
-      ros::Duration(1.0).sleep();
+      oss << "],";
     }
+    std_msgs::String msg;
+    msg.data = oss.str();
+    point_pub.publish(msg);
+
+    bcd_contour_publishCount++;
+    ros::spinOnce();
+    ros::Duration(1.0).sleep();
   }
 
   auto cell_intersections = calculateCellIntersections(bcd_cells, cell_graph);
