@@ -9,7 +9,7 @@ import mapIcon from '../assets/icons/map.svg';
 import calendarIcon from '../assets/icons/calendar.svg';
 import diagnosticsIcon from '../assets/icons/diagnostics.svg';
 
-const MainPage = () => {
+const MainPage = ({ showPage }) => {
   const [currentTime, setCurrentTime] = useState('');
   const [currentDate, setCurrentDate] = useState('');
 
@@ -65,7 +65,11 @@ const MainPage = () => {
             <span className="icon-label">Move</span>
           </div>
           <div className="icon-with-label">
-            <div className="icon">
+            <div
+              className="icon"
+              onClick={() => showPage('create-map2')}
+              style={{ cursor: 'pointer' }}
+            >
               <img src={mapIcon} alt="Zone" />
             </div>
             <span className="icon-label">Zones</span>
