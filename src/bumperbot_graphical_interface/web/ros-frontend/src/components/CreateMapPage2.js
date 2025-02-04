@@ -83,16 +83,40 @@ const CreateMapPage2 = ({showPage}) => {
   };
 
   return (
-    <div className="map-actions">
-      {/* Trash Icon Button */}
-      <button className="icon-button" onClick={handleTrashClick}>
-        <img src={trashIcon} alt="Trash" className="icon" />
-      </button>
-
-      {/* New Zone Button */}
-      <button className="new-zone-button" onClick={handleNewZoneClick}>
-        <img src={plusIcon} alt="Plus" className="plus-icon" /> New Zone
-      </button>
+    <div className="page-container">
+      {/* Map Actions at the top */}
+      <div className="map-actions">
+        {/* Trash Icon Button */}
+        <button className="icon-button" onClick={handleTrashClick}>
+          <img src={trashIcon} alt="Trash" className="icon" />
+        </button>
+  
+        {/* New Zone Button */}
+        <button className="new-zone-button" onClick={handleNewZoneClick}>
+          <img src={plusIcon} alt="Plus" className="plus-icon" /> New Zone
+        </button>
+      </div>
+  
+      {/* Content Grid below Map Actions */}
+      <div className="content-grid" id="grid-container">
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p>Error: {error}</p>
+        ) : (
+          data.map((entry, index) => (
+            <div
+              key={index}
+              className="grid-item"
+              // onClick={() => showPage('create-map2', entry.map_name)} //Placeholdername
+              style={{ cursor: 'pointer' }}
+            >
+              <h3>{entry.map_name}</h3>
+              {/* Additional entry details can go here */}
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 };

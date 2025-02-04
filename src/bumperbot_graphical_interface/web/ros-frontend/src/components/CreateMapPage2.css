@@ -21,8 +21,8 @@
   }
   
   .icon {
-    width: 100px;
-    height: 100px;
+    width: 3rem;
+    height: 3rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,7 +39,7 @@
     align-items: center;
     gap: 1.5rem;
     padding: 1.5rem 1.5rem;
-    font-size: 3.5rem;
+    font-size: 2.5rem;
     background: rgba(23, 23, 23, 1);
     color: #FAFAFA;
     border: none;
@@ -48,6 +48,7 @@
     overflow: hidden; /* Prevent content overflow */
     cursor: pointer;
     transition: background-color 0.5s ease;
+    font-weight: 700;
   }
   
   .new-zone-button:hover {
@@ -55,7 +56,64 @@
   }
   
   .plus-icon {
-    width: 100px;
-    height: 100px;
+    width: 3rem;
+    height: 3rem;
   }
+
+  .grid-item {
+    padding: 20px;
+    border-radius: 30px;
+    background: rgba(23, 23, 23, 1);
+    text-align: center;
+    cursor: pointer;
+    width: 30em;
+    position: relative;
+    height: 15vh;
+    /* box-shadow: 3px 3px 10px 1px rgb(92, 90, 90); */
+  }
+
+  .page-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .grid-item h3 {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    font-size: 1.8rem;  /* adjust font size as needed */
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    width: calc(100% - 30px); /* ensures some padding on the right if needed */
+    font-family: "Inter", sans-serif;
+  }
+  .content-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 15em;
+    gap: 50px;
+    height: 40vh;
+    overflow-y: auto; /* In case grid items overflow */
+    margin-top: 10vh;
+    padding-right: 4.5rem;
+  }
+
+  #grid-container::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #grid-container::-webkit-scrollbar-track {
+      border-radius: 8px;
+      background-color: #363636;
+      border: 1px solid #363636;
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  }
+
+  #grid-container::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      background-color: #e7e7e7;
+  }
+
   
