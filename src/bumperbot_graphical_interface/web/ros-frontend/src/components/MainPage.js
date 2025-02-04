@@ -58,34 +58,36 @@ const MainPage = ({ showPage }) => {
       {/* Function Selector at the Bottom */}
       <div className="function-selector-container">
         <div className="main-icons">
-          <div className="icon-with-label">
+
+          {/* add the onClick later for each showPage */}
+          <div className="icon-with-label hover">
             <div className="icon">
               <img src={moveIcon} alt="Move" />
             </div>
             <span className="icon-label">Move</span>
           </div>
-          <div className="icon-with-label">
-            <div
-              className="icon"
-              onClick={() => showPage('create-map2')}
-              style={{ cursor: 'pointer' }}
-            >
+          
+          <div className="icon-with-label hover" onClick={() => showPage('create-map2')} style={{ cursor: 'pointer' }}>
+            <div className="icon">
               <img src={mapIcon} alt="Zone" />
             </div>
             <span className="icon-label">Zones</span>
           </div>
-          <div className="icon-with-label">
+
+          <div className="icon-with-label hover">
             <div className="icon">
               <img src={calendarIcon} alt="Schedule" />
             </div>
             <span className="icon-label">Schedules</span>
           </div>
-          <div className="icon-with-label">
+
+          <div className="icon-with-label hover">
             <div className="icon">
               <img src={diagnosticsIcon} alt="Diagnostics" />
             </div>
             <span className="icon-label">Diagnostics</span>
           </div>
+
         </div>
       </div>
     </div>

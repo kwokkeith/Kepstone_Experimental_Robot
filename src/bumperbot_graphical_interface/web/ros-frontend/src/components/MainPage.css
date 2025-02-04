@@ -72,7 +72,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(23, 23, 23, 1);
+  /* background: rgba(23, 23, 23, 1); */
   border-radius: 30px;
   cursor: pointer;
   transition: background-color 0.5s ease;
@@ -86,9 +86,9 @@
 }
 
 /* Hover effect for icons */
-.icon:hover {
+/* .icon:hover {
   background: #2BE1A9;
-}
+} */
 
 /* Function Selector Container */
 .function-selector-container {
@@ -120,10 +120,15 @@
   display: flex;
   align-items: center;
   gap: 1.5rem; /* Space between icon and label */
+  border-radius: 20px;
 }
 
 .icon-label {
   font-size: 3.5rem;
   color: #FAFAFA;
   white-space: nowrap; /* Prevent labels from wrapping */
+}
+
+.hover:hover {
+  background: #2BE1A9;
 }
