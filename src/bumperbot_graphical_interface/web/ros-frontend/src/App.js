@@ -88,7 +88,7 @@ function App() {
           <button onClick={toggleMenu} className="menu-toggle-btn">☰</button>
           {currentPage === 'main' && <MainPage showPage={showPage} />}
           {currentPage === 'settings' && <SettingsPage />}
-          {currentPage === 'my-world' && <MyWorldPage />}
+          {currentPage === 'my-world' && <MyWorldPage mapName={mapName}/>}
           {currentPage === 'create-map' && <CreateMapPage mapName={mapName} showPage={showPage}/>} {/* Pass mapName to CreateMapPage */}
           {currentPage === 'create-map2' && <CreateMapPage2 showPage={showPage}/>}
         </>

@@ -1,21 +1,47 @@
 /* src/components/MyWorldPage.css */
 
-.my-world-page {
-    text-align: center;
-    padding: 2rem;
+  .my-world-container {
+    display: flex;
+    height: 85vh; 
+    /* this height is based of the 12 vh from the top-part*/
+  }
+
+  .my-world-left {
+    flex: 1;
+    padding-right: 10em;
+    height: 100%;
   }
   
-  .my-world-page h2 {
+  .my-world-left h2 {
     font-size: 2rem;
-    color: #333;
+    color: #FFFFFF;
     margin-bottom: 1rem;
+    font-family: "Inter", sans-serif;
   }
   
+  .my-world-right {
+    flex: 3; /* adjust width as needed */
+    padding-left: 10em;
+    height: 100%;
+  }
+
   .my-world-map {
     width: 100%;
     max-width: 600px;
     border: 2px solid #ddd;
     border-radius: 8px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .my-world-right h1{
+    font-size: 4rem;
+    color: #FFFFFF;
+    margin-bottom: 1rem;
+    font-family: "Inter", sans-serif;
+  }
+
+  .my-world-canvas {
+    width: 135%;   /* Set to 100% of the container width or adjust as needed */
+    height: 50%;  /* Set to 100% of the container height or specify a fixed value */
   }
   

@@ -415,9 +415,10 @@ const CreateMapPage = ({ mapName, showPage }) => {
   };
   const handleSave = () => {
     sessionStorage.removeItem('coverageListener');
-    showPage('main')
     fetchConfigData();
     fetchPolyData();
+    showPage('main');
+    publishDbShutdownState({ dbState: true });
   };
 
   const handleSaveEdit = () => {
