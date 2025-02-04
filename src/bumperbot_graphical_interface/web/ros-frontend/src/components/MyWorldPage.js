@@ -153,19 +153,25 @@ const MyWorldPage = ({mapName}) => {
   // =============================
 
   return (
-    <div className="my-world-page">
-      <h2>{mapName}</h2>
-      {isLoading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
-      <img
-        ref={imageRef}
-        alt="My World Map"
-        className="my-world-map"
-        style={{ display: 'none' }}
-        src={`${process.env.PUBLIC_URL}/my_world_map2.png`}
-        onLoad={handleImageLoad}
-      />
-      <canvas ref={canvasRef} className="my-world-canvas"></canvas>
+    <div className="my-world-container">
+      <div className="my-world-left">
+        <h2>{mapName}</h2>
+        {isLoading && <p>Loading...</p>}
+        {error && <p>Error: {error}</p>}
+        <img
+          ref={imageRef}
+          alt="My World Map"
+          className="my-world-map"
+          style={{ display: 'none' }}
+          src={`${process.env.PUBLIC_URL}/my_world_map2.png`}
+          onLoad={handleImageLoad}
+        />
+        <canvas ref={canvasRef} className="my-world-canvas"></canvas>
+      </div>
+      <div className="my-world-right">
+        {/* Insert additional text or content here */}
+        <h1>Coverage Cleaning mode</h1>
+      </div>
     </div>
   );
 };
