@@ -1,13 +1,80 @@
 // components/CreateMapPage2.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './CreateMapPage2.css';
 import trashIcon from '../assets/icons/trash.svg'; // Import the trash icon
 import plusIcon from '../assets/icons/plus.svg';  // Assuming you have a plus.svg icon, or replace it with a "+" character inside the button
+import ROSLIB from 'roslib';
+import { startNode, publishmapName, publishEditState } from '../rosService';
 
-const CreateMapPage2 = () => {
-  const handleNewZoneClick = () => {
-    console.log('New Zone button clicked');
-    // Additional logic for creating a new zone can go here
+const CreateMapPage2 = ({showPage}) => {
+    const [data, setData] = useState([]);
+    const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const handleStartNode = (mapName) => {
+      const startNodeService = startNode();
+      if (startNodeService) {
+        const request = new ROSLIB.ServiceRequest({});
+        startNodeService.callService(request, function(result) {
+          console.log('Service call result:', result);
+          publishmapName({ mapName });
+          startNodeService.ros.close(); // Close the ROS connection
+  
+          //Publish Edit State === FALSE only after the service call is successful
+          setTimeout(() => {
+            publishEditState({ editState: false });
+          }, 1000);
+  
+  
+        }, function(error) {
+          console.error('Service call failed:', error);
+          startNodeService.ros.close(); // Close the ROS connection
+        });
+      }
+    };
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const response = await fetch('http://localhost:5000/api/config');
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const result = await response.json();
+          setData(result.data);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      
+      fetchData();
+      
+    }, []);
+
+  const handleNewZoneClick = async () => {
+    try {
+      // Force re-fetching config data to avoid stale cache issues
+      const response = await fetch(`http://localhost:5000/api/config?timestamp=${new Date().getTime()}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const result = await response.json();
+      const dbmapNames = result.data.map(entry => entry.map_name);
+  
+      const mapName = prompt("What is the name of the Map?");
+      if (dbmapNames.includes(mapName)) {
+        alert("Map name already exists. Please enter a new map name.");
+      } else if (!mapName) {
+        alert("Please enter a valid map name");
+      } else {
+        showPage('create-map', mapName); // Pass map name to showPage
+        handleStartNode(mapName);
+      }
+    } catch (err) {
+      alert(`Error fetching config: ${err.message}`);
+    }
   };
 
   const handleTrashClick = () => {
