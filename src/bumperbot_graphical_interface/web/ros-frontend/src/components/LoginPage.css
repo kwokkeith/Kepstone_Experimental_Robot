@@ -1,14 +1,14 @@
 /* Define spacing variables for consistent spacing and typography throughout */
 :root {
   --spacing-small: 1rem;
-  --spacing-medium: 1.8rem;
-  --spacing-large: 2rem;
-  --spacing-extra-large: 3.5rem;
-  --border-radius: 1.7rem;
-  --font-size-small: 2.5rem;
-  --font-size-medium: 3.5rem;
-  --font-size-large: 4rem;
-  --font-size-xlarge: 6rem;
+  --spacing-medium: 1.5rem;
+  --spacing-large: 1.8rem;
+  --spacing-extra-large: 2rem;
+  --border-radius: 1.5rem;
+  --font-size-small: 1.5rem;
+  --font-size-medium: 2.5rem;
+  --font-size-large: 3rem;
+  --font-size-xlarge: 4rem;
 }
 
 /* Apply page-wide styling */

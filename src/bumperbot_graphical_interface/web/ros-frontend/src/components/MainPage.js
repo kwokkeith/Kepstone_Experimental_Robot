@@ -43,13 +43,13 @@ const MainPage = ({ showPage }) => {
         </div>
 
         <div className="top-icons">
-          <div className="icon">
+          <div className="icon hover">
             <img src={slidersIcon} alt="Sliders" />
           </div>
-          <div className="icon">
+          <div className="icon hover">
             <img src={bellIcon} alt="Notification" />
           </div>
-          <div className="icon">
+          <div className="icon hover">
             <img src={menuIcon} alt="Menu" />
           </div>
         </div>
