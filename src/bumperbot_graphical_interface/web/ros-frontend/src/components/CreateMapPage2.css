@@ -7,22 +7,20 @@
   }
   
   /* Icon Button (Trash) Styling */
-  .icon-button {
+  .icon-button-trash-zone {
     background-color: rgba(23, 23, 23, 1);
     border: none;
-    padding: 1rem;
+    padding: 1.5rem;
     border-radius: 30px;
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
   
-  .icon-button:hover {
+  .icon-button-trash-zone:hover {
     background-color: #2BE1A9;
   }
   
-  .icon {
-    width: 3rem;
-    height: 3rem;
+  #icon-trash-zone {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -30,8 +28,9 @@
     border-radius: 30px;
     cursor: pointer;
     transition: background-color 0.5s ease;
-    padding: 5px;
+    padding: 10px;
   }
+
   
   /* New Zone Button Styling */
   .new-zone-button {

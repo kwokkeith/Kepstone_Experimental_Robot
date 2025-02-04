@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './MyWorldPage.css';
 
-const MyWorldPage = () => {
+const MyWorldPage = ({mapName}) => {
   const canvasRef = useRef(null);
   const imageRef = useRef(null);
   const [data, setData] = useState([]);
@@ -16,9 +16,9 @@ const MyWorldPage = () => {
   // ==================================
   
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchConfigData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/data');
+        const response = await fetch('http://localhost:5000/api/config');
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -31,20 +31,9 @@ const MyWorldPage = () => {
       }
     };
     
-    fetchData();
+    fetchConfigData();
     
   }, []);
-
-  // ==================================
-  // useEffect Hooks for mapName
-  // ==================================
-
-  // const dbmapNames = data.map(entry => entry.map_name); //Newer version of the code to replace bottom
-  const mapName = data.length > 0 ? data[0].map_name : 'map_name';
-  useEffect(() => {
-    // Update sessionStorage when currentPage state changes
-    sessionStorage.setItem('mapName', JSON.stringify(mapName));
-  },[mapName])
 
   // ==================================
   // useEffect Hooks for drawing on canvas
@@ -104,10 +93,17 @@ const MyWorldPage = () => {
   // ===========================================
 
   useEffect(() => {
-    if (!data.length) return;
+    if (!data.length || !imageLoaded) return;
+
+    // Select the corresponding entry from data based on mapName
+    const entry = data.find(item => item.map_name === mapName);
+    if (!entry) {
+      console.error(`No entry found for map: ${mapName}`);
+      return;
+    }  
 
     // Process contours
-    const fetched_contours = data[0].polygonBounding_coordinates.trim();
+    const fetched_contours = entry.polygonBounding_coordinates.trim();
     const cleaned_contours = fetched_contours.endsWith(',') 
       ? fetched_contours.slice(0, -1)
       : fetched_contours;
@@ -127,7 +123,7 @@ const MyWorldPage = () => {
     // console.log('Contours List:', contours); //Debugging tool to see the contours
 
     // Process waypoints
-    const fetched_waypoints = data[0].cleaning_path_coordinates.trim();
+    const fetched_waypoints = entry.cleaning_path_coordinates.trim();
     const cleaned_waypoints = fetched_waypoints.endsWith(',') 
       ? fetched_waypoints.slice(0, -1)
       : fetched_waypoints;

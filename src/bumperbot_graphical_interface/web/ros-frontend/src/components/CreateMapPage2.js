@@ -87,8 +87,8 @@ const CreateMapPage2 = ({showPage}) => {
       {/* Map Actions at the top */}
       <div className="map-actions">
         {/* Trash Icon Button */}
-        <button className="icon-button" onClick={handleTrashClick}>
-          <img src={trashIcon} alt="Trash" className="icon" />
+        <button className="icon-button-trash-zone" onClick={handleTrashClick}>
+          <img src={trashIcon} alt="Trash" className="icon-trash-zone" />
         </button>
   
         {/* New Zone Button */}
@@ -108,7 +108,7 @@ const CreateMapPage2 = ({showPage}) => {
             <div
               key={index}
               className="grid-item"
-              // onClick={() => showPage('create-map2', entry.map_name)} //Placeholdername
+              onClick={() => showPage('my-world', entry.map_name)} //Placeholdername
               style={{ cursor: 'pointer' }}
             >
               <h3>{entry.map_name}</h3>
