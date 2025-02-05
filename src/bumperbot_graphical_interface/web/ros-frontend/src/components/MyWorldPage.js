@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './MyWorldPage.css';
+import plusIcon from '../assets/icons/play.svg';
+import pauseIcon from '../assets/icons/pause.svg';
+import stopIcon from '../assets/icons/stop.svg';  
 
 const MyWorldPage = ({mapName}) => {
   const canvasRef = useRef(null);
@@ -10,6 +13,8 @@ const MyWorldPage = ({mapName}) => {
   const [contoursList, setContoursList] = useState([]);
   const [waypointsList, setWaypointsList] = useState([]);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [isJobStarted, setIsJobStarted] = useState(false);
+  const [isJobPaused, setIsJobPaused] = useState(false);
 
   // ==================================
   // useEffect Hooks for fetching data
@@ -148,6 +153,20 @@ const MyWorldPage = ({mapName}) => {
     setImageLoaded(true);
   };
 
+  const handleStartJobClick = () => {
+    setIsJobStarted(true);
+    setIsJobPaused(false);
+  };
+
+  const handlePauseJobClick = () => {
+    setIsJobPaused(true);
+  };
+  
+  const handleStopJobClick = () => {
+    setIsJobStarted(false);
+    setIsJobPaused(false);
+  };
+
   // =============================
   // React rendered html component
   // =============================
@@ -171,6 +190,28 @@ const MyWorldPage = ({mapName}) => {
       <div className="my-world-right">
         {/* Insert additional text or content here */}
         <h1>Coverage Cleaning mode</h1>
+        <div className = "bottom-center-right-buttons">
+        {isJobStarted ? (
+          <>
+            <button className="pause-job-button" onClick={handlePauseJobClick}>
+              <img src={pauseIcon} alt="pause" className="pause-icon" />
+            </button>
+            {isJobPaused ? (
+              <button className="start-job-button" onClick={handleStartJobClick}>
+                <img src={plusIcon} alt="start" className="start-icon" />
+              </button>
+            ) : (
+              <button className="stop-job-button" onClick={handleStopJobClick}>
+                <img src={stopIcon} alt="stop" className="stop-icon" />
+              </button>
+            )}
+          </>
+        ) : (
+          <button className="start-job-button" onClick={handleStartJobClick}>
+            <img src={plusIcon} alt="start" className="start-icon" />
+          </button>
+        )}
+        </div>
       </div>
     </div>
   );

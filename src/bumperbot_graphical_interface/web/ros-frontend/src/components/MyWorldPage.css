@@ -17,12 +17,24 @@
     color: #FFFFFF;
     margin-bottom: 1rem;
     font-family: "Inter", sans-serif;
+    padding-top: 10vh;
   }
   
   .my-world-right {
     flex: 3; /* adjust width as needed */
     padding-left: 10em;
     height: 100%;
+    position: relative;
+  }
+
+  .bottom-center-right-buttons {
+    position: absolute;
+    bottom: 5vh; /* adjust spacing as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 2rem;
+    cursor: pointer;
   }
 
   .my-world-map {
@@ -44,4 +56,70 @@
     width: 135%;   /* Set to 100% of the container width or adjust as needed */
     height: 50%;  /* Set to 100% of the container height or specify a fixed value */
   }
+
+  /* START BUTTON */
+  .start-job-button {
+    background-color: rgba(23, 23, 23, 1);
+    border: none;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .start-icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+  }
+
+  .start-job-button:hover {
+    background-color: #2BE1A9;
+  }
+
+  /* PAUSE BUTTON */
+  .pause-job-button {
+    background-color: rgba(23, 23, 23, 1);
+    border: none;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .pause-icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+  }
+
+  .pause-job-button:hover {
+    background-color: #2BE1A9;
+  }
+
+    /* STOP BUTTON */
+    .stop-job-button {
+      background-color: rgba(23, 23, 23, 1);
+      border: none;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+  
+    .stop-icon{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.5s ease;
+    }
+  
+    .stop-job-button:hover {
+      background-color: #2BE1A9;
+    }
   
