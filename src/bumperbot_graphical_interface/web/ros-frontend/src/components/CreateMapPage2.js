@@ -104,17 +104,53 @@ const CreateMapPage2 = ({showPage}) => {
         ) : error ? (
           <p>Error: {error}</p>
         ) : (
-          data.map((entry, index) => (
-            <div
-              key={index}
-              className="grid-item"
-              onClick={() => showPage('my-world', entry.map_name)} //Placeholdername
-              style={{ cursor: 'pointer' }}
-            >
-              <h3>{entry.map_name}</h3>
-              {/* Additional entry details can go here */}
-            </div>
-          ))
+          data.map((entry, index) => {
+            let imageSrc = null;
+            try {
+              imageSrc = require(`../../public/temp_zone/image_${entry.map_name}.png`);
+            } catch (error) {
+              // imageSrc remains null if image is not found
+            }
+  
+            if (imageSrc) {
+              return (
+                <div
+                  key={index}
+                  className="grid-item"
+                  onClick={() => showPage('my-world', entry.map_name)}
+                  style={{
+                    backgroundImage: `url(${imageSrc})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <h3>{entry.map_name}</h3>
+                  {/* Additional entry details can go here */}
+                </div>
+              );
+            } else {
+              return (
+                <div
+                  key={index}
+                  className="grid-item"
+                  onClick={() => showPage('my-world', entry.map_name)}
+                  style={{
+                    backgroundColor: '#E0E8FC',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <p>Map image not found</p>
+                  <h3>{entry.map_name}</h3>
+                  {/* Additional entry details can go here */}
+                </div>
+              );
+            }
+          })
         )}
       </div>
     </div>

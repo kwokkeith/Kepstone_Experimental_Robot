@@ -87,12 +87,13 @@
     text-align: left;
     width: calc(100% - 30px); /* ensures some padding on the right if needed */
     font-family: "Inter", sans-serif;
+    color: rgba(23, 23, 23, 1);
   }
   .content-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 15em;
-    gap: 50px;
+    gap: 9vh;
     height: 40vh;
     overflow-y: auto; /* In case grid items overflow */
     margin-top: 10vh;
@@ -115,4 +116,10 @@
       background-color: #e7e7e7;
   }
 
+  .grid-item p{
+    color: #FF5255;
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: "Inter", sans-serif;
+  }
   
