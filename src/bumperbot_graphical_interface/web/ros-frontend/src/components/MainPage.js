@@ -55,6 +55,15 @@ const MainPage = ({ showPage }) => {
         </div>
       </header>
 
+      <div className="middle-content">
+        <div className = "middle-content-left">
+          {/* <p>Map</p> */}
+          </div>
+        <div className = "middle-content-right">
+          
+          </div>
+        </div>
+
       {/* Function Selector at the Bottom */}
       <div className="function-selector-container">
         <div className="main-icons">

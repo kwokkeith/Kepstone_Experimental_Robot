@@ -132,3 +132,25 @@
 .hover:hover {
   background: #2BE1A9;
 }
+
+.middle-content {
+  display: flex;
+  height: 85vh;
+  max-height: calc(100vh - 35vh);
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+}
+
+.middle-content-left {
+  flex: 1;
+  padding-right: 5em;
+  padding-left: 5em;
+  height: 100%;
+}
+
+.middle-content-right {
+  flex: 1;
+  padding-left: 5em;
+  padding-right: 5em;
+  height: 100%;
+}
