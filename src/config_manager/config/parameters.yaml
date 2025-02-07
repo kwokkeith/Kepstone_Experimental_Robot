@@ -14,7 +14,14 @@ vacuum_controller:
     set_vacuum_power: "/set_vacuum_power"                   # Service to set the target vacuum power for the vacuum module
   topics:
     vacuum_power: "/vacuum_controller/vacuum_power"         # Topic to publish the target vacuum power for the vacuum module
-    
+   
+rollerbrush_controller:
+  services:
+    get_rollerbrush_power: "/get_rollerbrush_power"                   # Service to get the target rollerbrush power for the rollerbrush module
+    set_rollerbrush_power: "/set_rollerbrush_power"                   # Service to set the target rollerbrush power for the rollerbrush module
+  topics:
+    rollerbrush_power: "/rollerbrush_controller/rollerbrush_power"         # Topic to publish the target rollerbrush power for the rollerbrush module
+
 localization:
   topics:
     imu: "/imu"                               # Topic to publish imu data
@@ -85,8 +92,8 @@ boundary_visualizer:
 
 camera:
   topics: 
-    color_image_raw: "/camera/color/image_raw"        # Raw RGB image of camera
-    depth_image_raw: "/camera/depth/image_raw"        # Raw depth image of camera
+    color_image_raw: "/depth_camera/color/image_raw"        # Raw RGB image of gazebo depth camera
+    depth_image_raw: "/depth_camera/depth/image_raw"        # Raw depth image of gazebo depth camera
 
 navigation:
   services:

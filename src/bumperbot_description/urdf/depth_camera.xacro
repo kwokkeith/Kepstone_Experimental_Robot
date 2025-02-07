@@ -58,11 +58,11 @@
                     will control the frame rate. -->
                 <updateRate>0.0</updateRate>
                 <cameraName>camera_ir</cameraName>
-                <imageTopicName>/camera/color/image_raw</imageTopicName>
-                <cameraInfoTopicName>/camera/color/camera_info</cameraInfoTopicName>
-                <depthImageTopicName>/camera/depth/image_raw</depthImageTopicName>
-                <depthImageCameraInfoTopicName>/camera/depth/camera_info</depthImageCameraInfoTopicName>
-                <pointCloudTopicName>/camera/depth/points</pointCloudTopicName>
+                <imageTopicName>/depth_camera/color/image_raw</imageTopicName>
+                <cameraInfoTopicName>/depth_camera/color/camera_info</cameraInfoTopicName>
+                <depthImageTopicName>/depth_camera/depth/image_raw</depthImageTopicName>
+                <depthImageCameraInfoTopicName>/depth_camera/depth/camera_info</depthImageCameraInfoTopicName>
+                <pointCloudTopicName>/depth_camera/depth/points</pointCloudTopicName>
                 <frameName>dpcamera_link</frameName>
                 <pointCloudCutoff>0.05</pointCloudCutoff>
                 <pointCloudCutoffMax>3.0</pointCloudCutoffMax>
