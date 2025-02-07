@@ -1,0 +1,15 @@
+<launch>
+    <!-- Start rosbridge server for ROS-WebSocket communication -->
+    <node name="rosbridge_websocket" pkg="rosbridge_server" type="rosbridge_websocket" output="screen"/>
+
+    <!-- Start the web server using exec tag with nohup, escaping & as &amp; -->
+    <node name="http_server" pkg="bumperbot_graphical_interface" type="start_web_server.sh"/>
+    
+    <!-- Start the service server for starting the coverage planner node -->
+    <node name="start_coverage_planner_service" pkg="bumperbot_graphical_interface" type="start_coverage_planner_service.py" output="screen"/>
+
+    <!-- Start the SQL server using exec tag -->
+    <node name="sql_server" pkg="bumperbot_graphical_interface" type="start_sql_server.sh"/>
+
+    <include file="$(find bumperbot_examples)/launch/test_env.launch"></include>
+</launch>

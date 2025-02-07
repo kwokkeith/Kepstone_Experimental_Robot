@@ -195,6 +195,7 @@ int main(int argc, char** argv) {
   ros::init(argc, argv, "coverage_planner_node");
   ros::NodeHandle nh;
   ros::Publisher point_pub = nh.advertise<std_msgs::String>("/canvas_messenger", 1000);
+  ros::Publisher waypoint_publisher = nh.advertise<std_msgs::String>("/coverage_planner/navigation_waypoints", 1000);
   ROS_INFO("Coverage Planner Node Started");
   // Get the parameter file path
   nh.getParam("parameter_file_path", PARAMETER_FILE_PATH);
@@ -848,6 +849,7 @@ int main(int argc, char** argv) {
   // Open waypoint file to write coordinates
   std::ofstream out(WAYPOINT_COORDINATE_FILE_PATH);
   std::ostringstream out_oss;
+  std::ostringstream out_waypoints;
 
 for (size_t i = 1; i < way_points.size(); ++i) {
     cv::Point p1 = cv::Point(std::round(CGAL::to_double(way_points[i - 1].x())),
@@ -906,27 +908,31 @@ for (size_t i = 1; i < way_points.size(); ++i) {
     cv::Size sz = original_img.size();
     int imgHeight = sz.height;
     int y_center = sz.height / 2;
-    // Write waypoints to a file (to be fed as coordinates for robot) (not used as of 2/2/202)
+    // Write waypoints to a file (to be fed as coordinates for robot) (not used as of 2/2/2025) -JunOnn
     out_oss << "[";
     if (i == 1) {
         out << p1.x << " " << (2* y_center - p1.y) << std::endl;
+        out_waypoints << p1.x << " " << (2* y_center - p1.y) << std::endl;
         out_oss << p1.x << " " << p1.y << std::endl;
 
     }
     for (const auto& point : newPoints) {
         out << point.x << " " << (2*y_center - point.y) << std::endl;
+        out_waypoints << point.x << " " << (2*y_center - point.y) << std::endl;
         out_oss << point.x << " " << point.y << std::endl; 
     }
 
     // For all other points we will just use p2,
     // we do not pass both p1 and p2 as it would duplicate the points
     out << p2.x << " " << (2*y_center-p2.y) << std::endl;
+    out_waypoints << p2.x << " " << (2*y_center-p2.y) << std::endl;
     out_oss << p2.x << " " << p2.y << std::endl;
     out_oss << "],";
   }
   out.close();
 
   std::string waypointData = out_oss.str();
+  std::string waypointnavigationData = out_waypoints.str();
 
   publish_count = 0;
 
@@ -935,6 +941,10 @@ for (size_t i = 1; i < way_points.size(); ++i) {
     std_msgs::String msg;
     msg.data = waypointData;
     point_pub.publish(msg);
+
+    std_msgs::String msg_navigation;
+    msg_navigation.data = waypointnavigationData;
+    waypoint_publisher.publish(msg_navigation);
 
     publish_count++;
     ros::spinOnce();

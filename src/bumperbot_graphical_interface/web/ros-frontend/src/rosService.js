@@ -258,3 +258,43 @@ export function publishDbShutdownState({dbState}) {
   }
   publishMultipleTimes(2);
 }
+
+
+export function publishWaypointsList({waypointsList}) {
+  // Initialize ROS connection
+  var ros = new ROSLIB.Ros({
+    url: 'ws://localhost:9090'
+  });
+
+  ros.on('connection', function() {
+    console.log('Waypoint publisher is now connected to websocket server.');
+  });
+  ros.on('error', function(error) {
+    console.error('Error connecting to ROSBridge for the Waypoint publisher:', error);
+  });
+  ros.on('close', function() {
+    console.log('Waypoint Publisher is disconnected from ROSBridge');
+  });
+
+  const waypointPublisher = new ROSLIB.Topic({
+    ros: ros,
+    name: '/bumperbot_graphical_interface/waypointsList',
+    messageType: 'std_msgs/String'
+  });
+
+  // Create a ROS message
+  const waypointMsg = new ROSLIB.Message({ data: waypointsList });
+
+  // Publish the message multiple times
+  function publishMultipleTimes(times) {
+    for (let i = 0; i < times; i++) {
+      setTimeout(() => {
+        waypointPublisher.publish(waypointMsg);
+        if(i=== times - 1){
+          ros.close();
+        }
+      }, i * 800);
+    }
+  }
+  publishMultipleTimes(4);
+}

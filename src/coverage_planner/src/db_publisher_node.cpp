@@ -16,6 +16,7 @@ bool mapNameStored = false;
 bool bcdPolygonContourCoordinatesStored = false;
 bool startPointsStored = false;
 bool roiPointsStored = false;
+bool navigation_waypointsStored = false;
 
 std::string map_name;
 std::string start_point;
@@ -23,6 +24,7 @@ std::string roi_points;
 std::string polygonBounding_coordinates;
 std::string cleaning_path_coordinates;
 std::string bcdPolygonContour_coordinates;
+std::string navigation_waypoints;
 std::string get_uuid();
 void insertPolygonData(const std::string& config_id);
 void insertData();
@@ -66,11 +68,11 @@ std::string get_uuid() {
 //TODO: Confirm with keith and Gizelle if the name cleaning_path_coordinates should be changed to waypoints?
 //TODO: Add images into db
 void insertData(){
-    if (mapNameStored && polygonBoundingCoordinatesStored && bcdPolygonContourCoordinatesStored && cleaningPathCoordinatesStored && startPointsStored && roiPointsStored){
+    if (mapNameStored && polygonBoundingCoordinatesStored && bcdPolygonContourCoordinatesStored && cleaningPathCoordinatesStored && startPointsStored && roiPointsStored && navigation_waypointsStored){
         std::string config_id = get_uuid();
         std::stringstream ss;
-        ss << "INSERT INTO Config_Table (config_id, map_name, start_point, roi_points, polygonBounding_coordinates, cleaning_path_coordinates) VALUES ('"
-              << config_id << "', '" << map_name << "', '" << start_point << "', '" << roi_points << "', '" << polygonBounding_coordinates << "', '" << cleaning_path_coordinates << "');";
+        ss << "INSERT INTO Config_Table (config_id, map_name, start_point, roi_points, polygonBounding_coordinates, cleaning_path_coordinates, navigation_waypoints) VALUES ('"
+              << config_id << "', '" << map_name << "', '" << start_point << "', '" << roi_points << "', '" << polygonBounding_coordinates << "', '" << cleaning_path_coordinates << "', '" << navigation_waypoints << "');";
             //   << map_name << "', '" << start_point << "', '" << roi_points << "', '" << polygonBounding_coordinates << "', '" << bcdPolygonContour_coordinates << "', '" << cleaning_path_coordinates << "');";
         char* errMsg = nullptr;
         int rc = sqlite3_exec(db, ss.str().c_str(), 0, 0, &errMsg);
@@ -84,6 +86,7 @@ void insertData(){
         polygonBoundingCoordinatesStored = false;
         cleaningPathCoordinatesStored = false;
         bcdPolygonContourCoordinatesStored = false;
+        navigation_waypointsStored = false;
 
         map_name.clear();
         start_point.clear();
@@ -91,6 +94,7 @@ void insertData(){
         polygonBounding_coordinates.clear();
         bcdPolygonContour_coordinates.clear();
         cleaning_path_coordinates.clear();
+        navigation_waypoints.clear();
     }
 }
 
@@ -174,10 +178,10 @@ void canvasMessengerCallback(const std_msgs::String::ConstPtr& msg) {
         cleaning_path_coordinates = msg->data;
         cleaningPathCoordinatesStored = true;
     }
-    ROS_INFO("Boolean States => polygonBoundingCoordinatesStored: %s, bcdPolygonContourCoordinatesStored: %s, cleaningPathCoordinatesStored: %s",
-              polygonBoundingCoordinatesStored ? "true" : "false",
-              bcdPolygonContourCoordinatesStored ? "true" : "false",
-              cleaningPathCoordinatesStored ? "true" : "false");
+    // ROS_INFO("Boolean States => polygonBoundingCoordinatesStored: %s, bcdPolygonContourCoordinatesStored: %s, cleaningPathCoordinatesStored: %s",
+    //           polygonBoundingCoordinatesStored ? "true" : "false",
+    //           bcdPolygonContourCoordinatesStored ? "true" : "false",
+    //           cleaningPathCoordinatesStored ? "true" : "false");
     insertData();
 }
 
@@ -186,6 +190,14 @@ void mapNameCallback(const std_msgs::String::ConstPtr& msg) {
     if (!mapNameStored){
         map_name = msg->data;
         mapNameStored = true;
+    }
+    insertData();
+}
+
+void navigation_waypointsCallback(const std_msgs::String::ConstPtr& msg) {
+    if (!navigation_waypointsStored){
+        navigation_waypoints = msg->data;
+        navigation_waypointsStored = true;
     }
     insertData();
 }
@@ -218,7 +230,8 @@ int main(int argc, char **argv) {
                                    "start_point TEXT NOT NULL," \
                                    "roi_points TEXT NOT NULL," \
                                    "polygonBounding_coordinates TEXT NOT NULL," \
-                                   "cleaning_path_coordinates TEXT NOT NULL);";
+                                   "cleaning_path_coordinates TEXT NOT NULL," \
+                                   "navigation_waypoints TEXT NOT NULL);";
     char *errMsg = 0;
     if (sqlite3_exec(db, sql_create_table, 0, 0, &errMsg) != SQLITE_OK) {
         ROS_ERROR("SQL error: %s", errMsg);
@@ -246,6 +259,7 @@ int main(int argc, char **argv) {
     ros::Subscriber roi_points_sub = nh.subscribe("/roi_points", 4, roiPointsCallback);
     ros::Subscriber point_sub = nh.subscribe("/canvas_messenger", 1000, canvasMessengerCallback);
     ros::Subscriber map_name_sub = nh.subscribe("/new_map_name", 1000, mapNameCallback);
+    ros::Subscriber navigation_waypoints_sub = nh.subscribe("/coverage_planner/navigation_waypoints", 1000, navigation_waypointsCallback);
     
     ros::Subscriber shutdown_sub = nh.subscribe("/shutdown_bool", 1, shutdownCallback);
 
