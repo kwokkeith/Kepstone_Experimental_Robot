@@ -47,4 +47,18 @@
   <exec_depend>eigen</exec_depend>
   <exec_depend>visualization_msgs</exec_depend>
 
+  <!-- For CV model: from myrequirements.txt -->
+  <exec_depend>python-numpy</exec_depend>
+  <exec_depend>python-opencv</exec_depend>
+  <exec_depend>python-loguru</exec_depend>
+  <exec_depend>python-thop</exec_depend>
+  <exec_depend>python-tabulate</exec_depend>
+  <exec_depend>python-py7zr</exec_depend>
+  <exec_depend>python-torch</exec_depend>
+  <exec_depend>python-torchvision</exec_depend>
+  <exec_depend>python-packaging</exec_depend>
+  <exec_depend>python-matplotlib</exec_depend>
+  <exec_depend>python-onnx</exec_depend>
+  <exec_depend>python-onnxruntime</exec_depend>
+
 </package>

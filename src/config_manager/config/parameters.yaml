@@ -85,8 +85,8 @@ boundary_visualizer:
 
 camera:
   topics: 
-    color_image_raw: "/camera/color/image_raw"        # Raw RGB image of camera
-    depth_image_raw: "/camera/depth/image_raw"        # Raw depth image of camera
+    color_image_raw: "/depth_camera/color/image_raw"        # Raw RGB image of gazebo depth camera
+    depth_image_raw: "/depth_camera/depth/image_raw"        # Raw depth image of gazebo depth camera
 
 navigation:
   services:
