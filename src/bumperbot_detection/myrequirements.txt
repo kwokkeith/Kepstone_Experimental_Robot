@@ -1,0 +1,13 @@
+# TODO: Update with exact module version
+numpy<2.0.0
+opencv_python
+loguru
+thop
+tabulate
+py7zr
+torch
+torchvision
+packaging
+matplotlib
+
+    

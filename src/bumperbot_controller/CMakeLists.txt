@@ -32,6 +32,8 @@ add_service_files(
   GetCurrentMode.srv
   SetVacuumPower.srv
   GetVacuumPower.srv
+  SetRollerBrushPower.srv
+  GetRollerBrushPower.srv
 )
 
 # Declare messages
@@ -120,6 +122,14 @@ target_link_libraries(vacuum_controller ${catkin_LIBRARIES} ${Eigen_LIBRARIES})
 add_executable(vacuum_controller_node nodes/vacuum_controller_node.cpp)
 add_dependencies(vacuum_controller_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(vacuum_controller_node ${catkin_LIBRARIES} vacuum_controller)
+
+add_library(rollerbrush_controller src/rollerbrush_controller.cpp)
+add_dependencies(rollerbrush_controller ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(rollerbrush_controller ${catkin_LIBRARIES} ${Eigen_LIBRARIES})
+
+add_executable(rollerbrush_controller_node nodes/rollerbrush_controller_node.cpp)
+add_dependencies(rollerbrush_controller_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(rollerbrush_controller_node ${catkin_LIBRARIES} rollerbrush_controller)
 
 #############
 ## Testing ##
