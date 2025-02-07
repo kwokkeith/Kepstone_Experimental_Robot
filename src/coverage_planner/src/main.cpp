@@ -941,13 +941,13 @@ for (size_t i = 1; i < way_points.size(); ++i) {
     ros::Duration(1.0).sleep();
   }
 
-  // std::string result_image_path = package_path + "/result/image_result.png";
-  // std::string GUI_result_path = GUI_package_path + "/web/ros-frontend/public/temp_zone/image_" + mapName + ".png";
+  std::string result_image_path = package_path + "/result/image_result.png";
+  std::string GUI_result_path = GUI_package_path + "/web/ros-frontend/public/temp_zone/image_" + mapName + ".png";
   
-  // cv::imwrite(GUI_result_path, original_img);
-  // std::cout << "Result image saved to: " << GUI_result_path << std::endl;
+  cv::imwrite(GUI_result_path, original_img);
+  std::cout << "Result image saved to: " << GUI_result_path << std::endl;
   ros::shutdown();
-  // cv::waitKey();
+  cv::waitKey();
 #else
   cv::Point p1, p2;
   cv::namedWindow("cover", cv::WINDOW_NORMAL);

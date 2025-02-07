@@ -55,8 +55,8 @@ body {
 }
 
 .icon {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   background: #171717; /* Dark background for icons */
   border-radius: 50%; /* Circular icons */
   display: flex;
@@ -73,17 +73,17 @@ body {
 /* Specific icons */
 .notification-icon::before {
   content: '🔔'; /* Placeholder for notification icon */
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .settings-icon::before {
   content: '⚙️'; /* Placeholder for settings icon */
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .profile-icon::before {
   content: '👤'; /* Placeholder for profile icon */
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 /* Universal button styling (optional if used across components) */

@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './MyWorldPage.css';
+import plusIcon from '../assets/icons/play.svg';
+import pauseIcon from '../assets/icons/pause.svg';
+import stopIcon from '../assets/icons/stop.svg';  
 
-const MyWorldPage = () => {
+const MyWorldPage = ({mapName}) => {
   const canvasRef = useRef(null);
   const imageRef = useRef(null);
   const [data, setData] = useState([]);
@@ -10,15 +13,17 @@ const MyWorldPage = () => {
   const [contoursList, setContoursList] = useState([]);
   const [waypointsList, setWaypointsList] = useState([]);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [isJobStarted, setIsJobStarted] = useState(false);
+  const [isJobPaused, setIsJobPaused] = useState(false);
 
   // ==================================
   // useEffect Hooks for fetching data
   // ==================================
   
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchConfigData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/data');
+        const response = await fetch('http://localhost:5000/api/config');
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -31,20 +36,9 @@ const MyWorldPage = () => {
       }
     };
     
-    fetchData();
+    fetchConfigData();
     
   }, []);
-
-  // ==================================
-  // useEffect Hooks for mapName
-  // ==================================
-
-  // const dbmapNames = data.map(entry => entry.map_name); //Newer version of the code to replace bottom
-  const mapName = data.length > 0 ? data[0].map_name : 'map_name';
-  useEffect(() => {
-    // Update sessionStorage when currentPage state changes
-    sessionStorage.setItem('mapName', JSON.stringify(mapName));
-  },[mapName])
 
   // ==================================
   // useEffect Hooks for drawing on canvas
@@ -104,10 +98,17 @@ const MyWorldPage = () => {
   // ===========================================
 
   useEffect(() => {
-    if (!data.length) return;
+    if (!data.length || !imageLoaded) return;
+
+    // Select the corresponding entry from data based on mapName
+    const entry = data.find(item => item.map_name === mapName);
+    if (!entry) {
+      console.error(`No entry found for map: ${mapName}`);
+      return;
+    }  
 
     // Process contours
-    const fetched_contours = data[0].polygonBounding_coordinates.trim();
+    const fetched_contours = entry.polygonBounding_coordinates.trim();
     const cleaned_contours = fetched_contours.endsWith(',') 
       ? fetched_contours.slice(0, -1)
       : fetched_contours;
@@ -127,7 +128,7 @@ const MyWorldPage = () => {
     // console.log('Contours List:', contours); //Debugging tool to see the contours
 
     // Process waypoints
-    const fetched_waypoints = data[0].cleaning_path_coordinates.trim();
+    const fetched_waypoints = entry.cleaning_path_coordinates.trim();
     const cleaned_waypoints = fetched_waypoints.endsWith(',') 
       ? fetched_waypoints.slice(0, -1)
       : fetched_waypoints;
@@ -152,24 +153,66 @@ const MyWorldPage = () => {
     setImageLoaded(true);
   };
 
+  const handleStartJobClick = () => {
+    setIsJobStarted(true);
+    setIsJobPaused(false);
+  };
+
+  const handlePauseJobClick = () => {
+    setIsJobPaused(true);
+  };
+  
+  const handleStopJobClick = () => {
+    setIsJobStarted(false);
+    setIsJobPaused(false);
+  };
+
   // =============================
   // React rendered html component
   // =============================
 
   return (
-    <div className="my-world-page">
-      <h2>{mapName}</h2>
-      {isLoading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
-      <img
-        ref={imageRef}
-        alt="My World Map"
-        className="my-world-map"
-        style={{ display: 'none' }}
-        src={`${process.env.PUBLIC_URL}/my_world_map2.png`}
-        onLoad={handleImageLoad}
-      />
-      <canvas ref={canvasRef} className="my-world-canvas"></canvas>
+    <div className="my-world-container">
+      <div className="my-world-left">
+        <h2>{mapName}</h2>
+        {isLoading && <p>Loading...</p>}
+        {error && <p>Error: {error}</p>}
+        <img
+          ref={imageRef}
+          alt="My World Map"
+          className="my-world-map"
+          style={{ display: 'none' }}
+          src={`${process.env.PUBLIC_URL}/my_world_map2.png`}
+          onLoad={handleImageLoad}
+        />
+        <canvas ref={canvasRef} className="my-world-canvas"></canvas>
+      </div>
+      <div className="my-world-right">
+        {/* Insert additional text or content here */}
+        <h1>Coverage Cleaning mode</h1>
+        <div className = "bottom-center-right-buttons">
+        {isJobStarted ? (
+          <>
+            <button className="pause-job-button" onClick={handlePauseJobClick}>
+              <img src={pauseIcon} alt="pause" className="pause-icon" />
+            </button>
+            {isJobPaused ? (
+              <button className="start-job-button" onClick={handleStartJobClick}>
+                <img src={plusIcon} alt="start" className="start-icon" />
+              </button>
+            ) : (
+              <button className="stop-job-button" onClick={handleStopJobClick}>
+                <img src={stopIcon} alt="stop" className="stop-icon" />
+              </button>
+            )}
+          </>
+        ) : (
+          <button className="start-job-button" onClick={handleStartJobClick}>
+            <img src={plusIcon} alt="start" className="start-icon" />
+          </button>
+        )}
+        </div>
+      </div>
     </div>
   );
 };

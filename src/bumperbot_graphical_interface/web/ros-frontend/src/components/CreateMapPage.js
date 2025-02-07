@@ -415,9 +415,10 @@ const CreateMapPage = ({ mapName, showPage }) => {
   };
   const handleSave = () => {
     sessionStorage.removeItem('coverageListener');
-    showPage('main')
     fetchConfigData();
     fetchPolyData();
+    showPage('main');
+    publishDbShutdownState({ dbState: true });
   };
 
   const handleSaveEdit = () => {
@@ -479,10 +480,10 @@ const CreateMapPage = ({ mapName, showPage }) => {
         ref={imageRef}
         src={`${process.env.PUBLIC_URL}/my_world_map2.png`}
         alt="My World Map"
-        className="my-world-map"
+        className="create-my-world-map"
         style={{ display: 'none' }}
       />
-      <canvas ref={canvasRef} className="my-world-canvas" onClick={handleCanvasClick}></canvas>
+      <canvas ref={canvasRef} className="create-my-world-canvas" onClick={handleCanvasClick}></canvas>
       {showButtonContainer && (
       <div className="button-container">
         <button onClick={handleClearDataWrapper} className="cancel-btn">Cancel</button>

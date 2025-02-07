@@ -40,7 +40,7 @@
 
 /* Time display styling */
 .time-display {
-  font-size: 7rem;
+  font-size: 4rem;
   font-weight: bold;
   white-space: nowrap;
   overflow-wrap: break-word;
@@ -49,7 +49,7 @@
 
 /* Date display styling */
 .date-display {
-  font-size: 4rem;
+  font-size: 3rem;
   width: 25vw;
   text-align: left;
   line-height: 1.5;
@@ -67,12 +67,12 @@
 
 /* Styling for each icon */
 .icon {
-  width: 120px;
-  height: 120px;
+  width: 70px;
+  height: 70px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(23, 23, 23, 1);
+  /* background: rgba(23, 23, 23, 1); */
   border-radius: 30px;
   cursor: pointer;
   transition: background-color 0.5s ease;
@@ -81,14 +81,14 @@
 
 /* Styling for SVG icons inside the box */
 .icon img {
-  width: 65%;
-  height: 65%;
+  width: 50%;
+  height: 50%;
 }
 
 /* Hover effect for icons */
-.icon:hover {
+/* .icon:hover {
   background: #2BE1A9;
-}
+} */
 
 /* Function Selector Container */
 .function-selector-container {
@@ -100,9 +100,9 @@
   left: 50%;
   transform: translateX(-50%);
   width: 90vw;
-  padding: 25px 25px;
+  padding: 20px 20px;
   background: rgba(23, 23, 23, 1);
-  border-radius: 30px; /* Fully rounded corners */
+  border-radius: 25px; /* Fully rounded corners */
   box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.3);
   overflow: hidden; /* Prevent content overflow */
 }
@@ -112,18 +112,45 @@
   display: flex;
   flex-wrap: wrap; /* Allow wrapping of items if container is too small */
   justify-content: space-around; /* Space icons evenly */
-  gap: 10rem; /* Add spacing between icon-with-label groups */
+  gap: 5rem; /* Add spacing between icon-with-label groups */
 }
 
 /* Icon with label styling */
 .icon-with-label {
   display: flex;
   align-items: center;
-  gap: 1.5rem; /* Space between icon and label */
+  gap: 1rem; /* Space between icon and label */
+  border-radius: 20px;
 }
 
 .icon-label {
-  font-size: 3.5rem;
+  font-size: 2.5rem;
   color: #FAFAFA;
   white-space: nowrap; /* Prevent labels from wrapping */
+}
+
+.hover:hover {
+  background: #2BE1A9;
+}
+
+.middle-content {
+  display: flex;
+  height: 85vh;
+  max-height: calc(100vh - 35vh);
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+}
+
+.middle-content-left {
+  flex: 1;
+  padding-right: 5em;
+  padding-left: 5em;
+  height: 100%;
+}
+
+.middle-content-right {
+  flex: 1;
+  padding-left: 5em;
+  padding-right: 5em;
+  height: 100%;
 }
