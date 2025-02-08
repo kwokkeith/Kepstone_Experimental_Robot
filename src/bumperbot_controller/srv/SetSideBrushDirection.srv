@@ -1,0 +1,4 @@
+string direction  # Desired sidebrush direction (up/down)
+---
+bool success   # Response if direction is successfully set
+string message # Response message

@@ -34,6 +34,12 @@ add_service_files(
   GetVacuumPower.srv
   SetRollerBrushPower.srv
   GetRollerBrushPower.srv
+  SetRollerBrushDirection.srv
+  GetRollerBrushDirection.srv
+  SetSideBrushSpeed.srv
+  GetSideBrushSpeed.srv
+  SetSideBrushDirection.srv
+  GetSideBrushDirection.srv
 )
 
 # Declare messages
@@ -130,6 +136,14 @@ target_link_libraries(rollerbrush_controller ${catkin_LIBRARIES} ${Eigen_LIBRARI
 add_executable(rollerbrush_controller_node nodes/rollerbrush_controller_node.cpp)
 add_dependencies(rollerbrush_controller_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(rollerbrush_controller_node ${catkin_LIBRARIES} rollerbrush_controller)
+
+add_library(sidebrush_controller src/sidebrush_controller.cpp)
+add_dependencies(sidebrush_controller ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(sidebrush_controller ${catkin_LIBRARIES} ${Eigen_LIBRARIES})
+
+add_executable(sidebrush_controller_node nodes/sidebrush_controller_node.cpp)
+add_dependencies(sidebrush_controller_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(sidebrush_controller_node ${catkin_LIBRARIES} sidebrush_controller)
 
 #############
 ## Testing ##
