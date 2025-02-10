@@ -33,6 +33,7 @@ add_message_files(
   RollerBrushPowerFeedback.msg
   SideBrushPosFeedback.msg
   SideBrushSpeedFeedback.msg
+  DustBagCapacityFeedback.msg
 )
 
 # Declare services
