@@ -1,4 +1,0 @@
-string direction  # Desired rollerbrush direction (up/down)
----
-bool success   # Response if direction is successfully set
-string message # Response message

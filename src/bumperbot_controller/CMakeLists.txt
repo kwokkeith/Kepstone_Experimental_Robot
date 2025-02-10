@@ -25,6 +25,16 @@ find_package(catkin REQUIRED COMPONENTS
 
 find_package(Eigen3 REQUIRED)
 
+# Add message files
+add_message_files(
+  FILES
+  VacuumPowerFeedback.msg
+  RollerBrushPosFeedback.msg
+  RollerBrushPowerFeedback.msg
+  SideBrushPosFeedback.msg
+  SideBrushSpeedFeedback.msg
+)
+
 # Declare services
 add_service_files(
   FILES
@@ -34,12 +44,12 @@ add_service_files(
   GetVacuumPower.srv
   SetRollerBrushPower.srv
   GetRollerBrushPower.srv
-  SetRollerBrushDirection.srv
-  GetRollerBrushDirection.srv
+  SetRollerBrushPosition.srv
+  GetRollerBrushPosition.srv
   SetSideBrushSpeed.srv
   GetSideBrushSpeed.srv
-  SetSideBrushDirection.srv
-  GetSideBrushDirection.srv
+  SetSideBrushPosition.srv
+  GetSideBrushPosition.srv
 )
 
 # Declare messages

@@ -6,8 +6,10 @@
 #include <std_msgs/String.h>
 #include <bumperbot_controller/SetRollerBrushPower.h>
 #include <bumperbot_controller/GetRollerBrushPower.h>
-#include <bumperbot_controller/SetRollerBrushDirection.h>
-#include <bumperbot_controller/GetRollerBrushDirection.h>
+#include <bumperbot_controller/SetRollerBrushPosition.h>
+#include <bumperbot_controller/GetRollerBrushPosition.h>
+#include <bumperbot_controller/RollerBrushPosFeedback.h>
+#include <bumperbot_controller/RollerBrushPowerFeedback.h>
 
 class RollerBrushController
 {
@@ -17,14 +19,14 @@ public:
 private:
     ros::NodeHandle nh_;
     ros::Publisher rollerbrush_power_pub_;
-    ros::Publisher rollerbrush_direction_pub_;
+    ros::Publisher rollerbrush_position_pub_;
     ros::ServiceServer set_rollerbrush_power_service_;
     ros::ServiceServer get_rollerbrush_power_service_;
-    ros::ServiceServer set_rollerbrush_direction_service_;
-    ros::ServiceServer get_rollerbrush_direction_service_;
+    ros::ServiceServer set_rollerbrush_position_service_;
+    ros::ServiceServer get_rollerbrush_position_service_;
 
     float current_power_;
-    std::string current_direction_;
+    std::string current_position_;
 
     // Callback function for the service to set Rollerbrush Power
     bool setRollerBrushPower(bumperbot_controller::SetRollerBrushPower::Request& req, 
@@ -33,11 +35,11 @@ private:
     bool getRollerBrushPower(bumperbot_controller::GetRollerBrushPower::Request& req, 
                         bumperbot_controller::GetRollerBrushPower::Response& res);
 
-    bool setRollerBrushDirection(bumperbot_controller::SetRollerBrushDirection::Request& req, 
-                        bumperbot_controller::SetRollerBrushDirection::Response& res);
+    bool setRollerBrushPosition(bumperbot_controller::SetRollerBrushPosition::Request& req, 
+                        bumperbot_controller::SetRollerBrushPosition::Response& res);
 
-    bool getRollerBrushDirection(bumperbot_controller::GetRollerBrushDirection::Request& req,   
-                        bumperbot_controller::GetRollerBrushDirection::Response& res);
+    bool getRollerBrushPosition(bumperbot_controller::GetRollerBrushPosition::Request& req,   
+                        bumperbot_controller::GetRollerBrushPosition::Response& res);
 };
 
 #endif 

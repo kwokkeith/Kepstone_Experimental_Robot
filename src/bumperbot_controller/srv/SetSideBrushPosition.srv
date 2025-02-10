@@ -1,0 +1,4 @@
+string position  # Desired sidebrush position (up/down)
+---
+bool success   # Response if position is successfully set
+string message # Response message

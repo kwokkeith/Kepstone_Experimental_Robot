@@ -7,8 +7,10 @@
 #include <std_msgs/String.h>
 #include <bumperbot_controller/SetSideBrushSpeed.h>
 #include <bumperbot_controller/GetSideBrushSpeed.h>
-#include <bumperbot_controller/SetSideBrushDirection.h>
-#include <bumperbot_controller/GetSideBrushDirection.h>
+#include <bumperbot_controller/SetSideBrushPosition.h>
+#include <bumperbot_controller/GetSideBrushPosition.h>
+#include <bumperbot_controller/SideBrushSpeedFeedback.h>
+#include <bumperbot_controller/SideBrushPosFeedback.h>
 
 class SideBrushController
 {
@@ -18,14 +20,14 @@ public:
 private:
     ros::NodeHandle nh_;
     ros::Publisher sidebrush_speed_pub_;
-    ros::Publisher sidebrush_direction_pub_;
+    ros::Publisher sidebrush_position_pub_;
     ros::ServiceServer set_sidebrush_speed_service_;
     ros::ServiceServer get_sidebrush_speed_service_;
-    ros::ServiceServer set_sidebrush_direction_service_;
-    ros::ServiceServer get_sidebrush_direction_service_;
+    ros::ServiceServer set_sidebrush_position_service_;
+    ros::ServiceServer get_sidebrush_position_service_;
 
     float current_speed_;
-    std::string current_direction_;
+    std::string current_position_;
 
     // Callback function for the service to set Sidebrush Speed
     bool setSideBrushSpeed(bumperbot_controller::SetSideBrushSpeed::Request& req, 
@@ -34,11 +36,11 @@ private:
     bool getSideBrushSpeed(bumperbot_controller::GetSideBrushSpeed::Request& req, 
                         bumperbot_controller::GetSideBrushSpeed::Response& res);
 
-    bool setSideBrushDirection(bumperbot_controller::SetSideBrushDirection::Request& req, 
-                        bumperbot_controller::SetSideBrushDirection::Response& res);
+    bool setSideBrushPosition(bumperbot_controller::SetSideBrushPosition::Request& req, 
+                        bumperbot_controller::SetSideBrushPosition::Response& res);
 
-    bool getSideBrushDirection(bumperbot_controller::GetSideBrushDirection::Request& req,   
-                        bumperbot_controller::GetSideBrushDirection::Response& res);
+    bool getSideBrushPosition(bumperbot_controller::GetSideBrushPosition::Request& req,   
+                        bumperbot_controller::GetSideBrushPosition::Response& res);
 };
 
 #endif 
