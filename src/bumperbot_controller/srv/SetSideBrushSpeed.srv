@@ -1,0 +1,4 @@
+uint32 speed  # Desired sidebrush speed (>0)
+---
+bool success   # Response if speed is successfully set
+string message # Response message

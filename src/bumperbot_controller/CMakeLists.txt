@@ -25,6 +25,17 @@ find_package(catkin REQUIRED COMPONENTS
 
 find_package(Eigen3 REQUIRED)
 
+# Add message files
+add_message_files(
+  FILES
+  VacuumPowerFeedback.msg
+  RollerBrushPosFeedback.msg
+  RollerBrushPowerFeedback.msg
+  SideBrushPosFeedback.msg
+  SideBrushSpeedFeedback.msg
+  DustBagCapacityFeedback.msg
+)
+
 # Declare services
 add_service_files(
   FILES
@@ -34,6 +45,12 @@ add_service_files(
   GetVacuumPower.srv
   SetRollerBrushPower.srv
   GetRollerBrushPower.srv
+  SetRollerBrushPosition.srv
+  GetRollerBrushPosition.srv
+  SetSideBrushSpeed.srv
+  GetSideBrushSpeed.srv
+  SetSideBrushPosition.srv
+  GetSideBrushPosition.srv
 )
 
 # Declare messages
@@ -130,6 +147,14 @@ target_link_libraries(rollerbrush_controller ${catkin_LIBRARIES} ${Eigen_LIBRARI
 add_executable(rollerbrush_controller_node nodes/rollerbrush_controller_node.cpp)
 add_dependencies(rollerbrush_controller_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(rollerbrush_controller_node ${catkin_LIBRARIES} rollerbrush_controller)
+
+add_library(sidebrush_controller src/sidebrush_controller.cpp)
+add_dependencies(sidebrush_controller ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(sidebrush_controller ${catkin_LIBRARIES} ${Eigen_LIBRARIES})
+
+add_executable(sidebrush_controller_node nodes/sidebrush_controller_node.cpp)
+add_dependencies(sidebrush_controller_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(sidebrush_controller_node ${catkin_LIBRARIES} sidebrush_controller)
 
 #############
 ## Testing ##
