@@ -1,0 +1,4 @@
+string waypoints_list
+---
+bool success
+string message

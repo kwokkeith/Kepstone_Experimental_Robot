@@ -4,7 +4,7 @@ import plusIcon from '../assets/icons/play.svg';
 import pauseIcon from '../assets/icons/pause.svg';
 import stopIcon from '../assets/icons/stop.svg';
 // import ROSLIB from 'roslib';
-import { publishWaypointsList } from '../rosService';
+import { callWriteWaypointsService } from '../rosService';
 
 const MyWorldPage = ({mapName}) => {
   const canvasRef = useRef(null);
@@ -162,7 +162,7 @@ const MyWorldPage = ({mapName}) => {
     setIsJobStarted(true);
     setIsJobPaused(false);
     //TODO: Get navigation_waypoints from config table
-    publishWaypointsList({ waypointsList: navigation_waypointsList });
+    callWriteWaypointsService({ waypointsList: navigation_waypointsList });
   };
 
   const handlePauseJobClick = () => {

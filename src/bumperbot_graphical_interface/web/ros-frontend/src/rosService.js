@@ -259,42 +259,38 @@ export function publishDbShutdownState({dbState}) {
   publishMultipleTimes(2);
 }
 
-
-export function publishWaypointsList({waypointsList}) {
+export function callWriteWaypointsService({ waypointsList }) {
   // Initialize ROS connection
   var ros = new ROSLIB.Ros({
     url: 'ws://localhost:9090'
   });
 
   ros.on('connection', function() {
-    console.log('Waypoint publisher is now connected to websocket server.');
+    console.log('Connected to ROSBridge for service call.');
+    
+    // Create the service client
+    var serviceClient = new ROSLIB.Service({
+      ros: ros,
+      name: '/write_waypoints_to_txt_file',
+      serviceType: 'bumperbot_graphical_interface/WriteWaypoints'
+    });
+    
+    // Create the service request
+    var request = new ROSLIB.ServiceRequest({
+      waypoints_list: waypointsList
+    });
+    
+    serviceClient.callService(request, function(result) {
+      console.log("Service called, received result:", result);
+      ros.close();
+    });
   });
+
   ros.on('error', function(error) {
-    console.error('Error connecting to ROSBridge for the Waypoint publisher:', error);
+    console.error('Error connecting to ROSBridge for service call:', error);
   });
+
   ros.on('close', function() {
-    console.log('Waypoint Publisher is disconnected from ROSBridge');
+    console.log('Disconnected from ROSBridge.');
   });
-
-  const waypointPublisher = new ROSLIB.Topic({
-    ros: ros,
-    name: '/bumperbot_graphical_interface/waypointsList',
-    messageType: 'std_msgs/String'
-  });
-
-  // Create a ROS message
-  const waypointMsg = new ROSLIB.Message({ data: waypointsList });
-
-  // Publish the message multiple times
-  function publishMultipleTimes(times) {
-    for (let i = 0; i < times; i++) {
-      setTimeout(() => {
-        waypointPublisher.publish(waypointMsg);
-        if(i=== times - 1){
-          ros.close();
-        }
-      }, i * 800);
-    }
-  }
-  publishMultipleTimes(4);
 }

@@ -1,4 +1,6 @@
 <launch>
+    <arg name="waypoints_file" default="$(find navigation)/waypoints/waypoints.txt"/>
+
     <!-- Start rosbridge server for ROS-WebSocket communication -->
     <node name="rosbridge_websocket" pkg="rosbridge_server" type="rosbridge_websocket" output="screen"/>
 
@@ -10,6 +12,10 @@
 
     <!-- Start the SQL server using exec tag -->
     <node name="sql_server" pkg="bumperbot_graphical_interface" type="start_sql_server.sh"/>
+
+    <node name="write_waypoints_to_txt_file_service" pkg="bumperbot_graphical_interface" type="write_waypoints_to_txt_file_service.py" output="screen">
+        <param name="waypoints_file_path" value="$(arg waypoints_file)" />
+    </node>
 
     <!--<include file="$(find coverage_planner)/launch/coverage_planner.launch"></include>-->
 </launch>
