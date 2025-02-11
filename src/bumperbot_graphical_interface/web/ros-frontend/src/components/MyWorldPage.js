@@ -4,7 +4,7 @@ import plusIcon from '../assets/icons/play.svg';
 import pauseIcon from '../assets/icons/pause.svg';
 import stopIcon from '../assets/icons/stop.svg';
 // import ROSLIB from 'roslib';
-import { callWriteWaypointsService } from '../rosService';
+import { callWriteWaypointsService, triggerStartCoverageService } from '../rosService';
 
 const MyWorldPage = ({mapName}) => {
   const canvasRef = useRef(null);
@@ -163,6 +163,9 @@ const MyWorldPage = ({mapName}) => {
     setIsJobPaused(false);
     //TODO: Get navigation_waypoints from config table
     callWriteWaypointsService({ waypointsList: navigation_waypointsList });
+    setTimeout(() => {
+      triggerStartCoverageService();
+    }, 4000);
   };
 
   const handlePauseJobClick = () => {

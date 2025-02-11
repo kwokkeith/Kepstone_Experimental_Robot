@@ -17,5 +17,9 @@
         <param name="waypoints_file_path" value="$(arg waypoints_file)" />
     </node>
 
+    <node name="start_coverage_service" pkg="bumperbot_graphical_interface" type="start_coverage_service.py" output="screen">
+        <param name="waypoints_file_path" value="$(arg waypoints_file)" />
+    </node>
+
     <!--<include file="$(find coverage_planner)/launch/coverage_planner.launch"></include>-->
 </launch>
