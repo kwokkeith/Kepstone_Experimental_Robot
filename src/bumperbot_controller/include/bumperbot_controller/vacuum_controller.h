@@ -5,6 +5,8 @@
 #include <std_msgs/Float32.h>
 #include <bumperbot_controller/SetVacuumPower.h>
 #include <bumperbot_controller/GetVacuumPower.h>
+#include <bumperbot_controller/VacuumPowerFeedback.h>
+#include <bumperbot_controller/DustBagCapacityFeedback.h>
 
 class VacuumController
 {

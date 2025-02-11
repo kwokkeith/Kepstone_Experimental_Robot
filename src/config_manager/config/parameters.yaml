@@ -17,10 +17,23 @@ vacuum_controller:
    
 rollerbrush_controller:
   services:
-    get_rollerbrush_power: "/get_rollerbrush_power"                   # Service to get the target rollerbrush power for the rollerbrush module
-    set_rollerbrush_power: "/set_rollerbrush_power"                   # Service to set the target rollerbrush power for the rollerbrush module
+    get_rollerbrush_power: "/get_rollerbrush_power"                           # Service to get the target rollerbrush power for the rollerbrush module
+    set_rollerbrush_power: "/set_rollerbrush_power"                           # Service to set the target rollerbrush power for the rollerbrush module
+    get_rollerbrush_position: "/get_rollerbrush_position"                   # Service to get the target rollerbrush position for the rollerbrush module
+    set_rollerbrush_position: "/set_rollerbrush_position"                   # Service to set the target rollerbrush position for the rollerbrush module
   topics:
-    rollerbrush_power: "/rollerbrush_controller/rollerbrush_power"         # Topic to publish the target rollerbrush power for the rollerbrush module
+    rollerbrush_power: "/rollerbrush_controller/rollerbrush_power"            # Topic to publish the target rollerbrush power for the rollerbrush module
+    rollerbrush_position: "/rollerbrush_controller/rollerbrush_position"    # Topic to publish the target rollerbrush position for the rollerbrush module
+
+sidebrush_controller:
+  services:
+    get_sidebrush_speed: "/get_sidebrush_speed"                         # Service to get the target sidebrush speed for the sidebrush module
+    set_sidebrush_speed: "/set_sidebrush_speed"                         # Service to set the target sidebrush speed for the sidebrush module
+    get_sidebrush_position: "/get_sidebrush_position"                 # Service to get the target sidebrush position for the sidebrush module
+    set_sidebrush_position: "/set_sidebrush_position"                 # Service to set the target sidebrush position for the sidebrush module
+  topics:
+    sidebrush_speed: "/sidebrush_controller/sidebrush_speed"            # Topic to publish the target sidebrush speed for the sidebrush module
+    sidebrush_position: "/sidebrush_controller/sidebrush_position"    # Topic to publish the target sidebrush position for the sidebrush module
 
 localization:
   topics:
