@@ -18,7 +18,8 @@
 
     <!-- args: gazebo_test.launch -->
     <arg name="model" default="$(find bumperbot_description)/urdf/bumperbot.urdf.xacro"/>
-    <arg name="world" default="$(find bumperbot_description)/worlds/test_world2_obstacles.sdf"/>
+    <arg name="world" default="$(find bumperbot_description)/worlds/test_world2.sdf"/>
+    <!-- <arg name="world" default="$(find bumperbot_description)/worlds/test_world2_obstacles.sdf"/> -->
     <!-- args: controller.launch -->
     <arg name="use_python" default="false"/>
     <arg name="is_simple" default="false"/> 

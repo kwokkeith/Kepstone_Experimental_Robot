@@ -1,7 +1,7 @@
 import rospy
 from geometry_msgs.msg import Point
 from enum import Enum
-from std_srvs.srv import Trigger
+from std_srvs.srv import Trigger, TriggerResponse
 from std_msgs.msg import Int32
 from navigation.srv import InitiateCoveragePath, InitiateCoveragePathRequest, InitiateCoveragePathResponse
 from litter_destruction.srv import GlobalBoundaryCenter, GlobalBoundaryCenterResponse
@@ -31,6 +31,7 @@ class RobotController:
         get_global_boundary_srv = rospy.get_param('/robot_controller/services/get_global_boundary')
         get_current_mode_srv = rospy.get_param('/robot_controller/services/get_current_mode')
         initiate_coverage_srv = rospy.get_param('/robot_controller/services/initiate_coverage')
+        stop_robot_job_srv = rospy.get_param('/robot_controller/services/stop_robot_job')
         # Service Clients
         clear_previous_job_client = rospy.get_param('/litter_manager/services/clear_previous_job')
         get_global_boundary_client = rospy.get_param('/litter_manager/services/get_global_boundary_center')
@@ -51,6 +52,7 @@ class RobotController:
         rospy.Service(mode_switch_srv, ModeSwitch, self.handle_mode_switch)                                         # Service server to request mode switch
         rospy.Service(get_global_boundary_srv, GlobalBoundaryCenter, self.handle_get_global_boundary_center)        # Service server to get global boundary center of robot controller
         rospy.Service(get_current_mode_srv, GetCurrentMode, self.handle_get_current_mode)                           # Service server to request current mode
+        rospy.Service(stop_robot_job_srv, Trigger, self.handle_stop_robot_job)                                      # Service server to stop robot's current jobs
 
         ## Service Clients
         rospy.wait_for_service(initiate_coverage_path_client)
@@ -173,6 +175,30 @@ class RobotController:
         return response
     
 
+    def handle_stop_robot_job(self, req):
+        """Service handler to stop robot's current job"""
+        try:
+            self.switch_mode(RobotMode.IDLE)
+        except Exception as e:
+            success = False
+            message = "Error stopping robot because of failed Robot mode switch"
+            return TriggerResponse(success=success, message=message)
+        try:
+            clear_job_response = self.clear_previous_litter_job()
+            if not clear_job_response.success:
+                success = False
+                message = "Error stopping robot's previous litter task"
+                return TriggerResponse(success=success, message=message)
+        except Exception as e:
+            success = False
+            message = "Error stopping robot's previous litter task"
+            return TriggerResponse(success=success, message=message)
+
+        success = True
+        message = "Succeeded in stopping robot job"
+        return TriggerResponse(success=success, message=message)
+
+
     def switch_mode(self, mode):
         """Switch the robot's mode and update the mux topic selection."""
         #######################################
@@ -199,6 +225,16 @@ class RobotController:
         self.publish_mode()      # Publish new mode to the topic   
         # Determining topic based on mode and start the appropriate mode function
         if mode == RobotMode.IDLE:
+            # Cancel all existing move goals
+            cancel_all_goals_response = self.cancel_all_goals()
+            # Check if successful in canceling all goals
+            if cancel_all_goals_response.success:
+                rospy.loginfo("Successfully canceled all goals.")
+            else:
+                rospy.logwarn("Failed to cancel all goals.")
+                response.success = False
+                response.message = "Failed to cancel existing move goals."
+                return response
             rospy.loginfo("Switched to IDLE mode.")
 
         elif mode == RobotMode.COVERAGE:

@@ -19,21 +19,21 @@ rollerbrush_controller:
   services:
     get_rollerbrush_power: "/get_rollerbrush_power"                           # Service to get the target rollerbrush power for the rollerbrush module
     set_rollerbrush_power: "/set_rollerbrush_power"                           # Service to set the target rollerbrush power for the rollerbrush module
-    get_rollerbrush_position: "/get_rollerbrush_position"                   # Service to get the target rollerbrush position for the rollerbrush module
-    set_rollerbrush_position: "/set_rollerbrush_position"                   # Service to set the target rollerbrush position for the rollerbrush module
+    get_rollerbrush_position: "/get_rollerbrush_position"                     # Service to get the target rollerbrush position for the rollerbrush module
+    set_rollerbrush_position: "/set_rollerbrush_position"                     # Service to set the target rollerbrush position for the rollerbrush module
   topics:
     rollerbrush_power: "/rollerbrush_controller/rollerbrush_power"            # Topic to publish the target rollerbrush power for the rollerbrush module
-    rollerbrush_position: "/rollerbrush_controller/rollerbrush_position"    # Topic to publish the target rollerbrush position for the rollerbrush module
+    rollerbrush_position: "/rollerbrush_controller/rollerbrush_position"      # Topic to publish the target rollerbrush position for the rollerbrush module
 
 sidebrush_controller:
   services:
     get_sidebrush_speed: "/get_sidebrush_speed"                         # Service to get the target sidebrush speed for the sidebrush module
     set_sidebrush_speed: "/set_sidebrush_speed"                         # Service to set the target sidebrush speed for the sidebrush module
-    get_sidebrush_position: "/get_sidebrush_position"                 # Service to get the target sidebrush position for the sidebrush module
-    set_sidebrush_position: "/set_sidebrush_position"                 # Service to set the target sidebrush position for the sidebrush module
+    get_sidebrush_position: "/get_sidebrush_position"                   # Service to get the target sidebrush position for the sidebrush module
+    set_sidebrush_position: "/set_sidebrush_position"                   # Service to set the target sidebrush position for the sidebrush module
   topics:
     sidebrush_speed: "/sidebrush_controller/sidebrush_speed"            # Topic to publish the target sidebrush speed for the sidebrush module
-    sidebrush_position: "/sidebrush_controller/sidebrush_position"    # Topic to publish the target sidebrush position for the sidebrush module
+    sidebrush_position: "/sidebrush_controller/sidebrush_position"      # Topic to publish the target sidebrush position for the sidebrush module
 
 localization:
   topics:
@@ -73,6 +73,7 @@ robot_controller:
     get_global_boundary: "/robot_controller/get_global_boundary"  # Service to retrieve the robot's global boundary center and radius
     get_current_mode: "/robot_controller/get_current_mode"        # Service to query the robot's current mode
     initiate_coverage: "/robot_controller/initiate_coverage"      # Service to initiate a coverage path for the robot
+    stop_robot_job: "/robot_controller/stop_robot_job"            # Service to stop robot's current job (Puts robot straight into IDLE and deletes all previous job)
   topics:
       robot_mode: "/robot_controller/robot_mode"                  # Topic to publish the robot's current mode (e.g., IDLE, ACTIVE)
 
