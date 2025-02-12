@@ -2,7 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import './MyWorldPage.css';
 import plusIcon from '../assets/icons/play.svg';
 import pauseIcon from '../assets/icons/pause.svg';
-import stopIcon from '../assets/icons/stop.svg';  
+import stopIcon from '../assets/icons/stop.svg';
+// import ROSLIB from 'roslib';
+import { callWriteWaypointsService, triggerStartCoverageService } from '../rosService';
 
 const MyWorldPage = ({mapName}) => {
   const canvasRef = useRef(null);
@@ -12,6 +14,7 @@ const MyWorldPage = ({mapName}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [contoursList, setContoursList] = useState([]);
   const [waypointsList, setWaypointsList] = useState([]);
+  const [navigation_waypointsList, setNavigationWaypointsList] = useState([]);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [isJobStarted, setIsJobStarted] = useState(false);
   const [isJobPaused, setIsJobPaused] = useState(false);
@@ -145,7 +148,9 @@ const MyWorldPage = ({mapName}) => {
       );
 
     setWaypointsList(waypoints);
-    // console.log('Waypoints List:', waypoints); //Debugging tool to see the waypoints
+    
+    const fetched_navigation_waypoints = entry.navigation_waypoints.trim();
+    setNavigationWaypointsList(fetched_navigation_waypoints);
     
   }, [data]);
 
@@ -156,6 +161,11 @@ const MyWorldPage = ({mapName}) => {
   const handleStartJobClick = () => {
     setIsJobStarted(true);
     setIsJobPaused(false);
+    //TODO: Get navigation_waypoints from config table
+    callWriteWaypointsService({ waypointsList: navigation_waypointsList });
+    setTimeout(() => {
+      triggerStartCoverageService();
+    }, 4000);
   };
 
   const handlePauseJobClick = () => {

@@ -258,3 +258,74 @@ export function publishDbShutdownState({dbState}) {
   }
   publishMultipleTimes(2);
 }
+
+export function callWriteWaypointsService({ waypointsList }) {
+  // Initialize ROS connection
+  var ros = new ROSLIB.Ros({
+    url: 'ws://localhost:9090'
+  });
+
+  ros.on('connection', function() {
+    console.log('Connected to ROSBridge for service call.');
+    
+    // Create the service client
+    var serviceClient = new ROSLIB.Service({
+      ros: ros,
+      name: '/write_waypoints_to_txt_file',
+      serviceType: 'bumperbot_graphical_interface/WriteWaypoints'
+    });
+    
+    // Create the service request
+    var request = new ROSLIB.ServiceRequest({
+      waypoints_list: waypointsList
+    });
+    
+    serviceClient.callService(request, function(result) {
+      console.log("Service called, received result:", result);
+      ros.close();
+    });
+  });
+
+  ros.on('error', function(error) {
+    console.error('Error connecting to ROSBridge for service call:', error);
+  });
+
+  ros.on('close', function() {
+    console.log('Disconnected from ROSBridge.');
+  });
+}
+
+export function triggerStartCoverageService() {
+  // Connect to ROS
+  var ros = new ROSLIB.Ros({
+    url: 'ws://localhost:9090'
+  });
+
+  ros.on('connection', function() {
+    console.log('Connected to ROSBridge.');
+
+    // Create the service client
+    var serviceClient = new ROSLIB.Service({
+      ros: ros,
+      name: '/start_coverage',
+      serviceType: 'std_srvs/Trigger'
+    });
+
+    // Create the service request
+    var request = new ROSLIB.ServiceRequest({});
+
+    // Call the service
+    serviceClient.callService(request, function(result) {
+      console.log("Service called, received result:", result);
+      ros.close();
+    });
+  });
+
+  ros.on('error', function(error) {
+    console.error('Error connecting to ROSBridge for service call:', error);
+  });
+
+  ros.on('close', function() {
+    console.log('Disconnected from ROSBridge.');
+  });
+}
