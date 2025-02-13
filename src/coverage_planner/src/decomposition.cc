@@ -230,8 +230,7 @@ bool computeBestTCDFromPolygonWithHoles(const PolygonWithHoles &pwh,
   }
 
   if (tcd_polygons->empty())
-    return false;
-  else
+    return false  else
     return true;
 }
 
