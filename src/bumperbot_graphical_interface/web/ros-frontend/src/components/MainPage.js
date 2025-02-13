@@ -1,5 +1,5 @@
 // Import necessary modules and assets
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './MainPage.css';
 import bellIcon from '../assets/icons/bell.svg';
 import menuIcon from '../assets/icons/Menu.svg';
@@ -8,10 +8,15 @@ import moveIcon from '../assets/icons/move.svg';
 import mapIcon from '../assets/icons/map.svg';
 import calendarIcon from '../assets/icons/calendar.svg';
 import diagnosticsIcon from '../assets/icons/diagnostics.svg';
+import batteryIcon from '../assets/icons/zap.svg';
 
 const MainPage = ({ showPage }) => {
   const [currentTime, setCurrentTime] = useState('');
   const [currentDate, setCurrentDate] = useState('');
+  const [percentage, setPercentage] = useState(10); //USE THIS TO SET PERCENTAGE OF BATTERY
+  const [circumference, setCircumference] = useState(0);
+  const [strokeDashoffset, setStrokeDashoffset] = useState(0);
+  const circleRef = useRef(null);
 
   useEffect(() => {
     const updateDateTime = () => {
@@ -31,6 +36,19 @@ const MainPage = ({ showPage }) => {
 
     return () => clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    if (circleRef.current) {
+      const radius = circleRef.current.r.baseVal.value;
+      const circumference = 2 * Math.PI * radius;
+      setCircumference(circumference);
+      setStrokeDashoffset(circumference - (percentage / 100) * circumference);
+      circleRef.current.style.strokeDasharray = circumference;
+      circleRef.current.style.strokeDashoffset = strokeDashoffset;
+    }
+  }, [percentage, circumference]);
+
+  const strokeColor = percentage < 20 ? '#FF5255' : '#2BE1A9';
 
   return (
     <div id="main-page" className="page">
@@ -56,13 +74,41 @@ const MainPage = ({ showPage }) => {
       </header>
 
       <div className="middle-content">
-        <div className = "middle-content-left">
+
+        <div className="middle-content-left">
           {/* <p>Map</p> */}
-          </div>
-        <div className = "middle-content-right">
-          
-          </div>
         </div>
+
+        <div className="middle-content-right-top">
+          <div className="battery-status">
+            <div className="progress-ring">
+              <svg width="100%" height="100%">
+                <circle
+                  ref={circleRef}
+                  cx="50%"
+                  cy="50%"
+                  r="40%"
+                  stroke={strokeColor}
+                />
+              </svg>
+              <div className="middle-icon">
+                  <img src={batteryIcon} alt="Battery" />
+              </div>
+            </div>
+            <div className="battery-text">
+              <h3>{percentage}%</h3>
+              <p>Battery in use</p> 
+              {/* TODO: Change to Battery Charging when read from rostopic */}
+            </div>
+          </div>
+          {/* <p>Top Right</p> */}
+        </div>
+
+        <div className="middle-content-right-bottom">
+          {/* <p>Bottom Right</p> */}
+        </div>
+
+      </div>
 
       {/* Function Selector at the Bottom */}
       <div className="function-selector-container">
