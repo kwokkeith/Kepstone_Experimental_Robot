@@ -279,7 +279,9 @@ class LitterManager:
                 if self.get_robot_mode().mode == 3 or self.get_robot_mode().mode == 5: # TODO: Change the number to an enum label
                     rospy.loginfo("Did not register new litter because robot is in LITTER PICKING or LITTER_TRACKING mode")
                     return
-                    
+                if self.get_robot_mode().mode == 6:
+                    rospy.loginfo("Detected litter but robot in IDLE_LATCH mode")
+                    return
                 # Proceed to initialise LITTER_PICKING mode
                 self.global_boundary_center = self.get_robot_position()
                 self.start_pos = self.global_boundary_center

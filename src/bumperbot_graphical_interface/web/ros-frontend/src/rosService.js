@@ -329,3 +329,38 @@ export function triggerStartCoverageService() {
     console.log('Disconnected from ROSBridge.');
   });
 }
+
+export function triggerStopCoverageService() {
+  // Connect to ROS
+  var ros = new ROSLIB.Ros({
+    url: 'ws://localhost:9090'
+  });
+
+  ros.on('connection', function() {
+    console.log('Connected to ROSBridge.');
+
+    // Create the service client
+    var serviceClient = new ROSLIB.Service({
+      ros: ros,
+      name: '/robot_controller/stop_robot_job',
+      serviceType: 'std_srvs/Trigger'
+    });
+
+    // Create the service request
+    var request = new ROSLIB.ServiceRequest({});
+
+    // Call the service
+    serviceClient.callService(request, function(result) {
+      console.log("Service to stop called, received result:", result);
+      ros.close();
+    });
+  });
+
+  ros.on('error', function(error) {
+    console.error('Error connecting to ROSBridge for service call:', error);
+  });
+
+  ros.on('close', function() {
+    console.log('Disconnected from ROSBridge.');
+  });
+}
