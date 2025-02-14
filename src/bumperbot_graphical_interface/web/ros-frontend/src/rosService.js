@@ -1,5 +1,6 @@
 // src/rosService.js
 import ROSLIB from 'roslib';
+import ROS3D from 'ros3d';
 
 export function startNode() {
   // Initialize ROS connection
@@ -363,4 +364,29 @@ export function triggerStopCoverageService() {
   ros.on('close', function() {
     console.log('Disconnected from ROSBridge.');
   });
+}
+
+export function sidebrush_speed_listener() {
+  // Initialize ROS connection
+  var ros = new ROSLIB.Ros({
+    url: 'ws://localhost:9090'
+  });
+
+  ros.on('connection', function() {
+    console.log('sidebrush listener is now connected to websocket server.');
+  });
+  ros.on('error', function(error) {
+    console.error('Error connecting to ROSBridge for the sidebrush listener:', error);
+  });
+  ros.on('close', function() {
+    console.log('sidebrush listener is disconnected from ROSBridge');
+  });
+
+  const listener = new ROSLIB.Topic({
+    ros: ros,
+    name: '/sidebrush_controller/sidebrush_speed',
+    messageType: 'std_msgs/UInt32'
+  });
+
+  return listener;
 }

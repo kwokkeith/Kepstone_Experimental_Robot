@@ -1,4 +1,3 @@
-// components/CreateMapPage2.js
 import React, { useState, useEffect } from 'react';
 import './Diagnostics.css';
 // import ROSLIB from 'roslib';
