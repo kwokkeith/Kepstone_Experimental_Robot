@@ -1,0 +1,128 @@
+#!/usr/bin/env python
+from onnx_infer import load_model_data, run_inference, image_point_to_ground_3d
+import rospy
+import cv2
+import numpy as np
+import math
+from cv_bridge import CvBridge, CvBridgeError
+import message_filters
+from decimal import Decimal
+from geometry_msgs.msg import PointStamped
+import os
+import pyrealsense2 as rs
+from sensor_msgs.msg import CameraInfo
+import time
+
+
+# This class is used to detect object (ball) and publish to camera_frame/detected_object_coordinates
+# Sub:
+#   /camera/color/image_raw
+# Pub:
+#   /camera_frame_detected_object_coordinates
+# Node Param:  
+#   camera_frame
+
+
+# Pipeline to configure the camera
+pipeline = rs.pipeline()
+config = rs.config()
+config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
+pipeline_profile = pipeline.start(config)
+
+# Get the depth stream intrinsics
+depth_stream = pipeline_profile.get_stream(rs.stream.depth) # Fetch the depth stream 
+intrinsics = depth_stream.as_video_stream_profile().get_intrinsics()
+
+print(f"Width: {intrinsics.width}")
+print(f"Height: {intrinsics.height}")
+print(f"Fx: {intrinsics.fx}")
+print(f"Fy: {intrinsics.fy}")
+print(f"Cx: {intrinsics.ppx}")
+print(f"Cy: {intrinsics.ppy}")
+print(f"Distortion Model: {intrinsics.model}")
+print(f"Distortion Coefficients: {intrinsics.coeffs}")
+
+# Stop the pipeline
+pipeline.stop()
+
+# Set camera_matrix
+camera_matrix = np.array([[390.8465270996094, 0, 323.46539306640625],
+                        [0, 390.8465270996094, 242.03125],
+                        [0, 0, 1]])
+dist_coeffs = np.zeros(5)  # assume no distortion
+camera_height = 1.2  # 1.2 meters above the ground
+tilt_angle_deg = 30  # 30-degree tilt
+
+
+# Get global paramaters for topics/services
+detected_object_coordinates_topic_pub_ = rospy.get_param('/litter_detection/topics/detected_object_coordinates_camera')
+camera_frame = rospy.get_param('~camera_frame', 'dpcamera_link')
+
+# Publish detected object coordinates
+coord_publisher = rospy.Publisher(detected_object_coordinates_topic_pub_, PointStamped, queue_size=10)
+
+def run_example(frame):   
+    # Load image
+    input_image = frame
+
+    # Run inference
+    boxes, scores, class_names = run_inference(
+    input_img=input_image, score_thr=0.05, input_shape="480,640")
+
+    for i in range(len(boxes)):
+        target_point = ((boxes[i][0]+boxes[i][2])/2, (boxes[i][1]+boxes[i][3])/2)  # Example target point in the image
+        # the distance is ground_position[2]
+        ground_position = image_point_to_ground_3d(target_point, camera_matrix, dist_coeffs, camera_height, tilt_angle_deg)
+
+
+
+        # Create a PointStamped message
+        point_msg = PointStamped()
+        point_msg.header.stamp = rospy.Time.now()     # Add a timestamp
+        point_msg.header.frame_id = camera_frame # Indicate the frame of reference
+
+        # Point coordinates are in robot coordinate system (point) as opposed to the 
+        # optical coordinate system of camera (Xtarget, Ytarget, Ztarget)
+        point_msg.point.x = -ground_position[0]
+        point_msg.point.y = ground_position[1]
+        point_msg.point.z = ground_position[2]
+
+        coord_publisher.publish(point_msg)        
+
+if __name__ == "__main__":
+    current_dir = os.path.dirname(os.path.realpath(__file__))
+    model_path = os.path.join(current_dir, "../models/encrypt-model-v1-fp16.7z")
+    load_model_data(model_path)
+
+    rospy.init_node('ball_detector', anonymous=True)
+    #rate = rospy.Rate(1000000)
+
+    cap = cv2.VideoCapture(4)
+    if not (cap.isOpened()):
+        print(f"Could not open video device of index 4")
+        exit(1)
+    
+    start_time = time.time()
+    fps = 0
+    frame_count = 0
+
+    while not rospy.is_shutdown():
+    #while True:
+        ret, frame = cap.read()
+        # cv2.imshow("Win1", frame)
+        if frame_count % 7== 0:
+            run_example(frame)
+                
+            cv2.imshow("Model", frame)
+            frame_count=0
+        frame_count+=1 
+
+        if not ret:
+            print("Failed to capture video frame")
+            break
+
+        cv2.waitKey(1)
+        #rate.sleep()
+
+    cap.release()
+    cv2.destroyAllWindows()
