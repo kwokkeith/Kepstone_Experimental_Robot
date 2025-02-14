@@ -16,7 +16,7 @@ class RobotMode(Enum):
     LITTER_PICKING     = 3
     TRANSITION         = 4
     LITTER_TRACKING    = 5
-
+    IDLE_LATCH         = 6
 
 class RobotController:
     def __init__(self):
@@ -178,7 +178,7 @@ class RobotController:
     def handle_stop_robot_job(self, req):
         """Service handler to stop robot's current job"""
         try:
-            self.switch_mode(RobotMode.IDLE)
+            self.switch_mode(RobotMode.IDLE_LATCH)
         except Exception as e:
             success = False
             message = "Error stopping robot because of failed Robot mode switch"
