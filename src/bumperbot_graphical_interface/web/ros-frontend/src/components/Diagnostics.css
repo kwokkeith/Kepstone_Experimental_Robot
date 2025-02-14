@@ -1,0 +1,61 @@
+.middle-content {
+  display: flex;
+  height: 85vh;
+  max-height: calc(100vh - 35vh);
+  padding-top: 5vh;
+  padding-bottom: 5vh;
+  width: 80vw;
+}
+
+.middle-content-left {
+  flex: 1;
+  padding-right: 5em;
+  padding-left: 2em;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.middle-content-right {
+  flex: 3;
+  padding-right: 2em;
+  padding-left: 5em;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3%;
+  border: 2px solid rgba(23, 23, 23, 1);
+  overflow: hidden;
+}
+
+.pill-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  
+}
+
+.pill-tab {
+  padding: 2rem 4rem;
+  background-color: rgba(23, 23, 23, 1);
+  color: #FAFAFA;
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1.5rem;
+  text-align: center;
+  font-family: "Inter", sans-serif;
+  font-weight: bold;
+}
+
+.pill-tab:hover {
+  background-color: #2BE1A9;
+}
+
+.pill-tab.active {
+  background-color: #2BE1A9;
+}
