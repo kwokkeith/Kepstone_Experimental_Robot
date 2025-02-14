@@ -17,6 +17,7 @@ const MainPage = ({ showPage }) => {
   const [circumference, setCircumference] = useState(0);
   const [strokeDashoffset, setStrokeDashoffset] = useState(0);
   const circleRef = useRef(null);
+  const viewerRef = useRef(null);
 
   useEffect(() => {
     const updateDateTime = () => {
@@ -75,8 +76,8 @@ const MainPage = ({ showPage }) => {
 
       <div className="middle-content">
 
-        <div className="middle-content-left">
-          {/* <p>Map</p> */}
+        <div className="middle-content-left" ref={viewerRef} id = "urdf-viewer">
+          {/* <p>urdfviewer</p> */}
         </div>
 
         <div className="middle-content-right-top">
@@ -136,9 +137,9 @@ const MainPage = ({ showPage }) => {
             <span className="icon-label">Schedules</span>
           </div>
 
-          <div className="icon-with-label hover">
+          <div className="icon-with-label hover" onClick={() => showPage('diagnostics')} style={{ cursor: 'pointer' }} >
             <div className="icon">
-              <img src={diagnosticsIcon} alt="Diagnostics" />
+              <img src={diagnosticsIcon} alt="Diagnostics"/>
             </div>
             <span className="icon-label">Diagnostics</span>
           </div>

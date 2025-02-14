@@ -9,6 +9,7 @@ import FullScreenToggle from './components/FullScreenToggle';
 import MyWorldPage from './components/MyWorldPage';
 import CreateMapPage from './components/CreateMapPage';
 import CreateMapPage2 from './components/CreateMapPage2';
+import Diagnostics from './components/Diagnostics';
 
 function App() {
   // Gets the session stored value, (in case react re-renders)
@@ -91,6 +92,8 @@ function App() {
           {currentPage === 'my-world' && <MyWorldPage mapName={mapName}/>}
           {currentPage === 'create-map' && <CreateMapPage mapName={mapName} showPage={showPage}/>} {/* Pass mapName to CreateMapPage */}
           {currentPage === 'create-map2' && <CreateMapPage2 showPage={showPage}/>}
+          {currentPage === 'diagnostics' && <Diagnostics showPage={showPage}/>}
+
         </>
       )}
     </div>
