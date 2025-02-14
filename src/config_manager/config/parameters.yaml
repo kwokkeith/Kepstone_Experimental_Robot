@@ -10,11 +10,13 @@ bumperbot_controller:
 
 vacuum_controller:
   services:
-    get_vacuum_power: "/get_vacuum_power"                   # Service to get the target vacuum power for the vacuum module
-    set_vacuum_power: "/set_vacuum_power"                   # Service to set the target vacuum power for the vacuum module
+    get_vacuum_power: "/get_vacuum_power"                             # Service to get the target vacuum power for the vacuum module
+    set_vacuum_power: "/set_vacuum_power"                             # Service to set the target vacuum power for the vacuum module
   topics:
-    vacuum_power: "/vacuum_controller/vacuum_power"         # Topic to publish the target vacuum power for the vacuum module
-   
+    vacuum_power: "/vacuum_controller/vacuum_power"                           # Topic to publish the target vacuum power for the vacuum module
+    vacuum_power_feedback: "/vacuum_controller/vacuum_power_feedback"         # Topic to get the vacuum power feedback
+    dustbag_capacity_feedback: "/vacuum_controller/dustbag_capacity_feedback" # Topic to get the dustbag capacity feedback
+
 rollerbrush_controller:
   services:
     get_rollerbrush_power: "/get_rollerbrush_power"                           # Service to get the target rollerbrush power for the rollerbrush module
@@ -22,8 +24,10 @@ rollerbrush_controller:
     get_rollerbrush_position: "/get_rollerbrush_position"                     # Service to get the target rollerbrush position for the rollerbrush module
     set_rollerbrush_position: "/set_rollerbrush_position"                     # Service to set the target rollerbrush position for the rollerbrush module
   topics:
-    rollerbrush_power: "/rollerbrush_controller/rollerbrush_power"            # Topic to publish the target rollerbrush power for the rollerbrush module
-    rollerbrush_position: "/rollerbrush_controller/rollerbrush_position"      # Topic to publish the target rollerbrush position for the rollerbrush module
+    rollerbrush_power: "/rollerbrush_controller/rollerbrush_power"                         # Topic to publish the target rollerbrush power for the rollerbrush module
+    rollerbrush_position: "/rollerbrush_controller/rollerbrush_position"                   # Topic to publish the target rollerbrush position for the rollerbrush module
+    rollerbrush_power_feedback: "/rollerbrush_controller/rollerbrush_power_feedback"       # Topic to get the rollerbrush speed feedback
+    rollerbrush_position_feedback: "/rollerbrush_controller/rollerbrush_position_feedback" # Topic to get the rollerbrush position feedback
 
 sidebrush_controller:
   services:
@@ -32,8 +36,10 @@ sidebrush_controller:
     get_sidebrush_position: "/get_sidebrush_position"                   # Service to get the target sidebrush position for the sidebrush module
     set_sidebrush_position: "/set_sidebrush_position"                   # Service to set the target sidebrush position for the sidebrush module
   topics:
-    sidebrush_speed: "/sidebrush_controller/sidebrush_speed"            # Topic to publish the target sidebrush speed for the sidebrush module
-    sidebrush_position: "/sidebrush_controller/sidebrush_position"      # Topic to publish the target sidebrush position for the sidebrush module
+    sidebrush_speed: "/sidebrush_controller/sidebrush_speed"                         # Topic to publish the target sidebrush speed for the sidebrush module
+    sidebrush_position: "/sidebrush_controller/sidebrush_position"                   # Topic to publish the target sidebrush position for the sidebrush module
+    sidebrush_speed_feedback: "/sidebrush_controller/sidebrush_speed_feedback"       # Topic to get the sidebrush speed feedback
+    sidebrush_position_feedback: "/sidebrush_controller/sidebrush_position_feedback" # Topic to get the sidebrush position feedback
 
 localization:
   topics:
