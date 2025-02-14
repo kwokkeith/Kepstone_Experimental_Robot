@@ -74,6 +74,7 @@ robot_controller:
     get_current_mode: "/robot_controller/get_current_mode"        # Service to query the robot's current mode
     initiate_coverage: "/robot_controller/initiate_coverage"      # Service to initiate a coverage path for the robot
     stop_robot_job: "/robot_controller/stop_robot_job"            # Service to stop robot's current job (Puts robot straight into IDLE and deletes all previous job)
+    start_robot_job: "/robot_controller/start_robot_job"          # Service to initialise robot's current state to switch it to an IDLE state where it would be able to move
   topics:
       robot_mode: "/robot_controller/robot_mode"                  # Topic to publish the robot's current mode (e.g., IDLE, ACTIVE)
 

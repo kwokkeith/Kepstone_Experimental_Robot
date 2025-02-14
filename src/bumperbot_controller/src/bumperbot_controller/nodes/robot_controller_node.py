@@ -32,6 +32,7 @@ class RobotController:
         get_current_mode_srv = rospy.get_param('/robot_controller/services/get_current_mode')
         initiate_coverage_srv = rospy.get_param('/robot_controller/services/initiate_coverage')
         stop_robot_job_srv = rospy.get_param('/robot_controller/services/stop_robot_job')
+        start_robot_job_srv = rospy.get_param('/robot_controller/services/start_robot_job')
         # Service Clients
         clear_previous_job_client = rospy.get_param('/litter_manager/services/clear_previous_job')
         get_global_boundary_client = rospy.get_param('/litter_manager/services/get_global_boundary_center')
@@ -53,6 +54,7 @@ class RobotController:
         rospy.Service(get_global_boundary_srv, GlobalBoundaryCenter, self.handle_get_global_boundary_center)        # Service server to get global boundary center of robot controller
         rospy.Service(get_current_mode_srv, GetCurrentMode, self.handle_get_current_mode)                           # Service server to request current mode
         rospy.Service(stop_robot_job_srv, Trigger, self.handle_stop_robot_job)                                      # Service server to stop robot's current jobs
+        rospy.Service(start_robot_job_srv, Trigger, self.handle_start_robot_job)                                    # Service server to initialise robot to running state
 
         ## Service Clients
         rospy.wait_for_service(initiate_coverage_path_client)
@@ -196,6 +198,19 @@ class RobotController:
 
         success = True
         message = "Succeeded in stopping robot job"
+        return TriggerResponse(success=success, message=message)
+
+
+    def handle_start_robot_job(self, req):
+        """Service handler to start robot, get it running. Allow it to move if it detects litter"""
+        try:
+            self.switch_mode(RobotMode.IDLE)
+        except Exception as e:
+            success = False
+            message = "Error stopping robot because of failed Robot mode switch"
+            return TriggerResponse(success=success, message=message)
+        success = True
+        message = "Robot is now running and can detect and move."
         return TriggerResponse(success=success, message=message)
 
 
