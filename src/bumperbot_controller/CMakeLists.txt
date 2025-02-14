@@ -156,6 +156,17 @@ add_executable(sidebrush_controller_node nodes/sidebrush_controller_node.cpp)
 add_dependencies(sidebrush_controller_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(sidebrush_controller_node ${catkin_LIBRARIES} sidebrush_controller)
 
+# Sidebrush Feedback subscriber 
+add_executable(sidebrush_subscriber nodes/sidebrush_subscriber.cpp)
+target_link_libraries(sidebrush_subscriber ${catkin_LIBRARIES})
+
+# Vacuum Feedback subscriber 
+add_executable(vacuum_subscriber nodes/vacuum_subscriber.cpp)
+target_link_libraries(vacuum_subscriber ${catkin_LIBRARIES})
+
+# Rollerbrush Feedback subscriber 
+add_executable(rollerbrush_subscriber nodes/rollerbrush_subscriber.cpp)
+target_link_libraries(rollerbrush_subscriber ${catkin_LIBRARIES})
 #############
 ## Testing ##
 #############

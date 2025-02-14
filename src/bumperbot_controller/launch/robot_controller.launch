@@ -11,12 +11,18 @@
     </node>
 
     <!-- Launch vacuum controller node -->
-    <node name="vacuum_controller_node" pkg="bumperbot_controller" type="vacuum_controller_node" output="screen"/>
+    <node name="vacuum_controller_node" pkg="bumperbot_controller" type="vacuum_controller_node" output="screen"/>    
+    <!-- Vacuum subscriber -->
+    <node pkg="bumperbot_controller" type="vacuum_subscriber" name="vacuum_subscriber" output="screen" />
     
     <!-- Launch rollerbrush controller node -->
     <node name="rollerbrush_controller_node" pkg="bumperbot_controller" type="rollerbrush_controller_node" output="screen"/>
+    <!-- Rollerbrush subscriber -->
+    <node pkg="bumperbot_controller" type="rollerbrush_subscriber" name="rollerbrush_subscriber" output="screen" />
 
     <!-- Launch sidebrush controller node -->
     <node name="sidebrush_controller_node" pkg="bumperbot_controller" type="sidebrush_controller_node" output="screen"/>
+    <!-- Sidebrush subscriber -->
+    <node pkg="bumperbot_controller" type="sidebrush_subscriber" name="sidebrush_subscriber" output="screen" />
 
 </launch>
