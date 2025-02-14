@@ -21,7 +21,7 @@ class RobotMode(Enum):
 class RobotController:
     def __init__(self):
         ## Configurations
-        self.mode = RobotMode.IDLE
+        self.mode = RobotMode.IDLE_LATCH
         self.global_boundary_center = Point()
         self.global_boundary_radius = 0
 
