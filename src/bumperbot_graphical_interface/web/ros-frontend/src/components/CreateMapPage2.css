@@ -117,3 +117,22 @@
     font-family: "Inter", sans-serif;
   }
   
+  .confirm-button {
+    background-color: rgba(23, 23, 23, 1);
+    color: #FAFAFA;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1.6rem;
+    transition: background-color 0.3s ease;
+    font-weight: 700;
+  }
+  
+  .confirm-button:hover {
+    background-color: #24c49f;
+  }
+
+  .grid-item.selected-zone h3 {
+    color: #FF5255;
+  }
