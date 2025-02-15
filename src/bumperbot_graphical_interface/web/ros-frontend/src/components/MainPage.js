@@ -10,6 +10,9 @@ import calendarIcon from '../assets/icons/calendar.svg';
 import diagnosticsIcon from '../assets/icons/diagnostics.svg';
 import batteryIcon from '../assets/icons/zap.svg';
 
+import ROSLIB from 'roslib';
+import * as ROS3D from 'ros3d';
+
 const MainPage = ({ showPage }) => {
   const [currentTime, setCurrentTime] = useState('');
   const [currentDate, setCurrentDate] = useState('');
@@ -50,6 +53,37 @@ const MainPage = ({ showPage }) => {
   }, [percentage, circumference]);
 
   const strokeColor = percentage < 20 ? '#FF5255' : '#2BE1A9';
+
+  // useEffect(() => {
+  //   // Initialize ROS connection
+  //   const ros = new ROSLIB.Ros({
+  //     url: 'ws://localhost:9090'
+  //   });
+
+  //   // Create the main viewer
+  //   const viewer = new ROS3D.Viewer({
+  //     divID: 'urdf-viewer',
+  //     width: 600,
+  //     height: 400,
+  //     antialias: true
+  //   });
+
+  //   // Add a grid
+  //   viewer.addObject(new ROS3D.Grid());
+
+  //   // Setup a URDF client
+  //   new ROS3D.UrdfClient({
+  //     ros: ros,
+  //     tfClient: new ROSLIB.TFClient({
+  //       ros: ros,
+  //       fixedFrame: 'base_link',
+  //       angularThres: 0.01,
+  //       transThres: 0.01
+  //     }),
+  //     path: 'http://localhost:8000/',
+  //     rootObject: viewer.scene
+  //   });
+  // }, []);
 
   return (
     <div id="main-page" className="page">

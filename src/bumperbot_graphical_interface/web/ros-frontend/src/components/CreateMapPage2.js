@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import './CreateMapPage2.css';
 import trashIcon from '../assets/icons/trash.svg'; // Import the trash icon
+import trashhoverIcon from '../assets/icons/trash-hover.svg'; // Import the trash icon
 import plusIcon from '../assets/icons/plus.svg';  // Assuming you have a plus.svg icon, or replace it with a "+" character inside the button
 import ROSLIB from 'roslib';
 import { startNode, publishmapName, publishEditState } from '../rosService';
@@ -88,7 +89,7 @@ const CreateMapPage2 = ({showPage}) => {
       <div className="map-actions">
         {/* Trash Icon Button */}
         <button className="icon-button-trash-zone" onClick={handleTrashClick}>
-          <img src={trashIcon} alt="Trash" className="icon-trash-zone" />
+          {/* <img src={trashIcon} alt="Trash" className="icon-trash-zone" /> */}
         </button>
   
         {/* New Zone Button */}

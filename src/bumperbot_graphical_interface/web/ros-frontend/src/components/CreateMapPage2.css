@@ -10,26 +10,20 @@
   .icon-button-trash-zone {
     background-color: rgba(23, 23, 23, 1);
     border: none;
-    padding: 1.5rem;
+    padding: 2.8rem;
     border-radius: 30px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    background-image: url("../assets/icons/trash.svg");
+    background-repeat: no-repeat;
+    background-position: center;
   }
   
   .icon-button-trash-zone:hover {
-    background-color: #2BE1A9;
+    background-color: #FF5255;
+    background-image: url("../assets/icons/trash-hover.svg");
   }
   
-  #icon-trash-zone {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* background: rgba(23, 23, 23, 1); */
-    border-radius: 30px;
-    cursor: pointer;
-    transition: background-color 0.5s ease;
-    padding: 10px;
-  }
 
   
   /* New Zone Button Styling */
