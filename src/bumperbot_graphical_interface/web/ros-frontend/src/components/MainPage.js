@@ -164,7 +164,7 @@ const MainPage = ({ showPage }) => {
             <span className="icon-label">Zones</span>
           </div>
 
-          <div className="icon-with-label hover">
+          <div className="icon-with-label hover" onClick = {() => showPage('schedules')} style={{ cursor: 'pointer' }}>
             <div className="icon">
               <img src={calendarIcon} alt="Schedule" />
             </div>
