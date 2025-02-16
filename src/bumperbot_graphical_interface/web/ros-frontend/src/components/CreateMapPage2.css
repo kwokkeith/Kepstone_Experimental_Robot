@@ -10,40 +10,34 @@
   .icon-button-trash-zone {
     background-color: rgba(23, 23, 23, 1);
     border: none;
-    padding: 1.5rem;
+    padding: 2.8rem;
     border-radius: 30px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    background-image: url("../assets/icons/trash.svg");
+    background-repeat: no-repeat;
+    background-position: center;
   }
   
   .icon-button-trash-zone:hover {
-    background-color: #2BE1A9;
+    background-color: #FF5255;
+    background-image: url("../assets/icons/trash-hover.svg");
   }
   
-  #icon-trash-zone {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* background: rgba(23, 23, 23, 1); */
-    border-radius: 30px;
-    cursor: pointer;
-    transition: background-color 0.5s ease;
-    padding: 10px;
-  }
 
   
   /* New Zone Button Styling */
   .new-zone-button {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
     padding: 1.5rem 1.5rem;
     font-size: 2.5rem;
     background: rgba(23, 23, 23, 1);
     color: #FAFAFA;
     border: none;
     border-radius: 30px; /* Fully rounded corners */
-    box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.3);
+    /* box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.3); */
     overflow: hidden; /* Prevent content overflow */
     cursor: pointer;
     transition: background-color 0.5s ease;
@@ -94,9 +88,9 @@
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 15em;
     gap: 9vh;
-    height: 40vh;
+    height: 55vh;
     overflow-y: auto; /* In case grid items overflow */
-    margin-top: 10vh;
+    margin-top: 10vh; /* Used to be 10vh*/
     padding-right: 4.5rem;
   }
 
@@ -123,3 +117,27 @@
     font-family: "Inter", sans-serif;
   }
   
+  .confirm-button {
+    background-color: rgba(23, 23, 23, 1);
+    color: #FAFAFA;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1.6rem;
+    transition: background-color 0.3s ease;
+    font-weight: 700;
+  }
+  
+  .confirm-button:hover {
+    background-color: #24c49f;
+  }
+
+  .grid-item.selected-zone h3 {
+    color: #FF5255;
+  }
+
+  .grid-item.selected-zone {
+    box-shadow: inset 0 0 0 5px #FF5255;
+
+  }

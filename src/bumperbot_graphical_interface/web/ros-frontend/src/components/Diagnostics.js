@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Diagnostics.css';
 // import ROSLIB from 'roslib';
-import { sidebrush_speed_listener } from '../rosService';
+import { sidebrush_speed_listener, sidebrush_position_listener,} from '../rosService';
 
 const Diagnostics = ({showPage}) => {
     const [data, setData] = useState([]);
@@ -9,6 +9,7 @@ const Diagnostics = ({showPage}) => {
     const [isLoading, setIsLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('tab1');
     const [sidebrushSpeed, setSidebrushSpeed] = useState(0);
+    const [sidebrushPosition, setSidebrushPosition] = useState(0);
     const [sidebrushMessages, setSidebrushMessages] = useState([]);
 
   
@@ -34,20 +35,29 @@ const Diagnostics = ({showPage}) => {
 
     useEffect(() => {
       const sidebrush_speed_srv = sidebrush_speed_listener();
+      const sidebrush_position_srv = sidebrush_position_listener(); 
     
-      const handleNewMessage = (msg) => {
-        // console.log('Received message:', msg.data); // Add this line for debugging
-        console.log(sidebrushMessages)
+      const handleNewSpeedMessage = (msg) => {
+        const labeledMessage = `/sidebrush_controller/sidebrush_speed returned: ${msg.data}`;
         setSidebrushSpeed(msg.data);
-        setSidebrushMessages(prevMessages => [...prevMessages, msg.data]);
+        setSidebrushMessages(prevMessages => [...prevMessages, labeledMessage]);
+      };
+
+      const handleNewPositionMessage = (msg) => {
+        const labeledMessage = `/sidebrush_controller/sidebrush_position returned : ${msg.data}`;
+        setSidebrushPosition(msg.data); 
+        setSidebrushMessages(prevMessages => [...prevMessages, labeledMessage]);
       };
     
-      sidebrush_speed_srv.subscribe(handleNewMessage);
+      sidebrush_speed_srv.subscribe(handleNewSpeedMessage);
+      sidebrush_position_srv.subscribe(handleNewPositionMessage); 
     
       return () => {
-        sidebrush_speed_srv.unsubscribe(handleNewMessage);
+        sidebrush_speed_srv.unsubscribe(handleNewSpeedMessage);
+        sidebrush_position_srv.unsubscribe(handleNewPositionMessage);
       };
     }, []);
+
 
     const showContent = (tabID) => {
       setActiveTab(tabID);
@@ -55,8 +65,8 @@ const Diagnostics = ({showPage}) => {
   
     return (
       <div className="diagnostics-page-container">
-        <div className="middle-content">
-          <div className="middle-content-left">
+        <div className="diagnostics-middle-content">
+          <div className="diagnostics-middle-content-left">
             <div className="pill-tabs">
               <div className={`pill-tab ${activeTab === 'sidebrush' ? 'active' : ''}`} onClick={() => showContent('sidebrush')}>Side Brush</div>
               <div className={`pill-tab ${activeTab === 'vacuum' ? 'active' : ''}`} onClick={() => showContent('vacuum')}>Vacuum</div>
@@ -64,11 +74,22 @@ const Diagnostics = ({showPage}) => {
               <div className={`pill-tab ${activeTab === 'dustbag' ? 'active' : ''}`} onClick={() => showContent('dustbag')}>Dust Bag</div>
             </div>
           </div>
-          <div className="middle-content-right">
+          <div className="diagnostics-middle-content-right">
             <div id="sidebrush" className="tab-content" style={{ display: activeTab === 'sidebrush' ? 'block' : 'none' }}>
-              {sidebrushMessages.map((message, index) => (
-                <div key={index}>{message}</div>
-              ))}
+              <div className="sidebrush-top">
+                <div className="sidebrush-top-left">
+                  {/* Content for top left */}
+                </div>
+                <div className="sidebrush-top-right">
+                  {/* Content for top right */} 
+                </div>
+              </div>
+                <div className="sidebrush-bottom bottom-scroll" id="sidebrush-bottom-scroll">
+                  {/* Content for bottom half */}
+                    {sidebrushMessages.map((message, index) => (
+                    <div key={index}>{message}</div>
+                    ))}
+                </div>
               </div>
             <div id="vacuum" className="tab-content" style={{ display: activeTab === 'vacuum' ? 'block' : 'none' }}>
               Content for Tab 2
