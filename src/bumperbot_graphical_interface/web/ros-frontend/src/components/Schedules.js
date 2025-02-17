@@ -5,15 +5,16 @@ import './Schedules.css';
 import plusIcon from '../assets/icons/plus.svg'; 
 import ROSLIB from 'roslib';
 import { startNode, publishmapName, publishEditState } from '../rosService';
-import chevronLeftIcon from '../assets/icons/chevron-left.svg';
-import chevronRightIcon from '../assets/icons/chevron-right.svg';
+// import chevronLeftIcon from '../assets/icons/chevron-left.svg';
+// import chevronRightIcon from '../assets/icons/chevron-right.svg';
 
 const Schedules = ({showPage}) => {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-  
+
     const [date, setDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(date.toDateString());
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
@@ -62,6 +63,10 @@ const Schedules = ({showPage}) => {
       console.log("Trash clicked");
     };
 
+    const handleDateClick = (date) => {
+      setSelectedDate(date.toDateString());
+    };
+
     const renderCalendar = () => {
       const days = [];
       const prevLastDay = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
@@ -88,10 +93,9 @@ const Schedules = ({showPage}) => {
         } else {
           // Current month days
           const currentDay = new Date(date.getFullYear(), date.getMonth(), day);
-          const dayClass =
-            currentDay.getTime() === today.getTime() ? 'current-day' : 'month-day';
+          const dayClass = selectedDate === currentDay.toDateString() ? 'selected-day' : 'current-day';
           days.push(
-            <div key={i} className={dayClass}>
+            <div key={i} className={dayClass} onClick={() => handleDateClick(currentDay)}>
               {day}
             </div>
           );
@@ -148,7 +152,9 @@ const Schedules = ({showPage}) => {
     };
 
     const handleNewSchedule = () => {
-      console.log("New Schedule clicked");
+      console.log(selectedDate)
+      // showPage('create-schedule');
+
     };
 
     const handleLeftClick = () => {

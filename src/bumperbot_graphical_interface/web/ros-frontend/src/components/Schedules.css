@@ -97,12 +97,19 @@
 }
 
 .current-day {
-  background-color: #24c49f;
+  background-color: transparent;
   color: #FAFAFA;
   border-radius: 0.9375rem; /* 15px */
   font-weight: 700;
   /* transition: 0.5s; */
   cursor: pointer;
+}
+
+.selected-day {
+  background-color: #24c49f; /* Change this to your desired color */
+  color: #FAFAFA;
+  border-radius: 0.9375rem; /* 15px */
+  font-weight: 700;
 }
 
 .padding-day {
@@ -140,4 +147,9 @@
   align-items: center;
   justify-content: flex-end;
   gap: 2rem; /* adjust spacing as needed */
+}
+
+.schedules-schedule-tab {
+  height: 100%;
+
 }

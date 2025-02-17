@@ -10,9 +10,6 @@ import calendarIcon from '../assets/icons/calendar.svg';
 import diagnosticsIcon from '../assets/icons/diagnostics.svg';
 import batteryIcon from '../assets/icons/zap.svg';
 
-import ROSLIB from 'roslib';
-import * as ROS3D from 'ros3d';
-
 const MainPage = ({ showPage }) => {
   const [currentTime, setCurrentTime] = useState('');
   const [currentDate, setCurrentDate] = useState('');
