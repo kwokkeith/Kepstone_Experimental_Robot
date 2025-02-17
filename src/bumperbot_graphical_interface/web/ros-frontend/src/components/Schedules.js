@@ -8,7 +8,7 @@ import { startNode, publishmapName, publishEditState } from '../rosService';
 // import chevronLeftIcon from '../assets/icons/chevron-left.svg';
 // import chevronRightIcon from '../assets/icons/chevron-right.svg';
 
-const Schedules = ({showPage}) => {
+const Schedules = ({showPage, showCreateSchedulePage}) => {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -153,7 +153,7 @@ const Schedules = ({showPage}) => {
 
     const handleNewSchedule = () => {
       console.log(selectedDate)
-      // showPage('create-schedule');
+      showCreateSchedulePage('create-schedule', selectedDate);
 
     };
 
