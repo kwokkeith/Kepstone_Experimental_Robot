@@ -1,0 +1,68 @@
+/* Fix header to the top */
+.top-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 12vh;
+    background: rgba(23, 23, 23, 0.50);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  /* Time and Date */
+  .time-date-container {
+    display: flex;
+    align-items: center;
+    margin-left: 4vw;
+  }
+  
+  /* Separator */
+  .separator {
+    width: 2px;
+    height: 60px;
+    background-color: #FAFAFA;
+    margin: 0 1vw;
+  }
+  
+  /* Time display */
+  .time-display {
+    font-size: 4rem;
+    font-weight: bold;
+  }
+  
+  /* Date display */
+  .date-display {
+    font-size: 3rem;
+    width: 25vw;
+    text-align: left;
+    line-height: 1.5;
+  }
+  
+  /* Top icons */
+  .top-icons {
+    display: flex;
+    gap: 2.5rem;
+    margin-right: 2.5vw;
+  }
+  
+  /* Header icons */
+  .top-icons .icon {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+    padding: 5px;
+  }
+  
+  /* SVG inside icons */
+  .top-icons .icon img {
+    width: 50%;
+    height: 50%;
+  }

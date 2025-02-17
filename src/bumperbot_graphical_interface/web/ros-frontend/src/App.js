@@ -10,6 +10,7 @@ import MyWorldPage from './components/MyWorldPage';
 import CreateMapPage from './components/CreateMapPage';
 import CreateMapPage2 from './components/CreateMapPage2';
 import Diagnostics from './components/Diagnostics';
+import Header from './components/Header'; // Import Header
 
 function App() {
   // Gets the session stored value, (in case react re-renders)
@@ -85,6 +86,8 @@ function App() {
         <LoginPage onLoginSuccess={handleLoginSuccess} />
       ) : (
         <>
+          {/* ✅ Add Header and pass `currentPage` & `showPage` */}
+          <Header currentPage={currentPage} showPage={showPage} />
           <Menu showPage={showPage} isOpen={isMenuOpen} />
           <button onClick={toggleMenu} className="menu-toggle-btn">☰</button>
           {currentPage === 'main' && <MainPage showPage={showPage} />}
@@ -93,7 +96,6 @@ function App() {
           {currentPage === 'create-map' && <CreateMapPage mapName={mapName} showPage={showPage}/>} {/* Pass mapName to CreateMapPage */}
           {currentPage === 'create-map2' && <CreateMapPage2 showPage={showPage}/>}
           {currentPage === 'diagnostics' && <Diagnostics showPage={showPage}/>}
-
         </>
       )}
     </div>

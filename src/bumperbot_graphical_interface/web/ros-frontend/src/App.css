@@ -25,67 +25,6 @@ body {
   border-radius: 0.5rem;
 }
 
-/* Top section (global layout) */
-.top-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background: rgba(23, 23, 23, 0.50); /* Semi-transparent bar */
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 10px;
-}
-
-/* Time display */
-.time-display {
-  font-size: 2.5rem; /* Larger font for time */
-  font-weight: bold;
-}
-
-/* Date display */
-.date-display {
-  font-size: 1.2rem; /* Smaller font for date */
-  text-align: right;
-}
-
-/* Top icons */
-.top-icons {
-  display: flex;
-  gap: 1rem; /* Space between icons */
-}
-
-.icon {
-  width: 30px;
-  height: 30px;
-  background: #171717; /* Dark background for icons */
-  border-radius: 50%; /* Circular icons */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.icon:hover {
-  background: rgba(255, 255, 255, 0.1); /* Light hover effect */
-}
-
-/* Specific icons */
-.notification-icon::before {
-  content: '🔔'; /* Placeholder for notification icon */
-  font-size: 1.2rem;
-}
-
-.settings-icon::before {
-  content: '⚙️'; /* Placeholder for settings icon */
-  font-size: 1.2rem;
-}
-
-.profile-icon::before {
-  content: '👤'; /* Placeholder for profile icon */
-  font-size: 1.2rem;
-}
-
 /* Universal button styling (optional if used across components) */
 button {
   padding: 1rem;
