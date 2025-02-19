@@ -10,7 +10,11 @@ import MyWorldPage from './components/MyWorldPage';
 import CreateMapPage from './components/CreateMapPage';
 import CreateMapPage2 from './components/CreateMapPage2';
 import Diagnostics from './components/Diagnostics';
+
 import Header from './components/Header'; // Import Header
+import Schedules from './components/Schedules';
+import CreateSchedule from './components/CreateSchedule';
+
 
 function App() {
   // Gets the session stored value, (in case react re-renders)
@@ -32,6 +36,11 @@ function App() {
     return storedMapNameState ? JSON.parse(storedMapNameState) : '';
   }
 
+  const getSelectedDateState = () => {
+    const storedSelectedDateState = sessionStorage.getItem('selected-date');
+    return storedSelectedDateState ? JSON.parse(storedSelectedDateState) : '';
+  }
+
   // ==========================
   // React States
   // ==========================
@@ -39,6 +48,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState(getCurrentPageState);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [mapName, setMapName] = useState(getMapNameState); //State to store map name
+  const [selectedDate, setSelectedDate] = useState(getSelectedDateState);
 
 
   // ==========================
@@ -59,6 +69,11 @@ function App() {
     sessionStorage.setItem('mapName', JSON.stringify(mapName));
   },[mapName])
 
+  useEffect(() => {
+    // Update sessionStorage when currentPage state changes
+    sessionStorage.setItem('selected-date', JSON.stringify(selectedDate));
+  },[selectedDate])
+
   // ==========================
   // Callback functions 
   // ==========================
@@ -75,6 +90,12 @@ function App() {
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
+
+  const showCreateSchedulePage = (page, dateSelected=selectedDate) => {
+    setCurrentPage(page);
+    setSelectedDate(dateSelected);
+    setIsMenuOpen(false);
+  }
 
   // ==========================
   // React rendered html component
@@ -96,6 +117,8 @@ function App() {
           {currentPage === 'create-map' && <CreateMapPage mapName={mapName} showPage={showPage}/>} {/* Pass mapName to CreateMapPage */}
           {currentPage === 'create-map2' && <CreateMapPage2 showPage={showPage}/>}
           {currentPage === 'diagnostics' && <Diagnostics showPage={showPage}/>}
+          {currentPage === 'schedules' && <Schedules showPage={showPage} showCreateSchedulePage={showCreateSchedulePage}/>}
+          {currentPage === 'create-schedule' && <CreateSchedule showPage={showPage} selectedDate={selectedDate}/>}
         </>
       )}
     </div>

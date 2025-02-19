@@ -27,6 +27,37 @@ const MainPage = ({ showPage }) => { // Ensure showPage is received as a prop
 
   const strokeColor = percentage < 20 ? '#FF5255' : '#2BE1A9';
 
+  // useEffect(() => {
+  //   // Initialize ROS connection
+  //   const ros = new ROSLIB.Ros({
+  //     url: 'ws://localhost:9090'
+  //   });
+
+  //   // Create the main viewer
+  //   const viewer = new ROS3D.Viewer({
+  //     divID: 'urdf-viewer',
+  //     width: 600,
+  //     height: 400,
+  //     antialias: true
+  //   });
+
+  //   // Add a grid
+  //   viewer.addObject(new ROS3D.Grid());
+
+  //   // Setup a URDF client
+  //   new ROS3D.UrdfClient({
+  //     ros: ros,
+  //     tfClient: new ROSLIB.TFClient({
+  //       ros: ros,
+  //       fixedFrame: 'base_link',
+  //       angularThres: 0.01,
+  //       transThres: 0.01
+  //     }),
+  //     path: 'http://localhost:8000/',
+  //     rootObject: viewer.scene
+  //   });
+  // }, []);
+
   return (
     <div id="main-page" className="page">
       {/* Header Component */}
@@ -86,7 +117,7 @@ const MainPage = ({ showPage }) => { // Ensure showPage is received as a prop
             <span className="icon-label">Zones</span>
           </div>
 
-          <div className="icon-with-label hover">
+          <div className="icon-with-label hover" onClick = {() => showPage('schedules')} style={{ cursor: 'pointer' }}>
             <div className="icon">
               <img src={calendarIcon} alt="Schedule" />
             </div>
