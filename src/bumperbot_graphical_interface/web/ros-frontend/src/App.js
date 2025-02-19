@@ -10,8 +10,11 @@ import MyWorldPage from './components/MyWorldPage';
 import CreateMapPage from './components/CreateMapPage';
 import CreateMapPage2 from './components/CreateMapPage2';
 import Diagnostics from './components/Diagnostics';
+
+import Header from './components/Header'; // Import Header
 import Schedules from './components/Schedules';
 import CreateSchedule from './components/CreateSchedule';
+
 
 function App() {
   // Gets the session stored value, (in case react re-renders)
@@ -104,6 +107,8 @@ function App() {
         <LoginPage onLoginSuccess={handleLoginSuccess} />
       ) : (
         <>
+          {/* ✅ Add Header and pass `currentPage` & `showPage` */}
+          <Header currentPage={currentPage} showPage={showPage} />
           <Menu showPage={showPage} isOpen={isMenuOpen} />
           <button onClick={toggleMenu} className="menu-toggle-btn">☰</button>
           {currentPage === 'main' && <MainPage showPage={showPage} />}
@@ -114,7 +119,6 @@ function App() {
           {currentPage === 'diagnostics' && <Diagnostics showPage={showPage}/>}
           {currentPage === 'schedules' && <Schedules showPage={showPage} showCreateSchedulePage={showCreateSchedulePage}/>}
           {currentPage === 'create-schedule' && <CreateSchedule showPage={showPage} selectedDate={selectedDate}/>}
-
         </>
       )}
     </div>

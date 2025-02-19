@@ -1,42 +1,18 @@
 // Import necessary modules and assets
 import React, { useState, useEffect, useRef } from 'react';
 import './MainPage.css';
-import bellIcon from '../assets/icons/bell.svg';
-import menuIcon from '../assets/icons/Menu.svg';
-import slidersIcon from '../assets/icons/sliders.svg';
 import moveIcon from '../assets/icons/move.svg';
 import mapIcon from '../assets/icons/map.svg';
 import calendarIcon from '../assets/icons/calendar.svg';
 import diagnosticsIcon from '../assets/icons/diagnostics.svg';
 import batteryIcon from '../assets/icons/zap.svg';
+import Header from './Header'; // Import the Header component
 
-const MainPage = ({ showPage }) => {
-  const [currentTime, setCurrentTime] = useState('');
-  const [currentDate, setCurrentDate] = useState('');
-  const [percentage, setPercentage] = useState(10); //USE THIS TO SET PERCENTAGE OF BATTERY
+const MainPage = ({ showPage }) => { // Ensure showPage is received as a prop
+  const [percentage, setPercentage] = useState(10); // Battery percentage
   const [circumference, setCircumference] = useState(0);
   const [strokeDashoffset, setStrokeDashoffset] = useState(0);
   const circleRef = useRef(null);
-  const viewerRef = useRef(null);
-
-  useEffect(() => {
-    const updateDateTime = () => {
-      const now = new Date();
-      const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      const date = now.toLocaleDateString('en-GB', {
-        day: '2-digit',
-        month: 'long',
-        year: 'numeric',
-      });
-      setCurrentTime(time);
-      setCurrentDate(date);
-    };
-
-    updateDateTime();
-    const timer = setInterval(updateDateTime, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
 
   useEffect(() => {
     if (circleRef.current) {
@@ -84,32 +60,12 @@ const MainPage = ({ showPage }) => {
 
   return (
     <div id="main-page" className="page">
-      {/* Top Section */}
-      <header className="top-section">
-        <div className="time-date-container">
-          <div className="time-display">{currentTime}</div>
-          <div className="separator"></div>
-          <div className="date-display">{currentDate}</div>
-        </div>
+      {/* Header Component */}
+      <Header currentPage="MainPage" /> {/* Pass the currentPage prop */}
 
-        <div className="top-icons">
-          <div className="icon hover">
-            <img src={slidersIcon} alt="Sliders" />
-          </div>
-          <div className="icon hover">
-            <img src={bellIcon} alt="Notification" />
-          </div>
-          <div className="icon hover">
-            <img src={menuIcon} alt="Menu" />
-          </div>
-        </div>
-      </header>
-
+      {/* Middle Content */}
       <div className="middle-content">
-
-        <div className="middle-content-left" ref={viewerRef} id = "urdf-viewer">
-          {/* <p>urdfviewer</p> */}
-        </div>
+        <div className="middle-content-left"></div>
 
         <div className="middle-content-right-top">
           <div className="battery-status">
@@ -174,7 +130,6 @@ const MainPage = ({ showPage }) => {
             </div>
             <span className="icon-label">Diagnostics</span>
           </div>
-
         </div>
       </div>
     </div>
