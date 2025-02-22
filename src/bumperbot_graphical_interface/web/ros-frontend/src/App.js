@@ -14,6 +14,7 @@ import Diagnostics from './components/Diagnostics';
 import Header from './components/Header'; // Import Header
 import Schedules from './components/Schedules';
 import CreateSchedule from './components/CreateSchedule';
+import SelectZone from './components/SelectZone';
 
 
 function App() {
@@ -119,6 +120,8 @@ function App() {
           {currentPage === 'diagnostics' && <Diagnostics showPage={showPage}/>}
           {currentPage === 'schedules' && <Schedules showPage={showPage} showCreateSchedulePage={showCreateSchedulePage}/>}
           {currentPage === 'create-schedule' && <CreateSchedule showPage={showPage} selectedDate={selectedDate}/>}
+          {currentPage === 'select-zone' && <SelectZone showPage={showPage}/>}
+
         </>
       )}
     </div>

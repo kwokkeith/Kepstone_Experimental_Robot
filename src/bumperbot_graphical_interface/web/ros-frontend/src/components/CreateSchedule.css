@@ -27,6 +27,13 @@
   grid-column: 2 / 3;
   grid-row: 1 / 2;
   width: 100%;
+  font-family: 'YourFontFamily', sans-serif; /* Change this to your desired font */
+  font-size: 1.6rem; /* Change this to your desired font size */
+  color: #24c49f; /* Change this to your desired text color */
+}
+
+.time-picker::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* This will invert the color of the icon */
 }
 
 .select-zone-button {
@@ -34,6 +41,9 @@
   grid-row: 2 / 3;
   cursor: pointer;
   text-align: left;
+  background-image: url("../assets/icons/map.svg");
+  background-repeat: no-repeat;
+  background-position: right 1.4rem center;
 }
 
 .dropdown {
