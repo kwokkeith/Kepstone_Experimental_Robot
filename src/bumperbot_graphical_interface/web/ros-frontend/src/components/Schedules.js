@@ -152,7 +152,7 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
     };
 
     const handleNewSchedule = () => {
-      console.log(selectedDate)
+      // console.log(selectedDate)
       showCreateSchedulePage('create-schedule', selectedDate);
 
     };
