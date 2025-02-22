@@ -12,6 +12,7 @@ const SelectZone = ({showPage}) => {
     const [isLoading, setIsLoading] = useState(true);
 
     const [zones, setZones] = useState([]);
+    const [zonesToDelete, setZonesToDelete] = useState([]);
 
     const handleStartNode = (mapName) => {
       const startNodeService = startNode();

@@ -85,7 +85,7 @@
   grid-template-rows: 1fr 1fr;
   height: 85vh;
   max-height: calc(100vh - 35vh);
-  padding-top: 5vh;
+  padding-top: 20vh;
   padding-bottom: 5vh;
   /* text-align: center; */
 }
