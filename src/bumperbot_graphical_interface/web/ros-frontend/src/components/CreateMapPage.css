@@ -5,10 +5,11 @@
   padding: 2rem;
 }
 
-.create-map-page h2 {
-  font-size: 2rem;
-  color: #333;
-  margin-bottom: 1rem;
+.create-map-name-heading {
+  font-size: 2.5rem;
+  color: #FAFAFA;
+  margin-bottom: 5vh;
+  max-width: 1vw;
 }
 
 .map-container {

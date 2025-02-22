@@ -6,7 +6,7 @@ import slidersIcon from '../assets/icons/sliders.svg';
 import homeIcon from '../assets/icons/home.svg';
 
 const Header = ({ currentPage = "Home", showPage }) => { // Pass showPage as prop
-  console.log("Current Page in Header:", currentPage); // Debugging
+  // console.log("Current Page in Header:", currentPage); // Debugging
 
   const [currentTime, setCurrentTime] = useState('');
   const [currentDate, setCurrentDate] = useState('');

@@ -45,6 +45,18 @@ app.get('/api/bcdpolycontourdata', (req, res) => {
     });
 });
 
+// get cleaning_path_coordinates from config_table
+app.get('/api/cleaning_waypoints', (req, res) => {
+    const query = `SELECT map_name, cleaning_path_coordinates FROM Config_Table`;
+    db.all(query, [], (err, rows) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+        return;
+      }
+      res.json({ data: rows });
+    });
+});
+
 // get data from config_table
 app.get('/api/config', (req, res) => {
     const query = `SELECT * FROM Config_Table`;

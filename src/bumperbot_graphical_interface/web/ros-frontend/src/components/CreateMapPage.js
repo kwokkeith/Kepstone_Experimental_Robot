@@ -9,13 +9,15 @@ const CreateMapPage = ({ mapName, showPage }) => {
   // React States
   // ==========================
 
-  // React States for creating map using ROS
+  // React States for creating map in JS
   const imageRef = useRef(null);
   const canvasRef = useRef(null);
+  const [showButtonContainer, setShowButtonContainer] = useState(false);
+
+  //React State for ROS
   const [points, setPoints] = useState([]);
   const [startpoints, setStartPoints] = useState(false);
   const [coverageListener, setcoverageListener] = useState('');
-  const [showButtonContainer, setShowButtonContainer] = useState(false);
   const [createMapState, setCreateMapState] = useState(true);
   const [editMapState, setEditMapState] = useState(false);
   const [contourAngles, setContourAngles] = useState({});
@@ -475,7 +477,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
 
   return (
     <div className="create-map-page">
-      <h2>{mapName}</h2>
+      <h2 className="create-map-name-heading">Creating: {mapName}</h2>
       <img
         ref={imageRef}
         src={`${process.env.PUBLIC_URL}/my_world_map2.png`}
