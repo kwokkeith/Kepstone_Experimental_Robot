@@ -1,0 +1,4 @@
+string json_message
+---
+bool success
+string response_message
