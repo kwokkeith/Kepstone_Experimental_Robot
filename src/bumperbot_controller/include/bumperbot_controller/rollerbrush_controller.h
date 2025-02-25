@@ -2,6 +2,7 @@
 #define ROLLERBRUSH_CONTROLLER_H
 
 #include <ros/ros.h>
+#include <algorithm>
 #include <std_msgs/Float32.h>
 #include <std_msgs/String.h>
 #include <bumperbot_controller/SetRollerBrushPower.h>

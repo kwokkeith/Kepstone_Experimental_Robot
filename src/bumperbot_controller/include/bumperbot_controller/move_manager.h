@@ -1,6 +1,7 @@
 #ifndef MOVE_MANAGER_H
 #define MOVE_MANAGER_H
 #include <ros/ros.h>
+#include <algorithm>
 #include <actionlib/client/simple_action_client.h>
 #include <move_base_msgs/MoveBaseAction.h>
 #include <litter_destruction/GetNextLitter.h>
@@ -8,6 +9,11 @@
 #include <litter_destruction/HasLitterToClear.h>
 #include <litter_destruction/GetNextTargetLitter.h>
 #include <litter_destruction/GlobalBoundaryCenter.h>
+#include <bumperbot_controller/SetVacuumPower.h>
+#include <bumperbot_controller/SetSideBrushPosition.h>
+#include <bumperbot_controller/SetSideBrushSpeed.h>
+#include <bumperbot_controller/SetRollerBrushPosition.h>
+#include <bumperbot_controller/SetRollerBrushPower.h>
 #include <bumperbot_detection/LitterPoint.h>
 #include <bumperbot_controller/ModeSwitch.h>
 #include <navigation/GetNextWaypoint.h>
@@ -23,7 +29,9 @@ enum class RobotMode {
     COVERAGE        = 2,
     LITTER_PICKING  = 3,
     TRANSITION      = 4,
-    LITTER_TRACKING = 5
+    LITTER_TRACKING = 5,
+    IDLE_LATCH      = 6,
+    ERROR           = 7
 };
 
 class MoveManager
@@ -35,17 +43,22 @@ public:
 
 private:
     ros::NodeHandle nh_;     
-    ros::Subscriber robot_mode_sub_;                    // Subscriber to the Robot Mode Topic
-    ros::Subscriber detected_litter_pose_sub_;          // Subscriber to get detected litter positions from the camera
-    ros::ServiceClient get_next_litter_client_;         // Service to get next litter from litter manager
-    ros::ServiceClient get_next_target_litter_client_;  // Service to get next target litter from litter manager
-    ros::ServiceClient delete_litter_client_;           // Service to remove litter from litter manager
-    ros::ServiceClient get_next_waypoint_client_;       // Service to get next waypoint from coverage manager
-    ros::ServiceClient update_waypoint_client_;         // Service to update the waypoint manager that previous waypoint reached
-    ros::ServiceClient has_litter_to_clear_client_;     // Service to check if any more litter to clear
-    ros::ServiceClient mode_switch_request_client_;     // Service to change robot mode
-    ros::ServiceClient get_global_boundary_client_;     // Service to get global boundary center from robot controller
-    ros::ServiceClient get_amcl_pose_client_;           // Service to get current robot's amcl position
+    ros::Subscriber robot_mode_sub_;                        // Subscriber to the Robot Mode Topic
+    ros::Subscriber detected_litter_pose_sub_;              // Subscriber to get detected litter positions from the camera
+    ros::ServiceClient get_next_litter_client_;             // Service to get next litter from litter manager
+    ros::ServiceClient get_next_target_litter_client_;      // Service to get next target litter from litter manager
+    ros::ServiceClient delete_litter_client_;               // Service to remove litter from litter manager
+    ros::ServiceClient get_next_waypoint_client_;           // Service to get next waypoint from coverage manager
+    ros::ServiceClient update_waypoint_client_;             // Service to update the waypoint manager that previous waypoint reached
+    ros::ServiceClient has_litter_to_clear_client_;         // Service to check if any more litter to clear
+    ros::ServiceClient mode_switch_request_client_;         // Service to change robot mode
+    ros::ServiceClient get_global_boundary_client_;         // Service to get global boundary center from robot controller
+    ros::ServiceClient get_amcl_pose_client_;               // Service to get current robot's amcl position
+    ros::ServiceClient set_vacuum_power_client_;            // Service to set vacuum power
+    ros::ServiceClient set_rollerbrush_power_client_;       // Service to set rollerbrush power
+    ros::ServiceClient set_rollerbrush_position_client_;    // Service to set rollerbrush position
+    ros::ServiceClient set_sidebrush_speed_client_;         // Service to set sidebrush speed
+    ros::ServiceClient set_sidebrush_position_client_;       // Service to set sidebrush position
 
     ros::ServiceServer cancel_goals_service_;           // Service server to cancel all move base goals
 
@@ -60,7 +73,7 @@ private:
     geometry_msgs::Point global_boundary_center_;
     std::string detected_litter_topic_sub_;
 
-
+    std::uint32_t sidebrush_deploy_speed_;
 
     // Callback functions for the subscribers
     void robotModeCallback(const std_msgs::Int32::ConstPtr& mode_msg);
@@ -76,5 +89,10 @@ private:
     geometry_msgs::Point getNearestDetectedLitter();
     bool isCoverageComplete();
     bool ModeSwitchRequest(RobotMode req_mode);
+    void litterDestructionProcedure();
+    void SidebrushDeployConfiguration();  // Deploys the sidebrush for litter destruction
+    void SidebrushRetractConfiguration(); // Retracts the sidebrush after litter destruction
+    void SidebrushSpeedRequest(uint32_t speed); // rpm for sidebrush
+    void SidebrushPositionRequest(std::string position); // up/down
 };
 #endif

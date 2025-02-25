@@ -18,6 +18,8 @@ litter_detection:
     cx: 320
     cy: 240
 
+sidebrush:
+  deploy_speed: 100    # Speed used when sidebrush is performing litter picking
 
 # Robot Configurations
 wheel:

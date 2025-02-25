@@ -2,6 +2,7 @@
 #define SIDEBRUSH_CONTROLLER_H
 
 #include <ros/ros.h>
+#include <algorithm>
 #include <std_msgs/Float32.h>
 #include <std_msgs/UInt32.h>
 #include <std_msgs/String.h>

@@ -17,6 +17,7 @@ class RobotMode(Enum):
     TRANSITION         = 4
     LITTER_TRACKING    = 5
     IDLE_LATCH         = 6
+    ERROR              = 7
 
 class RobotController:
     def __init__(self):
@@ -279,6 +280,8 @@ class RobotController:
             
             rospy.loginfo("Switched to LITTER_TRACKING mode")
 
+        elif mode == RobotMode.ERROR:
+            rospy.logerr("Robot faced a critical error")
         else:
             rospy.logwarn("In switch_mode, `mode` argument provided invalid")
     

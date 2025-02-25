@@ -98,11 +98,13 @@ bool RollerBrushController::setRollerBrushPosition(bumperbot_controller::SetRoll
 {
     try 
     {
+        std::transform(req.position.begin(), req.position.end(), req.position.begin(), ::toupper);
+
         // Validate input
-        if (req.position != "up" && req.position != "down")
+        if (req.position != "UP" && req.position != "DOWN")
         {
             res.success = false;
-            res.message = "Invalid position! Please set a value of 'up' or 'down'.";
+            res.message = "Invalid position! Please set a value of 'UP' or 'DOWN'.";
             ROS_WARN_STREAM(res.message);
             return false;
         }

@@ -5,7 +5,8 @@ MoveManager::MoveManager(ros::NodeHandle& nh) :
         move_base_client_("move_base", true),
         current_mode_(RobotMode::IDLE), // Initial mode of robot (IDLE)
         coverage_complete_(true),
-        nearest_litter_calculated_(false)
+        nearest_litter_calculated_(false),
+        sidebrush_deploy_speed_(100) // Target RPM of sidebrush when deployed
 {
     // GET global parameters for services/topics
     // Topic Subscribers
@@ -22,6 +23,11 @@ MoveManager::MoveManager(ros::NodeHandle& nh) :
     std::string mode_switch_request_srv_client_;
     std::string get_global_boundary_srv_client_;
     std::string get_amcl_pose_srv_client_;
+    std::string set_vacuum_power_srv_client_;
+    std::string set_rollerbrush_power_srv_client_;
+    std::string set_rollerbrush_position_srv_client_;
+    std::string set_sidebrush_speed_srv_client_;
+    std::string set_sidebrush_position_srv_client_;
     nh_.getParam("/litter_manager/services/get_next_litter", get_next_litter_srv_client_);
     nh_.getParam("/litter_manager/services/next_waypoint", get_next_target_litter_srv_client_);
     nh_.getParam("/litter_manager/services/delete_litter", delete_litter_srv_client_);
@@ -31,6 +37,12 @@ MoveManager::MoveManager(ros::NodeHandle& nh) :
     nh_.getParam("/robot_controller/services/mode_switch", mode_switch_request_srv_client_);
     nh_.getParam("/robot_controller/services/get_global_boundary", get_global_boundary_srv_client_);
     nh_.getParam("/navigation/services/get_amcl_pose", get_amcl_pose_srv_client_);
+    nh_.getParam("/vacuum_controller/services/set_vacuum_power", set_vacuum_power_srv_client_);
+    nh_.getParam("/rollerbrush_controller/services/set_rollerbrush_power", set_rollerbrush_power_srv_client_);
+    nh_.getParam("/rollerbrush_controller/services/set_rollerbrush_position", set_rollerbrush_position_srv_client_);
+    nh_.getParam("/sidebrush_controller/services/set_sidebrush_speed", set_sidebrush_speed_srv_client_);
+    nh_.getParam("/sidebrush_controller/services/set_sidebrush_position", set_sidebrush_position_srv_client_);
+
     // Service Servers
     std::string cancel_goals_svc_svr_;
     nh_.getParam("/move_manager/services/cancel_all_goals", cancel_goals_svc_svr_); 
@@ -39,18 +51,32 @@ MoveManager::MoveManager(ros::NodeHandle& nh) :
     robot_mode_sub_ = nh_.subscribe(robot_mode_topic_sub_, 10, &MoveManager::robotModeCallback, this);
 
     // Initialize service clients
-    get_next_litter_client_         = nh_.serviceClient<litter_destruction::GetNextLitter>(get_next_litter_srv_client_);              // Service to update to next litter in litter manager
-    get_next_target_litter_client_  = nh_.serviceClient<litter_destruction::GetNextTargetLitter>(get_next_target_litter_srv_client_); // Service to get next target litter waypoint (not to update)
-    delete_litter_client_           = nh_.serviceClient<litter_destruction::RemoveLitter>(delete_litter_srv_client_);                 // Service to delete litter in litter manager
-    get_next_waypoint_client_       = nh_.serviceClient<navigation::GetNextWaypoint>(get_next_waypoint_srv_client_);                  // Service to get next waypoint in coverage
-    update_waypoint_client_         = nh_.serviceClient<std_srvs::SetBool>(update_waypoint_srv_client_);                              // Service to update waypoint_manager (get next waypoint)
-    has_litter_to_clear_client_     = nh_.serviceClient<litter_destruction::HasLitterToClear>(has_litter_to_clear_srv_client_);       // Service to check if any more litter to clear (litter manager)
-    mode_switch_request_client_     = nh_.serviceClient<bumperbot_controller::ModeSwitch>(mode_switch_request_srv_client_);           // Service to change robot mode
-    get_global_boundary_client_     = nh_.serviceClient<litter_destruction::GlobalBoundaryCenter>(get_global_boundary_srv_client_);   // Service to get global boundary center from robot controller
-    get_amcl_pose_client_           = nh_.serviceClient<navigation::GetAmclPose>(get_amcl_pose_srv_client_);                          // Service to get amcl position of robot
+    get_next_litter_client_         = nh_.serviceClient<litter_destruction::GetNextLitter>(get_next_litter_srv_client_);                        // Service to update to next litter in litter manager
+    get_next_target_litter_client_  = nh_.serviceClient<litter_destruction::GetNextTargetLitter>(get_next_target_litter_srv_client_);           // Service to get next target litter waypoint (not to update)
+    delete_litter_client_           = nh_.serviceClient<litter_destruction::RemoveLitter>(delete_litter_srv_client_);                           // Service to delete litter in litter manager
+    get_next_waypoint_client_       = nh_.serviceClient<navigation::GetNextWaypoint>(get_next_waypoint_srv_client_);                            // Service to get next waypoint in coverage
+    update_waypoint_client_         = nh_.serviceClient<std_srvs::SetBool>(update_waypoint_srv_client_);                                        // Service to update waypoint_manager (get next waypoint)
+    has_litter_to_clear_client_     = nh_.serviceClient<litter_destruction::HasLitterToClear>(has_litter_to_clear_srv_client_);                 // Service to check if any more litter to clear (litter manager)
+    mode_switch_request_client_     = nh_.serviceClient<bumperbot_controller::ModeSwitch>(mode_switch_request_srv_client_);                     // Service to change robot mode
+    get_global_boundary_client_     = nh_.serviceClient<litter_destruction::GlobalBoundaryCenter>(get_global_boundary_srv_client_);             // Service to get global boundary center from robot controller
+    get_amcl_pose_client_           = nh_.serviceClient<navigation::GetAmclPose>(get_amcl_pose_srv_client_);                                    // Service to get amcl position of robot
+    set_vacuum_power_client_        = nh_.serviceClient<bumperbot_controller::SetVacuumPower>(set_vacuum_power_srv_client_);                    // Service to set the vacuum power
+    set_rollerbrush_power_client_   = nh_.serviceClient<bumperbot_controller::SetRollerBrushPower>(set_rollerbrush_power_srv_client_);          // Service to set the rollerbrush power
+    set_rollerbrush_position_client_= nh_.serviceClient<bumperbot_controller::SetRollerBrushPosition>(set_rollerbrush_position_srv_client_);    // Service to set rollerbrush position
+    set_sidebrush_speed_client_     = nh_.serviceClient<bumperbot_controller::SetSideBrushSpeed>(set_sidebrush_speed_srv_client_);              // Service to set sidebrush speed
+    set_sidebrush_position_client_  = nh_.serviceClient<bumperbot_controller::SetSideBrushPosition>(set_sidebrush_position_srv_client_);        // Service to set sidebrush position
 
     // Initialize service servers
     cancel_goals_service_ = nh_.advertiseService(cancel_goals_svc_svr_, &MoveManager::cancelGoalsCallback, this);
+
+    // Other parameters of the robot
+    int temp_value;
+    if (nh_.getParam("/sidebrush/deploy_speed", temp_value)) {
+        sidebrush_deploy_speed_ = static_cast<uint32_t>(temp_value);
+    } else {
+        ROS_WARN("Failed to get parameter /sidebrush/deploy_speed. Using default value.");
+    }
+
 
     ROS_INFO("Waiting for move_base action server...");
     move_base_client_.waitForServer();
@@ -196,6 +222,9 @@ void MoveManager::performLitterMode() {
     {
         ROS_INFO_STREAM("Successfully reached litter waypoint: [" << litter_point_.x << ", " << litter_point_.y << ", " << litter_point_.z << "]");
 
+        // Litter Destruction Procedure
+        // litterDestructionProcedure();
+
         // // Simulate litter destruction
         // ROS_INFO("Destroying litter...");
         // ros::Duration(5.0).sleep(); // Simulate the time taken to destroy the litter
@@ -210,7 +239,6 @@ void MoveManager::performLitterMode() {
     else
     { ROS_WARN_STREAM("Failed to reach litter waypoint: [" << litter_point_.x << ", " << litter_point_.y << ", " << litter_point_.z << "]"); }
 }
-
 
 void MoveManager::performCoverageMode() {
     ROS_INFO("Performing single step in coverage mode...");
@@ -291,22 +319,7 @@ void MoveManager::performLitterTracking() {
     ROS_INFO("Performing Litter Tracking Mode");
     move_base_client_.cancelAllGoals(); // Prioritise calculation of nearest litter position using camera detection
     if (nearest_litter_calculated_){
-        if(navigateToWaypoint(nearest_litter_)){
-            ROS_INFO("Successfully tracked and reached the nearest litter.");
-            ros::Duration(5.0).sleep(); // Simulate litter destruction
-            ROS_INFO("Simulating removing of litter using another PROCEDURE");
-
-            // Call the service to remove the litter from memory
-            if (!removeLitter(target_litter_)) {
-                ROS_WARN("Failed to remove the current target litter.");
-            } else {
-                ROS_INFO("Litter successfully removed.");
-                ModeSwitchRequest(RobotMode::LITTER_PICKING); // Switch back to LITTER_PICKING mode
-            }
-            nearest_litter_calculated_ = false;
-        } else {
-            ROS_WARN("Failed to navigate to the nearest detected litter.");
-        }
+        litterDestructionProcedure();
     }
 
     // Get the nearest detected litter
@@ -322,7 +335,98 @@ void MoveManager::performLitterTracking() {
     }
 }
 
+void MoveManager::litterDestructionProcedure() {
+    ROS_INFO("Destroying litter...");
+    SidebrushDeployConfiguration(); // Deploy sidebrush
+
+    // ********************************************************************
+    // After initialising the sidebrush head towards the litter
+    if(navigateToWaypoint(nearest_litter_)){
+        ROS_INFO("Successfully tracked and reached the nearest litter.");
+
+        // Perform litter destruction
+        ros::Duration(5.0).sleep(); // Hold for x seconds to ensure litter enters box
+        SidebrushRetractConfiguration(); // Retract sidebrush after completing cleaning
+
+        // ros::Duration(5.0).sleep(); // Simulate litter destruction
+        // ROS_INFO("Simulating removing of litter using another PROCEDURE");
+
+        // Call the service to remove the litter from memory
+        if (!removeLitter(target_litter_)) {
+            ROS_WARN("Failed to remove the current target litter.");
+        } else {
+            ROS_INFO("Litter successfully removed.");
+            ModeSwitchRequest(RobotMode::LITTER_PICKING); // Switch back to LITTER_PICKING mode
+        }
+        nearest_litter_calculated_ = false;
+    } else {
+        ROS_WARN("Failed to navigate to the nearest detected litter.");
+    }
+}
+
 // HELPER Functions
+void MoveManager::SidebrushDeployConfiguration() {
+    // Deploys the sidebrush for litter destruction
+    ROS_INFO("Deploying Sidebrush");
+    SidebrushPositionRequest("down");
+    SidebrushSpeedRequest(sidebrush_deploy_speed_);
+}
+
+void MoveManager::SidebrushRetractConfiguration() {
+    // Retracts the sidebrush after litter destruction
+    ROS_INFO("Retracting Sidebrush");
+    SidebrushSpeedRequest(0);
+    SidebrushPositionRequest("up");
+}
+
+void MoveManager::SidebrushSpeedRequest(uint32_t speed) {
+    // SET Sidebrush Speed
+    bumperbot_controller::SetSideBrushSpeed set_sidebrush_speed_srv;
+    set_sidebrush_speed_srv.request.speed = speed; // RPM
+    if(!set_sidebrush_speed_client_.call(set_sidebrush_speed_srv)){
+        ROS_WARN("Failed to call service to set sidebrush speed");
+        return; // Exit if the service call fails
+    }
+    // Check if set sidebrush speed client request is successful
+    if (!set_sidebrush_speed_srv.response.success)
+    {
+        ROS_WARN("Failed to set sidebrush speed");
+        
+        // Set robot to ERROR Mode if sidebrush fails to initiate
+        ModeSwitchRequest(RobotMode::ERROR);
+        return;
+    }
+}
+
+void MoveManager::SidebrushPositionRequest(std::string position) {
+    std::transform(position.begin(), position.end(), position.begin(), ::toupper);
+     // Validate position
+     if (position != "UP" && position != "DOWN") {
+        ROS_WARN("Invalid sidebrush position: %s. Expected 'UP' or 'DOWN'.", position.c_str());
+        return;
+    }
+
+    bumperbot_controller::SetSideBrushPosition set_sidebrush_position_srv;
+    set_sidebrush_position_srv.request.position = position; // Position of brush
+    if (!set_sidebrush_position_client_.call(set_sidebrush_position_srv))
+    {
+        ROS_WARN("Failed to call service to set sidebrush position");
+        return; // Exit if the service call fails
+    }
+
+    // Check if set sidebrush position client request is successful
+    if (!set_sidebrush_position_srv.response.success)
+    {
+        ROS_WARN("Failed to set sidebrush position");
+        
+        // Set robot to ERROR Mode if sidebrush fails to initiate
+        ModeSwitchRequest(RobotMode::ERROR);
+        return;
+    }
+}
+
+
+
 geometry_msgs::Point MoveManager::getNearestDetectedLitter() {
     // Define a temporary variable to store detected litter positions
     std::vector<geometry_msgs::Point> detected_litters;
