@@ -58,7 +58,7 @@ private:
     ros::ServiceClient set_rollerbrush_power_client_;       // Service to set rollerbrush power
     ros::ServiceClient set_rollerbrush_position_client_;    // Service to set rollerbrush position
     ros::ServiceClient set_sidebrush_speed_client_;         // Service to set sidebrush speed
-    ros::ServiceClient set_sidebrush_position_client_;       // Service to set sidebrush position
+    ros::ServiceClient set_sidebrush_position_client_;      // Service to set sidebrush position
 
     ros::ServiceServer cancel_goals_service_;           // Service server to cancel all move base goals
 
