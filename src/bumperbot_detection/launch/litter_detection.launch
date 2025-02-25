@@ -33,4 +33,7 @@
         <!-- Load marker configuration from YAML file -->
         <rosparam file="$(find bumperbot_detection)/config/marker_config.yaml" command="load" />
     </node>
+
+    <!-- Image compressor for UI -->
+    <node pkg="bumperbot_detection" type="image_compressor_node" name="image_compressor_node" />
 </launch>

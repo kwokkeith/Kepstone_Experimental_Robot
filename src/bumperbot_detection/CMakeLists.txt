@@ -11,6 +11,8 @@ find_package(catkin REQUIRED COMPONENTS
   tf2_geometry_msgs
   message_generation
   visualization_msgs
+  cv_bridge
+  image_transport
 )
 
 find_package(Eigen3 REQUIRED)
@@ -77,6 +79,7 @@ include_directories(
   include
   ${catkin_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
 )
 
 # # Link the libraries
@@ -107,3 +110,8 @@ target_link_libraries(litter_coordinate_subscriber ${catkin_LIBRARIES})
 add_executable(litter_plotter_publisher_node nodes/litter_plotter.cpp)
 target_link_libraries(litter_plotter_publisher_node ${catkin_LIBRARIES})
 add_dependencies(litter_plotter_publisher_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+# Image Compressor
+add_executable(image_compressor_node nodes/image_compressor.cpp)
+target_link_libraries(image_compressor_node ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
+add_dependencies(image_compressor_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})

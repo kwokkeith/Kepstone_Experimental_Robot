@@ -19,7 +19,8 @@
                 "${workspaceFolder}/src/litter_destruction/include",
                 "${workspaceFolder}/src/litter_destruction/include",
                 "${workspaceFolder}/devel/include",
-                "${workspaceFolder}/src/coverage_planner/include"
+                "${workspaceFolder}/src/coverage_planner/include",
+                "/usr/include/opencv4"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
