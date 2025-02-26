@@ -27,6 +27,32 @@ export function startNode() {
   return startNodeService;
 }
 
+export function endNode() {
+  // Initialize ROS connection
+  var ros = new ROSLIB.Ros({
+    url: 'ws://localhost:9090'
+  });
+
+  ros.on('connection', function() {
+    console.log('End_Coverage is connected to websocket server.');
+  });
+  ros.on('error', function(error) {
+    console.error('Error connecting to ROSBridge:', error);
+  });
+  ros.on('close', function() {
+    console.log('End_Coverage disconnected from ROSBridge');
+  });
+
+  //Define a ROS service client to start the node
+  const endNodeService = new ROSLIB.Service({
+    ros: ros,
+    name: '/stop_coverage_planner', 
+    serviceType: 'std_srvs/Trigger' 
+  });
+
+  return endNodeService;
+}
+
 export function publishPoint() {
   // Initialize ROS connection
   var ros = new ROSLIB.Ros({
@@ -410,6 +436,31 @@ export function sidebrush_position_listener() {
     ros: ros,
     name: '/sidebrush_controller/sidebrush_position',
     messageType: 'std_msgs/String'
+  });
+
+  return listener;
+}
+
+export function realsense_d455_listener() {
+  // Initialize ROS connection
+  var ros = new ROSLIB.Ros({
+    url: 'ws://localhost:9090'
+  });
+
+  ros.on('connection', function() {
+    console.log('realsense_d455_listener is now connected to websocket server.');
+  });
+  ros.on('error', function(error) {
+    console.error('Error connecting to ROSBridge for the realsense_d455_listener:', error);
+  });
+  ros.on('close', function() {
+    console.log('realsense_d455_listener is disconnected from ROSBridge');
+  });
+
+  const listener = new ROSLIB.Topic({
+    ros: ros,
+    name: '/depth_camera/color/image_compressed/compressed/', 
+    messageType: 'sensor_msgs/CompressedImage'
   });
 
   return listener;

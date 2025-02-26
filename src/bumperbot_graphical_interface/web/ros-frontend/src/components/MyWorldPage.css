@@ -23,13 +23,14 @@
   .my-world-right {
     flex: 3; /* adjust width as needed */
     padding-left: 10em;
+    padding-top: 4vh;
     height: 100%;
     position: relative;
   }
 
   .bottom-center-right-buttons {
     position: absolute;
-    bottom: 5vh; /* adjust spacing as needed */
+    bottom: 16vh; /* adjust spacing as needed */
     left: 50%;
     transform: translateX(-50%);
     display: flex;

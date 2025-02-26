@@ -10,6 +10,9 @@
     <!-- Start the service server for starting the coverage planner node -->
     <node name="start_coverage_planner_service" pkg="bumperbot_graphical_interface" type="start_coverage_planner_service.py" output="screen"/>
 
+    <!-- Start the service server for ending the coverage planner node -->
+    <node name="end_coverage_planner_service" pkg="bumperbot_graphical_interface" type="end_coverage_planner_service.py" output="screen"/>
+
     <!-- Start the SQL server using exec tag -->
     <node name="sql_server" pkg="bumperbot_graphical_interface" type="start_sql_server.sh"/>
 

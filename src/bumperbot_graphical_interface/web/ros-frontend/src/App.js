@@ -110,8 +110,8 @@ function App() {
         <>
           {/* ✅ Add Header and pass `currentPage` & `showPage` */}
           <Header currentPage={currentPage} showPage={showPage} />
-          <Menu showPage={showPage} isOpen={isMenuOpen} />
-          <button onClick={toggleMenu} className="menu-toggle-btn">☰</button>
+          {/* <Menu showPage={showPage} isOpen={isMenuOpen} /> */}
+          {/* <button onClick={toggleMenu} className="menu-toggle-btn">☰</button> */}
           {currentPage === 'main' && <MainPage showPage={showPage} />}
           {currentPage === 'settings' && <SettingsPage />}
           {currentPage === 'my-world' && <MyWorldPage mapName={mapName}/>}

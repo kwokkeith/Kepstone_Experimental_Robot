@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './CreateMapPage.css';
 import ROSLIB from 'roslib';
-import { coverage_listener, publishPoint, publishStartPoint, startNode, publishEditState, publishmapName, publishContourAngles, publishDbShutdownState} from '../rosService';
+import { coverage_listener, publishPoint, publishStartPoint, startNode, publishEditState, publishmapName, publishContourAngles, publishDbShutdownState, endNode} from '../rosService';
 
 const CreateMapPage = ({ mapName, showPage }) => {
   // ==========================
@@ -41,6 +41,12 @@ const CreateMapPage = ({ mapName, showPage }) => {
       fetchPolyData();
     }
   },[mapName]);
+
+  useEffect(() => {
+    console.log('Edit Map State:', editMapState);
+    console.log('Create Map State:', createMapState);
+    console.log("points:", points);
+  },[])
 
   // Function to fetch config data from sqlite db
   const fetchConfigData = async () => {
@@ -138,6 +144,12 @@ const CreateMapPage = ({ mapName, showPage }) => {
         const message = new ROSLIB.Message({ data: pointsStr });
         setPoints([]); // Reset all 4 points drawn
         setStartPoints(true);
+        
+        if (!editMapState && createMapState){
+          setTimeout(()=>{
+            alert("Please set a start point on the map")
+          },2500)
+        }
 
         //Publish the points to the ROS topic under /roi_points
         pointPublisher.publish(message);
@@ -382,7 +394,20 @@ const CreateMapPage = ({ mapName, showPage }) => {
         sessionStorage.removeItem('coverageListener');
         sessionStorage.removeItem('fourPointsSet');
         sessionStorage.removeItem('allBCDPolyContours');
-        showPage('main')
+
+        const endNodeSrvClient = endNode();
+        if (endNodeSrvClient) {
+          const request = new ROSLIB.ServiceRequest({});
+          endNodeSrvClient.callService(request, function(result) {
+            console.log('Service call result:', result);
+            endNodeSrvClient.ros.close(); // Close the ROS connection
+          }, function(error) {
+            console.error('Service call failed:', error);
+            endNodeSrvClient.ros.close(); // Close the ROS connection
+          });
+        }
+
+        showPage('create-map2')
         // Optionally, refresh data after deletion
         fetchConfigData();
         fetchPolyData();
@@ -415,11 +440,29 @@ const CreateMapPage = ({ mapName, showPage }) => {
     }
 
   };
+
   const handleSave = () => {
     sessionStorage.removeItem('coverageListener');
     fetchConfigData();
     fetchPolyData();
-    showPage('main');
+
+    const endNodeSrvClient = endNode();
+    if (endNodeSrvClient) {
+      const request = new ROSLIB.ServiceRequest({});
+      endNodeSrvClient.callService(
+        request,
+        function(result) {
+          console.log('Service call result:', result);
+          endNodeSrvClient.ros.close(); // Close the ROS connection
+        },
+        function(error) {
+          console.error('Service call failed:', error);
+          endNodeSrvClient.ros.close(); // Close the ROS connection
+        }
+      );
+    }
+
+    showPage('create-map2');
     publishDbShutdownState({ dbState: true });
   };
 
@@ -490,7 +533,9 @@ const CreateMapPage = ({ mapName, showPage }) => {
       <div className="button-container">
         <button onClick={handleClearDataWrapper} className="cancel-btn">Cancel</button>
         <button onClick={handleEdit} className="edit-btn">Edit</button>
-        <button onClick={handleSave} className="save-btn">Save</button>
+        {!editMapState && (
+          <button onClick={handleSave} className="save-btn">Save</button>
+        )}
         {editMapState && (
           <button onClick={handleSaveEdit} className = "save-edit-btn">Save Edit</button>
         )}
