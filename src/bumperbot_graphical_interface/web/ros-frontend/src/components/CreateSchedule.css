@@ -67,7 +67,7 @@
 }
 
 .schedule-form:focus {
-  border-color: #24c49f; /* Change this to your desired color */
+  border-color: #24c49f; 
   outline: none; /* Remove default outline */
 }
 

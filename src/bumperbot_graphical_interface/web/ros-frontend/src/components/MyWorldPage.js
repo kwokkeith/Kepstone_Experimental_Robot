@@ -101,58 +101,72 @@ const MyWorldPage = ({mapName}) => {
   // ===========================================
 
   useEffect(() => {
-    if (!data.length || !imageLoaded) return;
-
-    // Select the corresponding entry from data based on mapName
+    if (!data || data.length === 0) {
+      console.warn('Data not loaded yet');
+      return;
+    }
     const entry = data.find(item => item.map_name === mapName);
     if (!entry) {
       console.error(`No entry found for map: ${mapName}`);
       return;
     }  
-
-    // Process contours
-    const fetched_contours = entry.polygonBounding_coordinates.trim();
-    const cleaned_contours = fetched_contours.endsWith(',') 
-      ? fetched_contours.slice(0, -1)
-      : fetched_contours;
-
-    const contours = cleaned_contours
-      .replace(/^\[|\]$/g, '')
-      .split('],[')
-      .map(contourStr => 
-        contourStr.split('\n')
-          .map(coord => {
-            const [x, y] = coord.trim().split(' ').map(Number);
-            return { x, y };
-          })
-      );
-
-    setContoursList(contours);
-    // console.log('Contours List:', contours); //Debugging tool to see the contours
-
-    // Process waypoints
-    const fetched_waypoints = entry.cleaning_path_coordinates.trim();
-    const cleaned_waypoints = fetched_waypoints.endsWith(',') 
-      ? fetched_waypoints.slice(0, -1)
-      : fetched_waypoints;
-
-    const waypoints = cleaned_waypoints
-      .replace(/^\[|\]$/g, '')
-      .split('],[')
-      .map(waypointStr => 
-        waypointStr.split('\n')
-          .map(coord => {
-            const [x, y] = coord.trim().split(' ').map(Number);
-            return { x, y };
-          })
-      );
-
-    setWaypointsList(waypoints);
-    
-    const fetched_navigation_waypoints = entry.navigation_waypoints.trim();
-    setNavigationWaypointsList(fetched_navigation_waypoints);
-    
-  }, [data]);
+  
+    // Process contours only if the string is non-empty
+    if (entry.polygonBounding_coordinates && entry.polygonBounding_coordinates.trim() !== '') {
+      const fetched_contours = entry.polygonBounding_coordinates.trim();
+      const cleaned_contours = fetched_contours.endsWith(',')
+        ? fetched_contours.slice(0, -1)
+        : fetched_contours;
+  
+      const contours = cleaned_contours
+        .replace(/^\[|\]$/g, '')
+        .split('],[')
+        .map(contourStr =>
+          contourStr
+            .split('\n')
+            .filter(coord => coord.trim() !== '')
+            .map(coord => {
+              const [x, y] = coord.trim().split(' ').map(Number);
+              return { x, y };
+            })
+        );
+      setContoursList(contours);
+    } else {
+      console.warn('No polygonBounding_coordinates found.');
+    }
+  
+    // Process waypoints only if the string is non-empty
+    if (entry.cleaning_path_coordinates && entry.cleaning_path_coordinates.trim() !== '') {
+      const fetched_waypoints = entry.cleaning_path_coordinates.trim();
+      const cleaned_waypoints = fetched_waypoints.endsWith(',')
+        ? fetched_waypoints.slice(0, -1)
+        : fetched_waypoints;
+  
+      const waypoints = cleaned_waypoints
+        .replace(/^\[|\]$/g, '')
+        .split('],[')
+        .map(waypointStr =>
+          waypointStr
+            .split('\n')
+            .filter(coord => coord.trim() !== '')
+            .map(coord => {
+              const [x, y] = coord.trim().split(' ').map(Number);
+              return { x, y };
+            })
+        );
+      setWaypointsList(waypoints);
+    } else {
+      console.warn('No cleaning_path_coordinates found.');
+    }
+  
+    // Process navigation waypoints
+    if (entry.navigation_waypoints && entry.navigation_waypoints.trim() !== '') {
+      const fetched_navigation_waypoints = entry.navigation_waypoints.trim();
+      setNavigationWaypointsList(fetched_navigation_waypoints);
+    } else {
+      console.warn('No navigation_waypoints found.');
+    }
+  }, [data, mapName]);
 
   const handleImageLoad = () => {
     setImageLoaded(true);
