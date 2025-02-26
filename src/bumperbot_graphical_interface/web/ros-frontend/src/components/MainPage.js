@@ -8,6 +8,7 @@ import diagnosticsIcon from '../assets/icons/diagnostics.svg';
 import batteryIcon from '../assets/icons/zap.svg';
 import Header from './Header'; // Import the Header component
 import renderIMG from '../assets/images/Render3d.png';
+import {battery_percentage_listener} from '../rosService';
 
 const MainPage = ({ showPage }) => { // Ensure showPage is received as a prop
   const [percentage, setPercentage] = useState(10); // Battery percentage
@@ -16,6 +17,21 @@ const MainPage = ({ showPage }) => { // Ensure showPage is received as a prop
   const circleRef = useRef(null);
   const [nextSchedule, setNextSchedule] = useState('schedule1'); // Next schedule
 
+  // Only run with dv8 robot.
+  // useEffect(() => {
+  //   const battery_percentage_srv = battery_percentage_listener();
+  //   const handleNewBatteryPercentage = (msg) => {
+  //     const labeledMessage = `/sam/battery_state/percentage ${msg.data}`;
+  //     setPercentage(msg.data);
+  //   };
+
+  //   battery_percentage_srv.subscribe(handleNewBatteryPercentage);
+
+  //   return () => {
+  //     battery_percentage_srv.unsubscribe(handleNewBatteryPercentage);
+  //   };
+  // }, []);
+  
   useEffect(() => {
     if (circleRef.current) {
       const radius = circleRef.current.r.baseVal.value;

@@ -108,3 +108,10 @@
     border-radius: 8px;
     background-color: #e7e7e7;
 }
+
+.tab-content p{
+  font-size: 1.8rem;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  color: #FAFAFA;
+}
