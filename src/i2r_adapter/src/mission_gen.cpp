@@ -322,8 +322,8 @@ namespace mission_gen {
         Json::StreamWriterBuilder builder;
         const std::unique_ptr<Json::StreamWriter> writer(builder.newStreamWriter());
         std::ofstream output;
-        root["header"]["clientlocation"] = "CHART";
-        root["header"]["clientname"] = "CHART";
+        root["header"]["clientlocation"] = "full2dmap01";
+        root["header"]["clientname"] = "cag_vacuum_amr";
         root["header"]["clienttype"] = 1;
         root["header"]["cmd"] = 6;
         root["header"]["type"] = 1;

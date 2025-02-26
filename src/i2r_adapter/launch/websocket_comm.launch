@@ -1,0 +1,7 @@
+<launch>
+
+<param name="/websocket_comm/certification" type="string" value="$(find websocket_comm)/lic/default_gui1_pem.crt"/>
+<param name="/websocket_comm/key" type="string" value="$(find websocket_comm)/lic/default_gui1_pem.key"/>
+<node pkg="i2r_adapter" type="websocket_client_node" name="websocket_client_node" output="screen"/>
+
+</launch>

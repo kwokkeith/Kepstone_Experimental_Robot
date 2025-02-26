@@ -14,7 +14,24 @@ void wss_client_init()
     websocketpp::lib::error_code _ec;
 
     // Establish WebSocket connection
-    std::string websocket_url = "wss://0.0.0.0:5000";
+    std::string websocket_url = "wss://192.168.0.150:5100";
+
+    // The SSL context is required, and holds certificates
+    ssl::context ctx{ssl::context::tlsv12_client};
+
+    // This holds the root certificate used for verification
+    std::string certification_file =  "/home/keith/Documents/Capstone/Kepstone_Experimental_Robot/src/i2r_adapter/lic/default_gui1_pem.crt";
+    std::string key_file = "src/i2r_adapter/lic/default_gui1_pem.key";
+
+    ctx.use_certificate_file(certification_file, ssl::context::pem);
+    ctx.set_password_callback([](std::size_t,
+                                boost::asio::ssl::context_base::password_purpose)
+    {
+        return "pass_default_gui1";
+    });
+    ctx.use_rsa_private_key_file(key_file, ssl::context::pem);
+
+    WebSocket
     connection_id = ws_client->connect(websocket_url);
 
     if (connection_id == -1) {
@@ -46,6 +63,53 @@ void wss_client_init()
     ROS_INFO("WebSocket is now OPEN.");
 }
 
+void connect()
+{
+  std::string host = "192.168.0.150";
+  auto const  port = "5100";
+
+  // Look up the domain name
+  auto const results = resolver_.resolve(host, port);
+
+  // Make the connection on the IP address we get from a lookup
+  auto ep = net::connect(beast::get_lowest_layer(ws_), results);
+
+  // Set SNI Hostname (many hosts need this to handshake successfully)
+  if(! SSL_set_tlsext_host_name(ws_.next_layer().native_handle(), host.c_str()))
+    throw beast::system_error(
+        beast::error_code(
+          static_cast<int>(::ERR_get_error()),
+          net::error::get_ssl_category()),
+        "Failed to set SNI Hostname");
+
+  // Update the host_ string. This will provide the value of the
+  // Host HTTP header during the WebSocket handshake.
+  // See https://tools.ietf.org/html/rfc7230#section-5.4
+  host += ':' + std::to_string(ep.port());
+
+  // Perform the SSL handshake
+  ws_.next_layer().handshake(ssl::stream_base::client);
+
+  // Set a decorator to change the User-Agent of the handshake
+  ws_.set_option(websocket::stream_base::decorator(
+                   [](websocket::request_type& req)
+                 {
+                   req.set(http::field::user_agent,
+                   std::string(BOOST_BEAST_VERSION_STRING) +
+                   " websocket-client-coro");
+                 }));
+
+  // Perform the websocket handshake
+  ws_.handshake(host, "/");
+
+  // Post an event to the event queue to keep it from dying
+  boost::asio::post(io_ctx_, std::bind(&WebSocket::worker_receive_msg, this));
+  thread_ = std::thread([this] () {
+    io_ctx_.run();
+  });
+}
+
+
 
 // Function to ensure WebSocket connection is established
 void check_init_completion()
@@ -57,33 +121,6 @@ void check_init_completion()
     }
 }
 
-// Not needed because only one robot
-// // Thread-safe lock function
-// std::mutex _mutex;
-// std::unique_lock<std::mutex> lock()
-// {
-//     std::unique_lock<std::mutex> l(_mutex, std::defer_lock);
-//     while (!l.try_lock()) {
-//         // Intentionally busy wait
-//     }
-//     return l;
-// }
-
-// Service callback to send JSON messages via WebSocket
-// Example usage: 
-// rosservice call /send_json '{"json_message": "{\"command\": \"move\", \"speed\": 1.5}"}'
-// bool sendJsonCallback(i2r_adapter::SendJson::Request &req, i2r_adapter::SendJson::Response &res) {
-//     if (connection_id == -1) {
-//         res.success = false;
-//         res.response_message = "WebSocket is not connected!";
-//         ROS_ERROR("%s", res.response_message.c_str());
-//         return true;
-//     }
-
-//     ws_client->send(connection_id, req.json_message);
-
-//     return true;
-// }
 
 bool sendJsonCallback(i2r_adapter::SendJson::Request &req, i2r_adapter::SendJson::Response &res) {
     if (connection_id == -1) {

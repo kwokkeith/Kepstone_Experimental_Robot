@@ -16,6 +16,8 @@
 #include <mutex>
 #include <memory>
 
+namespace ssl = boost::asio::ssl;
+
 namespace mrccc_utils {
 namespace websocket_client {
 
