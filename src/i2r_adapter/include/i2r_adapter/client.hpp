@@ -43,6 +43,10 @@ public:
 
     connection_hdl get_hdl() const { return m_hdl; }
     std::string get_status() const { return m_status; }
+    void record_sent_message(std::string message) {
+        m_messages.push_back(">> " + message);
+    }
+    std::vector<std::string> m_messages;
 
 private:
     int m_id;
@@ -62,7 +66,9 @@ public:
     }
     int connect(const std::string& uri);
     void close(int id, websocketpp::close::status::value code, const std::string& reason);
-    void send(int id, const std::string& message);
+    void send(int id, std::string message, websocketpp::lib::error_code& e);
+    void send(int id, const std::string message);
+
     connection_metadata::ptr get_metadata(int id) const;
 
 private:

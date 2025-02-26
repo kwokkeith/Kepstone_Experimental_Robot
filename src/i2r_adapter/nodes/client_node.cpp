@@ -13,24 +13,35 @@ void wss_client_init()
     websocketpp::lib::error_code _ec;
 
     // Establish WebSocket connection
-    // TODO: Check websocket URL 
-    std::string websocket_url = "wss://192.168.0.150:5000";
+    std::string websocket_url = "wss://0.0.0.0:5000";
     connection_id = ws_client->connect(websocket_url);
 
-    if (connection_id != -1) {
-        ROS_INFO("WebSocket connected with ID: %d", connection_id);
-        std::this_thread::sleep_for(std::chrono::seconds(2)); // Allow time for connection setup
-    } else {
+    if (connection_id == -1) {
         ROS_ERROR("Failed to establish WebSocket connection.");
         return;
     }
 
-    // Send initial identification message
-    // Just to see if connection is active
-    std::string idme_cmd = "{\"command\": \"identify\"}";
-    ws_client->send(connection_id, idme_cmd);
+    ROS_INFO("WebSocket connected with ID: %d", connection_id);
+    std::this_thread::sleep_for(std::chrono::seconds(2)); // Allow time for connection setup
 
+    auto metadata = ws_client->get_metadata(connection_id);
+    int retries = 5;
+    while (metadata && metadata->get_status() != "Open" && retries > 0) {
+        ROS_WARN("WebSocket is not open yet, retrying...");
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+        metadata = ws_client->get_metadata(connection_id);
+        retries--;
+    }
+
+    if (!metadata || metadata->get_status() != "Open") {
+        ROS_ERROR("WebSocket failed to open after multiple retries.");
+        ws_client.reset();
+        return;
+    }
+
+    ROS_INFO("WebSocket is now OPEN.");
 }
+
 
 // Function to ensure WebSocket connection is established
 void check_init_completion()
@@ -57,6 +68,19 @@ void check_init_completion()
 // Service callback to send JSON messages via WebSocket
 // Example usage: 
 // rosservice call /send_json '{"json_message": "{\"command\": \"move\", \"speed\": 1.5}"}'
+// bool sendJsonCallback(i2r_adapter::SendJson::Request &req, i2r_adapter::SendJson::Response &res) {
+//     if (connection_id == -1) {
+//         res.success = false;
+//         res.response_message = "WebSocket is not connected!";
+//         ROS_ERROR("%s", res.response_message.c_str());
+//         return true;
+//     }
+
+//     ws_client->send(connection_id, req.json_message);
+
+//     return true;
+// }
+
 bool sendJsonCallback(i2r_adapter::SendJson::Request &req, i2r_adapter::SendJson::Response &res) {
     if (connection_id == -1) {
         res.success = false;
@@ -65,10 +89,37 @@ bool sendJsonCallback(i2r_adapter::SendJson::Request &req, i2r_adapter::SendJson
         return true;
     }
 
-    ws_client->send(connection_id, req.json_message);
+    auto metadata = ws_client->get_metadata(connection_id);
+    if (!metadata) {
+        res.success = false;
+        res.response_message = "WebSocket metadata not found!";
+        ROS_ERROR("%s", res.response_message.c_str());
+        return true;
+    }
+
+    if (metadata->get_status() != "Open") {
+        res.success = false;
+        res.response_message = "WebSocket is not in OPEN state!";
+        ROS_ERROR("%s", res.response_message.c_str());
+        return true;
+    }
+
+    websocketpp::lib::error_code ec;
+    ws_client->send(connection_id, req.json_message, ec);
+
+    if (ec) {
+        res.success = false;
+        res.response_message = "Failed to send message: " + ec.message();
+        ROS_ERROR("%s", res.response_message.c_str());
+    } else {
+        res.success = true;
+        res.response_message = "Message sent successfully.";
+        ROS_INFO("Sent JSON: %s", req.json_message.c_str());
+    }
 
     return true;
 }
+
 
 int main(int argc, char** argv) {
     ros::init(argc, argv, "websocket_client_node");
