@@ -28,13 +28,10 @@ namespace mission_gen {
         return goal;
     }
     
-    Json::Value Pose(float pose_x, float pose_y, float yaw) {
+    Json::Value Pose(float pose_x, float pose_y, tf2::Quaternion quat) {
         Json::Value pose;
         // Getting Quaternion values 
         // tf2::Quaternion quat = i2r_driver::get_quat_from_yaw(yaw);
-        tf2::Quaternion quat;
-        quat.setRPY(0.0, 0.0, yaw);
-        quat.normalize();
         pose["description"] = ""; // Point name not used in our case
         pose["nav_angle_w"] = quat.getW();
         pose["nav_angle_x"] = 0.0;
@@ -47,7 +44,7 @@ namespace mission_gen {
         return pose;
     }
     
-    Json::Value PointData(int index, float raw_x, float raw_y, float raw_yaw) {
+    Json::Value PointData(int index, float raw_x, float raw_y, tf2::Quaternion quat) {
         // JSON object with attributes required for waypoint data
         Json::Value data;
         data["angle_accuracy"] = 0.3;
@@ -61,7 +58,7 @@ namespace mission_gen {
         data["nav_max_vel"] = 1; // Consider getting this param from config [preset]
         data["nav_mode"] = 2; // Default >> 2 [Agile]; 1 [Pure Line Following]
         data["patience"] = 1; // Default is 1
-        data["pose"] = Pose(raw_x, raw_y, raw_yaw);
+        data["pose"] = Pose(raw_x, raw_y, quat);
         data["position_accuracy"] = 0.3; // Current Default >> 0.3
         data["safety_mode"] = 1;  // Current mode is set to 1 : Full safety
         data["steering_mode"] = "Differential"; // Modes avail: Differential, Ackermann, Omni
@@ -126,7 +123,7 @@ namespace mission_gen {
         return dock;
     }
     
-    std::string Mission_Data (const std::vector<rmf_fleet_msgs::msg::Location> &waypoint) {
+    std::string Mission_Data (const std::vector<geometry_msgs::PoseStamped> &waypoint) {
         // Processes a list of waypoints and converts into JSON format for robot to follow
         // Processes a set of waypoints and generates a list of JSON objects, each 
         // representing a movement command.
@@ -143,7 +140,7 @@ namespace mission_gen {
         int index = 0;
         for (auto& wp : waypoint) {
             // Each waypoint, x, y and yaw
-            root["points"].append(PointData(index, wp.x, wp.y, wp.yaw)); 
+            root["points"].append(PointData(index, wp.pose.position.x, wp.pose.position.y, wp.pose.orientation)); 
             index++;
         };
         Json::FastWriter print;
@@ -151,7 +148,7 @@ namespace mission_gen {
         return s;
     } 
     
-    Json::Value Mission(int mission_type, const std::vector<rmf_fleet_msgs::msg::Location>& waypoint) {    
+    Json::Value Mission(int mission_type, const std::vector<geometry_msgs::PoseStamped>& waypoint) {    
         // Creates JSON data for different types of missions (line following, docking, etc.)
         Json::Value root;
         Json::Value arr(Json::arrayValue);
