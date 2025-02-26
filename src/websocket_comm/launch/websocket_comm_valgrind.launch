@@ -1,0 +1,7 @@
+<launch>
+
+<node pkg="websocket_comm" type="websocket_comm_node" name="websocket_comm_node" output="screen" launch-prefix="valgrind --leak-check=full --log-file='/home/sp/g_test.log'"/>
+
+
+</launch>
+
