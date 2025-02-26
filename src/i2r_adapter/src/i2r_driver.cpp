@@ -4,7 +4,7 @@ namespace i2r_driver {
     std::string send_i2r_line_following_mission(ros::NodeHandle& node, std::string& task_id,
         const std::vector<geometry_msgs::PoseStamped>& path)
     {
-        task_id = 1; // Temporary task id used because not using RMF
+        task_id = 0; // Temporary task id used because not using RMF
 
         int _task_id = std::move(std::stoi(task_id)); 
         // std::vector <geometry_msgs::PoseStamped> i2r_waypoint;
