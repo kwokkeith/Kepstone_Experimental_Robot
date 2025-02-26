@@ -30,6 +30,13 @@ const Header = ({ currentPage = "Home", showPage }) => { // Pass showPage as pro
     return () => clearInterval(timer);
   }, []);
 
+  function handleMainPageClick() {
+    if(currentPage !== "MainPage") {
+      sessionStorage.removeItem("selected-date")
+      showPage('main');
+    }
+  }
+
   return (
     <header className="top-section">
       <div className="time-date-container">
@@ -45,7 +52,7 @@ const Header = ({ currentPage = "Home", showPage }) => { // Pass showPage as pro
         <div className="icon hover">
           <img src={bellIcon} alt="Notification" />
         </div>
-        <div className="icon hover" onClick={() => currentPage !== "MainPage" && showPage('main')}>
+        <div className="icon hover" onClick={handleMainPageClick}>
           {currentPage === "MainPage" ? (
             <img src={menuIcon} alt="Menu" />
           ) : (

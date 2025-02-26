@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import './Diagnostics.css';
 // import ROSLIB from 'roslib';
-import { sidebrush_speed_listener, sidebrush_position_listener,} from '../rosService';
+import { sidebrush_speed_listener, sidebrush_position_listener, realsense_d455_listener} from '../rosService';
 
 const Diagnostics = ({showPage}) => {
     const [data, setData] = useState([]);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-    const [activeTab, setActiveTab] = useState('tab1');
+    const [activeTab, setActiveTab] = useState('sidebrush');
     const [sidebrushSpeed, setSidebrushSpeed] = useState(0);
     const [sidebrushPosition, setSidebrushPosition] = useState(0);
     const [sidebrushMessages, setSidebrushMessages] = useState([]);
+    const [imageData, setImageData] = useState(null);
+    const [imageMessages, setImageMessages] = useState([]);
 
   
     useEffect(() => {
@@ -58,6 +60,26 @@ const Diagnostics = ({showPage}) => {
       };
     }, []);
 
+    useEffect(() => {
+      const realsense_listener_srv = realsense_d455_listener();
+    
+      const handleNewImageMessage = (msg) => {
+        const labeledMessage = `/depth_camera/color/image_compressed/compressed/ received: ${msg.header.stamp}`;
+  
+        // Adjust MIME type based on msg.format content
+        const mimeType = msg.format.includes('jpeg') ? 'image/jpeg' : msg.format;
+        const imageUrl = `data:${mimeType};base64,${msg.data}`;
+    
+        setImageData(imageUrl);
+        setImageMessages(prevMessages => [...prevMessages, labeledMessage]);
+      };
+    
+      realsense_listener_srv.subscribe(handleNewImageMessage);
+    
+      return () => {
+        realsense_listener_srv.unsubscribe(handleNewImageMessage);
+      };
+    }, []);
 
     const showContent = (tabID) => {
       setActiveTab(tabID);
@@ -71,7 +93,7 @@ const Diagnostics = ({showPage}) => {
               <div className={`pill-tab ${activeTab === 'sidebrush' ? 'active' : ''}`} onClick={() => showContent('sidebrush')}>Side Brush</div>
               <div className={`pill-tab ${activeTab === 'vacuum' ? 'active' : ''}`} onClick={() => showContent('vacuum')}>Vacuum</div>
               <div className={`pill-tab ${activeTab === 'rollerbrush' ? 'active' : ''}`} onClick={() => showContent('rollerbrush')}>Roller Brush</div>
-              <div className={`pill-tab ${activeTab === 'dustbag' ? 'active' : ''}`} onClick={() => showContent('dustbag')}>Dust Bag</div>
+              <div className={`pill-tab ${activeTab === 'camera' ? 'active' : ''}`} onClick={() => showContent('camera')}>Camera</div>
             </div>
           </div>
           <div className="diagnostics-middle-content-right">
@@ -97,9 +119,18 @@ const Diagnostics = ({showPage}) => {
             <div id="rollerbrush" className="tab-content" style={{ display: activeTab === 'rollerbrush' ? 'block' : 'none' }}>
               Content for Tab 3
               </div>
-            <div id="dustbag" className="tab-content" style={{ display: activeTab === 'dustbag' ? 'block' : 'none' }}>
-              Content for Tab 4
-              </div>
+              <div id="camera" className="tab-content"
+              style={{
+                display: activeTab === 'camera' ? 'flex' : 'none',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}>
+              {imageData ? (
+                <img src={imageData} alt="CameraOutput" />
+              ) : (
+                <p>No image data available</p>
+              )}
+            </div>
           </div>
         </div>
       </div>
