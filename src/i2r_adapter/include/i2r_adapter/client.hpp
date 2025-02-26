@@ -44,6 +44,7 @@ public:
     connection_hdl get_hdl() const { return m_hdl; }
     std::string get_status() const { return m_status; }
     void record_sent_message(std::string message) {
+       
         m_messages.push_back(">> " + message);
     }
     std::vector<std::string> m_messages;
@@ -71,9 +72,13 @@ public:
 
     connection_metadata::ptr get_metadata(int id) const;
 
+    typedef std::map<int, connection_metadata::ptr> con_list;
+
+    con_list m_connection_list;
+
 private:
     client m_endpoint;
-    std::map<int, connection_metadata::ptr> m_connection_list;
+    // std::map<int, connection_metadata::ptr> m_connection_list;
     int m_next_id = 0;
 };
 

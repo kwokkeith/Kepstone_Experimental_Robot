@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <fstream>
 #include <tf2/LinearMath/Quaternion.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <nav_msgs/Path.h>
 
@@ -25,6 +26,8 @@ std::string line_following(const int& task_id,
 std::string abort(int task_id);
 
 std::string dock(int task_id);
+
+std::string identifyMe();
 
 } // namespace mission_gen
 } // namespace mrccc_utils

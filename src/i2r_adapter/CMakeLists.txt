@@ -48,7 +48,7 @@ include_directories(
 )
 
 ## Define an executable target
-add_executable(websocket_client_node nodes/client_node.cpp src/client.cpp)
+add_executable(websocket_client_node nodes/client_node.cpp src/client.cpp src/mission_gen.cpp)
 
 target_link_libraries(  
   websocket_client_node

@@ -20,7 +20,8 @@
                 "${workspaceFolder}/src/litter_destruction/include",
                 "${workspaceFolder}/devel/include",
                 "${workspaceFolder}/src/coverage_planner/include",
-                "/usr/include/opencv4"
+                "/usr/include/opencv4",
+                "${workspaceFolder}/src/i2r_adapter/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

@@ -1,6 +1,7 @@
 #include <ros/ros.h>
 #include <std_msgs/String.h>
 #include <i2r_adapter/SendJson.h> 
+#include <i2r_adapter/mission_gen.hpp>
 #include "i2r_adapter/client.hpp"
 
 std::shared_ptr<mrccc_utils::websocket_client::websocket_endpoint> ws_client;
@@ -23,6 +24,9 @@ void wss_client_init()
 
     ROS_INFO("WebSocket connected with ID: %d", connection_id);
     std::this_thread::sleep_for(std::chrono::seconds(2)); // Allow time for connection setup
+
+    std::string idme_cmd = mrccc_utils::mission_gen::identifyMe();
+    ws_client->send(connection_id, idme_cmd, _ec);
 
     auto metadata = ws_client->get_metadata(connection_id);
     int retries = 5;
