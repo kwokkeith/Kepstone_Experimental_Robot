@@ -174,7 +174,7 @@ const Diagnostics = ({showPage}) => {
                   <img
                     src={enlargedImage}
                     alt="Enlarged Camera Output"
-                    style={{ maxWidth: '100%', maxHeight: '80%' }}
+                    style={{ maxWidth: '100%', maxHeight: '80%', borderRadius: '10px' }}
                   />
                 ) : (
                   <p style={{ color: '#fff' }}>No image data available</p>
@@ -212,7 +212,7 @@ const Diagnostics = ({showPage}) => {
                       <img
                         src={imageDataFront}
                         alt="CameraOutputFront"
-                        style={{ height: '100%', maxWidth: '35%' }}
+                        style={{ height: '100%', maxWidth: '35%' , borderRadius: '6px'}}
                       />
                     ) : (
                       <p>No image data available</p>
@@ -243,7 +243,7 @@ const Diagnostics = ({showPage}) => {
                       <img
                         src={imageDataRear}
                         alt="CameraOutputRear"
-                        style={{ height: '100%', maxWidth: '35%' }}
+                        style={{ height: '100%', maxWidth: '35%', borderRadius: '6px' }}
                       />
                     ) : (
                       <p>No image data available</p>

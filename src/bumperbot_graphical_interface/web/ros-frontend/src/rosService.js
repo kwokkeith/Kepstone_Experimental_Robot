@@ -463,6 +463,20 @@ export function realsense_d455_listener_front() {
     messageType: 'sensor_msgs/CompressedImage'
   });
 
+  // Throttling: allow messages only every ~17ms (60fps)
+  let lastTimestamp = 0;
+  const throttleInterval = 1000 / 30; // ~33.33ms
+
+  const originalSubscribe = listener.subscribe.bind(listener);
+  listener.subscribe = function(callback) {
+    originalSubscribe((msg) => {
+      const now = Date.now();
+      if (now - lastTimestamp < throttleInterval) return;
+      lastTimestamp = now;
+      callback(msg);
+    });
+  };
+
   return listener;
 }
 
@@ -487,6 +501,19 @@ export function realsense_d455_listener_rear() {
     name: '/depth_camera/color/image_compressed/compressed/rear', //Fake name change for DV8
     messageType: 'sensor_msgs/CompressedImage'
   });
+  // Throttling: allow messages only every ~17ms (60fps)
+  let lastTimestamp = 0;
+  const throttleInterval = 1000 / 30; // ~33.33ms
+
+  const originalSubscribe = listener.subscribe.bind(listener);
+  listener.subscribe = function(callback) {
+    originalSubscribe((msg) => {
+      const now = Date.now();
+      if (now - lastTimestamp < throttleInterval) return;
+      lastTimestamp = now;
+      callback(msg);
+    });
+  };
 
   return listener;
 }
