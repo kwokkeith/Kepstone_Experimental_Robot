@@ -3,7 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import './CreateMapPage.css';
 import ROSLIB from 'roslib';
 import { coverage_listener, publishPoint, publishStartPoint, startNode, publishEditState, publishmapName, publishContourAngles, publishDbShutdownState, endNode} from '../rosService';
-
+import minusIcon from "../assets/icons/minuszoom.svg";
+import plusIcon from "../assets/icons/pluszoom.svg";
 const CreateMapPage = ({ mapName, showPage }) => {
   // ==========================
   // React States
@@ -591,11 +592,11 @@ const CreateMapPage = ({ mapName, showPage }) => {
         <div className="btn-container">
           {/* Button to zoom in */}
           <button onClick={handleZoomIn}>
-            <span>+</span>
+            <img src={plusIcon} alt="Zoom In" />
           </button>
           {/* Button to zoom out */}
           <button onClick={handleZoomOut}>
-            <span>-</span>
+            <img src={minusIcon} alt="Zoom Out" />
           </button>
         </div>
         <div className='create-map-container' style={{ width: 'auto', overflow: "hidden" }}>
