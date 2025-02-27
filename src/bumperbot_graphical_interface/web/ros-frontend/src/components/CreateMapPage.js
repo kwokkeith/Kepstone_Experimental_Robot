@@ -13,6 +13,9 @@ const CreateMapPage = ({ mapName, showPage }) => {
   //Zoom and Pan Feature
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const dragOccurredRef = useRef(false);
+  const mousedownPosRef = useRef({ x: 0, y: 0 });
+  const dragThreshold = 5;
 
   // React States for creating map in JS
   const imageRef = useRef(null);
@@ -197,7 +200,10 @@ const CreateMapPage = ({ mapName, showPage }) => {
   
     // Mouse down event handler for starting canvas drag
     const handleMouseDown = (e) => {
-      prevPosition = { x: e.clientX, y: e.clientY };
+      // Only respond to left mouse button clicks (button === 0)
+      if (e.button !== 0) return;
+      mousedownPosRef.current = { x: e.clientX, y: e.clientY };
+      dragOccurredRef.current = false;
       dragTimeout = setTimeout(() => {
         isDragging = true;
       }, dragDelay);
@@ -205,14 +211,19 @@ const CreateMapPage = ({ mapName, showPage }) => {
   
     // Mouse move event handler for dragging the canvas
     const handleMouseMove = (e) => {
+      // Only update if left mouse button is pressed
+      if (!(e.buttons & 1)) return;
+      const dx = e.clientX - mousedownPosRef.current.x;
+      const dy = e.clientY - mousedownPosRef.current.y;
+      if (Math.abs(dx) > dragThreshold || Math.abs(dy) > dragThreshold) {
+        dragOccurredRef.current = true;
+      }
       if (!isDragging) return;
-      const deltaX = e.clientX - prevPosition.x;
-      const deltaY = e.clientY - prevPosition.y;
-      prevPosition = { x: e.clientX, y: e.clientY };
-      setPosition((position) => ({
-        x: position.x + deltaX,
-        y: position.y + deltaY,
+      setPosition((oldPos) => ({
+        x: oldPos.x + dx,
+        y: oldPos.y + dy,
       }));
+      mousedownPosRef.current = { x: e.clientX, y: e.clientY };
     };
   
     // Mouse up event handler for ending canvas drag
@@ -288,6 +299,11 @@ const CreateMapPage = ({ mapName, showPage }) => {
   };
 
   const handleCanvasClick = (event) => {
+    // If a drag occurred, do not process the click
+    if (dragOccurredRef.current) {
+      dragOccurredRef.current = false; // reset for the next click
+      return;
+    }
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     const rect = canvas.getBoundingClientRect();
@@ -297,8 +313,8 @@ const CreateMapPage = ({ mapName, showPage }) => {
     const rawY = Math.round(event.clientY - rect.top);
     
     // Adjust the coordinates to account for scale and translation offsets
-    const x = Math.round(rawX / scale - position.x);
-    const y = Math.round(rawY / scale - position.y);
+    const x = Math.round(rawX / scale);
+    const y = Math.round(rawY / scale);
 
     // Add the new point to the array
     const newPoints = [...points, { x, y }];
