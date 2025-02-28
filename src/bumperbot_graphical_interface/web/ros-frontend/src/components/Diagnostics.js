@@ -76,7 +76,7 @@ const Diagnostics = ({showPage}) => {
       const realsense_listener_srv = realsense_d455_listener_front();
     
       const handleNewImageMessage = (msg) => {
-        const labeledMessage = `/depth_camera/color/image_compressed/compressed/ received: ${msg.header.stamp}`;
+        const labeledMessage = `/depth_camera/color/image_compressed/front received: ${msg.header.stamp}`;
   
         // Adjust MIME type based on msg.format content
         const mimeType = msg.format.includes('jpeg') ? 'image/jpeg' : msg.format;
@@ -97,7 +97,7 @@ const Diagnostics = ({showPage}) => {
       const realsense_listener_rear_srv = realsense_d455_listener_rear();
     
       const handleNewImageMessage = (msg) => {
-        const labeledMessage = `/depth_camera/color/image_compressed/compressed/ received: ${msg.header.stamp}`;
+        const labeledMessage = `/depth_camera/color/image_compressed/rear received: ${msg.header.stamp}`;
   
         // Adjust MIME type based on msg.format content
         const mimeType = msg.format.includes('jpeg') ? 'image/jpeg' : msg.format;

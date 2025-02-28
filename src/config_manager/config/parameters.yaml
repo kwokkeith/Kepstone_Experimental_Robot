@@ -115,7 +115,8 @@ camera:
   topics: 
     color_image_raw: "/depth_camera/color/image_raw"        # Raw RGB image of gazebo depth camera
     depth_image_raw: "/depth_camera/depth/image_raw"        # Raw depth image of gazebo depth camera
-    color_image_compressed: "/depth_camera/color/image_compressed"  # Compressed RGB image of gazebo depth camera
+    color_image_front_compressed: "/depth_camera/color/image_compressed/front"  # Compressed RGB image of front depth camera
+    color_image_rear_compressed: "/depth_camera/color/image_compressed/rear  "  # Compressed RGB image of rear depth camera
 
 navigation:
   services:
