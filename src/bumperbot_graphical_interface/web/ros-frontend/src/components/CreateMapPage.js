@@ -3,11 +3,19 @@ import React, { useEffect, useRef, useState } from 'react';
 import './CreateMapPage.css';
 import ROSLIB from 'roslib';
 import { coverage_listener, publishPoint, publishStartPoint, startNode, publishEditState, publishmapName, publishContourAngles, publishDbShutdownState, endNode} from '../rosService';
-
+import minusIcon from "../assets/icons/minuszoom.svg";
+import plusIcon from "../assets/icons/pluszoom.svg";
 const CreateMapPage = ({ mapName, showPage }) => {
   // ==========================
   // React States
   // ==========================
+
+  //Zoom and Pan Feature
+  const [scale, setScale] = useState(1);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const dragOccurredRef = useRef(false);
+  const mousedownPosRef = useRef({ x: 0, y: 0 });
+  const dragThreshold = 5;
 
   // React States for creating map in JS
   const imageRef = useRef(null);
@@ -183,6 +191,61 @@ const CreateMapPage = ({ mapName, showPage }) => {
     sessionStorage.setItem('contourAngles', JSON.stringify(contourAngles));
   }, [contourAngles]);
 
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    let isDragging = false;
+    let prevPosition = { x: 0, y: 0 };
+    let dragTimeout = null;
+    const dragDelay = 200; // delay in ms
+  
+    // Mouse down event handler for starting canvas drag
+    const handleMouseDown = (e) => {
+      // Only respond to left mouse button clicks (button === 0)
+      if (e.button !== 0) return;
+      mousedownPosRef.current = { x: e.clientX, y: e.clientY };
+      dragOccurredRef.current = false;
+      dragTimeout = setTimeout(() => {
+        isDragging = true;
+      }, dragDelay);
+    };
+  
+    // Mouse move event handler for dragging the canvas
+    const handleMouseMove = (e) => {
+      // Only update if left mouse button is pressed
+      if (!(e.buttons & 1)) return;
+      const dx = e.clientX - mousedownPosRef.current.x;
+      const dy = e.clientY - mousedownPosRef.current.y;
+      if (Math.abs(dx) > dragThreshold || Math.abs(dy) > dragThreshold) {
+        dragOccurredRef.current = true;
+      }
+      if (!isDragging) return;
+      setPosition((oldPos) => ({
+        x: oldPos.x + dx,
+        y: oldPos.y + dy,
+      }));
+      mousedownPosRef.current = { x: e.clientX, y: e.clientY };
+    };
+  
+    // Mouse up event handler for ending canvas drag
+    const handleMouseUp = () => {
+      clearTimeout(dragTimeout);
+      isDragging = false;
+    };
+  
+    // Add event listeners
+    canvas?.addEventListener("mousedown", handleMouseDown);
+    canvas?.addEventListener("mousemove", handleMouseMove);
+    canvas?.addEventListener("mouseup", handleMouseUp);
+  
+    // Remove event listeners on component unmount
+    return () => {
+      clearTimeout(dragTimeout);
+      canvas?.removeEventListener("mousedown", handleMouseDown);
+      canvas?.removeEventListener("mousemove", handleMouseMove);
+      canvas?.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [canvasRef, scale]);
+
   // ==========================
   // FUNCTIONS
   // ==========================
@@ -236,11 +299,22 @@ const CreateMapPage = ({ mapName, showPage }) => {
   };
 
   const handleCanvasClick = (event) => {
+    // If a drag occurred, do not process the click
+    if (dragOccurredRef.current) {
+      dragOccurredRef.current = false; // reset for the next click
+      return;
+    }
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     const rect = canvas.getBoundingClientRect();
-    const x = Math.round(event.clientX - rect.left);
-    const y = Math.round(event.clientY - rect.top);
+
+    // Calculate raw coordinates relative to the canvas
+    const rawX = Math.round(event.clientX - rect.left);
+    const rawY = Math.round(event.clientY - rect.top);
+    
+    // Adjust the coordinates to account for scale and translation offsets
+    const x = Math.round(rawX / scale);
+    const y = Math.round(rawY / scale);
 
     // Add the new point to the array
     const newPoints = [...points, { x, y }];
@@ -470,6 +544,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
     // Reset State back to initial state for handleCanvasClick
     setEditMapState(false);
     setStartPoints(false);
+    setShowButtonContainer(false);
     sessionStorage.removeItem('coverageListener');
     sessionStorage.removeItem('fourPointsSet');
     const canvas = canvasRef.current;
@@ -514,6 +589,15 @@ const CreateMapPage = ({ mapName, showPage }) => {
 
   };
 
+  const handleZoomIn = () => {
+    setScale((scale) => scale + 0.1);
+  };
+
+  // Zoom out function
+  const handleZoomOut = () => {
+    setScale((scale) => scale - 0.1);
+  };
+
   // ==========================
   // React rendered html component
   // ==========================
@@ -521,14 +605,37 @@ const CreateMapPage = ({ mapName, showPage }) => {
   return (
     <div className="create-map-page">
       <h2 className="create-map-name-heading">Creating: {mapName}</h2>
-      <img
-        ref={imageRef}
-        src={`${process.env.PUBLIC_URL}/my_world_map2.png`}
-        alt="My World Map"
-        className="create-my-world-map"
-        style={{ display: 'none' }}
-      />
-      <canvas ref={canvasRef} className="create-my-world-canvas" onClick={handleCanvasClick}></canvas>
+        <div className="btn-container">
+          {/* Button to zoom in */}
+          <button onClick={handleZoomIn}>
+            <img src={plusIcon} alt="Zoom In" />
+          </button>
+          {/* Button to zoom out */}
+          <button onClick={handleZoomOut}>
+            <img src={minusIcon} alt="Zoom Out" />
+          </button>
+        </div>
+        <div className='create-map-container' style={{ width: 'auto', overflow: "hidden" }}>
+          <img
+            ref={imageRef}
+            // src={`${process.env.PUBLIC_URL}/my_world_map2.png`}
+            src={`${process.env.PUBLIC_URL}/cag_floor_plan.png`}
+            alt="My World Map"
+            className="create-my-world-map"
+            style={{ display: 'none' }}
+            draggable={false}
+            />
+          <canvas 
+            ref={canvasRef} 
+            className="create-my-world-canvas" 
+            onClick={handleCanvasClick}
+            style={{
+              transform: `scale(${scale}) translate(${position.x}px, ${position.y}px)`,
+            }}
+            draggable={false}>
+            </canvas>
+        </div>
+
       {showButtonContainer && (
       <div className="button-container">
         <button onClick={handleClearDataWrapper} className="cancel-btn">Cancel</button>

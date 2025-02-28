@@ -441,7 +441,7 @@ export function sidebrush_position_listener() {
   return listener;
 }
 
-export function realsense_d455_listener() {
+export function realsense_d455_listener_front() {
   // Initialize ROS connection
   var ros = new ROSLIB.Ros({
     url: 'ws://localhost:9090'
@@ -463,5 +463,82 @@ export function realsense_d455_listener() {
     messageType: 'sensor_msgs/CompressedImage'
   });
 
+  // Throttling: allow messages only every ~17ms (60fps)
+  let lastTimestamp = 0;
+  const throttleInterval = 1000 / 30; // ~33.33ms
+
+  const originalSubscribe = listener.subscribe.bind(listener);
+  listener.subscribe = function(callback) {
+    originalSubscribe((msg) => {
+      const now = Date.now();
+      if (now - lastTimestamp < throttleInterval) return;
+      lastTimestamp = now;
+      callback(msg);
+    });
+  };
+
   return listener;
+}
+
+export function realsense_d455_listener_rear() {
+  // Initialize ROS connection
+  var ros = new ROSLIB.Ros({
+    url: 'ws://localhost:9090'
+  });
+
+  ros.on('connection', function() {
+    console.log('realsense_d455_listener_rear is now connected to websocket server.');
+  });
+  ros.on('error', function(error) {
+    console.error('Error connecting to ROSBridge for the realsense_d455_listener_rear:', error);
+  });
+  ros.on('close', function() {
+    console.log('realsense_d455_listener_rear is disconnected from ROSBridge');
+  });
+
+  const listener = new ROSLIB.Topic({
+    ros: ros,
+    name: '/depth_camera/color/image_compressed/compressed/rear', //Fake name change for DV8
+    messageType: 'sensor_msgs/CompressedImage'
+  });
+  // Throttling: allow messages only every ~17ms (60fps)
+  let lastTimestamp = 0;
+  const throttleInterval = 1000 / 30; // ~33.33ms
+
+  const originalSubscribe = listener.subscribe.bind(listener);
+  listener.subscribe = function(callback) {
+    originalSubscribe((msg) => {
+      const now = Date.now();
+      if (now - lastTimestamp < throttleInterval) return;
+      lastTimestamp = now;
+      callback(msg);
+    });
+  };
+
+  return listener;
+}
+
+export function battery_percentage_listener() {
+  // Initialize ROS connection
+  var ros = new ROSLIB.Ros({
+    url: 'ws://localhost:9090'
+  });
+
+  ros.on('connection', function() {
+    console.log('battery_percentage_listener is now connected to websocket server.');
+  });
+  ros.on('error', function(error) {
+    console.error('Error connecting to ROSBridge for the battery_percentage_listener:', error);
+  });
+  ros.on('close', function() {
+    console.log('battery_percentage_listener is disconnected from ROSBridge');
+  });
+
+  const battery_listener = new ROSLIB.Topic({
+    ros: ros,
+    name: '/sam/battery_state/percentage', 
+    messageType: 'sensor_msgs/BatteryState'
+  });
+
+  return battery_listener;
 }

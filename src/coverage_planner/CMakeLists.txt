@@ -20,13 +20,14 @@ catkin_package(
 # Add your other dependencies
 find_package(Eigen3 REQUIRED)
 find_package(OpenCV 4 REQUIRED)
-find_package(CGAL QUIET COMPONENTS Core)
+find_package(CGAL REQUIRED COMPONENTS Core)
 find_package(SQLite3 REQUIRED)
 
 include_directories(
   ${catkin_INCLUDE_DIRS}
   ${EIGEN_INCLUDE_DIRS}
   ${OpenCV_INCLUDE_DIRS}
+  ${CGAL_DEFINITIONS}
   ${CGAL_INCLUDE_DIRS}
   ${SQLite3_INCLUDE_DIRS}
   include  # Your include directory
