@@ -3,41 +3,17 @@ from onnx_infer import load_model_data, run_inference, image_point_to_ground_3d
 import rospy
 import cv2
 import numpy as np
-import math
-from cv_bridge import CvBridge, CvBridgeError
-import message_filters
-from decimal import Decimal
-from geometry_msgs.msg import PointStamped
+import pickle
+import socket
+import struct
+import threading
+import time
 import os
 import pyrealsense2 as rs
 from sensor_msgs.msg import CameraInfo
-import time
+from geometry_msgs.msg import PointStamped
 
-
-# This class is used to detect object (ball) and publish to camera_frame/detected_object_coordinates
-# Sub:
-#   /camera/color/image_raw
-# Pub:
-#   /camera_frame_detected_object_coordinates
-# Node Param:  
-#   camera_frame
-
-
-# Pipeline to configure the camera
-pipeline = rs.pipeline()
-config = rs.config()
-config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
-pipeline_profile = pipeline.start(config)
-
-# Get the depth stream intrinsics
-#depth_stream = pipeline_profile.get_stream(rs.stream.depth) # Fetch the depth stream 
-#intrinsics = depth_stream.as_video_stream_profile().get_intrinsics()
-
-
-# Stop the pipeline
-pipeline.stop()
-
-# Set camera_matrix
+# --- Camera Configuration ---
 camera_matrix = np.array([[390.8465270996094, 0, 323.46539306640625],
                         [0, 390.8465270996094, 242.03125],
                         [0, 0, 1]])
@@ -45,74 +21,115 @@ dist_coeffs = np.zeros(5)  # assume no distortion
 camera_height = 1.2  # 1.2 meters above the ground
 tilt_angle_deg = 30  # 30-degree tilt
 
-
-# Get global paramaters for topics/services
+# --- ROS Parameters ---
+rospy.init_node('ball_detector', anonymous=True)
 detected_object_coordinates_topic_pub_ = rospy.get_param('/litter_detection/topics/detected_object_coordinates_camera')
 camera_frame = rospy.get_param('~camera_frame', 'dpcamera_link')
 
-# Publish detected object coordinates
+# --- Publisher ---
 coord_publisher = rospy.Publisher(detected_object_coordinates_topic_pub_, PointStamped, queue_size=10)
 
-def run_example(frame):   
-    # Load image
-    input_image = frame
+# --- Socket Parameters ---
+HOST = "192.168.0.151"  # Change this to the actual IP of the Jetson
+PORT = 5555
 
-    # Run inference
+def run_example(frame):
+    """ Run inference and return detection results """
     boxes, scores, class_names = run_inference(
-    input_img=input_image, score_thr=0.05, input_shape="480,640")
+        input_img=frame, score_thr=0.05, input_shape="480,640"
+    )
+
+    detection_results = []
 
     for i in range(len(boxes)):
-        target_point = ((boxes[i][0]+boxes[i][2])/2, (boxes[i][1]+boxes[i][3])/2)  # Example target point in the image
-        # the distance is ground_position[2]
+        target_point = ((boxes[i][0]+boxes[i][2])/2, (boxes[i][1]+boxes[i][3])/2)
         ground_position = image_point_to_ground_3d(target_point, camera_matrix, dist_coeffs, camera_height, tilt_angle_deg)
 
-
-
-        # Create a PointStamped message
         point_msg = PointStamped()
-        point_msg.header.stamp = rospy.Time.now()     # Add a timestamp
-        point_msg.header.frame_id = camera_frame # Indicate the frame of reference
+        point_msg.header.stamp = rospy.Time.now()
+        point_msg.header.frame_id = camera_frame
 
-        # Point coordinates are in robot coordinate system (point) as opposed to the 
-        # optical coordinate system of camera (Xtarget, Ytarget, Ztarget)
         point_msg.point.x = ground_position[2]
         point_msg.point.y = -ground_position[0]
         point_msg.point.z = ground_position[1]
 
-        coord_publisher.publish(point_msg)        
+        coord_publisher.publish(point_msg)
 
-if __name__ == "__main__":
+        # Store detection info
+        detection_results.append({
+            "class": class_names[i],
+            "score": scores[i],
+            "bbox": boxes[i],
+            "ground_position": (ground_position[2], -ground_position[0], ground_position[1])
+        })
+
+    return detection_results
+
+def socket_server():
+    """ Function to host a socket server and send frame + detection data """
+    while not rospy.is_shutdown():
+        try:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            sock.bind((HOST, PORT))
+            sock.listen(5)
+
+            print(f"[*] Server started at {HOST}:{PORT}, waiting for a connection...")
+            client_socket, client_address = sock.accept()
+            print(f"[*] Accepted connection from {client_address}")
+
+            cap = cv2.VideoCapture(4)
+            if not cap.isOpened():
+                print("[!] Could not open video device")
+                break
+
+            while not rospy.is_shutdown():
+                ret, frame = cap.read()
+                if not ret:
+                    print("Failed to capture video frame")
+                    break
+
+                detections = run_example(frame)
+
+                # --- Encode frame to reduce size before sending ---
+                _, encoded_frame = cv2.imencode(".jpg", frame)
+                frame_data = encoded_frame.tobytes()
+
+                # --- Pack data into a dictionary ---
+                data_packet = {
+                    "image": frame_data,
+                    "detections": detections
+                }
+
+                # --- Serialize and send over socket ---
+                serialized_data = pickle.dumps(data_packet)
+                message_size = struct.pack("L", len(serialized_data))
+                client_socket.sendall(message_size + serialized_data)
+
+                time.sleep(0.03)  # Control sending speed to avoid overloading
+
+        except (BrokenPipeError, ConnectionResetError):
+            print("[!] Connection lost. Reconnecting...")
+            time.sleep(2)
+        except Excetion as e:
+            print(f"[ERROR] {e}")
+            time.sleep(5)
+        finally:
+            sock.close()
+            cap.release()
+
+def main():
+    """ Main function to start OpenCV processing and socket server in parallel """
     current_dir = os.path.dirname(os.path.realpath(__file__))
     model_path = os.path.join(current_dir, "../models/encrypt-model-v1-fp16.7z")
     load_model_data(model_path)
 
-    rospy.init_node('ball_detector', anonymous=True)
-    #rate = rospy.Rate(1000000)
+    # Start socket server in a separate thread
+    socket_thread = threading.Thread(target=socket_server, daemon=True)
+    socket_thread.start()
 
-    cap = cv2.VideoCapture(4)
-    if not (cap.isOpened()):
-        print(f"Could not open video device of index 4")
-        exit(1)
-    
-    start_time = time.time()
-    fps = 0
-    frame_count = 0
+    rospy.spin()  # Keep ROS running
 
-    while not rospy.is_shutdown():
-    #while True:
-        ret, frame = cap.read()
-        # cv2.imshow("Win1", frame)
-        run_example(frame)
-                
-        cv2.imshow("Model", frame)
-        #frame_count+=1 
-
-        if not ret:
-            print("Failed to capture video frame")
-            break
-
-        cv2.waitKey(1)
-        #rate.sleep()
-
-    cap.release()
-    cv2.destroyAllWindows()
+if __name__ == "__main__":
+    main()
+p
