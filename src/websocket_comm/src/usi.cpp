@@ -223,7 +223,7 @@ void Usi::stop_asio()
 
 void Usi::handle_received_msg(std::string msg)
 {
-  // std::cout<<"Mainthread receive at: "<<std::this_thread::get_id()<<std::endl;
+  std::cout<<"Mainthread receive at: "<<std::this_thread::get_id()<<std::endl;
 
   nlohmann::json jobject = nlohmann::json::parse(msg);
 
