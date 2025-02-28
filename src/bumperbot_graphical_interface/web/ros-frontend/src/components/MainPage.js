@@ -8,14 +8,35 @@ import diagnosticsIcon from '../assets/icons/diagnostics.svg';
 import batteryIcon from '../assets/icons/zap.svg';
 import Header from './Header'; // Import the Header component
 import renderIMG from '../assets/images/Render3d.png';
+import {battery_percentage_listener} from '../rosService';
 
 const MainPage = ({ showPage }) => { // Ensure showPage is received as a prop
-  const [percentage, setPercentage] = useState(10); // Battery percentage
+  const [percentage, setPercentage] = useState(20); // Battery percentage
   const [circumference, setCircumference] = useState(0);
   const [strokeDashoffset, setStrokeDashoffset] = useState(0);
   const circleRef = useRef(null);
   const [nextSchedule, setNextSchedule] = useState('schedule1'); // Next schedule
 
+  //Battery States
+  const [batteryColor, setBatteryColor] = useState('#2BE1A9');
+  const [prevPercentage, setPrevPercentage] = useState(percentage);
+  const [batteryStatus, setBatteryStatus] = useState("Battery in use");
+
+  // Only run with dv8 robot.
+  // useEffect(() => {
+  //   const battery_percentage_srv = battery_percentage_listener();
+  //   const handleNewBatteryPercentage = (msg) => {
+  //     const labeledMessage = `/sam/battery_state/percentage ${msg.data}`;
+  //     setPercentage(msg.data);
+  //   };
+
+  //   battery_percentage_srv.subscribe(handleNewBatteryPercentage);
+
+  //   return () => {
+  //     battery_percentage_srv.unsubscribe(handleNewBatteryPercentage);
+  //   };
+  // }, []);
+  
   useEffect(() => {
     if (circleRef.current) {
       const radius = circleRef.current.r.baseVal.value;
@@ -27,7 +48,26 @@ const MainPage = ({ showPage }) => { // Ensure showPage is received as a prop
     }
   }, [percentage, circumference]);
 
-  const strokeColor = percentage < 20 ? '#FF5255' : '#2BE1A9';
+  useEffect(() => {
+    let newColor;
+    if (percentage <= 20) {
+      newColor = "#FF5255";
+    } else if (percentage < 50) {
+      newColor = "#F8E16A";
+    } else {
+      newColor = "#2BE1A9";
+    }
+    setBatteryColor(newColor);
+  
+    if (percentage > prevPercentage) {
+      setBatteryStatus("Battery is charging");
+    } else {
+      setBatteryStatus("Battery in use");
+    }
+    setPrevPercentage(percentage);
+  }, [percentage]);
+
+  
 
   return (
     <div id="main-page" className="page">
@@ -49,7 +89,7 @@ const MainPage = ({ showPage }) => { // Ensure showPage is received as a prop
                   cx="50%"
                   cy="50%"
                   r="40%"
-                  stroke={strokeColor}
+                  stroke={batteryColor}
                 />
               </svg>
               <div className="middle-icon">
@@ -58,7 +98,7 @@ const MainPage = ({ showPage }) => { // Ensure showPage is received as a prop
             </div>
             <div className="battery-text">
               <h3>{percentage}%</h3>
-              <p>Battery in use</p> 
+              <p>{batteryStatus}</p> 
               {/* TODO: Change to Battery Charging when read from rostopic */}
             </div>
           </div>

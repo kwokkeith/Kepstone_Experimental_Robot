@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Diagnostics.css';
 // import ROSLIB from 'roslib';
-import { sidebrush_speed_listener, sidebrush_position_listener, realsense_d455_listener} from '../rosService';
+import { sidebrush_speed_listener, sidebrush_position_listener, realsense_d455_listener_front, realsense_d455_listener_rear} from '../rosService';
 
 const Diagnostics = ({showPage}) => {
     const [data, setData] = useState([]);
@@ -11,10 +11,22 @@ const Diagnostics = ({showPage}) => {
     const [sidebrushSpeed, setSidebrushSpeed] = useState(0);
     const [sidebrushPosition, setSidebrushPosition] = useState(0);
     const [sidebrushMessages, setSidebrushMessages] = useState([]);
-    const [imageData, setImageData] = useState(null);
-    const [imageMessages, setImageMessages] = useState([]);
+    const [imageDataFront, setImageDataFront] = useState(null);
+    const [imageDataRear, setImageDataRear] = useState(null);
+    const [imageFrontMessages, setImageFrontMessages] = useState([]);
+    const [imageRearMessages, setImageRearMessages] = useState([]);
+    const [enlargedImage, setEnlargedImage] = useState(imageDataFront);
+    const [currentCameraMode,setCurrentCameraMode] = useState('front');
 
-  
+    useEffect(() => {
+      if (currentCameraMode == 'front') {
+        setEnlargedImage(imageDataFront);
+      }
+      else if (currentCameraMode == 'rear') {
+        setEnlargedImage(imageDataRear);
+      }
+    }, [imageDataFront, imageDataRear]);
+
     useEffect(() => {
       const fetchData = async () => {
         try {
@@ -61,7 +73,7 @@ const Diagnostics = ({showPage}) => {
     }, []);
 
     useEffect(() => {
-      const realsense_listener_srv = realsense_d455_listener();
+      const realsense_listener_srv = realsense_d455_listener_front();
     
       const handleNewImageMessage = (msg) => {
         const labeledMessage = `/depth_camera/color/image_compressed/compressed/ received: ${msg.header.stamp}`;
@@ -70,14 +82,35 @@ const Diagnostics = ({showPage}) => {
         const mimeType = msg.format.includes('jpeg') ? 'image/jpeg' : msg.format;
         const imageUrl = `data:${mimeType};base64,${msg.data}`;
     
-        setImageData(imageUrl);
-        setImageMessages(prevMessages => [...prevMessages, labeledMessage]);
+        setImageDataFront(imageUrl);
+        setImageFrontMessages(prevMessages => [...prevMessages, labeledMessage]);
       };
     
       realsense_listener_srv.subscribe(handleNewImageMessage);
     
       return () => {
         realsense_listener_srv.unsubscribe(handleNewImageMessage);
+      };
+    }, []);
+
+    useEffect(() => {
+      const realsense_listener_rear_srv = realsense_d455_listener_rear();
+    
+      const handleNewImageMessage = (msg) => {
+        const labeledMessage = `/depth_camera/color/image_compressed/compressed/ received: ${msg.header.stamp}`;
+  
+        // Adjust MIME type based on msg.format content
+        const mimeType = msg.format.includes('jpeg') ? 'image/jpeg' : msg.format;
+        const imageUrl = `data:${mimeType};base64,${msg.data}`;
+    
+        setImageDataRear(imageUrl);
+        setImageRearMessages(prevMessages => [...prevMessages, labeledMessage]);
+      };
+    
+      realsense_listener_rear_srv.subscribe(handleNewImageMessage);
+    
+      return () => {
+        realsense_listener_rear_srv.unsubscribe(handleNewImageMessage);
       };
     }, []);
 
@@ -119,17 +152,106 @@ const Diagnostics = ({showPage}) => {
             <div id="rollerbrush" className="tab-content" style={{ display: activeTab === 'rollerbrush' ? 'block' : 'none' }}>
               Content for Tab 3
               </div>
-              <div id="camera" className="tab-content"
+            <div
+              id="camera"
+              className="tab-content"
               style={{
                 display: activeTab === 'camera' ? 'flex' : 'none',
-                justifyContent: 'center',
-                alignItems: 'center'
+                flexDirection: 'column',
+                height: '100%',
               }}>
-              {imageData ? (
-                <img src={imageData} alt="CameraOutput" />
-              ) : (
-                <p>No image data available</p>
-              )}
+              
+              {/* Enlarged view area */}
+              <div
+                className="camera-enlarged-view"
+                style={{
+                  flex: 1,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}>
+                {enlargedImage ? (
+                  <img
+                    src={enlargedImage}
+                    alt="Enlarged Camera Output"
+                    style={{ maxWidth: '100%', maxHeight: '80%', borderRadius: '10px' }}
+                  />
+                ) : (
+                  <p style={{ color: '#fff' }}>No image data available</p>
+                )}
+              </div>
+              
+              {/* Thumbnails area */}
+              <div
+                className="camera-thumbnails"
+                style={{
+                  height: '30%',
+                  display: 'flex',
+                  flexDirection: 'row',
+                }}>
+                <div
+                  style={{
+                    flex: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => setCurrentCameraMode('front')}>
+                  <div
+                    className="camera-screen-bottom-left"
+                    style={{
+                      flex: 1,
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      width: '100%',
+                    }}>
+                    {imageDataFront ? (
+                      <img
+                        src={imageDataFront}
+                        alt="CameraOutputFront"
+                        style={{ height: '100%', maxWidth: '35%' , borderRadius: '6px'}}
+                      />
+                    ) : (
+                      <p>No image data available</p>
+                    )}
+                  </div>
+                  <p style={{ margin: '0.5rem 0', textAlign: 'center' }}>Front</p>
+                </div>
+                <div
+                  style={{
+                    flex: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => setCurrentCameraMode('rear')}>
+                  <div
+                    className="camera-screen-bottom-right"
+                    style={{
+                      flex: 1,
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      width: '100%',
+                    }}>
+                    {imageDataRear ? (
+                      <img
+                        src={imageDataRear}
+                        alt="CameraOutputRear"
+                        style={{ height: '100%', maxWidth: '35%', borderRadius: '6px' }}
+                      />
+                    ) : (
+                      <p>No image data available</p>
+                    )}
+                  </div>
+                  <p style={{ margin: '0.5rem 0', textAlign: 'center' }}>Rear</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

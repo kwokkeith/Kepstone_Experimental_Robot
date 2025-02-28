@@ -77,3 +77,25 @@
 .button-container{
   gap: 1vw;
 }
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.btn-container button {
+  background-color:  rgba(23, 23, 23, 1);
+  border: none;
+  color: #fff;
+  padding: 1rem;
+  margin: 0 0.5rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-container button:hover {
+  background-color: #24c49f;
+}

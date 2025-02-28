@@ -208,7 +208,8 @@ const MyWorldPage = ({mapName}) => {
           alt="My World Map"
           className="my-world-map"
           style={{ display: 'none' }}
-          src={`${process.env.PUBLIC_URL}/my_world_map2.png`}
+          // src={`${process.env.PUBLIC_URL}/my_world_map2.png`}
+          src={`${process.env.PUBLIC_URL}/cag_floor_plan.png`}
           onLoad={handleImageLoad}
         />
         <canvas ref={canvasRef} className="my-world-canvas"></canvas>
