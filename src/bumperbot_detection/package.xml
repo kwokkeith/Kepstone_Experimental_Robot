@@ -24,7 +24,6 @@
   <build_depend>visualization_msgs</build_depend>
   <build_depend>realsense2_camera</build_depend>
   <build_depend>cv_bridge</build_depend>
-  <build_depend>image_transport</build_depend>
 
   <!-- Build export dependencies -->
   <build_export_depend>rospy</build_export_depend>
@@ -49,7 +48,6 @@
   <exec_depend>eigen</exec_depend>
   <exec_depend>visualization_msgs</exec_depend>
   <exec_depend>cv_bridge</exec_depend>
-  <exec_depend>image_transport</exec_depend>
 
   <!-- For CV model: from myrequirements.txt -->
   <exec_depend>python-numpy</exec_depend>

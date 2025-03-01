@@ -3,19 +3,24 @@
 
 LitterCoordinateTransformer::LitterCoordinateTransformer(const ros::NodeHandle &nh, 
                                                          const std::string base_frame, 
-                                                         const std::string camera_frame) :
+                                                         const std::string camera_frame,
+                                                         const std::string rear_camera_frame) :
                     nh_(nh),
                     base_frame_(base_frame),
-                    camera_frame_(camera_frame)
+                    camera_frame_(camera_frame),
+                    rear_camera_frame_(rear_camera_frame)
 {
     // Get Global Parameter for services/topics
     std::string detected_object_coordinates_base_topic_pub_;
     std::string detected_object_coordinates_cam_topic_pub_;
+    std::string detected_object_coordinates_rear_cam_topic_pub_;
     nh_.getParam("/litter_detection/topics/detected_object_coordinates_base", detected_object_coordinates_base_topic_pub_);
     nh_.getParam("/litter_detection/topics/detected_object_coordinates_camera", detected_object_coordinates_cam_topic_pub_);
+    nh_.getParam("/litter_detection/topics/detected_object_coordinates_rear_camera", detected_object_coordinates_rear_cam_topic_pub_);
 
     // Initialize subscriber to get litter coordinates from the camera frame
     litter_coord_camera_frame_sub_ = nh_.subscribe(detected_object_coordinates_cam_topic_pub_, 10, &LitterCoordinateTransformer::litterCoordinatesCallback, this);
+    litter_coord_rear_camera_frame_sub_ = nh_.subscribe(detected_object_coordinates_rear_cam_topic_pub_, 10, &LitterCoordinateTransformer::litterCoordinatesCallback2, this);
 
     // Initialize publisher to advertise litter coordinates in base frame
     litter_coord_base_frame_pub_ = nh_.advertise<geometry_msgs::PointStamped>(detected_object_coordinates_base_topic_pub_, 10);
@@ -31,7 +36,7 @@ LitterCoordinateTransformer::~LitterCoordinateTransformer()
 }
 
 
-// Callback to process litter coordinates and transform them to the base_footprint frame
+// Callback to process litter coordinates detected from front camera and transform them to the base_frame (base_link)
 void LitterCoordinateTransformer::litterCoordinatesCallback(const geometry_msgs::PointStamped::ConstPtr& litter_point)
 {
     try
@@ -56,6 +61,47 @@ void LitterCoordinateTransformer::litterCoordinatesCallback(const geometry_msgs:
         // Log the transformed coordinates
         ROS_INFO("Litter coordinates (base_footprint): x = %.2f, y = %.2f, z = %.2f", 
                  litter_in_base_frame.point.x, litter_in_base_frame.point.y, litter_in_base_frame.point.z);
+
+        // Publish the litter coordinates in base frame
+        litter_coord_base_frame_pub_.publish(litter_in_base_frame);
+    }
+    catch (tf2::TransformException& ex)
+    {
+        ROS_WARN("Could not transform litter coordinates: %s", ex.what());
+    }
+}
+
+// // Callback to process litter coordinates detected from rear camera and transform them to the base_frame (base_link)
+void LitterCoordinateTransformer::litterCoordinatesCallback2(const geometry_msgs::PointStamped::ConstPtr& litter_point)
+{
+    try
+    {
+        // Lookup the transform from camera_frame to base_footprint
+        geometry_msgs::TransformStamped transform_stamped = tf_buffer_.lookupTransform(base_frame_, rear_camera_frame_, ros::Time(0), ros::Duration(1.0));
+
+        // Drop the rotation segment by only using the translation part
+        geometry_msgs::PointStamped litter_in_base_frame;
+        litter_in_base_frame.header.frame_id = base_frame_;
+        litter_in_base_frame.header.stamp = litter_point->header.stamp;
+
+        // Apply translation + rotation manually
+        // 180° rotation around Y-axis
+        double x_rotated = -litter_point->point.x;  // Flip X
+        double y_rotated = -litter_point->point.y;   // Y stays the same
+        double z_rotated = -litter_point->point.z;  // Flip Z
+
+        // Apply translation from camera_frame to base_footprint
+        litter_in_base_frame.point.x = x_rotated + transform_stamped.transform.translation.x;
+        litter_in_base_frame.point.y = y_rotated + transform_stamped.transform.translation.y;
+        litter_in_base_frame.point.z = z_rotated + transform_stamped.transform.translation.z;
+
+        // Extract x (side distance) and z (distance away) relative to base_footprint
+        double x_side_distance = litter_in_base_frame.point.x;
+        double z_distance_away = litter_in_base_frame.point.z;
+
+        // Log the transformed coordinates
+        ROS_INFO("Litter coordinates (base_footprint): x = %.2f, y = %.2f, z = %.2f", 
+                litter_in_base_frame.point.x, litter_in_base_frame.point.y, litter_in_base_frame.point.z);
 
         // Publish the litter coordinates in base frame
         litter_coord_base_frame_pub_.publish(litter_in_base_frame);

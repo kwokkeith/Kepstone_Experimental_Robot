@@ -5,6 +5,9 @@
     <node pkg="bumperbot_detection" type="get_coordinates.py" name="coordinate_detector" >
         <param name="launch_prefix" value="python3"/>
     </node> 
+    <node pkg="bumperbot_detection" type="get_coordinates_rear.py" name="rear_coordinate_detector" >
+        <param name="launch_prefix" value="python3"/>
+    </node> 
 
     <!-- Litter detector with realsense camera -->
     <!-- <node pkg="bumperbot_detection" type="cv_api_get_coordinates.py" name="coordinate_detector_cv" >
@@ -21,8 +24,9 @@
   
     <!-- Litter coordinate transformer publisher -Base frame -->
     <node pkg="bumperbot_detection" type="litter_coordinate_transformer_publisher_node" name="litter_coordinate_transformer_publisher_node" >
-        <param name="base_frame"    value="base_footprint" />
-        <param name="camera_frame"  value="dpcamera_link_optical"  />
+        <param name="base_frame"    value="base_link" />
+        <param name="camera_frame"  value="dpcamera_link_optical" />
+        <param name="rear_camera_frame" value="rear_dpcamera_link_optical" />
     </node>
   
     <!-- Litter memory node (publishes memory and service for deleting litter) -->
@@ -35,5 +39,5 @@
     </node>
 
     <!-- Image compressor for UI -->
-    <node pkg="bumperbot_detection" type="image_compressor_node" name="image_compressor_node" />
+    <!-- <node pkg="bumperbot_detection" type="image_compressor_node" name="image_compressor_node" /> -->
 </launch>

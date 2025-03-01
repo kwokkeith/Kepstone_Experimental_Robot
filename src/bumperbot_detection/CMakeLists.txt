@@ -12,7 +12,6 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   visualization_msgs
   cv_bridge
-  image_transport
 )
 
 find_package(Eigen3 REQUIRED)
