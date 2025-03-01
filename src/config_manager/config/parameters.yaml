@@ -88,6 +88,7 @@ litter_detection:
   topics:
     detected_object_coordinates_base: "/base_frame/detected_object_coordinates"           # Topic to publish detected object's coordinates from base frame
     detected_object_coordinates_camera: "/camera_frame/detected_object_coordinates"       # Topic to publish detected object's coordinates from camera frame
+    detected_object_coordinates_rear_camera: "/camera_frame_rear/detected_object_coordinates" # Topic to publish detected object's coordinates from rear camera frame
 
 move_manager:
   services:
@@ -113,10 +114,12 @@ boundary_visualizer:
 
 camera:
   topics: 
-    color_image_raw: "/depth_camera/color/image_raw"        # Raw RGB image of gazebo depth camera
-    depth_image_raw: "/depth_camera/depth/image_raw"        # Raw depth image of gazebo depth camera
-    color_image_front_compressed: "/depth_camera/color/image_compressed/front"  # Compressed RGB image of front depth camera
-    color_image_rear_compressed: "/depth_camera/color/image_compressed/rear  "  # Compressed RGB image of rear depth camera
+    color_image_raw: "/depth_camera_front/color/image_raw"        # Raw RGB image of gazebo depth camera
+    depth_image_raw: "/depth_camera_front/depth/image_raw"        # Raw depth image of gazebo depth camera
+    color_image_rear_raw: "/depth_camera_rear/color/image_raw"    # Raw RGB image of rear depth camera
+    depth_image_rear_raw: "/depth_camera_rear/depth/image_raw"    # Raw depth image of rear depth camera
+    color_image_front_compressed: "/depth_camera_front/color/image_raw/compressed"  # Compressed RGB image of front depth camera
+    color_image_rear_compressed: "/depth_camera_rear/color/image_compressed"  # Compressed RGB image of rear depth camera
 
 navigation:
   services:

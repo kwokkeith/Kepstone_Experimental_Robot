@@ -459,7 +459,7 @@ export function realsense_d455_listener_front() {
 
   const listener = new ROSLIB.Topic({
     ros: ros,
-    name: '/depth_camera/color/image_compressed/front', 
+    name: '/depth_camera_front/color/image_raw/compressed', 
     messageType: 'sensor_msgs/CompressedImage'
   });
 
@@ -498,7 +498,7 @@ export function realsense_d455_listener_rear() {
 
   const listener = new ROSLIB.Topic({
     ros: ros,
-    name: '/depth_camera/color/image_compressed/rear', //Fake name change for DV8
+    name: '/depth_camera_rear/color/image_raw/compressed', //Fake name change for DV8
     messageType: 'sensor_msgs/CompressedImage'
   });
   // Throttling: allow messages only every ~17ms (60fps)
