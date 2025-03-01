@@ -23,30 +23,30 @@ const MainPage = ({ showPage }) => { // Ensure showPage is received as a prop
   const [batteryStatus, setBatteryStatus] = useState("Battery in use");
 
   // Only run with dv8 robot.
-  // useEffect(() => {
-  //   const battery_percentage_srv = battery_percentage_listener();
-  //   const handleNewBatteryPercentage = (msg) => {
-  //     const labeledMessage = `/sam/battery_state/percentage ${msg.data}`;
-  //     setPercentage(msg.data);
-  //   };
+   useEffect(() => {
+     const battery_percentage_srv = battery_percentage_listener();
+     const handleNewBatteryPercentage = (msg) => {
+       const labeledMessage = `/sam/battery_state ${msg.percentage}`;
+       setPercentage(msg.percentage);
+     };
 
-  //   battery_percentage_srv.subscribe(handleNewBatteryPercentage);
+     battery_percentage_srv.subscribe(handleNewBatteryPercentage);
+     const radius = circleRef.current.r.baseVal.value;
+     const circumference = 2 * Math.PI * radius;
+     setCircumference(circumference);
 
-  //   return () => {
-  //     battery_percentage_srv.unsubscribe(handleNewBatteryPercentage);
-  //   };
-  // }, []);
+     return () => {
+       battery_percentage_srv.unsubscribe(handleNewBatteryPercentage);
+     };
+   });
   
   useEffect(() => {
     if (circleRef.current) {
-      const radius = circleRef.current.r.baseVal.value;
-      const circumference = 2 * Math.PI * radius;
-      setCircumference(circumference);
       setStrokeDashoffset(circumference - (percentage / 100) * circumference);
       circleRef.current.style.strokeDasharray = circumference;
       circleRef.current.style.strokeDashoffset = strokeDashoffset;
     }
-  }, [percentage, circumference]);
+  }, [circumference]);
 
   useEffect(() => {
     let newColor;

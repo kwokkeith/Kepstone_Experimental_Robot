@@ -536,7 +536,7 @@ export function battery_percentage_listener() {
 
   const battery_listener = new ROSLIB.Topic({
     ros: ros,
-    name: '/sam/battery_state/percentage', 
+    name: '/sam/battery_state', 
     messageType: 'sensor_msgs/BatteryState'
   });
 
