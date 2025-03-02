@@ -1,7 +1,8 @@
 // components/SelectZone.js
 import React, { useState, useEffect } from 'react';
 import './SelectZone.css';
-
+import leftchevron from '../assets/icons/chevron-left.svg';
+import checkIcon from '../assets/icons/check.svg';
 import plusIcon from '../assets/icons/plus.svg';  // Assuming you have a plus.svg icon, or replace it with a "+" character inside the button
 import ROSLIB from 'roslib';
 import { startNode, publishmapName, publishEditState } from '../rosService';
@@ -13,6 +14,7 @@ const SelectZone = ({showPage}) => {
 
     const [zones, setZones] = useState([]);
     const [zonesToDelete, setZonesToDelete] = useState([]);
+    const [zoneSequence, setZoneSequence] = useState([]);
 
     const handleStartNode = (mapName) => {
       const startNodeService = startNode();
@@ -82,7 +84,17 @@ const SelectZone = ({showPage}) => {
 
 
   const handleZoneClick = (entry) => {
-    showPage('my-world', entry.map_name);
+    // showPage('my-world', entry.map_name);
+    setZoneSequence(prevSequence => [...prevSequence, entry.map_name]);
+    console.log("Updated Zone Sequence:", [...zoneSequence, entry.map_name]);
+  };
+
+  const handleBackClick = () => {
+    showPage('create-schedule');
+  };
+
+  const handleCheckClick = () => {
+    showPage('create-schedule');
   };
 
 
@@ -97,6 +109,10 @@ const SelectZone = ({showPage}) => {
         </button>
       </div>
   
+      <div className="header-container">
+        <h1>Select Zone</h1>
+      </div>
+
       {/* Content Grid below Map Actions */}
       <div className="content-grid" id="grid-container">
         {isLoading ? (
@@ -111,6 +127,7 @@ const SelectZone = ({showPage}) => {
             } catch (error) {
               // imageSrc remains null if image is not found
             }
+            let zoneIndex = zoneSequence.indexOf(entry.map_name);
   
             if (imageSrc) {
               return (
@@ -128,7 +145,9 @@ const SelectZone = ({showPage}) => {
                   }}
                 >
                   <h3>{entry.map_name}</h3>
-                  {/* Additional entry details can go here */}
+                  {zoneIndex !== -1 && (
+                    <div className="sequence-indicator">{zoneIndex + 1}</div>
+                  )}
                 </div>
               );
             } else {
@@ -150,12 +169,22 @@ const SelectZone = ({showPage}) => {
                 >
                   <p>Map image not found</p>
                   <h3>{entry.map_name}</h3>
-                  {/* Additional entry details can go here */}
+                  {zoneIndex !== -1 && (
+                    <div className="sequence-indicator">{zoneIndex + 1}</div>
+                  )}
                 </div>
               );
             }
           })
         )}
+      </div>
+      <div className='bottom-button-container'>
+        <button className = "create-schedule-back-button bottom-button hover" onClick={handleBackClick}>
+            <img src={leftchevron} alt="Back" />
+          </button>
+        <button className = "create-schedule-confirm-button bottom-button hover" onClick={handleCheckClick}>
+          <img src={checkIcon} alt="Confirm" />
+        </button>
       </div>
     </div>
   );

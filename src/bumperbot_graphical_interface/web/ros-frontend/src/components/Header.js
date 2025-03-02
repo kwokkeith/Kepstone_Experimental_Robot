@@ -33,6 +33,9 @@ const Header = ({ currentPage = "Home", showPage }) => { // Pass showPage as pro
   function handleMainPageClick() {
     if(currentPage !== "MainPage") {
       sessionStorage.removeItem("selected-date")
+      sessionStorage.removeItem('schedule-name');
+      sessionStorage.removeItem('schedule-time');
+      sessionStorage.removeItem('repeat-option');
       showPage('main');
     }
   }
