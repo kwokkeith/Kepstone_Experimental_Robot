@@ -85,45 +85,58 @@ app.get('/api/polygon', (req, res) => {
 app.delete('/api/maps/:mapName', (req, res) => {
     const { mapName } = req.params;
     
-    // Start a transaction 
-    db.serialize(()=>{
-        db.run('BEGIN TRANSACTION');
-
-        // Delete from Polygon table based on config_id
-        const sqlDeletePolygon = `DELETE FROM Polygon_Table
-        WHERE config_id IN (SELECT config_id FROM Config_Table WHERE map_name = ?)`;
-
-        db.run(sqlDeletePolygon, [mapName], function(err) {
+    // First, check if a record exists so we can return 404 early if not found.
+    const sqlExists = `SELECT COUNT(*) AS count FROM Config_Table WHERE map_name = ?`;
+    db.get(sqlExists, [mapName], (err, row) => {
+      if (err) {
+        console.error('Existence check error:', err);
+        return res.status(500).json({ error: 'Database error' });
+      }
+      if (row.count === 0) {
+        return res.status(404).json({ message: 'No record found to delete.' });
+      }
+      
+      db.serialize(() => {
+        db.run('BEGIN TRANSACTION', (err) => {
+          if (err) {
+            console.error('Error starting transaction:', err);
+            return res.status(500).json({ error: 'Error starting transaction' });
+          }
+    
+          const sqlDeletePolygon = `DELETE FROM Polygon_Table
+                  WHERE config_id IN (SELECT config_id FROM Config_Table WHERE map_name = ?)`;
+    
+          db.run(sqlDeletePolygon, [mapName], function(err) {
             if (err) {
-                db.run('ROLLBACK');
-                // console.error('Error running SQL:', err.message);
-                res.status(500).json({ error: 'Database error' });
-                return;
+              console.error('Error deleting Polygon records:', err);
+              return db.run('ROLLBACK', () => {
+                res.status(500).json({ error: 'Error deleting Polygon records' });
+              });
             }
-
+    
             const sqlDeleteConfig = `DELETE FROM Config_Table WHERE map_name = ?`;
-
+    
             db.run(sqlDeleteConfig, [mapName], function(err) {
-                if (err) {
-                    db.run('ROLLBACK');
-                    res.status(500).json({ error: 'Database error' });
-                    return;
-                }
-                db.run('COMMIT', (err) => {
-                    if (err) {
-                        res.status(500).json({ error: 'Database error' });
-                        return;
-                    }
-                    if (this.changes === 0) {
-                        res.status(404).json({ message: 'No record found to delete.' });
-                        return;
-                    }
-                    res.json({ message: `Map with name ${mapName} deleted`, changes: this.changes });
+              if (err) {
+                console.error('Error deleting Config records:', err);
+                return db.run('ROLLBACK', () => {
+                  res.status(500).json({ error: 'Error deleting Config records' });
                 });
+              }
+    
+              db.run('COMMIT', function(err) {
+                if (err) {
+                  console.error('Error committing transaction:', err);
+                  return res.status(500).json({ error: 'Error committing transaction' });
+                }
+                res.json({ message: `Map with name ${mapName} deleted`, changes: this.changes });
+              });
             });
+          });
         });
+      });
     });
-});
+  });
 
 // START SERVER
 app.listen(PORT, () => {
