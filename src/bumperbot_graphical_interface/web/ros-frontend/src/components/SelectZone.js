@@ -87,10 +87,12 @@ const SelectZone = ({showPage}) => {
     // showPage('my-world', entry.map_name);
     setZoneSequence(prevSequence => [...prevSequence, entry.map_name]);
     console.log("Updated Zone Sequence:", [...zoneSequence, entry.map_name]);
+    sessionStorage.setItem('zoneSequence', JSON.stringify([...zoneSequence, entry.map_name]));
   };
 
   const handleBackClick = () => {
     showPage('create-schedule');
+    sessionStorage.removeItem('zoneSequence');
   };
 
   const handleCheckClick = () => {

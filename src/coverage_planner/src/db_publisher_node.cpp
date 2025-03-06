@@ -254,7 +254,7 @@ int main(int argc, char **argv) {
     }
 
     const char *sql_create_jobs_table = "CREATE TABLE IF NOT EXISTS Jobs_Table (" \
-                                        "job_id INTEGER," \
+                                        "job_id TEXT," \
                                         "config_id TEXT," \
                                         "sequence_no INTEGER ,"\
                                         "PRIMARY KEY(job_id, sequence_no),"\
@@ -269,7 +269,7 @@ int main(int argc, char **argv) {
     }
 
     const char *sql_create_job_order_table = "CREATE TABLE IF NOT EXISTS Job_Order_Table (" \
-                                        "job_id INTEGER NOT NULL," \
+                                        "job_id TEXT NOT NULL," \
                                         "config_id TEXT NOT NULL," \
                                         "PRIMARY KEY(job_id, config_id)," \
                                         "FOREIGN KEY(job_id) REFERENCES Jobs_Table(job_id)," \
@@ -284,7 +284,7 @@ int main(int argc, char **argv) {
     }
 
     const char *sql_create_schedule_table = "CREATE TABLE IF NOT EXISTS Schedule_Table (" \
-                                    "schedule_id INTEGER PRIMARY KEY," \
+                                    "schedule_id TEXT PRIMARY KEY," \
                                     "schedule_name TEXT," \
                                     "start_time TEXT NOT NULL CHECK (start_time GLOB '[0-2][0-9]:[0-5][0-9]:[0-5][0-9]')," \
                                     "start_date TEXT CHECK (start_date GLOB '[0-3][0-9]-[0-1][0-9]-[0-9][0-9][0-9][0-9]')," \
@@ -299,11 +299,12 @@ int main(int argc, char **argv) {
     }
     
     const char *sql_create_schedule_job_link = "CREATE TABLE IF NOT EXISTS Schedule_Job_Link (" \
-                                         "schedule_id INTEGER NOT NULL PRIMARY KEY," \
-                                         "sequence_no INTEGER NOT NULL," \
-                                         "job_id INTEGER NOT NULL," \
-                                         "FOREIGN KEY(schedule_id) REFERENCES Schedule_Table(schedule_id)," \
-                                         "FOREIGN KEY(job_id) REFERENCES Jobs_Table(job_id));";
+                                           "schedule_id TEXT NOT NULL," \
+                                           "sequence_no INTEGER NOT NULL," \
+                                           "job_id TEXT NOT NULL," \
+                                           "PRIMARY KEY(schedule_id, sequence_no)," \
+                                           "FOREIGN KEY(schedule_id) REFERENCES Schedule_Table(schedule_id)," \
+                                           "FOREIGN KEY(job_id) REFERENCES Jobs_Table(job_id));";
 
     if (sqlite3_exec(db, sql_create_schedule_job_link, 0, 0, &errMsg) != SQLITE_OK) {
         ROS_ERROR("SQL error creating schedule-job link table: %s", errMsg);
@@ -314,7 +315,7 @@ int main(int argc, char **argv) {
     }
     
     const char *sql_create_job_status = "CREATE TABLE IF NOT EXISTS JobStatus (" \
-                                    "job_id INTEGER PRIMARY KEY," \
+                                    "job_id TEXT PRIMARY KEY," \
                                     "status TEXT NOT NULL CHECK (status IN ('failed', 'scheduled', 'active', 'completed'))," \
                                     "FOREIGN KEY(job_id) REFERENCES Jobs_Table(job_id));";
 
@@ -327,7 +328,7 @@ int main(int argc, char **argv) {
     }
 
     const char *sql_create_contains = "CREATE TABLE IF NOT EXISTS ContainsTable (" \
-                                "job_id INTEGER," \
+                                "job_id TEXT," \
                                 "sequence_no INTEGER NOT NULL," \
                                 "PRIMARY KEY(job_id, sequence_no),"\
                                 "FOREIGN KEY(sequence_no) REFERENCES Jobs_Table(sequence_no)," \
