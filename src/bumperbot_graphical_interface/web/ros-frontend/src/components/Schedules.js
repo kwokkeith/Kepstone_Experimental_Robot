@@ -9,7 +9,8 @@ import { startNode, publishmapName, publishEditState } from '../rosService';
 // import chevronRightIcon from '../assets/icons/chevron-right.svg';
 
 const Schedules = ({showPage, showCreateSchedulePage}) => {
-    const [data, setData] = useState([]);
+    const [mapData, setMapData] = useState([]);
+    const [scheduleData, setScheduleData] = useState([]);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -22,14 +23,14 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
     // REACT WEBHOOKS
     // ---------------
     useEffect(() => {
-      const fetchData = async () => {
+      const fetchMapData = async () => {
         try {
           const response = await fetch('http://localhost:5000/api/config');
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
           const result = await response.json();
-          setData(result.data);
+          setMapData(result.data);
         } catch (err) {
           setError(err.message);
         } finally {
@@ -37,13 +38,21 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
         }
       };
       
-      fetchData();
+      fetchMapData();
       
     }, []);
 
-    // ----------
+    useEffect(() => {
+      fetch('http://localhost:5000/api/schedules')
+          .then(response => response.json())
+          .then(data => setScheduleData(data.data))
+          .catch(error => console.error('Error fetching schedules:', error));
+      // console.log("Schedule Data: ", scheduleData);
+    }, []);
+
+    // =========
     // Functions
-    // ----------
+    // =========
 
     const handleScheduleLeftClick = () => {
       handleMonthChange(-1);
@@ -67,11 +76,19 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
       setSelectedDate(date.toDateString());
     };
 
+    const formatDate = (date) => {
+      const day = date.getDate().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}-${month}-${year}`;
+    };
+
     const renderCalendar = () => {
       const days = [];
       const prevLastDay = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
       const totalMonthDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
       const startWeekDay = new Date(date.getFullYear(), date.getMonth(), 1).getDay(); // weekday for the 1st
+      
       const totalCalendarDay = 6 * 7;
       
       for (let i = 0; i < totalCalendarDay; i++) {
@@ -94,9 +111,14 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
           // Current month days
           const currentDay = new Date(date.getFullYear(), date.getMonth(), day);
           const dayClass = selectedDate === currentDay.toDateString() ? 'selected-day' : 'current-day';
+          
+          const currentDayFormattedforDB = formatDate(currentDay);
+          const hasSchedule = scheduleData.some(schedule => schedule.start_date === currentDayFormattedforDB);
+          
           days.push(
             <div key={i} className={dayClass} onClick={() => handleDateClick(currentDay)}>
               {day}
+              {hasSchedule && <span className="schedule-dot"></span>}  {/* Render a dot if there's a schedule */}
             </div>
           );
         }

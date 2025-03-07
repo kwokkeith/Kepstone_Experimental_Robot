@@ -170,6 +170,19 @@ const CreateSchedule = ({showPage, selectedDate}) => {
                                   job_id:jobId
                               })
                           });
+                      })
+                      .then(() => {
+                          // Insert into ContainsTable
+                          return fetch('http://localhost:5000/api/contains', {
+                              method: 'POST',
+                              headers: {
+                                  'Content-Type': 'application/json'
+                              },
+                              body: JSON.stringify({
+                                  job_id:jobId,
+                                  sequence_no: index
+                              })
+                          });
                       });
                   });
 

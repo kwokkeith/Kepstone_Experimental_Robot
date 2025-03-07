@@ -35,6 +35,11 @@
   border-radius: 30px; /* 15px */
 }
 
+.calendar {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .calendar-toolbar {
   display: flex;
   justify-content: space-between;
@@ -138,6 +143,15 @@
   border-radius: 0.9375rem; /* 15px */
   background-color: #24c49f;
   color: #24c49f;
+}
+
+.schedule-dot {
+  display:block;
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #FAFAFA;
+  border-radius: 50%;
+  margin: 0.25rem auto 0;
 }
 
 /* Action buttons */
