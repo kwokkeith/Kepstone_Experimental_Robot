@@ -304,7 +304,7 @@ int main(int argc, char **argv) {
                                            "job_id TEXT NOT NULL," \
                                            "PRIMARY KEY(schedule_id, sequence_no)," \
                                            "FOREIGN KEY(schedule_id) REFERENCES Schedule_Table(schedule_id)," \
-                                           "FOREIGN KEY(job_id) REFERENCES Jobs_Table(job_id));";
+                                           "FOREIGN KEY(job_id, sequence_no) REFERENCES Jobs_Table(job_id, sequence_no));";
 
     if (sqlite3_exec(db, sql_create_schedule_job_link, 0, 0, &errMsg) != SQLITE_OK) {
         ROS_ERROR("SQL error creating schedule-job link table: %s", errMsg);

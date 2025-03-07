@@ -301,95 +301,146 @@ app.get('/api/schedules', (req, res) => {
 app.delete('/api/delete_schedule', (req, res) => {
     const { schedule_name } = req.body;
     console.log('Received request to delete schedule:', schedule_name);
-
+  
     db.serialize(() => {
-        db.run('BEGIN TRANSACTION', (err) => {
+      db.run('BEGIN TRANSACTION', (err) => {
+        if (err) {
+          console.error('Error starting transaction:', err.message);
+          return res.status(500).json({ error: 'Error starting transaction' });
+        }
+  
+        // 1) Collect schedule IDs
+        const selectScheduleIds = `
+          SELECT schedule_id
+          FROM Schedule_Table
+          WHERE schedule_name = ?
+        `;
+        db.all(selectScheduleIds, [schedule_name], (err, scheduleRows) => {
+          if (err) {
+            console.error('Error fetching schedule IDs:', err.message);
+            return res.status(500).json({ error: err.message });
+          }
+  
+          const scheduleIds = scheduleRows.map(row => row.schedule_id);
+          console.log('Found schedule IDs:', scheduleIds);
+  
+          // 2) Now collect job IDs using those schedule IDs
+          const selectJobIds = `
+            SELECT job_id 
+            FROM Schedule_Job_Link
+            WHERE schedule_id IN (${scheduleIds.map(() => '?').join(',')})
+          `;
+          db.all(selectJobIds, scheduleIds, (err, jobRows) => {
             if (err) {
-                console.error('Error starting transaction:', err.message);
-                return res.status(500).json({ error: 'Error starting transaction' });
+              console.error('Error fetching job IDs:', err.message);
+              return res.status(500).json({ error: err.message });
             }
-
-            // Debugging: Log schedule_id values
-            const logScheduleIds = `SELECT schedule_id FROM Schedule_Table WHERE schedule_name = ?`;
-            db.all(logScheduleIds, [schedule_name], (err, rows) => {
+  
+            const jobIds = jobRows.map(r => r.job_id);
+            console.log('Found job IDs:', jobIds);
+  
+            // 3) Delete from dependent tables, using jobIds and scheduleIds as needed
+  
+            // Delete from JobStatus
+            if (jobIds.length > 0) {
+              const deleteJobStatus = `
+                DELETE FROM JobStatus
+                WHERE job_id IN (${jobIds.map(() => '?').join(',')})
+              `;
+              db.run(deleteJobStatus, jobIds, function(err) {
                 if (err) {
-                    console.error('Error fetching schedule_ids:', err.message);
+                  console.error('Error deleting from JobStatus:', err.message);
                 } else {
-                    console.log('Schedule IDs:', rows);
+                  console.log(`Deleted ${this.changes} rows from JobStatus`);
                 }
-            });
-
-            // Debugging: Log job_id values
-            const logJobIds = `SELECT job_id FROM Schedule_Job_Link WHERE schedule_id IN (SELECT schedule_id FROM Schedule_Table WHERE schedule_name = ?)`;
-            db.all(logJobIds, [schedule_name], (err, rows) => {
+              });
+            }
+  
+            // Delete from Job_Order_Table
+            if (jobIds.length > 0) {
+              const deleteJobOrder = `
+                DELETE FROM Job_Order_Table
+                WHERE job_id IN (${jobIds.map(() => '?').join(',')})
+              `;
+              db.run(deleteJobOrder, jobIds, function(err) {
                 if (err) {
-                    console.error('Error fetching job_ids:', err.message);
+                  console.error('Error deleting from Job_Order_Table:', err.message);
                 } else {
-                    console.log('Job IDs:', rows);
+                  console.log(`Deleted ${this.changes} rows from Job_Order_Table`);
                 }
-            });
-
-            const deleteJobStatus = `DELETE FROM JobStatus WHERE job_id IN (SELECT job_id FROM Schedule_Job_Link WHERE schedule_id IN (SELECT schedule_id FROM Schedule_Table WHERE schedule_name = ?))`;
-            db.run(deleteJobStatus, [schedule_name], function(err) {
+              });
+            }
+  
+            // Delete from ContainsTable
+            if (jobIds.length > 0) {
+              const deleteContainsTable = `
+                DELETE FROM ContainsTable
+                WHERE job_id IN (${jobIds.map(() => '?').join(',')})
+              `;
+              db.run(deleteContainsTable, jobIds, function(err) {
                 if (err) {
-                    console.error('Error deleting from JobStatus:', err.message);
-                    return res.status(500).json({ error: err.message });
+                  console.error('Error deleting from ContainsTable:', err.message);
                 } else {
-                    console.log(`Deleted ${this.changes} rows from JobStatus`);
+                  console.log(`Deleted ${this.changes} rows from ContainsTable`);
                 }
-            });
-
-            const deleteScheduleJobLink = `DELETE FROM Schedule_Job_Link WHERE schedule_id IN (SELECT schedule_id FROM Schedule_Table WHERE schedule_name = ?)`;
-            db.run(deleteScheduleJobLink, [schedule_name], function(err) {
+              });
+            }
+  
+            // Delete from Schedule_Job_Link (using scheduleIds)
+            if (scheduleIds.length > 0) {
+              const deleteScheduleJobLink = `
+                DELETE FROM Schedule_Job_Link
+                WHERE schedule_id IN (${scheduleIds.map(() => '?').join(',')})
+              `;
+              db.run(deleteScheduleJobLink, scheduleIds, function(err) {
                 if (err) {
-                    console.error('Error deleting from Schedule_Job_Link:', err.message);
-                    return res.status(500).json({ error: err.message });
+                  console.error('Error deleting from Schedule_Job_Link:', err.message);
                 } else {
-                    console.log(`Deleted ${this.changes} rows from Schedule_Job_Link`);
+                  console.log(`Deleted ${this.changes} rows from Schedule_Job_Link`);
                 }
-            });
-
-            const deleteJobOrder = `DELETE FROM Job_Order_Table WHERE job_id IN (SELECT job_id FROM Schedule_Job_Link WHERE schedule_id IN (SELECT schedule_id FROM Schedule_Table WHERE schedule_name = ?))`;
-            db.run(deleteJobOrder, [schedule_name], function(err) {
+              });
+            }
+  
+            // Delete from Jobs_Table (using jobIds)
+            if (jobIds.length > 0) {
+              const deleteJobs = `
+                DELETE FROM Jobs_Table
+                WHERE job_id IN (${jobIds.map(() => '?').join(',')})
+              `;
+              db.run(deleteJobs, jobIds, function(err) {
                 if (err) {
-                    console.error('Error deleting from Job_Order_Table:', err.message);
-                    return res.status(500).json({ error: err.message });
+                  console.error('Error deleting from Jobs_Table:', err.message);
                 } else {
-                    console.log(`Deleted ${this.changes} rows from Job_Order_Table`);
+                  console.log(`Deleted ${this.changes} rows from Jobs_Table`);
                 }
-            });
-
-            const deleteJobs = `DELETE FROM Jobs_Table WHERE job_id IN (SELECT job_id FROM Schedule_Job_Link WHERE schedule_id IN (SELECT schedule_id FROM Schedule_Table WHERE schedule_name = ?))`;
-            db.run(deleteJobs, [schedule_name], function(err) {
-                if (err) {
-                    console.error('Error deleting from Jobs_Table:', err.message);
-                    return res.status(500).json({ error: err.message });
-                } else {
-                    console.log(`Deleted ${this.changes} rows from Jobs_Table`);
-                }
-            });
-
-            const deleteSchedule = `DELETE FROM Schedule_Table WHERE schedule_name = ?`;
+              });
+            }
+  
+            // Finally, delete from Schedule_Table (using schedule_name)
+            const deleteSchedule = `
+              DELETE FROM Schedule_Table
+              WHERE schedule_name = ?
+            `;
             db.run(deleteSchedule, [schedule_name], function(err) {
-                if (err) {
-                    console.error('Error deleting from Schedule_Table:', err.message);
-                    return res.status(500).json({ error: err.message });
-                } else {
-                    console.log(`Deleted ${this.changes} rows from Schedule_Table`);
-                }
+              if (err) {
+                console.error('Error deleting from Schedule_Table:', err.message);
+                return res.status(500).json({ error: err.message });
+              }
+              console.log(`Deleted ${this.changes} rows from Schedule_Table`);
             });
-
+  
             db.run('COMMIT', (err) => {
-                if (err) {
-                    console.error('Error committing transaction:', err.message);
-                    return res.status(500).json({ error: 'Error committing transaction' });
-                }
-                res.json({ message: 'Entries deleted successfully' });
+              if (err) {
+                console.error('Error committing transaction:', err.message);
+                return res.status(500).json({ error: 'Error committing transaction' });
+              }
+              return res.json({ message: 'Entries deleted successfully' });
             });
+          });
         });
+      });
     });
-});
-
+  });
 // START SERVER
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

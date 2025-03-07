@@ -210,6 +210,10 @@ const CreateSchedule = ({showPage, selectedDate}) => {
           });
 
           showPage("schedules");
+          sessionStorage.removeItem('schedule-name');
+          sessionStorage.removeItem('schedule-time');
+          sessionStorage.removeItem('repeat-option');
+          sessionStorage.removeItem('zoneSequence');
     };
 
     const fetchConfigIds = async (zoneSequence) => {

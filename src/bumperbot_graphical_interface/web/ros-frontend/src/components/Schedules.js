@@ -77,7 +77,7 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
       .then(response => response.json())
       .then(data => setScheduleData(data.data))
       .catch(error => console.error('Error fetching schedules:', error));
-      
+
       if (selectedDate) {
         // Convert selectedDate ("Thu Mar 20 2025") to "YYYY-MM-DD" format
         const dateObj = new Date(selectedDate);
@@ -160,8 +160,10 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
           const dayClass = selectedDate === currentDay.toDateString() ? 'selected-day' : 'current-day';
 
           const currentDayFormattedforDB = formatDate(currentDay);
-          const hasSchedule = scheduleData.some(schedule => schedule.start_date === currentDayFormattedforDB);
-          
+          const hasSchedule = scheduleData
+          ? scheduleData.some(schedule => schedule.start_date === currentDayFormattedforDB)
+          : false;
+
           days.push(
             <div key={i} className={dayClass} onClick={() => handleDateClick(currentDay)}>
               {day}
@@ -204,7 +206,9 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const result = await response.json();
-        const dbmapNames = result.data.map(entry => entry.map_name);
+        const dbmapNames = result.data && Array.isArray(result.data)
+        ? result.data.map(entry => entry.map_name)
+        : [];
     
         const mapName = prompt("What is the name of the Map?");
         if (dbmapNames.includes(mapName)) {
@@ -330,21 +334,22 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
               <p>Loading...</p>
             ) : error ? (
               <p>Error: {error}</p>
-            ) : (
+            ) : Array.isArray(scheduleDateDisplay) ? (
               scheduleDateDisplay.map((entry) => (
                 <div
                   key={entry.schedule_id}
                   className={`schedule-grid-item ${
                     showConfirm && scheduleToDelete.includes(entry.schedule_name) ? 'selected-zone' : ''
                   }`}
-                  onClick={() => {
-                    handleScheduleClick(entry)}}
+                  onClick={() => handleScheduleClick(entry)}
                 >
                   <h1>{entry.schedule_name}</h1>
                   <p>Starts at: {entry.start_time}</p>
                   <p>{entry.recurrence}</p>
                 </div>
               ))
+            ) : (
+              null
             )}
           </div>
         </div>
