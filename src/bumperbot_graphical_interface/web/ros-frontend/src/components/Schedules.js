@@ -13,6 +13,9 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
     const [scheduleData, setScheduleData] = useState([]);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [scheduleDateDisplay,setScheduleDateDisplay] = useState([]);
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [scheduleToDelete, setScheduleToDelete] = useState([]);
 
     const [date, setDate] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState(date.toDateString());
@@ -50,6 +53,49 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
       // console.log("Schedule Data: ", scheduleData);
     }, []);
 
+    useEffect(() => {
+      if (selectedDate) {
+        // Convert selectedDate ("Thu Mar 20 2025") to "YYYY-MM-DD" format
+        const dateObj = new Date(selectedDate);
+        const day = String(dateObj.getDate()).padStart(2, '0');
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const year = dateObj.getFullYear();
+        const formattedDate = `${day}-${month}-${year}`;
+    
+        fetch(`http://localhost:5000/api/schedules?date=${formattedDate}`)
+          .then(response => response.json())
+          .then(data => {
+            // data.data contains the rows from Schedule_Table
+            setScheduleDateDisplay(data.data);
+          })
+          .catch(err => console.error('Error fetching schedules:', err));
+      }
+    }, [selectedDate]);
+
+    useEffect(()=>{
+      fetch('http://localhost:5000/api/schedules')
+      .then(response => response.json())
+      .then(data => setScheduleData(data.data))
+      .catch(error => console.error('Error fetching schedules:', error));
+      
+      if (selectedDate) {
+        // Convert selectedDate ("Thu Mar 20 2025") to "YYYY-MM-DD" format
+        const dateObj = new Date(selectedDate);
+        const day = String(dateObj.getDate()).padStart(2, '0');
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const year = dateObj.getFullYear();
+        const formattedDate = `${day}-${month}-${year}`;
+    
+        fetch(`http://localhost:5000/api/schedules?date=${formattedDate}`)
+          .then(response => response.json())
+          .then(data => {
+            // data.data contains the rows from Schedule_Table
+            setScheduleDateDisplay(data.data);
+          })
+          .catch(err => console.error('Error fetching schedules:', err));
+      }
+    },[scheduleToDelete])
+
     // =========
     // Functions
     // =========
@@ -70,6 +116,7 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
 
     const handleTrashClick = () => {
       console.log("Trash clicked");
+      setShowConfirm(true);
     };
 
     const handleDateClick = (date) => {
@@ -111,7 +158,7 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
           // Current month days
           const currentDay = new Date(date.getFullYear(), date.getMonth(), day);
           const dayClass = selectedDate === currentDay.toDateString() ? 'selected-day' : 'current-day';
-          
+
           const currentDayFormattedforDB = formatDate(currentDay);
           const hasSchedule = scheduleData.some(schedule => schedule.start_date === currentDayFormattedforDB);
           
@@ -186,6 +233,45 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
     const handleRightClick = () => {
       console.log("right clicked");
     };
+
+    const handleScheduleClick = (entry) => {
+      if (showConfirm) {
+        setScheduleToDelete((prev) => {
+          if (prev.includes(entry.schedule_name)) {
+            return prev.filter((name) => name !== entry.schedule_name);
+          } else {
+            return [...prev, entry.schedule_name];
+          }
+        });
+      }
+    };
+
+    const handleConfirmClick = async () => {
+      console.log(scheduleToDelete);
+
+      for (let schedule of scheduleToDelete) {
+        try {
+          const response = await fetch('http://localhost:5000/api/delete_schedule', {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ schedule_name: schedule }),
+          });
+    
+          if (!response.ok) {
+            console.error(`Failed to delete ${schedule}:`, response.statusText);
+          } else {
+            const result = await response.json();
+            console.log(`Deleted ${schedule}:`, result);
+          }
+        } catch (error) {
+          console.error(`Error deleting ${schedule}:`, error);
+        }
+      }
+      setShowConfirm(false);
+      setScheduleToDelete([]);
+    };
   
     return (
       <div className="schedules-page-container">
@@ -222,6 +308,11 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
   
         <div className="schedules-middle-content-right">
           <div className = "schedules-action-buttons">
+              {showConfirm && (
+              <button className="confirm-button" onClick={handleConfirmClick}>
+                Confirm
+              </button>
+            )}
             <button className="icon-button-trash-zone" onClick={handleTrashClick}>
               {/* <img src={trashIcon} alt="Trash" className="icon-trash-zone" /> */}
             </button>
@@ -234,8 +325,27 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
               <img src={plusIcon} alt="Plus" className="plus-icon" /> New Schedule
             </button>
           </div>
-          <div className = "schedules-schedule-tab">
-            
+          <div className="schedules-schedule-tab">
+            {isLoading ? (
+              <p>Loading...</p>
+            ) : error ? (
+              <p>Error: {error}</p>
+            ) : (
+              scheduleDateDisplay.map((entry) => (
+                <div
+                  key={entry.schedule_id}
+                  className={`schedule-grid-item ${
+                    showConfirm && scheduleToDelete.includes(entry.schedule_name) ? 'selected-zone' : ''
+                  }`}
+                  onClick={() => {
+                    handleScheduleClick(entry)}}
+                >
+                  <h1>{entry.schedule_name}</h1>
+                  <p>Starts at: {entry.start_time}</p>
+                  <p>{entry.recurrence}</p>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>

@@ -165,5 +165,46 @@
 
 .schedules-schedule-tab {
   height: 100%;
+  display: grid;
+  margin-top: 4vh;
+  grid-template-columns: 1fr; /* One column layout */
+  justify-items: end;
+  gap: 10px; /* Space between grid items */
+}
 
+.schedule-grid-item {
+  background-color: rgba(23, 23, 23, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  margin-bottom: 2vh; /* Add some space between rows */
+  padding: 1rem;
+  width: 71%;
+  max-height: 15vh;
+  border-radius: 30px;
+}
+
+.schedule-grid-item p{
+  font-size: 1.5rem;
+  color: #FAFAFA;
+  font-family: "Inter", sans-serif; 
+  margin-block-start: 0.2em;
+  margin-block-end: 0.2em;
+}
+
+.schedule-grid-item h1{
+  font-size: 2.5rem;
+  color: #FAFAFA;
+  font-family: "Inter", sans-serif; 
+  margin-block-start:0.2em;
+  margin-block-end: 0.2em;
+}
+
+.schedule-grid-item.selected-zone h1 {
+  color: #FF5255;
+}
+
+.schedule-grid-item.selected-zone {
+  box-shadow: inset 0 0 0 5px #FF5255;
 }
