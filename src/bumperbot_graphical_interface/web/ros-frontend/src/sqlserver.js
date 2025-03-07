@@ -323,20 +323,28 @@ app.delete('/api/delete_schedule', (req, res) => {
   
           const scheduleIds = scheduleRows.map(row => row.schedule_id);
           console.log('Found schedule IDs:', scheduleIds);
+          
+          if (scheduleIds.length === 0) {
+            console.error('No schedule found with name:', schedule_name);
+            return res.status(404).json({ error: 'Schedule not found' });
+          }
   
-          // 2) Now collect job IDs using those schedule IDs
-          const selectJobIds = `
-            SELECT job_id 
+          // 2) Collect all link entries (schedule_id, job_id, sequence_no)
+          const selectLinkEntries = `
+            SELECT schedule_id, job_id, sequence_no
             FROM Schedule_Job_Link
             WHERE schedule_id IN (${scheduleIds.map(() => '?').join(',')})
           `;
-          db.all(selectJobIds, scheduleIds, (err, jobRows) => {
+          db.all(selectLinkEntries, scheduleIds, (err, linkRows) => {
             if (err) {
-              console.error('Error fetching job IDs:', err.message);
+              console.error('Error fetching Schedule_Job_Link entries:', err.message);
               return res.status(500).json({ error: err.message });
             }
-  
-            const jobIds = jobRows.map(r => r.job_id);
+            
+            console.log('Found Schedule_Job_Link entries:', linkRows);
+            
+            // Extract job_ids from the link entries
+            const jobIds = linkRows.map(row => row.job_id);
             console.log('Found job IDs:', jobIds);
   
             // 3) Delete from dependent tables, using jobIds and scheduleIds as needed
@@ -386,18 +394,30 @@ app.delete('/api/delete_schedule', (req, res) => {
               });
             }
   
-            // Delete from Schedule_Job_Link (using scheduleIds)
-            if (scheduleIds.length > 0) {
-              const deleteScheduleJobLink = `
-                DELETE FROM Schedule_Job_Link
-                WHERE schedule_id IN (${scheduleIds.map(() => '?').join(',')})
-              `;
-              db.run(deleteScheduleJobLink, scheduleIds, function(err) {
-                if (err) {
-                  console.error('Error deleting from Schedule_Job_Link:', err.message);
-                } else {
-                  console.log(`Deleted ${this.changes} rows from Schedule_Job_Link`);
-                }
+            // Delete from Schedule_Job_Link one by one to handle composite keys properly
+            if (linkRows.length > 0) {
+              let deleteCount = 0;
+              let errorCount = 0;
+              
+              // Delete each link entry individually
+              linkRows.forEach(link => {
+                const deleteScheduleJobLink = `
+                  DELETE FROM Schedule_Job_Link
+                  WHERE schedule_id = ? AND job_id = ? AND sequence_no = ?
+                `;
+                db.run(deleteScheduleJobLink, [link.schedule_id, link.job_id, link.sequence_no], function(err) {
+                  if (err) {
+                    console.error('Error deleting from Schedule_Job_Link:', err.message);
+                    errorCount++;
+                  } else {
+                    deleteCount += this.changes;
+                  }
+                  
+                  // After all deletions are attempted
+                  if (deleteCount + errorCount === linkRows.length) {
+                    console.log(`Deleted ${deleteCount} rows from Schedule_Job_Link with ${errorCount} errors`);
+                  }
+                });
               });
             }
   
@@ -440,7 +460,7 @@ app.delete('/api/delete_schedule', (req, res) => {
         });
       });
     });
-  });
+});
 // START SERVER
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
