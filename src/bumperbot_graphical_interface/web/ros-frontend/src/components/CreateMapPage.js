@@ -150,6 +150,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
         const pointPublisher = publishPoint();
         const pointsStr = points.map(p=> `${p.x} ${p.y}`).join('\n');
         const message = new ROSLIB.Message({ data: pointsStr });
+        console.log('Publishing points:', pointsStr);
         setPoints([]); // Reset all 4 points drawn
         setStartPoints(true);
         
@@ -517,6 +518,7 @@ const CreateMapPage = ({ mapName, showPage }) => {
 
   const handleSave = () => {
     sessionStorage.removeItem('coverageListener');
+    sessionStorage.removeItem('fourPointsSet');
     fetchConfigData();
     fetchPolyData();
 

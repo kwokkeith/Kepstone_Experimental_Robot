@@ -11,7 +11,7 @@ import renderIMG from '../assets/images/Render3d.png';
 import {battery_percentage_listener} from '../rosService';
 
 const MainPage = ({ showPage }) => { // Ensure showPage is received as a prop
-  const [percentage, setPercentage] = useState(20); // Battery percentage
+  const [percentage, setPercentage] = useState(100); // Battery percentage
   const [circumference, setCircumference] = useState(0);
   const [strokeDashoffset, setStrokeDashoffset] = useState(0);
   const circleRef = useRef(null);
@@ -42,11 +42,12 @@ const MainPage = ({ showPage }) => { // Ensure showPage is received as a prop
   
   useEffect(() => {
     if (circleRef.current) {
-      setStrokeDashoffset(circumference - (percentage / 100) * circumference);
+      const newStrokeDashoffset = circumference - (percentage / 100) * circumference;
+      setStrokeDashoffset(newStrokeDashoffset);
       circleRef.current.style.strokeDasharray = circumference;
-      circleRef.current.style.strokeDashoffset = strokeDashoffset;
+      circleRef.current.style.strokeDashoffset = newStrokeDashoffset;
     }
-  }, [circumference]);
+  }, [circumference, percentage]);
 
   useEffect(() => {
     let newColor;

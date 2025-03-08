@@ -65,8 +65,6 @@ std::string get_uuid() {
     return res;
 }
 
-//TODO: Confirm with keith and Gizelle if the name cleaning_path_coordinates should be changed to waypoints?
-//TODO: Add images into db
 void insertData(){
     if (mapNameStored && polygonBoundingCoordinatesStored && bcdPolygonContourCoordinatesStored && cleaningPathCoordinatesStored && startPointsStored && roiPointsStored && navigation_waypointsStored){
         std::string config_id = get_uuid();
@@ -254,7 +252,96 @@ int main(int argc, char **argv) {
     } else {
         ROS_INFO("Polygon table created successfully");
     }
+
+    const char *sql_create_jobs_table = "CREATE TABLE IF NOT EXISTS Jobs_Table (" \
+                                        "job_id TEXT," \
+                                        "config_id TEXT," \
+                                        "sequence_no INTEGER ,"\
+                                        "PRIMARY KEY(job_id, sequence_no),"\
+                                        "FOREIGN KEY(config_id) REFERENCES Config_Table(config_id));";
+                                        
+    if (sqlite3_exec(db, sql_create_jobs_table, 0, 0, &errMsg) != SQLITE_OK) {
+        ROS_ERROR("SQL error: %s", errMsg);
+        sqlite3_free(errMsg);
+    return 1;
+    } else {
+        ROS_INFO("jobs table created successfully");
+    }
+
+    const char *sql_create_job_order_table = "CREATE TABLE IF NOT EXISTS Job_Order_Table (" \
+                                        "job_id TEXT NOT NULL," \
+                                        "config_id TEXT NOT NULL," \
+                                        "PRIMARY KEY(job_id, config_id)," \
+                                        "FOREIGN KEY(job_id) REFERENCES Jobs_Table(job_id)," \
+                                        "FOREIGN KEY(config_id) REFERENCES Config_Table(config_id));";
+                                        
+    if (sqlite3_exec(db, sql_create_job_order_table, 0, 0, &errMsg) != SQLITE_OK) {
+        ROS_ERROR("SQL error: %s", errMsg);
+        sqlite3_free(errMsg);
+    return 1;
+    } else {
+        ROS_INFO("jobs_order table created successfully");
+    }
+
+    const char *sql_create_schedule_table = "CREATE TABLE IF NOT EXISTS Schedule_Table (" \
+                                    "schedule_id TEXT PRIMARY KEY," \
+                                    "schedule_name TEXT," \
+                                    "start_time TEXT NOT NULL CHECK (start_time GLOB '[0-2][0-9]:[0-5][0-9]:[0-5][0-9]')," \
+                                    "start_date TEXT CHECK (start_date GLOB '[0-3][0-9]-[0-1][0-9]-[0-9][0-9][0-9][0-9]')," \
+                                    "recurrence TEXT NOT NULL CHECK (recurrence IN ('NoRepeat', 'Weekly', 'Monthly')) DEFAULT 'NoRepeat');";
+                                        
+    if (sqlite3_exec(db, sql_create_schedule_table, 0, 0, &errMsg) != SQLITE_OK) {
+        ROS_ERROR("SQL error: %s", errMsg);
+        sqlite3_free(errMsg);
+    return 1;
+    } else {
+        ROS_INFO("schedule table created successfully");
+    }
     
+    const char *sql_create_schedule_job_link = "CREATE TABLE IF NOT EXISTS Schedule_Job_Link (" \
+                                           "schedule_id TEXT NOT NULL," \
+                                           "sequence_no INTEGER NOT NULL," \
+                                           "job_id TEXT NOT NULL," \
+                                           "PRIMARY KEY(schedule_id, sequence_no)," \
+                                           "FOREIGN KEY(schedule_id) REFERENCES Schedule_Table(schedule_id)," \
+                                           "FOREIGN KEY(job_id, sequence_no) REFERENCES Jobs_Table(job_id, sequence_no));";
+
+    if (sqlite3_exec(db, sql_create_schedule_job_link, 0, 0, &errMsg) != SQLITE_OK) {
+        ROS_ERROR("SQL error creating schedule-job link table: %s", errMsg);
+        sqlite3_free(errMsg);
+        return 1;
+    } else {
+        ROS_INFO("Schedule-Job link table created successfully");
+    }
+    
+    const char *sql_create_job_status = "CREATE TABLE IF NOT EXISTS JobStatus (" \
+                                    "job_id TEXT PRIMARY KEY," \
+                                    "status TEXT NOT NULL CHECK (status IN ('failed', 'scheduled', 'active', 'completed'))," \
+                                    "FOREIGN KEY(job_id) REFERENCES Jobs_Table(job_id));";
+
+    if (sqlite3_exec(db, sql_create_job_status, 0, 0, &errMsg) != SQLITE_OK) {
+        ROS_ERROR("SQL error creating JobStatus table: %s", errMsg);
+        sqlite3_free(errMsg);
+        return 1;
+    } else {
+        ROS_INFO("JobStatus table created successfully");
+    }
+
+    const char *sql_create_contains = "CREATE TABLE IF NOT EXISTS ContainsTable (" \
+                                "job_id TEXT," \
+                                "sequence_no INTEGER NOT NULL," \
+                                "PRIMARY KEY(job_id, sequence_no),"\
+                                "FOREIGN KEY(sequence_no) REFERENCES Jobs_Table(sequence_no)," \
+                                "FOREIGN KEY(job_id) REFERENCES Jobs_Table(job_id));";
+
+    if (sqlite3_exec(db, sql_create_contains, 0, 0, &errMsg) != SQLITE_OK) {
+        ROS_ERROR("SQL error creating JobStatus table: %s", errMsg);
+        sqlite3_free(errMsg);
+        return 1;
+    } else {
+        ROS_INFO("JobStatus table created successfully");
+    }
+
     ros::Subscriber start_points_sub = nh.subscribe("/start_point", 1, startPointsCallback);
     ros::Subscriber roi_points_sub = nh.subscribe("/roi_points", 4, roiPointsCallback);
     ros::Subscriber point_sub = nh.subscribe("/canvas_messenger", 1000, canvasMessengerCallback);

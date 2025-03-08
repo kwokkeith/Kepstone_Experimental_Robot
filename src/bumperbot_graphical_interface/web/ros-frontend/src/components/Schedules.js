@@ -9,9 +9,13 @@ import { startNode, publishmapName, publishEditState } from '../rosService';
 // import chevronRightIcon from '../assets/icons/chevron-right.svg';
 
 const Schedules = ({showPage, showCreateSchedulePage}) => {
-    const [data, setData] = useState([]);
+    const [mapData, setMapData] = useState([]);
+    const [scheduleData, setScheduleData] = useState([]);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [scheduleDateDisplay,setScheduleDateDisplay] = useState([]);
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [scheduleToDelete, setScheduleToDelete] = useState([]);
 
     const [date, setDate] = useState(new Date());
     const [selectedDate, setSelectedDate] = useState(date.toDateString());
@@ -22,14 +26,14 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
     // REACT WEBHOOKS
     // ---------------
     useEffect(() => {
-      const fetchData = async () => {
+      const fetchMapData = async () => {
         try {
           const response = await fetch('http://localhost:5000/api/config');
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
           const result = await response.json();
-          setData(result.data);
+          setMapData(result.data);
         } catch (err) {
           setError(err.message);
         } finally {
@@ -37,13 +41,64 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
         }
       };
       
-      fetchData();
+      fetchMapData();
       
     }, []);
 
-    // ----------
+    useEffect(() => {
+      fetch('http://localhost:5000/api/schedules')
+          .then(response => response.json())
+          .then(data => setScheduleData(data.data))
+          .catch(error => console.error('Error fetching schedules:', error));
+      // console.log("Schedule Data: ", scheduleData);
+    }, []);
+
+    useEffect(() => {
+      if (selectedDate) {
+        // Convert selectedDate ("Thu Mar 20 2025") to "YYYY-MM-DD" format
+        const dateObj = new Date(selectedDate);
+        const day = String(dateObj.getDate()).padStart(2, '0');
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const year = dateObj.getFullYear();
+        const formattedDate = `${day}-${month}-${year}`;
+    
+        fetch(`http://localhost:5000/api/schedules?date=${formattedDate}`)
+          .then(response => response.json())
+          .then(data => {
+            // data.data contains the rows from Schedule_Table
+            setScheduleDateDisplay(data.data);
+          })
+          .catch(err => console.error('Error fetching schedules:', err));
+      }
+    }, [selectedDate]);
+
+    useEffect(()=>{
+      fetch('http://localhost:5000/api/schedules')
+      .then(response => response.json())
+      .then(data => setScheduleData(data.data))
+      .catch(error => console.error('Error fetching schedules:', error));
+
+      if (selectedDate) {
+        // Convert selectedDate ("Thu Mar 20 2025") to "YYYY-MM-DD" format
+        const dateObj = new Date(selectedDate);
+        const day = String(dateObj.getDate()).padStart(2, '0');
+        const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        const year = dateObj.getFullYear();
+        const formattedDate = `${day}-${month}-${year}`;
+    
+        fetch(`http://localhost:5000/api/schedules?date=${formattedDate}`)
+          .then(response => response.json())
+          .then(data => {
+            // data.data contains the rows from Schedule_Table
+            setScheduleDateDisplay(data.data);
+          })
+          .catch(err => console.error('Error fetching schedules:', err));
+      }
+    },[scheduleToDelete])
+
+    // =========
     // Functions
-    // ----------
+    // =========
 
     const handleScheduleLeftClick = () => {
       handleMonthChange(-1);
@@ -61,10 +116,18 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
 
     const handleTrashClick = () => {
       console.log("Trash clicked");
+      setShowConfirm(true);
     };
 
     const handleDateClick = (date) => {
       setSelectedDate(date.toDateString());
+    };
+
+    const formatDate = (date) => {
+      const day = date.getDate().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}-${month}-${year}`;
     };
 
     const renderCalendar = () => {
@@ -72,6 +135,7 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
       const prevLastDay = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
       const totalMonthDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
       const startWeekDay = new Date(date.getFullYear(), date.getMonth(), 1).getDay(); // weekday for the 1st
+      
       const totalCalendarDay = 6 * 7;
       
       for (let i = 0; i < totalCalendarDay; i++) {
@@ -94,9 +158,16 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
           // Current month days
           const currentDay = new Date(date.getFullYear(), date.getMonth(), day);
           const dayClass = selectedDate === currentDay.toDateString() ? 'selected-day' : 'current-day';
+
+          const currentDayFormattedforDB = formatDate(currentDay);
+          const hasSchedule = scheduleData
+          ? scheduleData.some(schedule => schedule.start_date === currentDayFormattedforDB)
+          : false;
+
           days.push(
             <div key={i} className={dayClass} onClick={() => handleDateClick(currentDay)}>
               {day}
+              {hasSchedule && <span className="schedule-dot"></span>}  {/* Render a dot if there's a schedule */}
             </div>
           );
         }
@@ -135,7 +206,9 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const result = await response.json();
-        const dbmapNames = result.data.map(entry => entry.map_name);
+        const dbmapNames = result.data && Array.isArray(result.data)
+        ? result.data.map(entry => entry.map_name)
+        : [];
     
         const mapName = prompt("What is the name of the Map?");
         if (dbmapNames.includes(mapName)) {
@@ -163,6 +236,45 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
 
     const handleRightClick = () => {
       console.log("right clicked");
+    };
+
+    const handleScheduleClick = (entry) => {
+      if (showConfirm) {
+        setScheduleToDelete((prev) => {
+          if (prev.includes(entry.schedule_name)) {
+            return prev.filter((name) => name !== entry.schedule_name);
+          } else {
+            return [...prev, entry.schedule_name];
+          }
+        });
+      }
+    };
+
+    const handleConfirmClick = async () => {
+      console.log(scheduleToDelete);
+
+      for (let schedule of scheduleToDelete) {
+        try {
+          const response = await fetch('http://localhost:5000/api/delete_schedule', {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ schedule_name: schedule }),
+          });
+    
+          if (!response.ok) {
+            console.error(`Failed to delete ${schedule}:`, response.statusText);
+          } else {
+            const result = await response.json();
+            console.log(`Deleted ${schedule}:`, result);
+          }
+        } catch (error) {
+          console.error(`Error deleting ${schedule}:`, error);
+        }
+      }
+      setShowConfirm(false);
+      setScheduleToDelete([]);
     };
   
     return (
@@ -200,6 +312,11 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
   
         <div className="schedules-middle-content-right">
           <div className = "schedules-action-buttons">
+              {showConfirm && (
+              <button className="confirm-button" onClick={handleConfirmClick}>
+                Confirm
+              </button>
+            )}
             <button className="icon-button-trash-zone" onClick={handleTrashClick}>
               {/* <img src={trashIcon} alt="Trash" className="icon-trash-zone" /> */}
             </button>
@@ -212,8 +329,28 @@ const Schedules = ({showPage, showCreateSchedulePage}) => {
               <img src={plusIcon} alt="Plus" className="plus-icon" /> New Schedule
             </button>
           </div>
-          <div className = "schedules-schedule-tab">
-            
+          <div className="schedules-schedule-tab">
+            {isLoading ? (
+              <p>Loading...</p>
+            ) : error ? (
+              <p>Error: {error}</p>
+            ) : Array.isArray(scheduleDateDisplay) ? (
+              scheduleDateDisplay.map((entry) => (
+                <div
+                  key={entry.schedule_id}
+                  className={`schedule-grid-item ${
+                    showConfirm && scheduleToDelete.includes(entry.schedule_name) ? 'selected-zone' : ''
+                  }`}
+                  onClick={() => handleScheduleClick(entry)}
+                >
+                  <h1>{entry.schedule_name}</h1>
+                  <p>Starts at: {entry.start_time}</p>
+                  <p>{entry.recurrence}</p>
+                </div>
+              ))
+            ) : (
+              null
+            )}
           </div>
         </div>
       </div>
