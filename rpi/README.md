@@ -31,9 +31,9 @@ Follow these steps to set up your development environment and run the project.
     ```bash
     rustup target add aarch64-unknown-linux-gnu 
 
-4. **Download and extract Zig 0.14.0 compiler for x64**
+4. **Download and extract Zig 0.9.0 compiler for x64**
     ```bash
-    curl -s -L https://ziglang.org/download/0.14.0/zig-linux-x86_64-0.14.0.tar.xz | tar xvJ -C ~
+    curl -s -L https://ziglang.org/download/0.9.0/zig-linux-x86_64-0.9.0.tar.xz | tar xvJ -C ~
 
 5. **Automatically add zig binary to PATH environment variable**
     ```bash
@@ -51,10 +51,16 @@ Follow these steps to set up your development environment and run the project.
     ```bash
     git clone https://github.com/agx-hv/dv8 && cd dv8/rpi/rosbin
 
-9. **Build the arm64 binary**
+9. **Source ros environment and set the ROSRUST_MSG_PATH environment variable**
+    ```bash
+    source /opt/ros/noetic/setup.bash && export ROSRUST_MSG_PATH=/path/to/directory/containing/bumperbot_controller
+
+10. **Build the arm64 binary**
     ```bash
     cargo zigbuild --release --target aarch64-unknown-linux-gnu
 
-
+11. **Copy the binary over to the Raspberry Pi**
+    ```bash
+    scp target/aarch64-unknown-linux-gnu/release/rosbin dv8@<RASPI_IP_ADDRESS>:~/
 
 
