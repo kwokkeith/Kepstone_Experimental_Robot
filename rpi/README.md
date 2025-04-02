@@ -18,7 +18,11 @@ Make sure you have the following installed:
 
 ### Installation Steps
 
-1. **Clone the repository**
+1. **Install Rust**
+    ```bash
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+2. **Clone the repository**
 
    To start, clone the repository to your local machine using the following command:
 
