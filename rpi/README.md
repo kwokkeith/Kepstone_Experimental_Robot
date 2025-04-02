@@ -37,7 +37,7 @@ Follow these steps to set up your development environment and run the project.
 
 5. **Automatically add zig binary to PATH environment variable**
     ```bash
-    echo "export PATH=$PATH:$HOME/zig-linux-x86_64-0.14.0/" >> $HOME/.bashrc && source $HOME/.bashrc
+    echo "export PATH=$PATH:$HOME/zig-linux-x86_64-0.9.0/" >> $HOME/.bashrc && source $HOME/.bashrc
 
 6. **Test Zig compiler path works and correctly displays its version**
     ```bash
