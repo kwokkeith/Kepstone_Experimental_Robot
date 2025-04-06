@@ -5,28 +5,36 @@ This guide walks you through the process of cross-compiling ROS Noetic binaries 
 ⚠️ Note: ROS Noetic is only officially supported on Ubuntu 20.04 (Focal), which reaches end-of-Life (EOL) in May 2025. It is strongly recommended to use Ubuntu 20.04 in a chroot, VM, or container for building, rather than on your host system.
 
 ---
-###🚀 Why Cross-Compile?
+### 🚀 Why Cross-Compile?
+
 Cross-compiling provides more than just faster build times. Here are some major advantages:
 
+✅ Avoid Using Outdated OSes on the Pi
+ROS Noetic is officially supported only on Ubuntu 20.04 Focal, which reached End-of-Life in May 2025. Installing and running Focal on a Raspberry Pi is not only clunky and unsupported, but also introduces long-term security risks and compatibility issues.
+
+By cross-compiling, you don’t need to install Ubuntu on the Pi at all — you can run your binaries directly on the latest, officially supported Raspberry Pi OS (Bookworm, 64-bit).
+
+This means:
+- Your Pi stays up to date with Debian-based system libraries.
+- You benefit from ongoing security updates and hardware compatibility.
+- There's no need to hack around outdated Ubuntu images just to run ROS.
+
 ✅ No Need to Install ROS on the Pi
-- The Raspberry Pi does not need ROS Noetic installed.
-- This keeps the Pi system clean, reduces maintenance, and avoids dependency issues.
+- You don’t even need to install ROS on the Pi at all. The compiled binaries can be copied over and executed immediately, greatly reducing the system footprint and avoiding complex dependency management.
+- This simplifies deployment and makes it easy to:
+- Run ROS nodes on multiple devices without repeated setup.
+- Maintain a clean, lightweight Pi image.
+- Isolate and reproduce issues, since everything is built in a controlled dev environment.
 
-✅ Compatible with the Latest Raspberry Pi OS
-- The generated binaries run perfectly on Raspberry Pi OS Bookworm (64-bit).
-- No need to downgrade to deprecated or unsupported distributions like Ubuntu 20.04 Focal.
+✅ Faster and More Scalable Development
+- You compile on a powerful x86-64 machine, not the slow ARM CPU on the Pi.
+- Builds that take 30+ minutes on the Pi complete in seconds on your dev machine.
+- Ideal for CI/CD pipelines or large ROS workspaces.
 
-✅ Faster Builds and Less Heat
-- Builds are done on your powerful dev machine, not the Pi.
-- No prolonged compilation times that could overheat or wear down the Pi.
-
-✅ Minimal Footprint
-- Deployment is as simple as copying over the compiled binary.
-- No need for dev tools, compilers, or ROS packages on the Pi.
-
-✅ Predictable, Reproducible Results
-- Build environments are fully controlled and reproducible using Docker or chroot.
-- Binaries built this way can be versioned, tested in CI, and rolled out reliably across multiple Pi devices.
+✅ Reproducible and Consistent Binaries
+- The build process is deterministic — every Pi gets the same binary.
+- Easy to debug and version control.
+- Compatible with system libraries on Raspberry Pi OS out of the box.
 
 ### ⚙️ Why Use Zig as the Linker?
 Traditional cross-compilation often requires setting up:
@@ -47,7 +55,7 @@ Zig replaces all of that with a single, portable, zero-setup linker.
 - No need to install or configure complex toolchains.
 - The resulting binary will link correctly against the Pi’s system libraries out-of-the-box.
 
-###🦀 Why Use Rust?
+### 🦀 Why Use Rust?
 Rust is a modern systems programming language designed for performance, reliability, and safety — all of which make it an excellent fit for developing ROS nodes on embedded platforms like the Raspberry Pi Zero 2 W.
 
 Here’s why Rust is a great choice for this cross-compilation workflow:
