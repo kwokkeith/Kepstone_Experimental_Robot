@@ -10,6 +10,7 @@ This guide walks you through the process of cross-compiling ROS Noetic binaries 
 Cross-compiling provides more than just faster build times. Here are some major advantages:
 
 ✅ Avoid Using Outdated OSes on the Pi
+
 ROS Noetic is officially supported only on Ubuntu 20.04 Focal, which reached End-of-Life in May 2025. Installing and running Focal on a Raspberry Pi is not only clunky and unsupported, but also introduces long-term security risks and compatibility issues.
 
 By cross-compiling, you don’t need to install Ubuntu on the Pi at all — you can run your binaries directly on the latest, officially supported Raspberry Pi OS (Bookworm, 64-bit).
