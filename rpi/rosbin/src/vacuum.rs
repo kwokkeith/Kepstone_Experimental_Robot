@@ -55,30 +55,30 @@ pub fn main() {
     let mut joy_vac_power = vac_power.clone();
     let mut joy_roller_speed = roller_speed.clone();
     let _subscriber_joy = rosrust::subscribe("/joy1/joy", 100, move |v: Joy| {
-        // Callback for handling received messages
-        let d_pad_UPDOWN = v.axes.get(4).unwrap();
-        let curr_vac_pwr = joy_vac_power.load(Ordering::Relaxed);
-        let curr_roller_spd = joy_roller_speed.load(Ordering::Relaxed);
-        println!("Rollerbrush: {}%", &curr_roller_spd);
-        match d_pad_UPDOWN {
-            -1.0 => {
-                if curr_vac_pwr < 800 {
-                    joy_vac_power.fetch_add(50, Ordering::Relaxed);
-                };
-                if curr_roller_spd < 100 {
-                    joy_roller_speed.fetch_add(10, Ordering::Relaxed);
-                }
-            },
-            1.0 => {
-                if curr_vac_pwr > 0 {
-                    joy_vac_power.fetch_sub(50, Ordering::Relaxed);
-                };
-                if curr_roller_spd > 0 {
-                    joy_roller_speed.fetch_sub(10, Ordering::Relaxed);
-                }
-            },
-            _ => {}
-        };
+        //// Callback for handling received messages
+        //let d_pad_UPDOWN = v.axes.get(4).unwrap();
+        //let curr_vac_pwr = joy_vac_power.load(Ordering::Relaxed);
+        //let curr_roller_spd = joy_roller_speed.load(Ordering::Relaxed);
+        //println!("Rollerbrush: {}%", &curr_roller_spd);
+        //match d_pad_UPDOWN {
+        //    -1.0 => {
+        //        if curr_vac_pwr < 800 {
+        //            joy_vac_power.fetch_add(50, Ordering::Relaxed);
+        //        };
+        //        if curr_roller_spd < 100 {
+        //            joy_roller_speed.fetch_add(10, Ordering::Relaxed);
+        //        }
+        //    },
+        //    1.0 => {
+        //        if curr_vac_pwr > 0 {
+        //            joy_vac_power.fetch_sub(50, Ordering::Relaxed);
+        //        };
+        //        if curr_roller_spd > 0 {
+        //            joy_roller_speed.fetch_sub(10, Ordering::Relaxed);
+        //        }
+        //    },
+        //    _ => {}
+        //};
     }).unwrap();
 
     let mut msg = rosrust_msg::bumperbot_controller::RollerBrushPowerFeedback::default();

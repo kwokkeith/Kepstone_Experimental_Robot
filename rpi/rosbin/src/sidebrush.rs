@@ -47,15 +47,15 @@ pub fn main() {
 
     let _subscriber_joy = rosrust::subscribe("/joy1/joy", 100, move |v: Joy| {
         // Callback for handling received messages
-        println!("Buttons: {:?}", v.buttons);
-        let brushspeed = speed3.clone();
-        let oldspeed = speed3.clone().load(Ordering::Relaxed);
-        if v.buttons[3] == 1 && oldspeed > 0 {
-            brushspeed.store(oldspeed - 50, Ordering::Relaxed);
-        }
-        if v.buttons[0] == 1 && oldspeed < 300 {
-            brushspeed.store(oldspeed + 50, Ordering::Relaxed);
-        }
+        //println!("Buttons: {:?}", v.buttons);
+        //let brushspeed = speed3.clone();
+        //let oldspeed = speed3.clone().load(Ordering::Relaxed);
+        //if v.buttons[3] == 1 && oldspeed > 0 {
+        //    brushspeed.store(oldspeed - 50, Ordering::Relaxed);
+        //}
+        //if v.buttons[0] == 1 && oldspeed < 300 {
+        //    brushspeed.store(oldspeed + 50, Ordering::Relaxed);
+        //}
     }).unwrap();
 
     while rosrust::is_ok() {
