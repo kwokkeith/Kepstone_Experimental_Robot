@@ -129,7 +129,7 @@ With libraries like rosrust, you can write fully-functional ROS Noetic nodes in 
 
 8. **Clone this repository and change directory into the rosbin project directory**
     ```bash
-    git clone https://github.com/agx-hv/dv8 && cd dv8/rpi/rosbin
+    git clone https://github.com/kwokkeith/Kepstone_Experimental_Robot.git && cd rpi/rosbin
 
 9. **Source ros environment and set the ROSRUST_MSG_PATH environment variable**
     ```bash
