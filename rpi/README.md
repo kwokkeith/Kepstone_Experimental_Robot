@@ -1,11 +1,11 @@
-# Cross-compiling ROS Binaries for Raspberry Pi 2 Zero W
+# Cross-Compiling ROS Noetic Rust Binaries for Raspberry Pi Zero 2 W
 
-This guide walks you through the process of cross-compiling ROS Noetic binaries for the Raspberry Pi Zero 2 W, which uses an ARM64 processor. Rather than compiling directly on the Pi — which is slow and resource-limited — this approach allows you to build binaries on a fast x86-64 machine and run them immediately on a fresh install of Raspberry Pi OS (Bookworm, 64-bit).
+This guide walks you through the process of cross-compiling ROS Noetic binaries for the Raspberry Pi Zero 2 W, which uses an ARM64 processor. Rather than compiling directly on the Pi — which is slow and resource-limited — this approach allows you to build binaries on a fast x86-64 machine and run them immediately on a fresh install of Raspberry Pi OS.
 
 ⚠️ Note: ROS Noetic is only officially supported on Ubuntu 20.04 (Focal), which reaches end-of-Life (EOL) in May 2025. It is strongly recommended to use Ubuntu 20.04 in a chroot, VM, or container for building, rather than on your host system.
 
 ---
-### 🚀 Why Cross-Compile?
+### ⚙️ Why Cross-Compile for the Pi?
 
 Cross-compiling provides more than just faster build times. Here are some major advantages:
 
@@ -39,7 +39,7 @@ This simplifies deployment and makes it easy to:
 - Easy to debug and version control.
 - Compatible with system libraries on Raspberry Pi OS out of the box.
 
-### ⚙️ Why Use Zig as the Linker?
+### 🔗 Why Use Zig to Link Rust?
 Traditional cross-compilation often requires setting up:
 
 - A cross toolchain (e.g., gcc-aarch64-linux-gnu)
@@ -58,7 +58,7 @@ Zig replaces all of that with a single, portable, zero-setup linker.
 - No need to install or configure complex toolchains.
 - The resulting binary will link correctly against the Pi’s system libraries out-of-the-box.
 
-### 🦀 Why Use Rust?
+### 🦀 Why Write ROS Nodes in Rust?
 Rust is a modern systems programming language designed for performance, reliability, and safety — all of which make it an excellent fit for developing ROS nodes on embedded platforms like the Raspberry Pi Zero 2 W.
 
 Here’s why Rust is a great choice for this cross-compilation workflow:
@@ -86,7 +86,15 @@ With libraries like rosrust, you can write fully-functional ROS Noetic nodes in 
 - Ubuntu 20.04 LTS (in VM, Docker container, or chroot)
 - Git
 
-### Installation Steps
+### 🏁 Quickstart (TL;DR) 
+
+1. Clone this repo 
+2. Build with Zig linker for ARM64: 
+    ```bash 
+    cargo zigbuild --release --target aarch64-unknown-linux-gnu 
+3. SCP the binary to your Raspberry Pi and run!
+
+### Detailed Installation Steps
 
 1. **Install ROS Noetic on Ubuntu 20.04 LTS**
     ```bash
