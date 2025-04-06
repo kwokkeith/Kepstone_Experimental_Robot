@@ -64,15 +64,19 @@ Rust is a modern systems programming language designed for performance, reliabil
 Here’s why Rust is a great choice for this cross-compilation workflow:
 
 ✅ Memory Safety Without Runtime Overhead
+
 Rust guarantees memory safety at compile time, without relying on a garbage collector. This eliminates entire classes of bugs — such as null pointer dereferences, buffer overflows, and use-after-free — while still delivering performance close to C/C++. This is especially important on embedded devices where resources are limited, and bugs can be hard to debug.
 
 ✅ Lightweight, High-Performance Binaries
+
 Rust compiles directly to efficient native code with zero-cost abstractions. The resulting binaries are small, fast, and ideal for running on the Pi Zero 2 W, which has limited CPU and memory resources.
 
 ✅ Safe Concurrency by Design
+
 Rust’s ownership system also applies to concurrent programming. It makes data races impossible by default, allowing you to confidently build multithreaded ROS nodes that handle multiple topics, services, or sensors in parallel — without risking undefined behavior or hard-to-find bugs.
 
 ✅ Writing ROS Nodes in Rust
+
 With libraries like rosrust, you can write fully-functional ROS Noetic nodes in pure Rust — supporting publishers, subscribers, services, and parameters. This brings all of Rust’s safety and performance benefits into the ROS ecosystem, without needing to fall back on C++.
 
 
