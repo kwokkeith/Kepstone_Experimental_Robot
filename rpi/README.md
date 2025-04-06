@@ -13,7 +13,7 @@ Cross-compiling provides more than just faster build times. Here are some major 
 
 ROS Noetic is officially supported only on Ubuntu 20.04 Focal, which reached End-of-Life in May 2025. Installing and running Focal on a Raspberry Pi is not only clunky and unsupported, but also introduces long-term security risks and compatibility issues.
 
-By cross-compiling, you don’t need to install Ubuntu on the Pi at all — you can run your binaries directly on the latest, officially supported Raspberry Pi OS (Bookworm, 64-bit).
+By cross-compiling, you don’t need to install Ubuntu on the Pi at all — you can run your binaries directly on the latest, officially supported Raspberry Pi OS.
 
 This means:
 - Your Pi stays up to date with Debian-based system libraries.
@@ -21,8 +21,10 @@ This means:
 - There's no need to hack around outdated Ubuntu images just to run ROS.
 
 ✅ No Need to Install ROS on the Pi
-- You don’t even need to install ROS on the Pi at all. The compiled binaries can be copied over and executed immediately, greatly reducing the system footprint and avoiding complex dependency management.
-- This simplifies deployment and makes it easy to:
+
+You don’t even need to install ROS on the Pi at all. The compiled binaries can be copied over and executed immediately, greatly reducing the system footprint and avoiding complex dependency management.
+
+This simplifies deployment and makes it easy to:
 - Run ROS nodes on multiple devices without repeated setup.
 - Maintain a clean, lightweight Pi image.
 - Isolate and reproduce issues, since everything is built in a controlled dev environment.
