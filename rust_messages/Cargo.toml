@@ -1,8 +1,0 @@
-[package]
-name = "rust_messages"
-version = "0.1.0"
-edition = "2018"
-
-[dependencies]
-rosrust = "0.9"
-rosrust_msg = "0.1"
