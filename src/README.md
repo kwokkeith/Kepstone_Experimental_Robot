@@ -54,6 +54,15 @@ Contains nodes and codes for computer vision-based object detection and TF trans
 
 ---
 
+## bumperbot_examples
+
+Contains the launch code to start the simulation as per the testing environment.
+
+### Launch Files:
+- `test_env.launch`: Launches the whole project to start the test simulation.
+
+---
+
 ## bumperbot_graphical_interface
 
 Contains the React Web UI for robot management and database.
