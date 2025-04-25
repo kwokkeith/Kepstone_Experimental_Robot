@@ -15,6 +15,11 @@ pub fn main() {
     let pwm1 = Pwm::new(Channel::Pwm1).unwrap();
     pwm1.enable();
 
+    // GPIO
+    let gpio = Gpio::new().unwrap();
+    let mut pin17 = gpio.get(17).unwrap().into_output();
+    let mut pin27 = gpio.get(27).unwrap().into_output();
+
     let rate = rosrust::rate(100.0);
     let mut servo = servo::Servo::new(pwm0);
 
@@ -85,9 +90,18 @@ pub fn main() {
     while rosrust::is_ok() {
         let vac_watts = vac_power.load(Ordering::Relaxed);
         let roller_spd = roller_speed.load(Ordering::Relaxed);
+        if roller_spd > 0 {
+            pin17.set_high();
+            pin27.set_low();
+            msg.pos = "DOWN".to_owned();
+        } 
+        if roller_spd == 0 {
+            pin17.set_low();
+            pin27.set_high();
+            msg.pos = "UP".to_owned();
+        }
         pwm1.set_frequency(50.0, roller_spd as f64 / 100.0);
         msg.message = "OK".to_owned();
-        msg.pos = "DOWN".to_owned();
         msg.power = format!("{:.2}", roller_spd).parse().unwrap();
         publisher_2.send(msg.clone());
         servo.move_to_angle(vac_watts as f64/800.0 * 180.0, &publisher);

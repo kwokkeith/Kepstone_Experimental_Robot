@@ -16,6 +16,11 @@ pub fn main() {
     let mut pin14 = gpio.get(14).unwrap().into_output();
     pin14.set_low();
 
+    let mut pin17 = gpio.get(17).unwrap().into_output();
+    pin17.set_low();
+    let mut pin27 = gpio.get(27).unwrap().into_output();
+    pin27.set_low();
+
     std::thread::sleep(std::time::Duration::from_millis(5000));
     println!("PWM Channel 0 initialized!");
     println!("PWM Channel 1 initialized!");
