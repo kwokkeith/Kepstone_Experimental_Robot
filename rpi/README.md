@@ -1,3 +1,30 @@
+# Source Files
+- `rosbin/src/main.rs`    
+    - Entrypoint, used to select which code to compile
+- `rosbin/src/pwm_init.rs`
+    - Initialize GPIO and PWM to the appropriate modes, must be run before sidebrush/vacuum binaries
+- `rosbin/src/sidebrush.rs`
+    - Sidebrush source code
+- `rosbin/src/vacuum.rs`
+    - Vacuum and rollerbrush source code
+- `rosbin/src/servo.rs`
+    - Contains struct to interface with SG09 servo via PWM, used by vacuum.rs
+- `rosbin/src/bts7960_motor_control.rs`
+    - Contains struct to interface with BTS7960 Motor driver via PWM, used by sidebrush.rs
+
+# ROS Messages
+- `rosbin/rosrust_msgs/bumperbot_controller/msg/RollerBrushPosFeedback.msg` (unused) 
+- `rosbin/rosrust_msgs/bumperbot_controller/msg/RollerBrushPowerFeedback.msg`
+    - power: 0.0 to 1.0
+    - message: "OK" or "ERROR"
+    - pos: "UP" or "DOWN"
+- `rosbin/rosrust_msgs/bumperbot_controller/msg/SideBrushPosFeedback.msg` (unused) 
+- `rosbin/rosrust_msgs/bumperbot_controller/msg/SideBrushSpeedFeedback.msg`
+    - speed: 0 to 300
+    - message: "OK" or "ERROR"
+    - pos: "UP" or "DOWN"
+- `rosbin/rosrust_msgs/bumperbot_controller/msg/VacuumPowerFeedback.msg` (unused) 
+
 # Cross-Compiling ROS Noetic Rust Binaries for Raspberry Pi Zero 2 W
 
 This guide walks you through the process of cross-compiling ROS Noetic binaries for the Raspberry Pi Zero 2 W, which uses an ARM64 processor. Rather than compiling directly on the Pi — which is slow and resource-limited — this approach allows you to build binaries on a fast x86-64 machine and run them immediately on a fresh install of Raspberry Pi OS.
